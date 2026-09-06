@@ -1,0 +1,12 @@
+{
+  "name": "agriassist-frontend",
+  "version": "1.0.0",
+  "description": "Farmer-friendly web application for crop sowing recommendations",
+  "scripts": {
+    "start": "npx serve src -l 3434",
+    "dev": "npx serve src -l 3434"
+  },
+  "dependencies": {
+    "serve": "^14.2.4"
+  }
+}
