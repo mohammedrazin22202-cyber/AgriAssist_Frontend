@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AgriAssist - Smart Crop Sowing Decision System</title>
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f0fdf4',
+              100: '#dcfce7',
+              200: '#bbf7d0',
+              500: '#22c55e',
+              600: '#16a34a',
+              700: '#15803d',
+              800: '#166534',
+              900: '#14532d',
+            }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="min-h-screen bg-slate-50 text-slate-800 flex flex-col">
+
+  <!-- TOP NAVIGATION HEADER -->
+  <header class="bg-brand-800 text-white shadow-md sticky top-0 z-30">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex flex-wrap items-center justify-between gap-4">
+      <div class="flex items-center space-x-3">
+        <div class="bg-white text-brand-800 p-2 rounded-xl shadow-sm font-extrabold text-2xl">
+          🌾
+        </div>
+        <div>
+          <div class="flex items-center space-x-2">
+            <h1 class="text-xl sm:text-2xl font-black tracking-tight">AgriAssist</h1>
+            <span class="bg-brand-700 text-emerald-100 text-xs px-2.5 py-0.5 rounded-full font-medium border border-brand-600">Decision Support</span>
+          </div>
+          <p class="text-xs text-brand-200">Kisan Fasal Salahkaar • Smart Crop Sowing Advisor</p>
+        </div>
+      </div>
+
+      <div class="flex items-center space-x-3">
+        <!-- API Connection Status Badge -->
+        <div id="apiStatusBadge" class="flex items-center space-x-1.5 text-xs bg-brand-900/80 px-3 py-1.5 rounded-full border border-brand-700">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          <span id="apiStatusText" class="text-emerald-100">Connecting to Engine...</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT CONTAINER -->
+  <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+
+    <!-- HERO INTRODUCTION -->
+    <div class="bg-gradient-to-r from-emerald-900 via-brand-800 to-green-950 text-white rounded-2xl p-6 sm:p-8 shadow-lg relative overflow-hidden">
+      <div class="relative z-10 max-w-3xl">
+        <h2 class="text-2xl sm:text-3xl font-extrabold mb-2">What Should You Sow This Season?</h2>
+        <p class="text-emerald-100 text-sm sm:text-base leading-relaxed">
+          Make confident, high-yield planting decisions. Tell us about your soil, season, and irrigation, and AgriAssist will rank the most profitable and climate-resilient crops with tailored agronomic guidance.
+        </p>
+      </div>
+      <!-- Decorative background glow -->
+      <div class="absolute -right-16 -bottom-16 w-64 h-64 bg-emerald-500/20 rounded-full blur-3xl pointer-events-none"></div>
+    </div>
+
+    <!-- DECISION INPUT FORM -->
+    <section class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 sm:p-8">
+      <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-100 pb-5 mb-6">
+        <div>
+          <h3 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+            <span>📋</span> Enter Your Farming Parameters
+          </h3>
+          <p class="text-xs text-slate-500">Provide field conditions to calculate matching crop suitability</p>
+        </div>
+
+        <!-- Mode Toggle (Simple vs Advanced) -->
+        <div class="flex items-center bg-slate-100 p-1 rounded-xl text-xs font-semibold">
+          <button id="modeSimpleBtn" type="button" class="px-3.5 py-1.5 rounded-lg transition-all bg-white text-brand-800 shadow-sm">
+            🌿 Simple / Quick Mode
+          </button>
+          <button id="modeAdvancedBtn" type="button" class="px-3.5 py-1.5 rounded-lg transition-all text-slate-600 hover:text-slate-900">
+            🔬 Advanced (Lab Soil Card)
+          </button>
+        </div>
+      </div>
+
+      <form id="recommendForm" class="space-y-6">
+        <!-- QUICK PARAMETERS GRID -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      </form>
+    </section>
+  </main>
+</body>
+</html>
