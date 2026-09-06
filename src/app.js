@@ -448,3 +448,260 @@ function createCropCardHTML(crop) {
         <div class="card-expanded-details hidden space-y-3 pt-3 border-t border-slate-100 text-xs text-slate-700">
           <div>
             <div class="font-bold text-slate-900 mb-1">Why This Crop:</div>
+            <ul class="space-y-1 text-slate-600">${reasonsList}</ul>
+          </div>
+
+          ${warningsList ? `
+            <div class="bg-amber-50 p-2.5 rounded-xl border border-amber-200">
+              <div class="font-bold text-amber-900 mb-1">Cautions & Risk Management:</div>
+              <ul class="space-y-1">${warningsList}</ul>
+            </div>
+          ` : ""}
+
+          <div>
+            <div class="font-bold text-slate-900 mb-1">🌾 Seed & Sowing Tips:</div>
+            <p class="text-slate-600 leading-relaxed">${crop.sowing_tips}</p>
+          </div>
+
+          <div>
+            <div class="font-bold text-slate-900 mb-1">🧪 Fertilizer & Nutrient Advice:</div>
+            <p class="text-slate-600 leading-relaxed">${crop.fertilizer_advice}</p>
+          </div>
+
+          ${crop.companion_crops && crop.companion_crops.length > 0 ? `
+            <div>
+              <div class="font-bold text-slate-900 mb-1">🤝 Recommended Intercrops:</div>
+              <div class="flex flex-wrap gap-1">
+                ${crop.companion_crops.map(c => `<span class="bg-emerald-50 text-emerald-800 border border-emerald-200 px-2 py-0.5 rounded text-[11px] font-medium">${c}</span>`).join("")}
+              </div>
+            </div>
+          ` : ""}
+        </div>
+      </div>
+
+      <!-- Action Button to Expand -->
+      <div class="pt-3 mt-2 border-t border-slate-100">
+        <button type="button" class="card-toggle-details w-full py-1.5 text-center text-xs font-bold text-brand-700 hover:text-brand-800 hover:bg-emerald-50 rounded-xl transition">
+          View Agronomic Advice ▼
+        </button>
+      </div>
+    </div>
+  `;
+}
+
+// ----------------- SIDE-BY-SIDE COMPARISON -----------------
+
+function toggleCropComparison(cropId, isChecked) {
+  const crop = appState.recommendations.find(c => c.crop_id === cropId);
+  if (!crop) return;
+
+  if (isChecked) {
+    if (appState.selectedForComparison.length >= 3) {
+      alert("You can compare up to 3 crops at once.");
+      // Uncheck
+      const cb = cropsGrid.querySelector(`input[data-crop-id="${cropId}"]`);
+      if (cb) cb.checked = false;
+      return;
+    }
+    appState.selectedForComparison.push(crop);
+  } else {
+    appState.selectedForComparison = appState.selectedForComparison.filter(c => c.crop_id !== cropId);
+  }
+
+  updateComparisonBar();
+}
+
+function updateComparisonBar() {
+  const count = appState.selectedForComparison.length;
+  compareCount.textContent = count;
+
+  if (count > 0) {
+    compareBar.classList.remove("hidden");
+    compareBadges.innerHTML = appState.selectedForComparison.map(c => `
+      <span class="bg-brand-100 text-brand-900 px-2.5 py-1 rounded-lg text-xs font-bold border border-brand-300 flex items-center gap-1">
+        ${c.name}
+      </span>
+    `).join("");
+  } else {
+    compareBar.classList.add("hidden");
+  }
+}
+
+function clearComparison() {
+  appState.selectedForComparison = [];
+  cropsGrid.querySelectorAll(".compare-checkbox").forEach(cb => cb.checked = false);
+  updateComparisonBar();
+}
+
+function openComparisonModal() {
+  if (appState.selectedForComparison.length === 0) return;
+
+  const crops = appState.selectedForComparison;
+
+  let headersHTML = `<th class="p-3 text-left font-bold text-slate-700 bg-slate-100 w-1/4">Feature / Metric</th>`;
+  crops.forEach(c => {
+    headersHTML += `
+      <th class="p-3 text-left bg-slate-50 border-l border-slate-200">
+        <div class="text-base font-bold text-slate-900">${c.name}</div>
+        <div class="text-xs text-brand-700 font-semibold">${c.suitability_score}% Match (${c.suitability_level})</div>
+      </th>
+    `;
+  });
+
+  const row = (title, keyExtractor) => `
+    <tr class="border-t border-slate-200">
+      <td class="p-3 font-semibold text-slate-700 bg-slate-50">${title}</td>
+      ${crops.map(c => `<td class="p-3 text-slate-800 border-l border-slate-200">${keyExtractor(c)}</td>`).join("")}
+    </tr>
+  `;
+
+  compareModalContent.innerHTML = `
+    <div class="overflow-x-auto">
+      <table class="w-full text-xs text-left border border-slate-200 rounded-xl overflow-hidden">
+        <thead>
+          <tr>${headersHTML}</tr>
+        </thead>
+        <tbody class="divide-y divide-slate-200">
+          ${row("Category", c => `<span class="bg-slate-100 px-2 py-0.5 rounded font-bold">${c.category}</span>`)}
+          ${row("Growth Duration", c => c.duration_days)}
+          ${row("Water Requirement", c => `<strong>${c.water_requirement}</strong>`)}
+          ${row("Est. Yield / Acre", c => c.estimated_yield_per_acre)}
+          ${row("Profit Potential", c => c.profit_potential)}
+          ${row("Sowing Window", c => c.sowing_window)}
+          ${row("Key Sowing Advice", c => c.sowing_tips)}
+          ${row("Fertilizer Advice", c => c.fertilizer_advice)}
+          ${row("Soil Considerations", c => c.soil_notes)}
+        </tbody>
+      </table>
+    </div>
+  `;
+
+  compareModal.classList.remove("hidden");
+}
+
+function closeComparisonModal() {
+  compareModal.classList.add("hidden");
+}
+
+// ----------------- OFFLINE FALLBACK ENGINE -----------------
+
+function handleOfflineFallback(payload) {
+  // Simple deterministic scoring for when backend is not actively running
+  const mockCrops = [
+    {
+      crop_id: "wheat",
+      name: "Wheat",
+      hindi_name: "गेहूं",
+      scientific_name: "Triticum aestivum",
+      category: "Cereal",
+      suitability_score: payload.season === "Rabi" ? 92.0 : 40.0,
+      suitability_level: payload.season === "Rabi" ? "Highly Recommended" : "Marginal",
+      sowing_window: "November 1st - November 25th",
+      duration_days: "110 - 130 days",
+      water_requirement: "Medium",
+      estimated_yield_per_acre: "18 - 24 Quintals",
+      investment_level: "Moderate",
+      profit_potential: "Moderate",
+      reasons: ["Ideal climate fit for post-monsoon cool weather.", "Thrives in well-drained loam."],
+      warnings: ["Late sowing results in terminal heat stress."],
+      sowing_tips: "Sow at 4-5 cm depth. First irrigation at 21 days is vital.",
+      fertilizer_advice: "Half N with full P and K at sowing; remaining N at CRI stage.",
+      soil_notes: "Requires well-drained fertile loam."
+    },
+    {
+      crop_id: "mustard",
+      name: "Mustard / Rapeseed",
+      hindi_name: "सरसों",
+      scientific_name: "Brassica juncea",
+      category: "Oilseed",
+      suitability_score: payload.season === "Rabi" ? 88.0 : 35.0,
+      suitability_level: payload.season === "Rabi" ? "Highly Recommended" : "Marginal",
+      sowing_window: "Sept 25th - Oct 20th",
+      duration_days: "100 - 125 days",
+      water_requirement: "Low to Medium",
+      estimated_yield_per_acre: "8 - 12 Quintals",
+      investment_level: "Low",
+      profit_potential: "High",
+      reasons: ["Low water requirement saves pumping cost.", "High market price for oil content."],
+      warnings: ["Monitor for aphids during foggy periods."],
+      sowing_tips: "Fine firm seedbed. Thin seedlings at 15-20 days.",
+      fertilizer_advice: "Apply Sulfur (20 kg/ha) for oil content enhancement.",
+      soil_notes: "Light to medium alluvial and sandy loam soils."
+    },
+    {
+      crop_id: "cotton",
+      name: "Cotton",
+      hindi_name: "कपास",
+      scientific_name: "Gossypium hirsutum",
+      category: "Fiber",
+      suitability_score: (payload.season === "Kharif" && payload.soil_type.includes("Black")) ? 94.0 : 55.0,
+      suitability_level: (payload.season === "Kharif" && payload.soil_type.includes("Black")) ? "Highly Recommended" : "Moderately Suitable",
+      sowing_window: "May - June (Irrigated) or June - July (Rainfed)",
+      duration_days: "150 - 180 days",
+      water_requirement: "Medium to High",
+      estimated_yield_per_acre: "10 - 16 Quintals",
+      investment_level: "High",
+      profit_potential: "Very High",
+      reasons: ["Black soil has the highest water retention for cotton root systems.", "Kharif warmth supports boll formation."],
+      warnings: ["Monitor for pink bollworm."],
+      sowing_tips: "Maintain 90x60 cm spacing. Trap crops like marigold recommended.",
+      fertilizer_advice: "Apply N in 3-4 split doses.",
+      soil_notes: "Deep black soil is prime."
+    },
+    {
+      crop_id: "chickpea",
+      name: "Chickpea (Gram / Chana)",
+      hindi_name: "चना",
+      scientific_name: "Cicer arietinum",
+      category: "Pulse",
+      suitability_score: payload.season === "Rabi" ? 90.0 : 45.0,
+      suitability_level: payload.season === "Rabi" ? "Highly Recommended" : "Marginal",
+      sowing_window: "Oct 15th - Nov 15th",
+      duration_days: "95 - 120 days",
+      water_requirement: "Low",
+      estimated_yield_per_acre: "8 - 12 Quintals",
+      investment_level: "Low to Moderate",
+      profit_potential: "High",
+      reasons: ["Biological nitrogen fixation enhances soil health.", "Low water demand."],
+      warnings: ["Waterlogging causes instant wilt."],
+      sowing_tips: "Inoculate seeds with Rhizobium. Sow deep (7-10 cm).",
+      fertilizer_advice: "Focus on Phosphorus (DAP/SSP).",
+      soil_notes: "Well-aerated deep soil."
+    },
+    {
+      crop_id: "pearl_millet",
+      name: "Pearl Millet (Bajra)",
+      hindi_name: "बाजरा",
+      scientific_name: "Pennisetum glaucum",
+      category: "Cereal",
+      suitability_score: (payload.water_availability.includes("Low") || payload.season === "Kharif") ? 91.0 : 62.0,
+      suitability_level: (payload.water_availability.includes("Low") || payload.season === "Kharif") ? "Highly Recommended" : "Moderately Suitable",
+      sowing_window: "June - July",
+      duration_days: "75 - 90 days",
+      water_requirement: "Low",
+      estimated_yield_per_acre: "12 - 18 Quintals",
+      investment_level: "Low",
+      profit_potential: "Moderate",
+      reasons: ["Top performer under water scarcity & high heat.", "Quick harvest."],
+      warnings: ["Avoid heavy rains during flowering."],
+      sowing_tips: "Shallow 2-3 cm sowing depth.",
+      fertilizer_advice: "Modest NPK requirement.",
+      soil_notes: "Thrives in sandy and poor fertility soils."
+    }
+  ];
+
+  mockCrops.sort((a, b) => b.suitability_score - a.suitability_score);
+
+  handleRecommendationResponse({
+    total_crops_evaluated: mockCrops.length,
+    recommendations: mockCrops,
+    top_pick: mockCrops[0],
+    soil_summary: {
+      soil_type: payload.soil_type,
+      description: FALLBACK_SOIL_BENCHMARKS[payload.soil_type]?.desc || "Standard soil profile",
+      drainage: "Standard",
+      benchmark_npk: "Baseline NPK Applied",
+      benchmark_ph: "Baseline pH Applied"
+    }
+  });
+}
