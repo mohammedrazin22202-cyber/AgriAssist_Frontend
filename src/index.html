@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AgriAssist - Smart Crop Sowing Decision System</title>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#166534">
   <!-- Tailwind CSS via CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="style.css">
@@ -35,7 +37,7 @@
 
   <!-- TOP NAVIGATION HEADER -->
   <header class="bg-brand-800 text-white shadow-md sticky top-0 z-30">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex flex-wrap items-center justify-between gap-4">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-wrap items-center justify-between gap-4">
       <div class="flex items-center space-x-3">
         <div class="bg-white text-brand-800 p-2 rounded-xl shadow-sm font-extrabold text-2xl">
           🌾
@@ -43,284 +45,450 @@
         <div>
           <div class="flex items-center space-x-2">
             <h1 class="text-xl sm:text-2xl font-black tracking-tight">AgriAssist</h1>
-            <span class="bg-brand-700 text-emerald-100 text-xs px-2.5 py-0.5 rounded-full font-medium border border-brand-600">Decision Support</span>
+            <span class="bg-brand-700 text-emerald-100 text-xs px-2.5 py-0.5 rounded-full font-medium border border-brand-600" data-i18n="tagline">Smart Decision Engine</span>
           </div>
-          <p class="text-xs text-brand-200">Kisan Fasal Salahkaar • Smart Crop Sowing Advisor</p>
+          <p class="text-xs text-brand-200" data-i18n="subtitle">Kisan Fasal Salahkaar • Empowering Indian Agriculture</p>
         </div>
       </div>
 
-      <div class="flex items-center space-x-3">
+      <div class="flex items-center flex-wrap gap-2.5">
+        <!-- Live Weather Auto-Detect Button -->
+        <button id="detectWeatherBtn" type="button" class="flex items-center space-x-1.5 text-xs bg-emerald-700 hover:bg-emerald-600 text-white px-3 py-1.5 rounded-full shadow-sm transition border border-emerald-500">
+          <span>📍</span>
+          <span id="weatherBtnText" data-i18n="detectLocation">Detect Weather</span>
+        </button>
+
+        <!-- Language Switcher Button -->
+        <button id="langToggleBtn" type="button" class="flex items-center space-x-1 text-xs bg-brand-900 hover:bg-brand-950 text-amber-300 font-bold px-3 py-1.5 rounded-full border border-brand-700 transition">
+          <span>🌐</span>
+          <span id="langToggleText">हिन्दी में देखें</span>
+        </button>
+
         <!-- API Connection Status Badge -->
         <div id="apiStatusBadge" class="flex items-center space-x-1.5 text-xs bg-brand-900/80 px-3 py-1.5 rounded-full border border-brand-700">
           <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-          <span id="apiStatusText" class="text-emerald-100">Connecting to Engine...</span>
+          <span id="apiStatusText" class="text-emerald-100">Connecting...</span>
         </div>
       </div>
     </div>
   </header>
 
-  <!-- MAIN CONTENT CONTAINER -->
-  <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
-
-    <!-- HERO INTRODUCTION -->
-    <div class="bg-gradient-to-r from-emerald-900 via-brand-800 to-green-950 text-white rounded-2xl p-6 sm:p-8 shadow-lg relative overflow-hidden">
-      <div class="relative z-10 max-w-3xl">
-        <h2 class="text-2xl sm:text-3xl font-extrabold mb-2">What Should You Sow This Season?</h2>
-        <p class="text-emerald-100 text-sm sm:text-base leading-relaxed">
-          Make confident, high-yield planting decisions. Tell us about your soil, season, and irrigation, and AgriAssist will rank the most profitable and climate-resilient crops with tailored agronomic guidance.
-        </p>
+  <!-- LIVE WEATHER ALERT BANNER (Dynamically shown after detection or manual query) -->
+  <div id="weatherAlertBanner" class="hidden bg-gradient-to-r from-blue-900 via-indigo-900 to-slate-900 text-white shadow-inner">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-wrap items-center justify-between gap-3 text-xs">
+      <div class="flex items-center space-x-3">
+        <span class="text-2xl" id="weatherIcon">⛅</span>
+        <div>
+          <span class="font-bold text-sm text-blue-200" id="weatherLocationName">Pune, Maharashtra</span>
+          <span class="text-slate-300 ml-2" id="weatherCondition">Partly Cloudy • 28°C</span>
+        </div>
       </div>
-      <!-- Decorative background glow -->
-      <div class="absolute -right-16 -bottom-16 w-64 h-64 bg-emerald-500/20 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="flex flex-wrap items-center gap-4 text-slate-200">
+        <div class="bg-blue-800/60 px-2.5 py-1 rounded-lg border border-blue-700">
+          <span>💧 Humidity:</span> <strong id="weatherHumidity">64%</strong>
+        </div>
+        <div class="bg-blue-800/60 px-2.5 py-1 rounded-lg border border-blue-700">
+          <span>🌧️ Next 7-Day Rain:</span> <strong id="weatherForecastRain">35 mm</strong>
+        </div>
+        <div class="bg-emerald-900/80 text-emerald-200 px-3 py-1 rounded-lg font-semibold border border-emerald-600" id="weatherSowingReadiness">
+          ✓ Ideal Sowing Window in Next 48h
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN NAVIGATION TABS -->
+  <nav class="bg-white border-b border-slate-200 sticky top-[57px] z-20 shadow-sm no-print">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex space-x-2 py-2 overflow-x-auto">
+      <button id="tabAdvisorBtn" class="nav-tab active px-4 py-2 rounded-xl text-xs sm:text-sm font-bold border border-slate-200 transition flex items-center gap-2 whitespace-nowrap">
+        <span>🌱</span> <span data-i18n="tabAdvisor">Crop Sowing Advisor</span>
+      </button>
+      <button id="tabRotationBtn" class="nav-tab px-4 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-600 hover:bg-slate-100 border border-transparent transition flex items-center gap-2 whitespace-nowrap">
+        <span>🔄</span> <span data-i18n="tabRotation">1-Year Rotation Planner</span>
+      </button>
+      <button id="tabFertilizerBtn" class="nav-tab px-4 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-600 hover:bg-slate-100 border border-transparent transition flex items-center gap-2 whitespace-nowrap">
+        <span>🧪</span> <span data-i18n="tabFertilizer">Fertilizer & Soil Doctor</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- MAIN CONTENT CONTAINER -->
+  <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-8">
+
+    <!-- ==================== TAB 1: CROP SOWING ADVISOR ==================== -->
+    <div id="advisorTabContent" class="space-y-8">
+
+      <!-- HERO INTRODUCTION -->
+      <div class="bg-gradient-to-r from-emerald-900 via-brand-800 to-green-950 text-white rounded-2xl p-6 sm:p-8 shadow-lg relative overflow-hidden">
+        <div class="relative z-10 max-w-3xl">
+          <h2 class="text-2xl sm:text-3xl font-extrabold mb-2" data-i18n="heroTitle">What Should You Sow This Season?</h2>
+          <p class="text-emerald-100 text-sm sm:text-base leading-relaxed" data-i18n="heroDesc">
+            Make confident, high-yield planting decisions. Tell us about your soil, season, and irrigation, and AgriAssist will rank the most profitable, climate-resilient crops with exact fertilizer bags, cost estimates, and stage-wise agronomic guidance.
+          </p>
+        </div>
+        <!-- Decorative background glow -->
+        <div class="absolute -right-16 -bottom-16 w-64 h-64 bg-emerald-500/20 rounded-full blur-3xl pointer-events-none"></div>
+      </div>
+
+      <!-- DECISION INPUT FORM -->
+      <section class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 sm:p-8">
+        <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-100 pb-5 mb-6">
+          <div>
+            <h3 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+              <span>📋</span> <span data-i18n="formTitle">Enter Your Farming Parameters</span>
+            </h3>
+            <p class="text-xs text-slate-500" data-i18n="formSubtitle">Provide field conditions to calculate matching crop suitability, fertilizer bags, and profit</p>
+          </div>
+
+          <!-- Mode Toggle (Simple vs Advanced) -->
+          <div class="flex items-center bg-slate-100 p-1 rounded-xl text-xs font-semibold">
+            <button id="modeSimpleBtn" type="button" class="px-3.5 py-1.5 rounded-lg transition-all bg-white text-brand-800 shadow-sm">
+              🌿 <span data-i18n="modeSimple">Simple / Quick Mode</span>
+            </button>
+            <button id="modeAdvancedBtn" type="button" class="px-3.5 py-1.5 rounded-lg transition-all text-slate-600 hover:text-slate-900">
+              🔬 <span data-i18n="modeAdvanced">Advanced (Lab Soil Card)</span>
+            </button>
+          </div>
+        </div>
+
+        <form id="recommendForm" class="space-y-6">
+          <!-- QUICK PARAMETERS GRID -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+            <!-- 1. SOIL TYPE -->
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2" for="soilTypeSelect">
+                1. <span data-i18n="labelSoilType">Soil Type</span> <span class="text-rose-500">*</span>
+              </label>
+              <div class="relative">
+                <select id="soilTypeSelect" class="w-full bg-slate-50 border border-slate-300 text-slate-900 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition cursor-pointer">
+                  <option value="Black Soil (Regur)">Black Soil (Regur / काली मिट्टी)</option>
+                  <option value="Alluvial Soil">Alluvial Soil (जलोढ़ मिट्टी)</option>
+                  <option value="Red Soil">Red Soil (लाल मिट्टी)</option>
+                  <option value="Sandy Loam Soil">Sandy Loam Soil (बलुई दोमट)</option>
+                  <option value="Clay Loam Soil">Clay Loam Soil (चिकनी दोमट)</option>
+                  <option value="Laterite Soil">Laterite Soil (लेटराइट मिट्टी)</option>
+                </select>
+              </div>
+              <p id="soilTypeHint" class="text-xs text-slate-500 mt-1.5 italic">High moisture retention, ideal for cotton & pulses.</p>
+            </div>
+
+            <!-- 2. SEASON -->
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2" for="seasonSelect">
+                2. <span data-i18n="labelSeason">Sowing Season</span> <span class="text-rose-500">*</span>
+              </label>
+              <div class="relative">
+                <select id="seasonSelect" class="w-full bg-slate-50 border border-slate-300 text-slate-900 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition cursor-pointer">
+                  <option value="Kharif">Kharif (Monsoon / June - July)</option>
+                  <option value="Rabi">Rabi (Winter / Oct - Nov)</option>
+                  <option value="Zaid">Zaid (Summer / March - April)</option>
+                  <option value="All Season / Flexible">All Season / Flexible</option>
+                </select>
+              </div>
+              <p id="seasonHint" class="text-xs text-slate-500 mt-1.5 italic">Onset of South-West monsoon. Warm and humid.</p>
+            </div>
+
+            <!-- 3. WATER & IRRIGATION -->
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2" for="waterSelect">
+                3. <span data-i18n="labelWater">Water Availability</span> <span class="text-rose-500">*</span>
+              </label>
+              <div class="relative">
+                <select id="waterSelect" class="w-full bg-slate-50 border border-slate-300 text-slate-900 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition cursor-pointer">
+                  <option value="Moderate (Canal / Tube-well / Seasonal)">Moderate (Canal / Borewell / 2-4 Irrigations)</option>
+                  <option value="Low (Rainfed / Drought-prone)">Low (Rainfed / Drought-prone / No assured water)</option>
+                  <option value="High (Assured Irrigation / River / Drip)">High (Assured Irrigation / Perennial / Drip)</option>
+                </select>
+              </div>
+              <p id="waterHint" class="text-xs text-slate-500 mt-1.5 italic">Adequate for standard seasonal cereal & pulse crops.</p>
+            </div>
+
+          </div>
+
+          <!-- SECONDARY PARAMETERS GRID -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-2 border-t border-slate-100">
+            <!-- Land Size -->
+            <div>
+              <label class="block text-xs font-semibold text-slate-700 mb-1.5" for="landSizeInput">
+                <span data-i18n="labelLandSize">Land Area (Acres)</span>
+              </label>
+              <div class="flex items-center">
+                <input id="landSizeInput" type="number" step="0.5" min="0.25" max="500" value="2.0" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-brand-500 outline-none">
+                <span class="ml-2 text-xs font-bold text-slate-500">Acres</span>
+              </div>
+            </div>
+
+            <!-- Land Topography -->
+            <div>
+              <label class="block text-xs font-semibold text-slate-700 mb-1.5" for="landTypeSelect">
+                <span data-i18n="labelTopography">Land Topography</span>
+              </label>
+              <select id="landTypeSelect" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-brand-500 outline-none">
+                <option value="Plain">Plain Flat Land (समतल भूमि)</option>
+                <option value="Slope / Hill">Slope / Hill / Upland (ढलान / टीला)</option>
+                <option value="Lowland">Lowland / Waterlogging (जलभराव वाली भूमि)</option>
+              </select>
+            </div>
+
+            <!-- Farming Budget / Goal -->
+            <div>
+              <label class="block text-xs font-semibold text-slate-700 mb-1.5" for="budgetSelect">
+                <span data-i18n="labelGoal">Investment & Return Goal</span>
+              </label>
+              <select id="budgetSelect" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-brand-500 outline-none">
+                <option value="Balanced">Balanced (Standard Input & Reliable Return)</option>
+                <option value="Low Cost">Low Cost (Low Investment, Minimum Risk)</option>
+                <option value="Commercial / High Value">Commercial / High Value (Maximize Market Returns)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- ADVANCED SOIL & CLIMATE LAB PARAMETERS (Hidden in Simple Mode) -->
+          <div id="advancedParamsPanel" class="hidden bg-emerald-50/60 border border-emerald-200 rounded-xl p-5 space-y-4">
+            <div class="flex items-center justify-between">
+              <h4 class="text-xs font-bold uppercase tracking-wider text-emerald-900 flex items-center gap-1.5">
+                <span>🔬</span> Soil Health Card & Micro-Climate Lab Values
+              </h4>
+              <span class="text-xs text-emerald-700">Pre-filled with soil type averages; edit to customize</span>
+            </div>
+
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 text-xs">
+              <div>
+                <label class="block font-semibold text-slate-700 mb-1" for="advN">Nitrogen (N kg/ha)</label>
+                <input id="advN" type="number" class="w-full bg-white border border-slate-300 rounded-lg p-2 text-slate-900 font-mono" placeholder="180">
+              </div>
+              <div>
+                <label class="block font-semibold text-slate-700 mb-1" for="advP">Phosphorus (P kg/ha)</label>
+                <input id="advP" type="number" class="w-full bg-white border border-slate-300 rounded-lg p-2 text-slate-900 font-mono" placeholder="35">
+              </div>
+              <div>
+                <label class="block font-semibold text-slate-700 mb-1" for="advK">Potassium (K kg/ha)</label>
+                <input id="advK" type="number" class="w-full bg-white border border-slate-300 rounded-lg p-2 text-slate-900 font-mono" placeholder="320">
+              </div>
+              <div>
+                <label class="block font-semibold text-slate-700 mb-1" for="advPH">Soil pH (0-14)</label>
+                <input id="advPH" type="number" step="0.1" min="4.0" max="9.5" class="w-full bg-white border border-slate-300 rounded-lg p-2 text-slate-900 font-mono" placeholder="7.8">
+              </div>
+              <div>
+                <label class="block font-semibold text-slate-700 mb-1" for="advTemp">Temperature (°C)</label>
+                <input id="advTemp" type="number" step="0.5" class="w-full bg-white border border-slate-300 rounded-lg p-2 text-slate-900 font-mono" placeholder="28">
+              </div>
+              <div>
+                <label class="block font-semibold text-slate-700 mb-1" for="advRain">Rainfall (mm)</label>
+                <input id="advRain" type="number" class="w-full bg-white border border-slate-300 rounded-lg p-2 text-slate-900 font-mono" placeholder="800">
+              </div>
+            </div>
+          </div>
+
+          <!-- SUBMIT ACTION BUTTONS -->
+          <div class="pt-2 flex flex-wrap items-center gap-3">
+            <button id="submitBtn" type="submit" class="px-8 py-3.5 bg-brand-600 hover:bg-brand-700 active:bg-brand-800 text-white font-bold text-sm sm:text-base rounded-xl shadow-md hover:shadow-lg transition-all flex items-center justify-center space-x-2">
+              <span>🌾</span>
+              <span data-i18n="btnGetRecommendations">Get Crop Recommendations</span>
+              <span id="btnSpinner" class="hidden animate-spin ml-2">⏳</span>
+            </button>
+            <button id="printReportBtn" type="button" class="px-5 py-3.5 bg-white hover:bg-slate-100 text-slate-700 font-bold text-sm rounded-xl border border-slate-300 transition flex items-center space-x-1.5 shadow-sm">
+              <span>📄</span>
+              <span data-i18n="btnPrintAdvisory">Download / Print Advisory</span>
+            </button>
+          </div>
+        </form>
+      </section>
+
+      <!-- RECOMMENDATION RESULTS SECTION -->
+      <section id="resultsSection" class="space-y-6">
+
+        <!-- SOIL PROFILE SUMMARY BAR -->
+        <div id="soilSummaryBar" class="bg-white border border-slate-200 rounded-xl p-4 shadow-sm flex flex-wrap items-center justify-between gap-4 text-xs">
+          <div class="flex items-center space-x-3">
+            <div class="w-10 h-10 rounded-xl bg-brand-100 text-brand-800 flex items-center justify-center font-bold text-lg">
+              🌱
+            </div>
+            <div>
+              <div class="font-bold text-slate-900 text-sm" id="summarySoilTitle">Black Soil (Regur) Profile</div>
+              <div class="text-slate-500" id="summarySoilDesc">Clay-rich volcanic soil with high water retention</div>
+            </div>
+          </div>
+          <div class="flex flex-wrap items-center gap-2">
+            <span id="summaryNPKBadge" class="bg-slate-100 text-slate-700 font-mono px-2.5 py-1 rounded-lg border border-slate-200">
+              N: 180 | P: 35 | K: 320 kg/ha
+            </span>
+            <span id="summaryPHBadge" class="bg-emerald-100 text-emerald-800 font-mono px-2.5 py-1 rounded-lg border border-emerald-200">
+              pH: 7.8 (Optimal)
+            </span>
+            <span id="summaryDrainageBadge" class="bg-blue-50 text-blue-700 px-2.5 py-1 rounded-lg border border-blue-200">
+              Drainage: High water retention
+            </span>
+          </div>
+        </div>
+
+        <!-- FILTER & SEARCH CONTROLS -->
+        <div class="flex flex-wrap items-center justify-between gap-4 no-print">
+          <!-- Category Filter Chips -->
+          <div class="flex flex-wrap items-center gap-1.5" id="categoryChips">
+            <button class="cat-chip active px-3 py-1.5 rounded-xl text-xs font-semibold transition bg-brand-700 text-white shadow-sm" data-category="All">
+              All Crops (<span id="totalCropsCount">0</span>)
+            </button>
+            <button class="cat-chip px-3 py-1.5 rounded-xl text-xs font-semibold transition bg-white text-slate-700 hover:bg-slate-100 border border-slate-200" data-category="Cereal">
+              Cereals
+            </button>
+            <button class="cat-chip px-3 py-1.5 rounded-xl text-xs font-semibold transition bg-white text-slate-700 hover:bg-slate-100 border border-slate-200" data-category="Pulse">
+              Pulses (दालें)
+            </button>
+            <button class="cat-chip px-3 py-1.5 rounded-xl text-xs font-semibold transition bg-white text-slate-700 hover:bg-slate-100 border border-slate-200" data-category="Oilseed">
+              Oilseeds (तिलहन)
+            </button>
+            <button class="cat-chip px-3 py-1.5 rounded-xl text-xs font-semibold transition bg-white text-slate-700 hover:bg-slate-100 border border-slate-200" data-category="Fiber">
+              Fiber (कपास/जूट)
+            </button>
+            <button class="cat-chip px-3 py-1.5 rounded-xl text-xs font-semibold transition bg-white text-slate-700 hover:bg-slate-100 border border-slate-200" data-category="Vegetable">
+              Vegetables
+            </button>
+            <button class="cat-chip px-3 py-1.5 rounded-xl text-xs font-semibold transition bg-white text-slate-700 hover:bg-slate-100 border border-slate-200" data-category="Spices">
+              Spices
+            </button>
+          </div>
+
+          <!-- Search Input -->
+          <div class="w-full sm:w-64 relative">
+            <input id="cropSearchInput" type="text" placeholder="Search crops (e.g. Wheat, Chana)..." class="w-full bg-white border border-slate-300 rounded-xl pl-9 pr-3 py-1.5 text-xs text-slate-800 placeholder-slate-400 focus:ring-2 focus:ring-brand-500 outline-none">
+            <span class="absolute left-3 top-2 text-slate-400 text-xs">🔍</span>
+          </div>
+        </div>
+
+        <!-- TOP PICK SPOTLIGHT BANNER -->
+        <div id="topPickCard" class="hidden bg-gradient-to-r from-emerald-50 via-teal-50 to-green-50 border-2 border-emerald-400 rounded-2xl p-5 sm:p-6 shadow-sm">
+          <!-- Populated via JavaScript -->
+        </div>
+
+        <!-- CROP RECOMMENDATIONS GRID -->
+        <div id="cropsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- Cards dynamically injected via app.js -->
+        </div>
+
+        <!-- NO RESULTS FOUND -->
+        <div id="noResultsState" class="hidden text-center py-12 bg-white rounded-2xl border border-slate-200">
+          <div class="text-4xl mb-2">🔍</div>
+          <h4 class="font-bold text-slate-800 text-base" data-i18n="noResults">No matching crops found</h4>
+          <p class="text-xs text-slate-500 mt-1">Try selecting 'All' categories or modifying your search query.</p>
+        </div>
+
+      </section>
+
     </div>
 
-    <!-- DECISION INPUT FORM -->
-    <section class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 sm:p-8">
-      <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-100 pb-5 mb-6">
-        <div>
-          <h3 class="text-lg font-bold text-slate-900 flex items-center gap-2">
-            <span>📋</span> Enter Your Farming Parameters
-          </h3>
-          <p class="text-xs text-slate-500">Provide field conditions to calculate matching crop suitability</p>
-        </div>
-
-        <!-- Mode Toggle (Simple vs Advanced) -->
-        <div class="flex items-center bg-slate-100 p-1 rounded-xl text-xs font-semibold">
-          <button id="modeSimpleBtn" type="button" class="px-3.5 py-1.5 rounded-lg transition-all bg-white text-brand-800 shadow-sm">
-            🌿 Simple / Quick Mode
-          </button>
-          <button id="modeAdvancedBtn" type="button" class="px-3.5 py-1.5 rounded-lg transition-all text-slate-600 hover:text-slate-900">
-            🔬 Advanced (Lab Soil Card)
-          </button>
-        </div>
+    <!-- ==================== TAB 2: 1-YEAR ROTATION PLANNER ==================== -->
+    <div id="rotationTabContent" class="hidden space-y-8">
+      <div class="bg-gradient-to-r from-emerald-800 via-teal-900 to-slate-900 text-white rounded-2xl p-6 sm:p-8 shadow-lg">
+        <h2 class="text-2xl sm:text-3xl font-extrabold mb-2">🔄 1-Year Multi-Crop Rotation & Sequencing Planner</h2>
+        <p class="text-emerald-100 text-sm sm:text-base leading-relaxed">
+          Design sustainable 3-season annual crop cycles (Kharif → Rabi → Zaid). Integrate nitrogen-fixing pulses to revitalize your soil, disrupt pest cycles, and maximize total annual farm income.
+        </p>
       </div>
 
-      <form id="recommendForm" class="space-y-6">
-        <!-- QUICK PARAMETERS GRID -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-
-          <!-- 1. SOIL TYPE -->
+      <!-- Rotation Config Card -->
+      <section class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 space-y-4">
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
           <div>
-            <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2" for="soilTypeSelect">
-              1. Soil Type (मिट्टी का प्रकार) <span class="text-rose-500">*</span>
-            </label>
-            <div class="relative">
-              <select id="soilTypeSelect" class="w-full bg-slate-50 border border-slate-300 text-slate-900 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition cursor-pointer">
-                <!-- Dynamically populated from metadata -->
-                <option value="Black Soil (Regur)">Black Soil (Regur / काली मिट्टी)</option>
-                <option value="Alluvial Soil">Alluvial Soil (जलोढ़ मिट्टी)</option>
-                <option value="Red Soil">Red Soil (लाल मिट्टी)</option>
-                <option value="Sandy Loam Soil">Sandy Loam Soil (बलुई दोमट)</option>
-                <option value="Clay Loam Soil">Clay Loam Soil (चिकनी दोमट)</option>
-                <option value="Laterite Soil">Laterite Soil (लेटराइट मिट्टी)</option>
-              </select>
-            </div>
-            <p id="soilTypeHint" class="text-xs text-slate-500 mt-1.5 italic">High moisture retention, ideal for cotton & pulses.</p>
-          </div>
-
-          <!-- 2. SEASON -->
-          <div>
-            <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2" for="seasonSelect">
-              2. Sowing Season (बुवाई का मौसम) <span class="text-rose-500">*</span>
-            </label>
-            <div class="relative">
-              <select id="seasonSelect" class="w-full bg-slate-50 border border-slate-300 text-slate-900 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition cursor-pointer">
-                <option value="Kharif">Kharif (Monsoon / June - July)</option>
-                <option value="Rabi">Rabi (Winter / Oct - Nov)</option>
-                <option value="Zaid">Zaid (Summer / March - April)</option>
-                <option value="All Season / Flexible">All Season / Flexible</option>
-              </select>
-            </div>
-            <p id="seasonHint" class="text-xs text-slate-500 mt-1.5 italic">Onset of South-West monsoon. Warm and humid.</p>
-          </div>
-
-          <!-- 3. WATER & IRRIGATION -->
-          <div>
-            <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2" for="waterSelect">
-              3. Water Availability (सिंचाई सुविधा) <span class="text-rose-500">*</span>
-            </label>
-            <div class="relative">
-              <select id="waterSelect" class="w-full bg-slate-50 border border-slate-300 text-slate-900 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition cursor-pointer">
-                <option value="Moderate (Canal / Tube-well / Seasonal)">Moderate (Canal / Borewell / 2-4 Irrigations)</option>
-                <option value="Low (Rainfed / Drought-prone)">Low (Rainfed / Drought-prone / No assured water)</option>
-                <option value="High (Assured Irrigation / River / Drip)">High (Assured Irrigation / Perennial / Drip)</option>
-              </select>
-            </div>
-            <p id="waterHint" class="text-xs text-slate-500 mt-1.5 italic">Adequate for standard seasonal cereal & pulse crops.</p>
-          </div>
-
-        </div>
-
-        <!-- SECONDARY PARAMETERS GRID -->
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-2 border-t border-slate-100">
-          <!-- Land Size -->
-          <div>
-            <label class="block text-xs font-semibold text-slate-700 mb-1.5" for="landSizeInput">
-              Land Area (भूमि का रकबा)
-            </label>
-            <div class="flex items-center">
-              <input id="landSizeInput" type="number" step="0.5" min="0.25" max="500" value="2.0" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-brand-500 outline-none">
-              <span class="ml-2 text-xs font-bold text-slate-500">Acres</span>
-            </div>
-          </div>
-
-          <!-- Land Topography -->
-          <div>
-            <label class="block text-xs font-semibold text-slate-700 mb-1.5" for="landTypeSelect">
-              Land Topography (जमीन का ढलान)
-            </label>
-            <select id="landTypeSelect" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-brand-500 outline-none">
-              <option value="Plain">Plain Flat Land (समतल भूमि)</option>
-              <option value="Slope / Hill">Slope / Hill / Upland (ढलान / टीला)</option>
-              <option value="Lowland">Lowland / Waterlogging (जलभराव वाली भूमि)</option>
+            <label class="block font-bold text-slate-700 mb-1" for="rotSoilSelect">Soil Type</label>
+            <select id="rotSoilSelect" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-sm">
+              <option value="Alluvial Soil">Alluvial Soil</option>
+              <option value="Black Soil (Regur)">Black Soil (Regur)</option>
+              <option value="Red Soil">Red Soil</option>
+              <option value="Sandy Loam Soil">Sandy Loam Soil</option>
+              <option value="Clay Loam Soil">Clay Loam Soil</option>
+              <option value="Laterite Soil">Laterite Soil</option>
             </select>
           </div>
-
-          <!-- Farming Budget / Goal -->
           <div>
-            <label class="block text-xs font-semibold text-slate-700 mb-1.5" for="budgetSelect">
-              Investment & Return Goal (खेती का उद्देश्य)
-            </label>
-            <select id="budgetSelect" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-brand-500 outline-none">
-              <option value="Balanced">Balanced (Standard Input & Reliable Return)</option>
-              <option value="Low Cost">Low Cost (Low Investment, Minimum Risk)</option>
-              <option value="Commercial / High Value">Commercial / High Value (Maximize Market Returns)</option>
+            <label class="block font-bold text-slate-700 mb-1" for="rotWaterSelect">Water Availability</label>
+            <select id="rotWaterSelect" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-sm">
+              <option value="Moderate (Canal / Tube-well / Seasonal)">Moderate (Canal / Tube-well)</option>
+              <option value="Low (Rainfed / Drought-prone)">Low (Rainfed / Drought-prone)</option>
+              <option value="High (Assured Irrigation / River / Drip)">High (Assured Irrigation / Drip)</option>
             </select>
           </div>
-        </div>
-
-        <!-- ADVANCED SOIL & CLIMATE LAB PARAMETERS (Hidden in Simple Mode) -->
-        <div id="advancedParamsPanel" class="hidden bg-emerald-50/60 border border-emerald-200 rounded-xl p-5 space-y-4">
-          <div class="flex items-center justify-between">
-            <h4 class="text-xs font-bold uppercase tracking-wider text-emerald-900 flex items-center gap-1.5">
-              <span>🔬</span> Soil Health Card & Micro-Climate Lab Values
-            </h4>
-            <span class="text-xs text-emerald-700">Pre-filled with soil type averages; edit to customize</span>
-          </div>
-
-          <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 text-xs">
-            <div>
-              <label class="block font-semibold text-slate-700 mb-1" for="advN">Nitrogen (N kg/ha)</label>
-              <input id="advN" type="number" class="w-full bg-white border border-slate-300 rounded-lg p-2 text-slate-900 font-mono" placeholder="180">
-            </div>
-            <div>
-              <label class="block font-semibold text-slate-700 mb-1" for="advP">Phosphorus (P kg/ha)</label>
-              <input id="advP" type="number" class="w-full bg-white border border-slate-300 rounded-lg p-2 text-slate-900 font-mono" placeholder="35">
-            </div>
-            <div>
-              <label class="block font-semibold text-slate-700 mb-1" for="advK">Potassium (K kg/ha)</label>
-              <input id="advK" type="number" class="w-full bg-white border border-slate-300 rounded-lg p-2 text-slate-900 font-mono" placeholder="320">
-            </div>
-            <div>
-              <label class="block font-semibold text-slate-700 mb-1" for="advPH">Soil pH (0-14)</label>
-              <input id="advPH" type="number" step="0.1" min="4.0" max="9.5" class="w-full bg-white border border-slate-300 rounded-lg p-2 text-slate-900 font-mono" placeholder="7.8">
-            </div>
-            <div>
-              <label class="block font-semibold text-slate-700 mb-1" for="advTemp">Temperature (°C)</label>
-              <input id="advTemp" type="number" step="0.5" class="w-full bg-white border border-slate-300 rounded-lg p-2 text-slate-900 font-mono" placeholder="28">
-            </div>
-            <div>
-              <label class="block font-semibold text-slate-700 mb-1" for="advRain">Rainfall (mm)</label>
-              <input id="advRain" type="number" class="w-full bg-white border border-slate-300 rounded-lg p-2 text-slate-900 font-mono" placeholder="800">
-            </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="rotLandInput">Land Size (Acres)</label>
+            <input id="rotLandInput" type="number" step="0.5" value="2.0" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-sm">
           </div>
         </div>
+        <button id="generateRotationBtn" type="button" class="px-6 py-2.5 bg-brand-700 hover:bg-brand-800 text-white font-bold text-xs sm:text-sm rounded-xl shadow-sm transition">
+          Generate 1-Year Rotation Plans 🔄
+        </button>
+      </section>
 
-        <!-- SUBMIT ACTION BUTTON -->
-        <div class="pt-2">
-          <button id="submitBtn" type="submit" class="w-full sm:w-auto px-8 py-3.5 bg-brand-600 hover:bg-brand-700 active:bg-brand-800 text-white font-bold text-sm sm:text-base rounded-xl shadow-md hover:shadow-lg transition-all flex items-center justify-center space-x-2">
-            <span>🌾</span>
-            <span>Get Crop Recommendations (फसल सुझाव प्राप्त करें)</span>
-            <span id="btnSpinner" class="hidden animate-spin ml-2">⏳</span>
-          </button>
-        </div>
-      </form>
-    </section>
+      <!-- Rotation Plans Output Container -->
+      <div id="rotationPlansContainer" class="space-y-6">
+        <!-- Rendered by app.js -->
+      </div>
+    </div>
 
-    <!-- RECOMMENDATION RESULTS SECTION (Hidden initially until first query) -->
-    <section id="resultsSection" class="space-y-6">
+    <!-- ==================== TAB 3: FERTILIZER & SOIL DOCTOR ==================== -->
+    <div id="fertilizerTabContent" class="hidden space-y-8">
+      <div class="bg-gradient-to-r from-teal-900 via-emerald-900 to-slate-900 text-white rounded-2xl p-6 sm:p-8 shadow-lg">
+        <h2 class="text-2xl sm:text-3xl font-extrabold mb-2">🧪 Fertilizer Prescription & Soil Health Doctor</h2>
+        <p class="text-emerald-100 text-sm sm:text-base leading-relaxed">
+          Stoichiometric commercial fertilizer calculator. Calculate exact 50 kg bags of Urea, DAP, and MOP tailored to your soil test card, plus Agricultural Lime or Gypsum dosages for pH correction.
+        </p>
+      </div>
 
-      <!-- SOIL PROFILE SUMMARY BAR -->
-      <div id="soilSummaryBar" class="bg-white border border-slate-200 rounded-xl p-4 shadow-sm flex flex-wrap items-center justify-between gap-4 text-xs">
-        <div class="flex items-center space-x-3">
-          <div class="w-10 h-10 rounded-xl bg-brand-100 text-brand-800 flex items-center justify-center font-bold text-lg">
-            🌱
+      <section class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 sm:p-8 space-y-6">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 text-xs">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="fertCropSelect">Target Crop</label>
+            <select id="fertCropSelect" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-sm">
+              <option value="wheat">Wheat (गेहूं)</option>
+              <option value="rice">Rice / Paddy (धान)</option>
+              <option value="cotton">Cotton (कपास)</option>
+              <option value="maize">Maize (मक्का)</option>
+              <option value="mustard">Mustard (सरसों)</option>
+              <option value="chickpea">Chickpea (चना)</option>
+              <option value="sugarcane">Sugarcane (गन्ना)</option>
+              <option value="potato">Potato (आलू)</option>
+              <option value="soybean">Soybean (सोयाबीन)</option>
+            </select>
           </div>
           <div>
-            <div class="font-bold text-slate-900 text-sm" id="summarySoilTitle">Black Soil (Regur) Profile</div>
-            <div class="text-slate-500" id="summarySoilDesc">Clay-rich volcanic soil with high water retention</div>
+            <label class="block font-bold text-slate-700 mb-1" for="fertSoilN">Soil Nitrogen (N kg/ha)</label>
+            <input id="fertSoilN" type="number" value="140" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-sm font-mono">
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="fertSoilP">Soil Phosphorus (P kg/ha)</label>
+            <input id="fertSoilP" type="number" value="25" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-sm font-mono">
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="fertSoilK">Soil Potassium (K kg/ha)</label>
+            <input id="fertSoilK" type="number" value="180" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-sm font-mono">
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="fertSoilPH">Soil pH</label>
+            <input id="fertSoilPH" type="number" step="0.1" value="7.2" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-sm font-mono">
           </div>
         </div>
-        <div class="flex flex-wrap items-center gap-2">
-          <span id="summaryNPKBadge" class="bg-slate-100 text-slate-700 font-mono px-2.5 py-1 rounded-lg border border-slate-200">
-            N: 180 | P: 35 | K: 320 kg/ha
-          </span>
-          <span id="summaryPHBadge" class="bg-emerald-100 text-emerald-800 font-mono px-2.5 py-1 rounded-lg border border-emerald-200">
-            pH: 7.8 (Optimal)
-          </span>
-          <span id="summaryDrainageBadge" class="bg-blue-50 text-blue-700 px-2.5 py-1 rounded-lg border border-blue-200">
-            Drainage: High water retention
-          </span>
-        </div>
-      </div>
 
-      <!-- FILTER & SEARCH CONTROLS -->
-      <div class="flex flex-wrap items-center justify-between gap-4">
-        <!-- Category Filter Chips -->
-        <div class="flex flex-wrap items-center gap-1.5" id="categoryChips">
-          <button class="cat-chip active px-3 py-1.5 rounded-xl text-xs font-semibold transition bg-brand-700 text-white shadow-sm" data-category="All">
-            All Crops (<span id="totalCropsCount">0</span>)
-          </button>
-          <button class="cat-chip px-3 py-1.5 rounded-xl text-xs font-semibold transition bg-white text-slate-700 hover:bg-slate-100 border border-slate-200" data-category="Cereal">
-            Cereals
-          </button>
-          <button class="cat-chip px-3 py-1.5 rounded-xl text-xs font-semibold transition bg-white text-slate-700 hover:bg-slate-100 border border-slate-200" data-category="Pulse">
-            Pulses (दालें)
-          </button>
-          <button class="cat-chip px-3 py-1.5 rounded-xl text-xs font-semibold transition bg-white text-slate-700 hover:bg-slate-100 border border-slate-200" data-category="Oilseed">
-            Oilseeds (तिलहन)
-          </button>
-          <button class="cat-chip px-3 py-1.5 rounded-xl text-xs font-semibold transition bg-white text-slate-700 hover:bg-slate-100 border border-slate-200" data-category="Fiber">
-            Fiber (कपास/जूट)
-          </button>
-          <button class="cat-chip px-3 py-1.5 rounded-xl text-xs font-semibold transition bg-white text-slate-700 hover:bg-slate-100 border border-slate-200" data-category="Vegetable">
-            Vegetables
-          </button>
-          <button class="cat-chip px-3 py-1.5 rounded-xl text-xs font-semibold transition bg-white text-slate-700 hover:bg-slate-100 border border-slate-200" data-category="Spices">
-            Spices
+        <div class="flex items-center gap-4">
+          <div class="w-32 text-xs">
+            <label class="block font-bold text-slate-700 mb-1" for="fertLandAcres">Land Area (Acres)</label>
+            <input id="fertLandAcres" type="number" step="0.5" value="2.0" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-sm font-bold">
+          </div>
+          <button id="calcFertilizerBtn" type="button" class="mt-5 px-6 py-2.5 bg-brand-700 hover:bg-brand-800 text-white font-bold text-sm rounded-xl shadow-sm transition">
+            Calculate Fertilizer Prescription 🧪
           </button>
         </div>
 
-        <!-- Search Input -->
-        <div class="w-full sm:w-64 relative">
-          <input id="cropSearchInput" type="text" placeholder="Search crops (e.g. Wheat, Chana)..." class="w-full bg-white border border-slate-300 rounded-xl pl-9 pr-3 py-1.5 text-xs text-slate-800 placeholder-slate-400 focus:ring-2 focus:ring-brand-500 outline-none">
-          <span class="absolute left-3 top-2 text-slate-400 text-xs">🔍</span>
+        <!-- Prescription Results Card -->
+        <div id="fertPrescriptionResult" class="hidden pt-6 border-t border-slate-200">
+          <!-- Populated by app.js -->
         </div>
-      </div>
-
-      <!-- TOP PICK SPOTLIGHT BANNER -->
-      <div id="topPickCard" class="hidden bg-gradient-to-r from-emerald-50 via-teal-50 to-green-50 border-2 border-emerald-400 rounded-2xl p-5 sm:p-6 shadow-sm">
-        <!-- Populated via JavaScript -->
-      </div>
-
-      <!-- CROP RECOMMENDATIONS GRID -->
-      <div id="cropsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <!-- Cards dynamically injected via app.js -->
-      </div>
-
-      <!-- NO RESULTS FOUND -->
-      <div id="noResultsState" class="hidden text-center py-12 bg-white rounded-2xl border border-slate-200">
-        <div class="text-4xl mb-2">🔍</div>
-        <h4 class="font-bold text-slate-800 text-base">No matching crops found</h4>
-        <p class="text-xs text-slate-500 mt-1">Try selecting 'All' categories or modifying your search query.</p>
-      </div>
-
-    </section>
+      </section>
+    </div>
 
   </main>
 
   <!-- FLOATING COMPARISON BAR (Shows when crops are checked for comparison) -->
-  <div id="compareBar" class="hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 border-t border-slate-200 compare-bar px-4 py-3">
+  <div id="compareBar" class="hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 border-t border-slate-200 compare-bar px-4 py-3 no-print">
     <div class="max-w-7xl mx-auto flex items-center justify-between">
       <div class="flex items-center space-x-3 text-xs">
         <span class="font-bold text-slate-900">Compare Selected Crops (<span id="compareCount">0</span>/3):</span>
@@ -336,7 +504,7 @@
   </div>
 
   <!-- COMPARISON MODAL -->
-  <div id="compareModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 modal-backdrop">
+  <div id="compareModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 modal-backdrop no-print">
     <div class="bg-white w-full max-w-5xl rounded-2xl shadow-2xl overflow-hidden max-h-[90vh] flex flex-col">
       <div class="bg-brand-800 text-white px-6 py-4 flex items-center justify-between">
         <h3 class="font-bold text-base flex items-center gap-2">
@@ -351,7 +519,7 @@
   </div>
 
   <!-- FOOTER -->
-  <footer class="bg-white border-t border-slate-200 text-slate-500 text-xs py-6 mt-12">
+  <footer class="bg-white border-t border-slate-200 text-slate-500 text-xs py-6 mt-12 no-print">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-wrap items-center justify-between gap-4">
       <div class="flex items-center space-x-2">
         <span class="font-black text-brand-800 text-sm">🌾 AgriAssist</span>
