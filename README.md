@@ -1,34 +1,46 @@
 # AgriAssist Frontend
 
-A clean, responsive, farmer-oriented web application for deciding what crops to sow based on soil type, seasonal calendars, irrigation availability, and agronomic benchmarks.
+A clean, responsive, farmer-oriented web application for deciding what crops to sow, planning 1-year multi-crop rotations, calculating fertilizer prescriptions, and diagnosing soil health.
 
-## Features
-- **Dual Mode Input**:
-  - **Quick / Simple Mode**: One-click selection of soil types, seasons, and water availability with visual guides.
-  - **Advanced Soil Lab Mode**: Input exact Soil Health Card parameters (N, P, K in kg/ha, pH, temperature, and rainfall).
-- **Match Scoring**: Visual percentage compatibility scores (0–100%) with categorized badges.
-- **Actionable Agronomic Advice**: Expandable cards with seed treatments, sowing depth, fertilizer schedules, risk management, and companion intercrops.
-- **Filter & Search**: Search by crop name (English and Hindi) or filter by categories (Cereals, Pulses, Oilseeds, Fiber, Vegetables, Spices).
-- **Side-by-Side Comparison**: Select up to 3 crops to compare duration, water need, yield, and profit in an interactive modal.
-- **Offline Resilient**: Connects to the FastAPI backend on `http://localhost:4343/api`, with built-in fallback calculation if the backend is not yet started.
+## Key Features
+- **🌾 Crop Sowing Advisor**:
+  - **Live Weather & Geolocation**: Auto-detect temperature, humidity, and 7-day rainfall forecast via Open-Meteo with sowing readiness alerts.
+  - **Financial & MSP Calculator**: Project net profit (₹/acre), cultivation costs, expected yield, and ROI % based on Indian MSP rates.
+  - **Fertilizer Prescriber**: Exact 50 kg bags of Urea, DAP, and MOP required.
+  - **Voice Readout (TTS)**: Listen to agronomic recommendations aloud in English or Hindi.
+  - **Bilingual UI**: One-click toggle between English and Hindi (हिंदी).
+  - **4-Stage Growth Timeline**: Milestone-wise activities and IPM pest/disease alerts.
+  - **Side-by-Side Comparison**: Compare up to 3 crops simultaneously.
+  - **Share & Print**: One-click printable Farmer Advisory Sheet (PDF) and WhatsApp sharing.
+- **🔄 1-Year Rotation Planner**:
+  - Designs 3-season annual crop cycles (Kharif → Rabi → Zaid).
+  - Calculates annual net profit and Soil Health Index (nitrogen-fixing benefits and pest disruption).
+- **🧪 Fertilizer & Soil Doctor**:
+  - Dedicated stoichiometric calculator for Urea, DAP, MOP, plus Agricultural Lime or Gypsum dosages.
+- **📱 PWA & 100% Offline Resilient**:
+  - Service Worker (`sw.js`) and PWA `manifest.json`.
+  - Complete 28-crop local database and offline recommendation engine if the backend is not yet started.
 
 ## How to Run
 
-### Option 1: Using any browser directly
-Double-click `src/index.html` or open it directly in Google Chrome, Microsoft Edge, or Firefox.
+### Option 1: Direct in Browser
+Open `src/index.html` directly in any web browser.
 
-### Option 2: Using Node / npx
-```bash
-npm start
-```
-Or:
-```bash
-npx serve src -l 3434
-```
-Open [http://localhost:3434](http://localhost:3434) in your browser.
-
-### Option 3: Using Python built-in server
+### Option 2: Using Python built-in server
 ```bash
 python -m http.server 3434 --directory src
 ```
 Open [http://localhost:3434](http://localhost:3434) in your browser.
+
+### Option 3: Using Node / npx
+```bash
+npx serve src -l 3434
+```
+
+### Option 4: Full Stack with Docker
+```bash
+# From the project root:
+docker compose up --build
+```
+- Frontend: [http://localhost:3434](http://localhost:3434)
+- Backend: [http://localhost:4343](http://localhost:4343)
