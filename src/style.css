@@ -63,13 +63,13 @@ body {
 
 /* Audio Playing Pulse Animation */
 @keyframes audioPulse {
-  0% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.15); opacity: 0.8; }
-  100% { transform: scale(1); opacity: 1; }
+  0% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.6); }
+  70% { box-shadow: 0 0 0 6px rgba(34, 197, 94, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
 }
 
 .audio-speaking {
-  animation: audioPulse 1.2s infinite ease-in-out;
+  animation: audioPulse 1.4s infinite ease-in-out;
   background-color: #dcfce7 !important;
   color: #166534 !important;
   border-color: #22c55e !important;
@@ -112,16 +112,16 @@ body {
   background: #94a3b8;
 }
 
-/* PRINT STYLESHEET (Clean 1-Page A4 Advisory Sheet) */
+/* PRINT STYLESHEET (Clean A4 Farmer Advisory Sheet) */
 @media print {
-  header, footer, #compareBar, #compareModal, .no-print, button, input, select, #advancedParamsPanel, #resultsTabs {
+  header, footer, #compareBar, #compareModal, .no-print, button, input, select, #advancedParamsPanel, #resultsTabs, #weatherAlertBanner {
     display: none !important;
   }
 
   body {
     background: white !important;
     color: black !important;
-    font-size: 11pt !important;
+    font-size: 10pt !important;
     padding: 0 !important;
     margin: 0 !important;
   }
@@ -136,11 +136,12 @@ body {
     display: block !important;
   }
 
-  .crop-card {
+  #topPickCard, .crop-card {
     break-inside: avoid;
     box-shadow: none !important;
     border: 1px solid #94a3b8 !important;
     margin-bottom: 12pt !important;
+    background: white !important;
   }
 
   .card-expanded-details {
