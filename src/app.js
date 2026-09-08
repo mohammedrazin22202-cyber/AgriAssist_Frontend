@@ -197,6 +197,7 @@ const fertPrescriptionResult = document.getElementById("fertPrescriptionResult")
 document.addEventListener("DOMContentLoaded", () => {
   setupEventListeners();
   registerServiceWorker();
+  populateFertilizerCropOptions();
   checkApiHealth();
   updateSoilPresets();
   executeRecommendation();
@@ -210,6 +211,13 @@ function registerServiceWorker() {
   }
 }
 
+function populateFertilizerCropOptions() {
+  if (!fertCropSelect) return;
+  fertCropSelect.innerHTML = LOCAL_CROPS_DB.map(c => `
+    <option value="${c.id}">${c.name}${c.hindi_name ? ` (${c.hindi_name})` : ""}</option>
+  `).join("");
+}
+
 function setupEventListeners() {
   // Navigation Tabs
   tabAdvisorBtn.addEventListener("click", () => switchTab("advisor"));
@@ -218,12 +226,24 @@ function setupEventListeners() {
 
   // Weather detection
   detectWeatherBtn.addEventListener("click", detectLocationAndWeather);
+  const closeWeatherAlertBtn = document.getElementById("closeWeatherAlertBtn");
+  if (closeWeatherAlertBtn) {
+    closeWeatherAlertBtn.addEventListener("click", () => {
+      weatherAlertBanner.classList.add("hidden");
+    });
+  }
 
   // Language toggle
   langToggleBtn.addEventListener("click", toggleLanguage);
 
   // Print report
-  printReportBtn.addEventListener("click", () => window.print());
+  printReportBtn.addEventListener("click", () => {
+    const printDateEl = document.getElementById("printDateStamp");
+    if (printDateEl) {
+      printDateEl.textContent = new Date().toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" }) + " • Soil: " + soilTypeSelect.value + " • " + seasonSelect.value;
+    }
+    window.print();
+  });
 
   // Input change updates
   modeSimpleBtn.addEventListener("click", () => setMode("simple"));
@@ -250,15 +270,15 @@ function setupEventListeners() {
     filterAndRenderCrops();
   });
 
-  // Category filter chips
+  // Category filter chips with clean border toggle
   categoryChips.querySelectorAll(".cat-chip").forEach(chip => {
     chip.addEventListener("click", () => {
       categoryChips.querySelectorAll(".cat-chip").forEach(c => {
-        c.classList.remove("active", "bg-brand-700", "text-white");
-        c.classList.add("bg-white", "text-slate-700");
+        c.classList.remove("active", "bg-brand-700", "text-white", "border-brand-700");
+        c.classList.add("bg-white", "text-slate-700", "border-slate-200");
       });
-      chip.classList.add("active", "bg-brand-700", "text-white");
-      chip.classList.remove("bg-white", "text-slate-700");
+      chip.classList.add("active", "bg-brand-700", "text-white", "border-brand-700");
+      chip.classList.remove("bg-white", "text-slate-700", "border-slate-200");
       appState.activeCategory = chip.getAttribute("data-category");
       filterAndRenderCrops();
     });
@@ -271,38 +291,46 @@ function setupEventListeners() {
   compareModal.addEventListener("click", (e) => {
     if (e.target === compareModal) closeComparisonModal();
   });
+
+  // Escape key closes modal
+  window.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && !compareModal.classList.contains("hidden")) {
+      closeComparisonModal();
+    }
+  });
 }
 
 function switchTab(tab) {
   appState.activeTab = tab;
   [tabAdvisorBtn, tabRotationBtn, tabFertilizerBtn].forEach(btn => {
-    btn.classList.remove("active", "bg-brand-800", "text-white");
-    btn.classList.add("text-slate-600");
+    btn.classList.remove("active", "bg-brand-800", "text-white", "border-brand-800", "shadow-sm");
+    btn.classList.add("text-slate-600", "hover:bg-slate-100", "border-transparent");
   });
 
   advisorTabContent.classList.add("hidden");
   rotationTabContent.classList.add("hidden");
   fertilizerTabContent.classList.add("hidden");
 
-  if (tab === "advisor") {
-    tabAdvisorBtn.classList.add("active", "bg-brand-800", "text-white");
-    tabAdvisorBtn.classList.remove("text-slate-600");
-    advisorTabContent.classList.remove("hidden");
-  } else if (tab === "rotation") {
-    tabRotationBtn.classList.add("active", "bg-brand-800", "text-white");
-    tabRotationBtn.classList.remove("text-slate-600");
-    rotationTabContent.classList.remove("hidden");
+  let activeBtn = tabAdvisorBtn;
+  let activeContent = advisorTabContent;
+
+  if (tab === "rotation") {
+    activeBtn = tabRotationBtn;
+    activeContent = rotationTabContent;
     if (rotationPlansContainer.children.length === 0) {
       executeRotationPlan();
     }
   } else if (tab === "fertilizer") {
-    tabFertilizerBtn.classList.add("active", "bg-brand-800", "text-white");
-    tabFertilizerBtn.classList.remove("text-slate-600");
-    fertilizerTabContent.classList.remove("hidden");
+    activeBtn = tabFertilizerBtn;
+    activeContent = fertilizerTabContent;
     if (fertPrescriptionResult.classList.contains("hidden")) {
       executeFertilizerDoctor();
     }
   }
+
+  activeBtn.classList.add("active", "bg-brand-800", "text-white", "border-brand-800", "shadow-sm");
+  activeBtn.classList.remove("text-slate-600", "hover:bg-slate-100", "border-transparent");
+  activeContent.classList.remove("hidden");
 }
 
 function toggleLanguage() {
@@ -317,7 +345,10 @@ function toggleLanguage() {
     }
   });
 
-  // Re-render crops with new language preferences
+  // Re-render top pick and crops with new language preferences
+  if (appState.topPick) {
+    renderTopPick(appState.topPick);
+  }
   filterAndRenderCrops();
 }
 
@@ -355,6 +386,7 @@ async function fetchWeatherByCoords(lat, lon, locationLabel) {
 
     const currentTemp = Math.round(data.current?.temperature_2m || 28);
     const humidity = Math.round(data.current?.relative_humidity_2m || 65);
+    const weatherCode = data.current?.weather_code ?? 1;
     const rainForecast7Day = Math.round(
       (data.daily?.precipitation_sum || []).slice(0, 7).reduce((a, b) => a + b, 0)
     );
@@ -363,12 +395,37 @@ async function fetchWeatherByCoords(lat, lon, locationLabel) {
       location: locationLabel,
       temp: currentTemp,
       humidity: humidity,
-      rain7d: rainForecast7Day
+      rain7d: rainForecast7Day,
+      code: weatherCode
     };
 
+    // WMO Weather interpretation
+    let weatherEmoji = "⛅";
+    let weatherConditionText = "Partly Cloudy";
+    if (weatherCode === 0) {
+      weatherEmoji = "☀️";
+      weatherConditionText = "Clear & Sunny";
+    } else if ([1, 2, 3].includes(weatherCode)) {
+      weatherEmoji = "⛅";
+      weatherConditionText = "Partly Cloudy";
+    } else if ([45, 48].includes(weatherCode)) {
+      weatherEmoji = "🌫️";
+      weatherConditionText = "Foggy";
+    } else if ([51, 53, 55, 61, 63, 65, 80, 81, 82].includes(weatherCode)) {
+      weatherEmoji = "🌧️";
+      weatherConditionText = "Rain Showers";
+    } else if ([71, 73, 75, 77, 85, 86].includes(weatherCode)) {
+      weatherEmoji = "❄️";
+      weatherConditionText = "Cold / Frost";
+    } else if ([95, 96, 99].includes(weatherCode)) {
+      weatherEmoji = "⛈️";
+      weatherConditionText = "Thunderstorms";
+    }
+
     // Update UI Elements
+    document.getElementById("weatherIcon").textContent = weatherEmoji;
     document.getElementById("weatherLocationName").textContent = locationLabel;
-    document.getElementById("weatherCondition").textContent = `${currentTemp}°C • Humidity ${humidity}%`;
+    document.getElementById("weatherCondition").textContent = `${weatherConditionText} • ${currentTemp}°C`;
     document.getElementById("weatherHumidity").textContent = `${humidity}%`;
     document.getElementById("weatherForecastRain").textContent = `${rainForecast7Day} mm`;
 
@@ -385,7 +442,7 @@ async function fetchWeatherByCoords(lat, lon, locationLabel) {
     }
 
     weatherAlertBanner.classList.remove("hidden");
-    weatherBtnText.textContent = `${currentTemp}°C 📍`;
+    weatherBtnText.textContent = `${weatherEmoji} ${currentTemp}°C`;
 
     // Populate advanced fields
     advTemp.value = currentTemp;
@@ -417,7 +474,7 @@ function speakCropAdvice(cropId) {
   window.speechSynthesis.cancel();
   appState.currentlySpeakingId = cropId;
 
-  const crop = appState.recommendations.find(c => c.crop_id === cropId);
+  const crop = appState.recommendations.find(c => c.crop_id === cropId) || (appState.topPick?.crop_id === cropId ? appState.topPick : null);
   if (!crop) return;
 
   const isHindi = appState.currentLang === "hi";
@@ -447,17 +504,23 @@ function speakCropAdvice(cropId) {
   const voice = voices.find(v => v.lang.startsWith(targetLangCode));
   if (voice) utterance.voice = voice;
 
-  const activeBtn = document.querySelector(`.voice-btn[data-crop-id="${cropId}"]`);
-  if (activeBtn) activeBtn.classList.add("audio-speaking");
+  // Highlight all voice buttons for this crop (spotlight + grid)
+  document.querySelectorAll(`.voice-btn[data-crop-id="${cropId}"]`).forEach(btn => {
+    btn.classList.add("audio-speaking");
+  });
 
   utterance.onend = () => {
     appState.currentlySpeakingId = null;
-    if (activeBtn) activeBtn.classList.remove("audio-speaking");
+    document.querySelectorAll(`.voice-btn[data-crop-id="${cropId}"]`).forEach(btn => {
+      btn.classList.remove("audio-speaking");
+    });
   };
 
   utterance.onerror = () => {
     appState.currentlySpeakingId = null;
-    if (activeBtn) activeBtn.classList.remove("audio-speaking");
+    document.querySelectorAll(`.voice-btn[data-crop-id="${cropId}"]`).forEach(btn => {
+      btn.classList.remove("audio-speaking");
+    });
   };
 
   window.speechSynthesis.speak(utterance);
@@ -604,6 +667,7 @@ async function executeRecommendation() {
 
 function handleRecommendationResponse(data) {
   appState.recommendations = data.recommendations || [];
+  appState.topPick = data.top_pick || null;
   totalCropsCount.textContent = appState.recommendations.length;
 
   const s = data.soil_summary || {};
@@ -612,6 +676,11 @@ function handleRecommendationResponse(data) {
   summaryNPKBadge.textContent = s.benchmark_npk || "NPK Benchmark Applied";
   summaryPHBadge.textContent = `pH: ${s.benchmark_ph || "Neutral"}`;
   summaryDrainageBadge.textContent = `Drainage: ${s.drainage || "Moderate"}`;
+
+  const printDateEl = document.getElementById("printDateStamp");
+  if (printDateEl) {
+    printDateEl.textContent = new Date().toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" }) + " • Soil: " + (s.soil_type || soilTypeSelect.value) + " • " + seasonSelect.value;
+  }
 
   if (data.top_pick) {
     renderTopPick(data.top_pick);
@@ -744,9 +813,31 @@ function renderTopPick(top) {
   const isHi = appState.currentLang === "hi";
   const hindi = top.hindi_name ? `<span class="text-base text-emerald-800 font-normal">(${top.hindi_name})</span>` : "";
   const netProfit = top.financials ? `₹${Math.round(top.financials.profit_per_acre_inr).toLocaleString("en-IN")}` : "High";
-  const roi = top.financials ? `${top.financials.roi_percentage}%` : "High";
+  const roi = top.financials && top.financials.roi_percentage ? `(${top.financials.roi_percentage}% ROI)` : "";
   const urea = top.fertilizer_prescription ? `${top.fertilizer_prescription.urea_bags_50kg} bags` : "2.0 bags";
   const dap = top.fertilizer_prescription ? `${top.fertilizer_prescription.dap_bags_50kg} bags` : "1.0 bags";
+  const isCompared = appState.selectedForComparison.some(c => c.crop_id === top.crop_id);
+
+  const reasonsList = (top.reasons || []).map(r => `
+    <li class="flex items-start gap-1.5">
+      <span class="text-emerald-600 font-bold">✓</span>
+      <span>${r}</span>
+    </li>
+  `).join("");
+
+  const warningsList = (top.warnings || []).length > 0 ? (top.warnings || []).map(w => `
+    <li class="flex items-start gap-1.5 text-amber-800">
+      <span class="font-bold">⚠️</span>
+      <span>${w}</span>
+    </li>
+  `).join("") : "";
+
+  const growthStages = top.growth_stages || [
+    { day_range: "Day 0-20", stage_name: "Establishment", activities: "Seed treatment and shallow sowing.", pest_warning: "Damping off" },
+    { day_range: "Day 20-50", stage_name: "Vegetative", activities: "First top dressing and weeding.", pest_warning: "Defoliating pests" },
+    { day_range: "Day 50-80", stage_name: "Flowering", activities: "Moisture maintenance and pest check.", pest_warning: "Pod borers" },
+    { day_range: "Day 80+", stage_name: "Harvest", activities: "Cut at physiological maturity.", pest_warning: "Storage insects" }
+  ];
 
   topPickCard.innerHTML = `
     <div class="flex flex-wrap items-center justify-between gap-4">
@@ -768,15 +859,20 @@ function renderTopPick(top) {
         </div>
       </div>
 
-      <div class="flex items-center gap-3">
+      <div class="flex items-center gap-2">
         <!-- Text-to-Speech Button -->
-        <button type="button" class="voice-btn bg-white hover:bg-emerald-100 text-emerald-800 p-2.5 rounded-xl border border-emerald-300 shadow-sm transition" data-crop-id="${top.crop_id}" title="Listen to recommendation">
+        <button type="button" class="voice-btn bg-white hover:bg-emerald-100 text-emerald-800 p-2.5 rounded-xl border border-emerald-300 shadow-sm transition" data-crop-id="${top.crop_id}" title="Listen to recommendation" aria-label="Listen audio advisory">
           🔊
         </button>
         <!-- WhatsApp Button -->
-        <button type="button" class="whatsapp-btn bg-emerald-600 hover:bg-emerald-700 text-white p-2.5 rounded-xl shadow-sm transition" data-crop-id="${top.crop_id}" title="Share on WhatsApp">
+        <button type="button" class="whatsapp-btn bg-emerald-600 hover:bg-emerald-700 text-white p-2.5 rounded-xl shadow-sm transition" data-crop-id="${top.crop_id}" title="Share on WhatsApp" aria-label="Share advisory on WhatsApp">
           💬
         </button>
+        <!-- Compare Checkbox -->
+        <label class="flex items-center space-x-1.5 text-xs text-emerald-900 cursor-pointer select-none bg-white/90 px-3 py-2 rounded-xl border border-emerald-300 hover:bg-emerald-50">
+          <input type="checkbox" data-crop-id="${top.crop_id}" class="compare-checkbox rounded text-brand-600" ${isCompared ? "checked" : ""}>
+          <span class="text-[11px] font-semibold">Compare</span>
+        </label>
         <div class="text-right ml-2">
           <div class="text-3xl sm:text-4xl font-black text-emerald-700">${top.suitability_score}%</div>
           <div class="text-xs font-semibold text-emerald-800 uppercase tracking-wider">${top.suitability_level}</div>
@@ -788,7 +884,7 @@ function renderTopPick(top) {
     <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-4 pt-4 border-t border-emerald-200/60 text-xs">
       <div class="bg-white/85 p-2.5 rounded-xl border border-emerald-200">
         <span class="text-emerald-800 block font-semibold">Net Profit / Acre</span>
-        <span class="font-extrabold text-emerald-950 text-sm">${netProfit} <span class="text-[10px] text-emerald-700 font-normal">(${roi} ROI)</span></span>
+        <span class="font-extrabold text-emerald-950 text-sm">${netProfit} <span class="text-[10px] text-emerald-700 font-normal">${roi}</span></span>
       </div>
       <div class="bg-white/85 p-2.5 rounded-xl border border-emerald-200">
         <span class="text-emerald-800 block font-semibold">Fertilizer Requirement</span>
@@ -804,6 +900,7 @@ function renderTopPick(top) {
       </div>
     </div>
 
+    <!-- Sowing tips preview -->
     <div class="mt-4 text-xs space-y-1.5">
       <div class="font-bold text-emerald-900 flex items-center gap-1.5">
         <span>💡</span> Primary Match:
@@ -814,11 +911,73 @@ function renderTopPick(top) {
         <span class="font-normal text-slate-800">${top.sowing_tips}</span>
       </div>
     </div>
+
+    <!-- Expandable Detailed Advice for Top Pick -->
+    <div class="top-pick-expanded-details hidden space-y-3 pt-4 mt-4 border-t border-emerald-200/80 text-xs text-slate-700">
+      ${warningsList ? `
+        <div class="bg-amber-50 p-2.5 rounded-xl border border-amber-200">
+          <div class="font-bold text-amber-900 mb-1">Cautions & Risks:</div>
+          <ul class="space-y-1">${warningsList}</ul>
+        </div>
+      ` : ""}
+
+      <div>
+        <div class="font-bold text-slate-900 mb-1">🧪 Fertilizer & Nutrient Schedule:</div>
+        <p class="text-slate-600 leading-relaxed">${top.fertilizer_advice}</p>
+      </div>
+
+      <!-- Growth Timeline for Top Pick -->
+      <div class="pt-2 border-t border-emerald-100">
+        <div class="font-bold text-slate-800 text-[11px] mb-2 flex items-center gap-1">
+          <span>📅</span> 4-Stage Growth Timeline & IPM Calendar:
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 text-[10px]">
+          ${growthStages.map(st => `
+            <div class="bg-white/90 p-2.5 rounded-xl border border-emerald-200">
+              <span class="text-brand-700 font-bold block">${st.day_range}</span>
+              <strong class="text-slate-900 block truncate">${st.stage_name}</strong>
+              <p class="text-slate-600 text-[9px] mt-0.5 leading-tight">${st.activities}</p>
+              ${st.pest_warning ? `<span class="text-amber-800 block text-[9px] mt-1 font-semibold">⚠️ ${st.pest_warning}</span>` : ""}
+            </div>
+          `).join("")}
+        </div>
+      </div>
+
+      ${top.companion_crops && top.companion_crops.length > 0 ? `
+        <div>
+          <div class="font-bold text-slate-900 mb-1">🤝 Recommended Companion Intercrops:</div>
+          <div class="flex flex-wrap gap-1">
+            ${top.companion_crops.map(c => `<span class="bg-emerald-100 text-emerald-800 border border-emerald-300 px-2 py-0.5 rounded text-[11px] font-medium">${c}</span>`).join("")}
+          </div>
+        </div>
+      ` : ""}
+    </div>
+
+    <!-- Toggle button for Top Pick Details -->
+    <div class="pt-3 mt-2 border-t border-emerald-200/60 no-print text-center">
+      <button type="button" class="top-pick-toggle-btn text-xs font-bold text-emerald-800 hover:text-emerald-950 py-1 px-4 hover:bg-emerald-100/60 rounded-xl transition">
+        ${isHi ? "विस्तृत सलाह देखें ▼" : "View Complete Agronomic Advice ▼"}
+      </button>
+    </div>
   `;
 
-  // Attach voice and whatsapp listener to top pick
+  // Attach voice, whatsapp, compare, and details listener to top pick
   topPickCard.querySelector(".voice-btn")?.addEventListener("click", () => speakCropAdvice(top.crop_id));
   topPickCard.querySelector(".whatsapp-btn")?.addEventListener("click", () => shareOnWhatsApp(top.crop_id));
+  topPickCard.querySelector(".compare-checkbox")?.addEventListener("change", (e) => {
+    toggleCropComparison(top.crop_id, e.target.checked);
+  });
+  topPickCard.querySelector(".top-pick-toggle-btn")?.addEventListener("click", (e) => {
+    const details = topPickCard.querySelector(".top-pick-expanded-details");
+    const isHidden = details.classList.contains("hidden");
+    details.classList.toggle("hidden");
+    const isHindiNow = appState.currentLang === "hi";
+    if (isHindiNow) {
+      e.target.textContent = isHidden ? "सलाह छिपाएं ▲" : "विस्तृत सलाह देखें ▼";
+    } else {
+      e.target.textContent = isHidden ? "Hide Complete Advice ▲" : "View Complete Agronomic Advice ▼";
+    }
+  });
 }
 
 function filterAndRenderCrops() {
@@ -830,6 +989,21 @@ function filterAndRenderCrops() {
       crop.category.toLowerCase().includes(appState.searchQuery);
     return matchesCategory && matchesSearch;
   });
+
+  // Manage Top Pick Card visibility based on search and category
+  if (appState.topPick) {
+    const topMatchesCategory = appState.activeCategory === "All" || appState.topPick.category === appState.activeCategory;
+    const topMatchesSearch = !appState.searchQuery ||
+      appState.topPick.name.toLowerCase().includes(appState.searchQuery) ||
+      (appState.topPick.hindi_name && appState.topPick.hindi_name.toLowerCase().includes(appState.searchQuery)) ||
+      appState.topPick.category.toLowerCase().includes(appState.searchQuery);
+
+    if (filtered.length > 0 && topMatchesCategory && topMatchesSearch) {
+      renderTopPick(appState.topPick);
+    } else {
+      topPickCard.classList.add("hidden");
+    }
+  }
 
   if (filtered.length === 0) {
     cropsGrid.innerHTML = "";
@@ -847,7 +1021,12 @@ function filterAndRenderCrops() {
       const details = card.querySelector(".card-expanded-details");
       const isHidden = details.classList.contains("hidden");
       details.classList.toggle("hidden");
-      btn.textContent = isHidden ? "Hide Agronomic Advice ▲" : "View Agronomic Advice ▼";
+      const isHi = appState.currentLang === "hi";
+      if (isHi) {
+        btn.textContent = isHidden ? "सलाह छिपाएं ▲" : "कृषि सलाह देखें ▼";
+      } else {
+        btn.textContent = isHidden ? "Hide Agronomic Advice ▲" : "View Agronomic Advice ▼";
+      }
     });
   });
 
@@ -882,7 +1061,7 @@ function createCropCardHTML(crop) {
   else if (crop.suitability_score < 80) scoreBadgeClass = "badge-score-med";
 
   const netProfit = crop.financials ? `₹${Math.round(crop.financials.profit_per_acre_inr).toLocaleString("en-IN")}` : "High";
-  const roi = crop.financials ? `${crop.financials.roi_percentage}%` : "";
+  const roi = crop.financials && crop.financials.roi_percentage ? `(${crop.financials.roi_percentage}% ROI)` : "";
   const urea = crop.fertilizer_prescription ? `${crop.fertilizer_prescription.urea_bags_50kg} bags` : "2.0 bags";
   const dap = crop.fertilizer_prescription ? `${crop.fertilizer_prescription.dap_bags_50kg} bags` : "1.0 bags";
 
@@ -900,7 +1079,7 @@ function createCropCardHTML(crop) {
     </li>
   `).join("") : "";
 
-  // Growth timeline stages
+  // Growth timeline stages (Clean 2-column grid to avoid squeeze)
   const growthStages = crop.growth_stages || [
     { day_range: "Day 0-20", stage_name: "Establishment", activities: "Seed treatment and shallow sowing.", pest_warning: "Damping off" },
     { day_range: "Day 20-50", stage_name: "Vegetative", activities: "First top dressing and weeding.", pest_warning: "Defoliating pests" },
@@ -913,11 +1092,11 @@ function createCropCardHTML(crop) {
       <div class="font-bold text-slate-800 text-[11px] mb-2 flex items-center gap-1">
         <span>📅</span> Growth Timeline & IPM Pest Calendar:
       </div>
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-1.5 text-[10px]">
+      <div class="grid grid-cols-2 gap-2 text-[10px]">
         ${growthStages.map(st => `
           <div class="bg-slate-50 p-2 rounded-lg border border-slate-200">
             <span class="text-brand-700 font-bold block">${st.day_range}</span>
-            <strong class="text-slate-900 block truncate">${st.stage_name}</strong>
+            <strong class="text-slate-900 block truncate" title="${st.stage_name}">${st.stage_name}</strong>
             <p class="text-slate-600 text-[9px] mt-0.5 leading-tight">${st.activities}</p>
             ${st.pest_warning ? `<span class="text-amber-800 block text-[9px] mt-1 font-semibold">⚠️ ${st.pest_warning}</span>` : ""}
           </div>
@@ -925,6 +1104,8 @@ function createCropCardHTML(crop) {
       </div>
     </div>
   `;
+
+  const isHi = appState.currentLang === "hi";
 
   return `
     <div class="crop-card bg-white border border-slate-200 rounded-2xl p-5 flex flex-col justify-between" data-crop-id="${crop.crop_id}">
@@ -949,14 +1130,14 @@ function createCropCardHTML(crop) {
             </h4>
             <p class="text-xs text-slate-500 italic mb-2">${crop.scientific_name}</p>
           </div>
-          <div class="flex items-center space-x-1">
-            <button type="button" class="voice-btn bg-slate-50 hover:bg-emerald-50 text-slate-700 hover:text-emerald-700 p-1.5 rounded-lg border border-slate-200 transition text-xs" data-crop-id="${crop.crop_id}" title="Listen audio advice">
+          <div class="flex items-center space-x-1 shrink-0">
+            <button type="button" class="voice-btn bg-slate-50 hover:bg-emerald-50 text-slate-700 hover:text-emerald-700 p-1.5 rounded-lg border border-slate-200 transition text-xs" data-crop-id="${crop.crop_id}" title="Listen audio advice" aria-label="Listen audio advice">
               🔊
             </button>
-            <button type="button" class="whatsapp-btn bg-slate-50 hover:bg-emerald-50 text-slate-700 hover:text-emerald-700 p-1.5 rounded-lg border border-slate-200 transition text-xs" data-crop-id="${crop.crop_id}" title="Share on WhatsApp">
+            <button type="button" class="whatsapp-btn bg-slate-50 hover:bg-emerald-50 text-slate-700 hover:text-emerald-700 p-1.5 rounded-lg border border-slate-200 transition text-xs" data-crop-id="${crop.crop_id}" title="Share on WhatsApp" aria-label="Share on WhatsApp">
               💬
             </button>
-            <label class="flex items-center space-x-1 text-xs text-slate-500 cursor-pointer select-none bg-slate-50 p-1.5 rounded-lg border border-slate-200 hover:bg-slate-100 ml-1">
+            <label class="flex items-center space-x-1 text-xs text-slate-500 cursor-pointer select-none bg-slate-50 p-1.5 rounded-lg border border-slate-200 hover:bg-slate-100 ml-0.5">
               <input type="checkbox" data-crop-id="${crop.crop_id}" class="compare-checkbox rounded text-brand-600" ${isCompared ? "checked" : ""}>
               <span class="text-[10px] font-semibold">Compare</span>
             </label>
@@ -966,7 +1147,7 @@ function createCropCardHTML(crop) {
         <!-- Profit & Fertilizer Pill Strip -->
         <div class="flex flex-wrap items-center gap-1.5 my-2">
           <span class="bg-emerald-50 text-emerald-900 text-[11px] font-bold px-2 py-0.5 rounded-lg border border-emerald-200">
-            Net Profit: ${netProfit}/acre (${roi} ROI)
+            Net Profit: ${netProfit}/acre ${roi}
           </span>
           <span class="bg-blue-50 text-blue-900 text-[11px] font-semibold px-2 py-0.5 rounded-lg border border-blue-200">
             Urea: ${urea} | DAP: ${dap}
@@ -989,7 +1170,7 @@ function createCropCardHTML(crop) {
           </div>
           <div>
             <span class="text-slate-400 block text-[10px] uppercase font-semibold">Sowing Window</span>
-            <span class="font-bold text-slate-800 truncate">${crop.sowing_window}</span>
+            <span class="font-bold text-slate-800 text-[11px] leading-tight block" title="${crop.sowing_window}">${crop.sowing_window}</span>
           </div>
         </div>
 
@@ -1033,7 +1214,7 @@ function createCropCardHTML(crop) {
       <!-- Action Button to Expand -->
       <div class="pt-3 mt-2 border-t border-slate-100 no-print">
         <button type="button" class="card-toggle-details w-full py-1.5 text-center text-xs font-bold text-brand-700 hover:text-brand-800 hover:bg-emerald-50 rounded-xl transition">
-          View Agronomic Advice ▼
+          ${isHi ? "कृषि सलाह देखें ▼" : "View Agronomic Advice ▼"}
         </button>
       </div>
     </div>
