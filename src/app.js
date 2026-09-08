@@ -1393,11 +1393,21 @@ async function executeFertilizerDoctor() {
 function renderFertilizerDoctorResult(data, payload) {
   fertPrescriptionResult.classList.remove("hidden");
 
+  // Determine crop display name from LOCAL_CROPS_DB or payload
+  let cropDisplayName = "Selected Crop";
+  if (window.LOCAL_CROPS_DB && payload.crop_id) {
+    const found = window.LOCAL_CROPS_DB.find(c => c.id === payload.crop_id);
+    if (found) cropDisplayName = found.name;
+  }
+  if (cropDisplayName === "Selected Crop" && payload.crop_id) {
+    cropDisplayName = payload.crop_id.replace(/_/g, " ").replace(/\b\w/g, l => l.toUpperCase());
+  }
+
   fertPrescriptionResult.innerHTML = `
     <div class="space-y-4">
       <div class="flex flex-wrap items-center justify-between gap-3">
         <h4 class="font-bold text-slate-900 text-base flex items-center gap-2">
-          <span>🩺</span> Agronomic Prescription for ${payload.land_size_acres} Acres
+          <span>🩺</span> Agronomic Prescription for ${cropDisplayName} (${payload.land_size_acres} Acres)
         </h4>
         <span class="text-xs text-slate-500 font-semibold">Est. Subsidized Fertilizer Cost: ₹${(data.approx_fertilizer_cost_inr || 0).toLocaleString("en-IN")}</span>
       </div>
@@ -1485,11 +1495,12 @@ function toggleCropComparison(cropId, isChecked) {
   if (isChecked) {
     if (appState.selectedForComparison.length >= 3) {
       alert("You can compare up to 3 crops at once.");
-      const cb = cropsGrid.querySelector(`input[data-crop-id="${cropId}"]`);
-      if (cb) cb.checked = false;
+      document.querySelectorAll(`.compare-checkbox[data-crop-id="${cropId}"]`).forEach(cb => cb.checked = false);
       return;
     }
-    appState.selectedForComparison.push(crop);
+    if (!appState.selectedForComparison.some(c => c.crop_id === cropId)) {
+      appState.selectedForComparison.push(crop);
+    }
   } else {
     appState.selectedForComparison = appState.selectedForComparison.filter(c => c.crop_id !== cropId);
   }
@@ -1500,27 +1511,49 @@ function toggleCropComparison(cropId, isChecked) {
 function updateComparisonBar() {
   const count = appState.selectedForComparison.length;
   compareCount.textContent = count;
+  const resultsSection = document.getElementById("resultsSection");
 
   if (count > 0) {
     compareBar.classList.remove("hidden");
+    if (resultsSection) {
+      resultsSection.classList.add("pb-24");
+    }
     compareBadges.innerHTML = appState.selectedForComparison.map(c => `
-      <span class="bg-brand-100 text-brand-900 px-2.5 py-1 rounded-lg text-xs font-bold border border-brand-300 flex items-center gap-1">
-        ${c.name}
+      <span class="bg-brand-100 text-brand-900 px-2.5 py-1 rounded-lg text-xs font-bold border border-brand-300 flex items-center gap-1.5 shadow-sm">
+        <span>${c.name}</span>
+        <button type="button" class="remove-compare-badge text-brand-700 hover:text-rose-700 font-black text-sm leading-none ml-0.5 transition" data-crop-id="${c.crop_id}" title="Remove crop">&times;</button>
       </span>
     `).join("");
+
+    compareBadges.querySelectorAll(".remove-compare-badge").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const cropId = btn.dataset.cropId;
+        appState.selectedForComparison = appState.selectedForComparison.filter(c => c.crop_id !== cropId);
+        document.querySelectorAll(`.compare-checkbox[data-crop-id="${cropId}"]`).forEach(cb => cb.checked = false);
+        updateComparisonBar();
+      });
+    });
   } else {
     compareBar.classList.add("hidden");
+    if (resultsSection) {
+      resultsSection.classList.remove("pb-24");
+    }
   }
 }
 
 function clearComparison() {
   appState.selectedForComparison = [];
-  cropsGrid.querySelectorAll(".compare-checkbox").forEach(cb => cb.checked = false);
+  document.querySelectorAll(".compare-checkbox").forEach(cb => cb.checked = false);
   updateComparisonBar();
 }
 
 function openComparisonModal() {
-  if (appState.selectedForComparison.length === 0) return;
+  if (appState.selectedForComparison.length < 2) {
+    alert("Please select at least 2 crops to compare side-by-side.");
+    return;
+  }
+
+  document.body.style.overflow = "hidden";
 
   const crops = appState.selectedForComparison;
 
@@ -1556,6 +1589,7 @@ function openComparisonModal() {
           ${row("Est. Yield / Acre", c => c.estimated_yield_per_acre)}
           ${row("Sowing Window", c => c.sowing_window)}
           ${row("Key Sowing Advice", c => c.sowing_tips)}
+          ${row("Cautions & Risks", c => `<span class="text-rose-700 font-medium">${c.cautions || "Standard vigilance for localized pests."}</span>`)}
           ${row("Fertilizer Advice", c => c.fertilizer_advice)}
           ${row("Soil Considerations", c => c.soil_notes)}
         </tbody>
@@ -1567,5 +1601,6 @@ function openComparisonModal() {
 }
 
 function closeComparisonModal() {
+  document.body.style.overflow = "";
   compareModal.classList.add("hidden");
 }
