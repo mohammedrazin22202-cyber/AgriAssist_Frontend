@@ -553,6 +553,212 @@
       </section>
     </div>
 
+    <!-- ==================== TAB 4: KISAN PLANT DOCTOR ==================== -->
+    <div id="doctorTabContent" class="hidden space-y-8">
+      <div class="bg-gradient-to-r from-rose-900 via-red-950 to-slate-900 text-white rounded-2xl p-6 sm:p-8 shadow-lg relative overflow-hidden">
+        <div class="relative z-10 max-w-3xl">
+          <h2 class="text-2xl sm:text-3xl font-extrabold mb-2" data-i18n="doctorHeroTitle">🩺 Kisan Plant Doctor & Pest Diagnostic</h2>
+          <p class="text-rose-100 text-sm sm:text-base leading-relaxed" data-i18n="doctorHeroDesc">
+            Identify crop pests, fungal diseases, and nutrient deficiencies. Get biological Integrated Pest Management (IPM) recipes, exact chemical dosages, and Pre-Harvest Interval (PHI) waiting periods.
+          </p>
+        </div>
+      </div>
+
+      <!-- Doctor Filters Card -->
+      <section class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 space-y-5">
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="doctorCropSelect">1. Target Crop</label>
+            <select id="doctorCropSelect" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-sm outline-none focus:ring-2 focus:ring-rose-500">
+              <option value="all">All Crops (सभी फसलें)</option>
+              <option value="wheat">Wheat (गेहूं)</option>
+              <option value="rice">Rice (धान)</option>
+              <option value="cotton">Cotton (कपास)</option>
+              <option value="maize">Maize (मक्का)</option>
+              <option value="chickpea">Chickpea (चना)</option>
+              <option value="mustard">Mustard (सरसों)</option>
+              <option value="soybean">Soybean (सोयाबीन)</option>
+              <option value="tomato">Tomato (टमाटर)</option>
+              <option value="potato">Potato (आलू)</option>
+              <option value="onion">Onion (प्याज़)</option>
+              <option value="chilli">Chilli (मिर्च)</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="doctorPartSelect">2. Affected Plant Part</label>
+            <select id="doctorPartSelect" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-sm outline-none focus:ring-2 focus:ring-rose-500">
+              <option value="all">All Parts (पूरा पौधा)</option>
+              <option value="Leaf">Leaf (पत्तियां)</option>
+              <option value="Stem">Stem (तना)</option>
+              <option value="Root">Root (जड़)</option>
+              <option value="Fruit/Grain">Fruit / Grain / Pod (फल / दाना / फली)</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="doctorSearchInput">3. Search Disease / Symptom</label>
+            <div class="relative">
+              <input id="doctorSearchInput" type="text" placeholder="e.g. Pink bollworm, Yellow rust, Wilt, Holes..." class="w-full bg-slate-50 border border-slate-300 rounded-xl pl-9 pr-3 py-2 text-sm outline-none focus:ring-2 focus:ring-rose-500">
+              <span class="absolute left-3 top-2.5 text-slate-400 text-xs">🔍</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Symptom Tags -->
+        <div class="pt-2 border-t border-slate-100 flex flex-wrap items-center gap-2 text-xs">
+          <span class="font-bold text-slate-500">Quick Symptoms:</span>
+          <button type="button" class="quick-symptom-tag bg-slate-100 hover:bg-rose-100 hover:text-rose-800 text-slate-700 px-2.5 py-1 rounded-lg transition" data-symptom="Yellow Rust">Yellow Rust (पीला रतुआ)</button>
+          <button type="button" class="quick-symptom-tag bg-slate-100 hover:bg-rose-100 hover:text-rose-800 text-slate-700 px-2.5 py-1 rounded-lg transition" data-symptom="Pink Bollworm">Pink Bollworm (गुलाबी सूंडी)</button>
+          <button type="button" class="quick-symptom-tag bg-slate-100 hover:bg-rose-100 hover:text-rose-800 text-slate-700 px-2.5 py-1 rounded-lg transition" data-symptom="Stem Borer">Stem Borer (तना छेदक)</button>
+          <button type="button" class="quick-symptom-tag bg-slate-100 hover:bg-rose-100 hover:text-rose-800 text-slate-700 px-2.5 py-1 rounded-lg transition" data-symptom="Wilt">Fusarium Wilt (उकठा)</button>
+          <button type="button" class="quick-symptom-tag bg-slate-100 hover:bg-rose-100 hover:text-rose-800 text-slate-700 px-2.5 py-1 rounded-lg transition" data-symptom="Blight">Late Blight (झुलसा)</button>
+          <button type="button" class="quick-symptom-tag bg-slate-100 hover:bg-rose-100 hover:text-rose-800 text-slate-700 px-2.5 py-1 rounded-lg transition" data-symptom="Aphid">Aphids (माहू / चेपा)</button>
+          <button id="doctorResetBtn" type="button" class="text-xs text-rose-600 hover:underline font-semibold ml-auto">Reset Filters</button>
+        </div>
+      </section>
+
+      <!-- Doctor Results Container -->
+      <div id="doctorResultsGrid" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Rendered by app.js -->
+      </div>
+    </div>
+
+    <!-- ==================== TAB 5: MANDI MARKET PRICES & TRENDS ==================== -->
+    <div id="mandiTabContent" class="hidden space-y-8">
+      <div class="bg-gradient-to-r from-emerald-800 via-teal-900 to-slate-900 text-white rounded-2xl p-6 sm:p-8 shadow-lg relative overflow-hidden">
+        <div class="relative z-10 max-w-3xl">
+          <h2 class="text-2xl sm:text-3xl font-extrabold mb-2" data-i18n="mandiHeroTitle">📈 Mandi Market Prices & Trend Analytics</h2>
+          <p class="text-emerald-100 text-sm sm:text-base leading-relaxed" data-i18n="mandiHeroDesc">
+            Check live modal rates across major APMCs, monitor 30-day price trajectories, compare prices against official Government MSP, and get strategic "Best Time to Sell" advisories.
+          </p>
+        </div>
+      </div>
+
+      <!-- Mandi Filter Bar -->
+      <section class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 space-y-4">
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="mandiCommoditySelect">1. Commodity / Crop</label>
+            <select id="mandiCommoditySelect" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-sm outline-none focus:ring-2 focus:ring-emerald-500">
+              <option value="all">All Commodities (सभी फसलें)</option>
+              <option value="wheat">Wheat (गेहूं)</option>
+              <option value="rice">Rice / Paddy (धान)</option>
+              <option value="cotton">Cotton (कपास)</option>
+              <option value="soybean">Soybean (सोयाबीन)</option>
+              <option value="mustard">Mustard (सरसों)</option>
+              <option value="chickpea">Chickpea (चना)</option>
+              <option value="onion">Onion (प्याज़)</option>
+              <option value="tomato">Tomato (टमाटर)</option>
+              <option value="potato">Potato (आलू)</option>
+              <option value="chilli">Chilli (मिर्च)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="mandiStateFilter">2. State</label>
+            <select id="mandiStateFilter" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-sm outline-none focus:ring-2 focus:ring-emerald-500">
+              <option value="all">All States (सभी राज्य)</option>
+              <option value="Punjab">Punjab</option>
+              <option value="Haryana">Haryana</option>
+              <option value="Madhya Pradesh">Madhya Pradesh</option>
+              <option value="Maharashtra">Maharashtra</option>
+              <option value="Gujarat">Gujarat</option>
+              <option value="Rajasthan">Rajasthan</option>
+              <option value="Uttar Pradesh">Uttar Pradesh</option>
+              <option value="Karnataka">Karnataka</option>
+              <option value="Andhra Pradesh">Andhra Pradesh</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="mandiSearchInput">3. Filter Market / APMC</label>
+            <input id="mandiSearchInput" type="text" placeholder="e.g. Khanna, Lasalgaon, Rajkot..." class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-sm outline-none focus:ring-2 focus:ring-emerald-500">
+          </div>
+        </div>
+      </section>
+
+      <!-- Mandi Cards Grid -->
+      <div id="mandiCardsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Injected by app.js -->
+      </div>
+    </div>
+
+    <!-- ==================== TAB 6: SMART IRRIGATION SCHEDULER ==================== -->
+    <div id="irrigationTabContent" class="hidden space-y-8">
+      <div class="bg-gradient-to-r from-blue-900 via-cyan-950 to-slate-900 text-white rounded-2xl p-6 sm:p-8 shadow-lg relative overflow-hidden">
+        <div class="relative z-10 max-w-3xl">
+          <h2 class="text-2xl sm:text-3xl font-extrabold mb-2" data-i18n="irrigHeroTitle">💧 Smart Irrigation & Water Budgeting Scheduler</h2>
+          <p class="text-blue-100 text-sm sm:text-base leading-relaxed" data-i18n="irrigHeroDesc">
+            Calculate exact crop water depth, total volume in Liters, electric pump run hours, and irrigation frequency based on crop growth phase and real-time rainfall forecast.
+          </p>
+        </div>
+      </div>
+
+      <!-- Irrigation Inputs -->
+      <section class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 sm:p-8 space-y-6">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 text-xs">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="irrigCropSelect">Target Crop</label>
+            <select id="irrigCropSelect" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-sm">
+              <option value="wheat">Wheat (गेहूं)</option>
+              <option value="rice">Rice / Paddy (धान)</option>
+              <option value="cotton">Cotton (कपास)</option>
+              <option value="maize">Maize (मक्का)</option>
+              <option value="mustard">Mustard (सरसों)</option>
+              <option value="chickpea">Chickpea (चना)</option>
+              <option value="sugarcane">Sugarcane (गन्ना)</option>
+              <option value="potato">Potato (आलू)</option>
+              <option value="tomato">Tomato (टमाटर)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="irrigStageSelect">Growth Phase</label>
+            <select id="irrigStageSelect" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-sm">
+              <option value="CRI / Early Vegetative">CRI / Early Vegetative (क्रिटिकल जड़ अवस्था)</option>
+              <option value="Branching / Tillering">Branching / Tillering (कल्ले फूटना)</option>
+              <option value="Flowering / Tasseling">Flowering / Tasseling (फूल आना)</option>
+              <option value="Grain / Pod / Tuber Filling">Grain / Pod / Tuber Filling (दाना भराव)</option>
+              <option value="Maturity">Maturity / Pre-Harvest (परिपक्वता)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="irrigSoilSelect">Soil Type</label>
+            <select id="irrigSoilSelect" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-sm">
+              <option value="Alluvial Soil">Alluvial Soil (जलोढ़)</option>
+              <option value="Black Soil (Regur)">Black Soil (काली मिट्टी)</option>
+              <option value="Sandy Loam Soil">Sandy Loam (बलुई दोमट)</option>
+              <option value="Clay Loam Soil">Clay Loam (चिकनी दोमट)</option>
+              <option value="Red Soil">Red Soil (लाल मिट्टी)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="irrigLandInput">Land Area (Acres)</label>
+            <input id="irrigLandInput" type="number" step="0.5" min="0.25" max="500" value="2.0" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-sm font-bold">
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="irrigPumpInput">Pump Motor (HP)</label>
+            <select id="irrigPumpInput" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-sm font-bold">
+              <option value="3.0">3.0 HP (~19,500 L/hr)</option>
+              <option value="5.0" selected>5.0 HP (~32,500 L/hr)</option>
+              <option value="7.5">7.5 HP (~48,500 L/hr)</option>
+              <option value="10.0">10.0 HP (~65,000 L/hr)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-4">
+          <button id="calcIrrigationBtn" type="button" class="px-7 py-3 bg-blue-700 hover:bg-blue-800 text-white font-bold text-sm rounded-xl shadow-md transition flex items-center gap-2">
+            <span>💧</span> <span>Compute Irrigation Schedule</span>
+          </button>
+          <span class="text-xs text-slate-500 italic">Adjusts automatically for upcoming rain forecast</span>
+        </div>
+
+        <!-- Irrigation Results Card -->
+        <div id="irrigationResultContainer" class="hidden pt-6 border-t border-slate-200 space-y-6">
+          <!-- Populated by app.js -->
+        </div>
+      </section>
+    </div>
+
   </main>
 
   <!-- FLOATING COMPARISON BAR (Shows when crops are checked for comparison) -->
