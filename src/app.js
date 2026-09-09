@@ -1045,16 +1045,23 @@ const fertPrescriptionResult = document.getElementById("fertPrescriptionResult")
 
 
 
-
 // ----------------- INITIALIZATION -----------------
 
 document.addEventListener("DOMContentLoaded", () => {
   setupEventListeners();
   registerServiceWorker();
   populateFertilizerCropOptions();
+  initDistrictSelector();
+  initKisanKhata();
   checkApiHealth();
   updateSoilPresets();
   executeRecommendation();
+
+  // Load saved language if any
+  const savedLang = localStorage.getItem("agriassist_lang");
+  if (savedLang && TRANSLATIONS[savedLang]) {
+    setLanguage(savedLang);
+  }
 });
 
 function registerServiceWorker() {
@@ -1073,13 +1080,19 @@ function populateFertilizerCropOptions() {
 }
 
 function setupEventListeners() {
-  // Navigation Tabs
-  tabAdvisorBtn.addEventListener("click", () => switchTab("advisor"));
-  tabRotationBtn.addEventListener("click", () => switchTab("rotation"));
-  tabFertilizerBtn.addEventListener("click", () => switchTab("fertilizer"));
+  // Navigation Tabs (All 9 Modules)
+  tabAdvisorBtn?.addEventListener("click", () => switchTab("advisor"));
+  tabDoctorBtn?.addEventListener("click", () => switchTab("doctor"));
+  tabMandiBtn?.addEventListener("click", () => switchTab("mandi"));
+  tabIrrigationBtn?.addEventListener("click", () => switchTab("irrigation"));
+  tabOrganicBtn?.addEventListener("click", () => switchTab("organic"));
+  tabRotationBtn?.addEventListener("click", () => switchTab("rotation"));
+  tabFertilizerBtn?.addEventListener("click", () => switchTab("fertilizer"));
+  tabYojanaBtn?.addEventListener("click", () => switchTab("yojana"));
+  tabKhataBtn?.addEventListener("click", () => switchTab("khata"));
 
   // Weather detection
-  detectWeatherBtn.addEventListener("click", detectLocationAndWeather);
+  detectWeatherBtn?.addEventListener("click", detectLocationAndWeather);
   const closeWeatherAlertBtn = document.getElementById("closeWeatherAlertBtn");
   if (closeWeatherAlertBtn) {
     closeWeatherAlertBtn.addEventListener("click", () => {
@@ -1087,11 +1100,63 @@ function setupEventListeners() {
     });
   }
 
-  // Language toggle
-  langToggleBtn.addEventListener("click", toggleLanguage);
+  // Language modal controls
+  langToggleBtn?.addEventListener("click", () => {
+    langModal?.classList.remove("hidden");
+  });
+  closeLangModalBtn?.addEventListener("click", () => {
+    langModal?.classList.add("hidden");
+  });
+  langModal?.addEventListener("click", (e) => {
+    if (e.target === langModal) langModal.classList.add("hidden");
+  });
+  document.querySelectorAll(".lang-choice-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const lang = btn.getAttribute("data-lang");
+      setLanguage(lang);
+      langModal?.classList.add("hidden");
+    });
+  });
+
+  // District Calibrator controls
+  stateSelect?.addEventListener("change", handleStateChange);
+  districtSelect?.addEventListener("change", handleDistrictChange);
+
+  // Plant Doctor controls
+  doctorCropSelect?.addEventListener("change", executePlantDoctor);
+  doctorPartSelect?.addEventListener("change", executePlantDoctor);
+  doctorSearchInput?.addEventListener("input", executePlantDoctor);
+  document.querySelectorAll(".quick-symptom-tag").forEach(tagBtn => {
+    tagBtn.addEventListener("click", () => {
+      const sym = tagBtn.getAttribute("data-symptom");
+      if (doctorSearchInput) {
+        doctorSearchInput.value = sym;
+        executePlantDoctor();
+      }
+    });
+  });
+  doctorResetBtn?.addEventListener("click", resetPlantDoctor);
+
+  // Mandi Prices controls
+  mandiCommoditySelect?.addEventListener("change", executeMandiPrices);
+  mandiStateFilter?.addEventListener("change", executeMandiPrices);
+  mandiSearchInput?.addEventListener("input", executeMandiPrices);
+
+  // Irrigation Scheduler controls
+  calcIrrigationBtn?.addEventListener("click", executeIrrigationScheduler);
+
+  // Organic Doctor controls
+  calcOrganicBtn?.addEventListener("click", executeOrganicDoctor);
+
+  // Yojana Hub controls
+  calcYojanaBtn?.addEventListener("click", executeKisanYojana);
+
+  // Kisan Khata controls
+  khataForm?.addEventListener("submit", addKhataTransaction);
+  clearKhataBtn?.addEventListener("click", clearKhataLedger);
 
   // Print report
-  printReportBtn.addEventListener("click", () => {
+  printReportBtn?.addEventListener("click", () => {
     const printDateEl = document.getElementById("printDateStamp");
     if (printDateEl) {
       printDateEl.textContent = new Date().toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" }) + " • Soil: " + soilTypeSelect.value + " • " + seasonSelect.value;
@@ -1100,32 +1165,32 @@ function setupEventListeners() {
   });
 
   // Input change updates
-  modeSimpleBtn.addEventListener("click", () => setMode("simple"));
-  modeAdvancedBtn.addEventListener("click", () => setMode("advanced"));
-  soilTypeSelect.addEventListener("change", updateSoilPresets);
-  seasonSelect.addEventListener("change", updateSeasonHint);
-  waterSelect.addEventListener("change", updateWaterHint);
+  modeSimpleBtn?.addEventListener("click", () => setMode("simple"));
+  modeAdvancedBtn?.addEventListener("click", () => setMode("advanced"));
+  soilTypeSelect?.addEventListener("change", updateSoilPresets);
+  seasonSelect?.addEventListener("change", updateSeasonHint);
+  waterSelect?.addEventListener("change", updateWaterHint);
 
   // Form submit
-  recommendForm.addEventListener("submit", (e) => {
+  recommendForm?.addEventListener("submit", (e) => {
     e.preventDefault();
     executeRecommendation();
   });
 
   // Rotation trigger
-  generateRotationBtn.addEventListener("click", executeRotationPlan);
+  generateRotationBtn?.addEventListener("click", executeRotationPlan);
 
   // Fertilizer Doctor trigger
-  calcFertilizerBtn.addEventListener("click", executeFertilizerDoctor);
+  calcFertilizerBtn?.addEventListener("click", executeFertilizerDoctor);
 
   // Search input
-  cropSearchInput.addEventListener("input", (e) => {
+  cropSearchInput?.addEventListener("input", (e) => {
     appState.searchQuery = e.target.value.trim().toLowerCase();
     filterAndRenderCrops();
   });
 
   // Category filter chips with clean border toggle
-  categoryChips.querySelectorAll(".cat-chip").forEach(chip => {
+  categoryChips?.querySelectorAll(".cat-chip").forEach(chip => {
     chip.addEventListener("click", () => {
       categoryChips.querySelectorAll(".cat-chip").forEach(c => {
         c.classList.remove("active", "bg-brand-700", "text-white", "border-brand-700");
@@ -1139,58 +1204,97 @@ function setupEventListeners() {
   });
 
   // Comparison modal
-  clearCompareBtn.addEventListener("click", clearComparison);
-  openCompareModalBtn.addEventListener("click", openComparisonModal);
-  closeCompareModalBtn.addEventListener("click", closeComparisonModal);
-  compareModal.addEventListener("click", (e) => {
+  clearCompareBtn?.addEventListener("click", clearComparison);
+  openCompareModalBtn?.addEventListener("click", openComparisonModal);
+  closeCompareModalBtn?.addEventListener("click", closeComparisonModal);
+  compareModal?.addEventListener("click", (e) => {
     if (e.target === compareModal) closeComparisonModal();
   });
 
   // Escape key closes modal
   window.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && !compareModal.classList.contains("hidden")) {
-      closeComparisonModal();
+    if (e.key === "Escape") {
+      if (compareModal && !compareModal.classList.contains("hidden")) {
+        closeComparisonModal();
+      }
+      if (langModal && !langModal.classList.contains("hidden")) {
+        langModal.classList.add("hidden");
+      }
     }
   });
 }
 
 function switchTab(tab) {
   appState.activeTab = tab;
-  [tabAdvisorBtn, tabRotationBtn, tabFertilizerBtn].forEach(btn => {
-    btn.classList.remove("active", "bg-brand-800", "text-white", "border-brand-800", "shadow-sm");
-    btn.classList.add("text-slate-600", "hover:bg-slate-100", "border-transparent");
+  const allTabs = [
+    { id: "advisor", btn: tabAdvisorBtn, content: advisorTabContent },
+    { id: "doctor", btn: tabDoctorBtn, content: doctorTabContent },
+    { id: "mandi", btn: tabMandiBtn, content: mandiTabContent },
+    { id: "irrigation", btn: tabIrrigationBtn, content: irrigationTabContent },
+    { id: "organic", btn: tabOrganicBtn, content: organicTabContent },
+    { id: "rotation", btn: tabRotationBtn, content: rotationTabContent },
+    { id: "fertilizer", btn: tabFertilizerBtn, content: fertilizerTabContent },
+    { id: "yojana", btn: tabYojanaBtn, content: yojanaTabContent },
+    { id: "khata", btn: tabKhataBtn, content: khataTabContent }
+  ];
+
+  allTabs.forEach(t => {
+    if (t.btn) {
+      t.btn.classList.remove("active", "bg-brand-800", "text-white", "border-brand-800", "shadow-sm");
+      t.btn.classList.add("text-slate-600", "hover:bg-slate-100", "border-transparent");
+    }
+    if (t.content) {
+      t.content.classList.add("hidden");
+    }
   });
 
-  advisorTabContent.classList.add("hidden");
-  rotationTabContent.classList.add("hidden");
-  fertilizerTabContent.classList.add("hidden");
-
-  let activeBtn = tabAdvisorBtn;
-  let activeContent = advisorTabContent;
-
-  if (tab === "rotation") {
-    activeBtn = tabRotationBtn;
-    activeContent = rotationTabContent;
-    if (rotationPlansContainer.children.length === 0) {
-      executeRotationPlan();
+  const selected = allTabs.find(t => t.id === tab);
+  if (selected) {
+    if (selected.btn) {
+      selected.btn.classList.add("active", "bg-brand-800", "text-white", "border-brand-800", "shadow-sm");
+      selected.btn.classList.remove("text-slate-600", "hover:bg-slate-100", "border-transparent");
     }
-  } else if (tab === "fertilizer") {
-    activeBtn = tabFertilizerBtn;
-    activeContent = fertilizerTabContent;
-    if (fertPrescriptionResult.classList.contains("hidden")) {
-      executeFertilizerDoctor();
+    if (selected.content) {
+      selected.content.classList.remove("hidden");
     }
   }
 
-  activeBtn.classList.add("active", "bg-brand-800", "text-white", "border-brand-800", "shadow-sm");
-  activeBtn.classList.remove("text-slate-600", "hover:bg-slate-100", "border-transparent");
-  activeContent.classList.remove("hidden");
+  // Auto-run initial computation if needed
+  if (tab === "doctor" && doctorResultsGrid && !doctorResultsGrid.children.length) {
+    executePlantDoctor();
+  } else if (tab === "mandi" && mandiCardsContainer && !mandiCardsContainer.children.length) {
+    executeMandiPrices();
+  } else if (tab === "irrigation" && irrigationResultContainer && !irrigationResultContainer.children.length) {
+    executeIrrigationScheduler();
+  } else if (tab === "organic" && organicResultContainer && !organicResultContainer.children.length) {
+    executeOrganicDoctor();
+  } else if (tab === "rotation" && rotationPlansContainer && rotationPlansContainer.children.length === 0) {
+    executeRotationPlan();
+  } else if (tab === "fertilizer" && fertPrescriptionResult && fertPrescriptionResult.classList.contains("hidden")) {
+    executeFertilizerDoctor();
+  } else if (tab === "yojana" && yojanaResultContainer && !yojanaResultContainer.children.length) {
+    executeKisanYojana();
+  } else if (tab === "khata") {
+    renderKhataLedger();
+  }
 }
 
-function toggleLanguage() {
-  appState.currentLang = appState.currentLang === "en" ? "hi" : "en";
-  const dict = TRANSLATIONS[appState.currentLang];
-  langToggleText.textContent = dict.langSwitch;
+function setLanguage(lang) {
+  if (!TRANSLATIONS[lang]) return;
+  appState.currentLang = lang;
+  localStorage.setItem("agriassist_lang", lang);
+
+  const dict = TRANSLATIONS[lang];
+  const langLabels = {
+    en: "🇬🇧 EN",
+    hi: "🇮🇳 हिन्दी",
+    pa: "🇮🇳 ਪੰਜਾਬੀ",
+    mr: "🇮🇳 मराठी",
+    gu: "🇮🇳 ગુજરાતી"
+  };
+  if (langToggleText) {
+    langToggleText.textContent = langLabels[lang] || dict.langSwitch || "Language";
+  }
 
   document.querySelectorAll("[data-i18n]").forEach(el => {
     const key = el.getAttribute("data-i18n");
@@ -1199,11 +1303,25 @@ function toggleLanguage() {
     }
   });
 
-  // Re-render top pick and crops with new language preferences
+  // Re-render top pick and crops with updated language
   if (appState.topPick) {
     renderTopPick(appState.topPick);
   }
   filterAndRenderCrops();
+
+  // If Plant doctor or mandi is currently open, refresh them
+  if (appState.activeTab === "doctor") executePlantDoctor();
+  if (appState.activeTab === "mandi") executeMandiPrices();
+  if (appState.activeTab === "khata") renderKhataLedger();
+}
+
+function toggleLanguage() {
+  if (langModal) {
+    langModal.classList.remove("hidden");
+  } else {
+    const nextLang = appState.currentLang === "en" ? "hi" : "en";
+    setLanguage(nextLang);
+  }
 }
 
 // ----------------- LIVE WEATHER & GEOLOCATION (Open-Meteo) -----------------
@@ -2458,3 +2576,932 @@ function closeComparisonModal() {
   document.body.style.overflow = "";
   compareModal.classList.add("hidden");
 }
+
+// ----------------- AUDIO SPEECH SYNTHESIS -----------------
+
+function speakDiagnosis(text, lang = "hi") {
+  if (!("speechSynthesis" in window)) {
+    alert("Voice speech synthesis is not supported on your browser/device.");
+    return;
+  }
+  window.speechSynthesis.cancel(); // Stop any active utterance
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = lang === "hi" ? "hi-IN" : "en-IN";
+  utterance.rate = 0.9;
+  utterance.pitch = 1.0;
+  window.speechSynthesis.speak(utterance);
+}
+window.speakDiagnosis = speakDiagnosis;
+
+// ----------------- REGIONAL AGRO-CLIMATIC CALIBRATOR -----------------
+
+function initDistrictSelector() {
+  if (!stateSelect) return;
+  const states = Object.keys(LOCAL_DISTRICTS_REGISTRY);
+  stateSelect.innerHTML = `<option value="">-- Choose State / राज्य चुनें --</option>` +
+    states.map(s => `<option value="${s}">${s}</option>`).join("");
+}
+
+function handleStateChange() {
+  const state = stateSelect.value;
+  if (!state || !LOCAL_DISTRICTS_REGISTRY[state]) {
+    districtSelect.innerHTML = `<option value="">-- First choose state --</option>`;
+    districtSelect.disabled = true;
+    if (districtPresetStatus) districtPresetStatus.textContent = "Select state & district to auto-configure soil and climate";
+    return;
+  }
+
+  const districts = LOCAL_DISTRICTS_REGISTRY[state];
+  districtSelect.innerHTML = `<option value="">-- Choose District / जिला चुनें --</option>` +
+    districts.map(d => `<option value="${d.district}">${d.district}</option>`).join("");
+  districtSelect.disabled = false;
+  if (districtPresetStatus) districtPresetStatus.textContent = `${districts.length} districts available in ${state}`;
+}
+
+function handleDistrictChange() {
+  const state = stateSelect.value;
+  const distName = districtSelect.value;
+  if (!state || !distName || !LOCAL_DISTRICTS_REGISTRY[state]) return;
+
+  const district = LOCAL_DISTRICTS_REGISTRY[state].find(d => d.district === distName);
+  if (!district) return;
+
+  // Auto-populate form
+  if (soilTypeSelect) {
+    soilTypeSelect.value = district.soil_type;
+    updateSoilPresets();
+  }
+  if (advRain) advRain.value = district.annual_rainfall_mm;
+  if (advTemp) advTemp.value = district.avg_temp_c;
+
+  if (districtPresetStatus) {
+    const crops = (district.priority_crops || []).map(c => c.charAt(0).toUpperCase() + c.slice(1)).join(", ");
+    districtPresetStatus.innerHTML = `✅ Calibrated for <strong>${district.district}</strong>: ${district.soil_type} • ${district.annual_rainfall_mm}mm rain • Key: ${crops}`;
+  }
+}
+
+// ----------------- KISAN PLANT DOCTOR & PEST DIAGNOSTIC -----------------
+
+async function executePlantDoctor() {
+  const crop = doctorCropSelect ? doctorCropSelect.value : "all";
+  const part = doctorPartSelect ? doctorPartSelect.value : "all";
+  const query = doctorSearchInput ? doctorSearchInput.value.trim().toLowerCase() : "";
+
+  // Try API first
+  if (appState.apiOnline) {
+    try {
+      const res = await fetch(`${API_BASE}/plant-doctor/diagnose`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          crop_id: crop === "all" ? null : crop,
+          affected_part: part === "all" ? null : part,
+          symptom_query: query || null
+        })
+      });
+      if (res.ok) {
+        const data = await res.json();
+        renderPlantDoctor(data.issues || []);
+        return;
+      }
+    } catch (err) {
+      console.warn("Plant Doctor API offline, switching to client DB:", err);
+    }
+  }
+
+  // Offline filtering
+  let issues = [...LOCAL_PESTS_DB];
+  if (crop && crop !== "all") {
+    issues = issues.filter(i => i.crop_id === crop);
+  }
+  if (part && part !== "all") {
+    issues = issues.filter(i => (i.affected_parts || []).includes(part) || (i.affected_parts || []).includes("Whole Plant"));
+  }
+  if (query) {
+    issues = issues.filter(i => {
+      const nameMatch = (i.name || "").toLowerCase().includes(query) || (i.hindi_name || "").toLowerCase().includes(query);
+      const symptomMatch = (i.symptoms || []).some(s => s.toLowerCase().includes(query));
+      const controlMatch = (i.chemical_control || []).concat(i.biological_control || []).some(c => c.toLowerCase().includes(query));
+      return nameMatch || symptomMatch || controlMatch;
+    });
+  }
+
+  renderPlantDoctor(issues);
+}
+
+function resetPlantDoctor() {
+  if (doctorCropSelect) doctorCropSelect.value = "all";
+  if (doctorPartSelect) doctorPartSelect.value = "all";
+  if (doctorSearchInput) doctorSearchInput.value = "";
+  executePlantDoctor();
+}
+
+function renderPlantDoctor(issues) {
+  if (!doctorResultsGrid) return;
+  if (!issues || issues.length === 0) {
+    doctorResultsGrid.innerHTML = `
+      <div class="col-span-full text-center py-12 bg-white rounded-2xl border border-slate-200 p-8">
+        <div class="text-4xl mb-3">🔍</div>
+        <h4 class="font-bold text-slate-800 text-base">No Matching Pest or Disease Found</h4>
+        <p class="text-xs text-slate-500 mt-1 max-w-md mx-auto">Try clearing search terms or setting plant part to "All Parts" to see full diagnostics for this crop.</p>
+      </div>
+    `;
+    return;
+  }
+
+  doctorResultsGrid.innerHTML = issues.map(item => {
+    const sevColor = item.severity === "Critical" ? "bg-rose-100 text-rose-800 border-rose-300" :
+                    (item.severity === "High" ? "bg-amber-100 text-amber-800 border-amber-300" : "bg-emerald-100 text-emerald-800 border-emerald-300");
+    const speechScript = `${item.name}. ${item.hindi_name || ""}. लक्षण: ${(item.symptoms || []).join(", ")}. जैविक उपचार: ${(item.biological_control || []).join(", ")}. रासायनिक दवा: ${item.chemical_dosage || ""}. फसल कटाई अंतराल: ${item.pre_harvest_interval_days} दिन.`;
+    const escapedScript = encodeURIComponent(speechScript);
+
+    return `
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition p-5 flex flex-col justify-between space-y-4">
+        <div>
+          <!-- Header -->
+          <div class="flex items-start justify-between gap-3 border-b border-slate-100 pb-3">
+            <div>
+              <div class="flex items-center gap-2 flex-wrap">
+                <span class="text-xs px-2 py-0.5 rounded-full font-bold border ${sevColor}">
+                  ● ${item.severity}
+                </span>
+                <span class="text-xs bg-slate-100 text-slate-600 px-2 py-0.5 rounded-md font-semibold">${item.crop_name}</span>
+                <span class="text-xs bg-indigo-50 text-indigo-700 px-2 py-0.5 rounded-md font-semibold">${item.type}</span>
+              </div>
+              <h4 class="text-base font-bold text-slate-900 mt-1.5">${item.name}</h4>
+              <p class="text-xs font-semibold text-rose-700">${item.hindi_name || ""}</p>
+            </div>
+
+            <!-- Audio Speak Button -->
+            <button type="button" class="shrink-0 p-2.5 rounded-xl bg-slate-100 hover:bg-rose-100 text-slate-700 hover:text-rose-700 transition" title="Listen to Audio Advisory (ऑडियो सलाह सुनें)" onclick="speakDiagnosis(decodeURIComponent('${escapedScript}'), 'hi')">
+              🔊
+            </button>
+          </div>
+
+          <!-- Symptoms -->
+          <div class="mt-3">
+            <span class="text-xs font-bold text-slate-700 block mb-1">🔍 Diagnostic Symptoms (लक्षण):</span>
+            <ul class="text-xs text-slate-600 space-y-1 pl-4 list-disc">
+              ${(item.symptoms || []).map(s => `<li>${s}</li>`).join("")}
+            </ul>
+          </div>
+
+          <!-- Biological Control (IPM) -->
+          <div class="mt-3.5 bg-emerald-50/70 border border-emerald-200 rounded-xl p-3">
+            <span class="text-xs font-bold text-emerald-900 flex items-center gap-1.5 mb-1">
+              <span>🌿</span> Biological & Natural Control (जैविक उपचार):
+            </span>
+            <ul class="text-xs text-emerald-800 space-y-1 pl-4 list-disc">
+              ${(item.biological_control || []).map(b => `<li>${b}</li>`).join("")}
+            </ul>
+          </div>
+
+          <!-- Chemical Control & PHI -->
+          <div class="mt-3.5 bg-rose-50/70 border border-rose-200 rounded-xl p-3">
+            <span class="text-xs font-bold text-rose-900 flex items-center gap-1.5 mb-1">
+              <span>🧪</span> Chemical Intervention (रासायनिक नियंत्रण):
+            </span>
+            <div class="text-xs text-rose-950 font-mono bg-white/80 p-2 rounded-lg border border-rose-200 mb-2">
+              <strong>Dosage:</strong> ${item.chemical_dosage || (item.chemical_control || []).join(" OR ")}
+            </div>
+            <div class="flex items-center justify-between text-xs pt-1 border-t border-rose-200/60 text-rose-800">
+              <span class="flex items-center gap-1 font-semibold">
+                <span>⏱️ Pre-Harvest Interval (PHI):</span>
+              </span>
+              <span class="font-bold bg-rose-200 px-2 py-0.5 rounded-full text-rose-900">
+                Wait ${item.pre_harvest_interval_days} Days before picking
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Prevention Footer -->
+        <div class="pt-2 border-t border-slate-100 text-xs text-slate-500 italic">
+          💡 Preventive advice: ${(item.prevention_tips || []).join(" • ")}
+        </div>
+      </div>
+    `;
+  }).join("");
+}
+
+// ----------------- MANDI MARKET PRICES & TRENDS -----------------
+
+async function executeMandiPrices() {
+  const crop = mandiCommoditySelect ? mandiCommoditySelect.value : "all";
+  const state = mandiStateFilter ? mandiStateFilter.value : "all";
+  const query = mandiSearchInput ? mandiSearchInput.value.trim().toLowerCase() : "";
+
+  // Try API first
+  if (appState.apiOnline) {
+    try {
+      const url = new URL(`${API_BASE}/mandi-prices`);
+      if (crop !== "all") url.searchParams.append("crop_id", crop);
+      if (state !== "all") url.searchParams.append("state", state);
+      if (query) url.searchParams.append("query", query);
+
+      const res = await fetch(url);
+      if (res.ok) {
+        const data = await res.json();
+        renderMandiPrices(data.markets || []);
+        return;
+      }
+    } catch (err) {
+      console.warn("Mandi API offline, falling back to local DB:", err);
+    }
+  }
+
+  // Offline filtering
+  let prices = [...LOCAL_MANDI_DB];
+  if (crop && crop !== "all") {
+    prices = prices.filter(p => p.crop_id === crop);
+  }
+  if (state && state !== "all") {
+    prices = prices.filter(p => p.state.toLowerCase() === state.toLowerCase());
+  }
+  if (query) {
+    prices = prices.filter(p => {
+      return (p.commodity || "").toLowerCase().includes(query) ||
+             (p.market_apmc || "").toLowerCase().includes(query) ||
+             (p.district || "").toLowerCase().includes(query) ||
+             (p.crop_name || "").toLowerCase().includes(query);
+    });
+  }
+
+  renderMandiPrices(prices);
+}
+
+function renderMandiPrices(prices) {
+  if (!mandiCardsContainer) return;
+  if (!prices || prices.length === 0) {
+    mandiCardsContainer.innerHTML = `
+      <div class="col-span-full text-center py-12 bg-white rounded-2xl border border-slate-200 p-8">
+        <div class="text-4xl mb-3">📉</div>
+        <h4 class="font-bold text-slate-800 text-base">No Mandi Prices Matching Filter</h4>
+        <p class="text-xs text-slate-500 mt-1">Try selecting "All Commodities" or "All States" to view current benchmarks.</p>
+      </div>
+    `;
+    return;
+  }
+
+  mandiCardsContainer.innerHTML = prices.map(m => {
+    const diffMsp = m.modal_price_per_quintal - m.msp_price;
+    const mspBadge = diffMsp >= 0 ?
+      `<span class="text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-full font-bold text-xs">+₹${Math.round(diffMsp)} above MSP</span>` :
+      `<span class="text-rose-700 bg-rose-50 border border-rose-200 px-2 py-0.5 rounded-full font-bold text-xs">-₹${Math.abs(Math.round(diffMsp))} below MSP</span>`;
+
+    // Generate mini SVG sparkline
+    const hist = m.historical_30d || [];
+    let sparklineSVG = "";
+    if (hist.length >= 2) {
+      const vals = hist.map(h => h.modal_price);
+      const minV = Math.min(...vals);
+      const maxV = Math.max(...vals);
+      const range = (maxV - minV) || 1;
+      const w = 240;
+      const h = 40;
+      const points = vals.map((v, idx) => {
+        const x = (idx / (vals.length - 1)) * w;
+        const y = h - ((v - minV) / range) * (h - 8) - 4;
+        return `${x.toFixed(1)},${y.toFixed(1)}`;
+      }).join(" ");
+
+      sparklineSVG = `
+        <div class="mt-3 bg-slate-50 p-2.5 rounded-xl border border-slate-200">
+          <div class="flex items-center justify-between text-[10px] text-slate-500 mb-1 font-semibold">
+            <span>30-Day APMC Price Trajectory</span>
+            <span class="${m.trend.includes('Rising') ? 'text-emerald-600' : 'text-slate-600'}">● ${m.trend}</span>
+          </div>
+          <svg viewBox="0 0 ${w} ${h}" class="w-full h-10 overflow-visible">
+            <polyline fill="none" stroke="${m.trend.includes('Rising') ? '#059669' : '#0284c7'}" stroke-width="2.5" points="${points}" />
+            ${vals.map((v, idx) => {
+              const x = (idx / (vals.length - 1)) * w;
+              const y = h - ((v - minV) / range) * (h - 8) - 4;
+              return `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="3" fill="#ffffff" stroke="${m.trend.includes('Rising') ? '#059669' : '#0284c7'}" stroke-width="2" />`;
+            }).join("")}
+          </svg>
+          <div class="flex items-center justify-between text-[10px] font-mono text-slate-400 mt-1">
+            <span>30d ago: ₹${vals[0]}</span>
+            <span class="font-bold text-slate-700">Today: ₹${vals[vals.length - 1]}</span>
+          </div>
+        </div>
+      `;
+    }
+
+    return `
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition p-5 flex flex-col justify-between space-y-4">
+        <div>
+          <!-- Header -->
+          <div class="flex items-start justify-between gap-2 border-b border-slate-100 pb-3">
+            <div>
+              <span class="text-[10px] font-bold uppercase tracking-wider bg-slate-100 text-slate-700 px-2 py-0.5 rounded">${m.state} • ${m.district}</span>
+              <h4 class="font-black text-slate-900 text-base mt-1">${m.commodity}</h4>
+              <p class="text-xs text-brand-700 font-semibold">${m.market_apmc}</p>
+            </div>
+            <div class="text-right">
+              <span class="text-xs text-slate-500 block font-medium">Modal Price</span>
+              <span class="text-xl font-black text-emerald-700">₹${Math.round(m.modal_price_per_quintal).toLocaleString("en-IN")}</span>
+              <span class="text-[10px] text-slate-400 block font-mono">per Quintal (100 kg)</span>
+            </div>
+          </div>
+
+          <!-- MSP Comparison -->
+          <div class="flex items-center justify-between mt-3 text-xs">
+            <span class="text-slate-600 font-medium">Govt MSP: <strong class="font-mono text-slate-900">₹${Math.round(m.msp_price).toLocaleString("en-IN")}</strong></span>
+            ${mspBadge}
+          </div>
+
+          <!-- Price Range Bar -->
+          <div class="mt-3 bg-slate-100 p-2.5 rounded-xl text-xs flex items-center justify-between font-mono">
+            <span class="text-slate-600">Min: ₹${Math.round(m.min_price)}</span>
+            <span class="text-slate-400">↔</span>
+            <span class="text-slate-900 font-bold">Max: ₹${Math.round(m.max_price)}</span>
+          </div>
+
+          <!-- 30-day Trend Graph -->
+          ${sparklineSVG}
+        </div>
+
+        <!-- Selling Advice Box -->
+        <div class="pt-3 border-t border-slate-100">
+          <div class="bg-brand-50/80 border border-brand-200 rounded-xl p-2.5 text-xs text-brand-900">
+            <strong class="text-brand-800 flex items-center gap-1 mb-0.5">
+              <span>💡</span> Mandi Selling Advisory:
+            </strong>
+            ${m.selling_advice}
+          </div>
+        </div>
+      </div>
+    `;
+  }).join("");
+}
+
+// ----------------- SMART IRRIGATION & WATER BUDGETING SCHEDULER -----------------
+
+async function executeIrrigationScheduler() {
+  const crop = irrigCropSelect ? irrigCropSelect.value : "wheat";
+  const stage = irrigStageSelect ? irrigStageSelect.value : "CRI / Early Vegetative";
+  const soil = irrigSoilSelect ? irrigSoilSelect.value : "Alluvial Soil";
+  const landAcres = irrigLandInput ? parseFloat(irrigLandInput.value) || 2.0 : 2.0;
+  const pumpHp = irrigPumpInput ? parseFloat(irrigPumpInput.value) || 5.0 : 5.0;
+
+  // Try API first
+  if (appState.apiOnline) {
+    try {
+      const res = await fetch(`${API_BASE}/irrigation-schedule`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          crop_id: crop,
+          growth_stage: stage,
+          soil_type: soil,
+          land_size_acres: landAcres,
+          pump_capacity_hp: pumpHp
+        })
+      });
+      if (res.ok) {
+        const data = await res.json();
+        renderIrrigationResult(data);
+        return;
+      }
+    } catch (err) {
+      console.warn("Irrigation API offline, using client logic:", err);
+    }
+  }
+
+  // Offline calculation
+  const stageDepths = {
+    "CRI / Early Vegetative": 45,
+    "Branching / Tillering": 55,
+    "Flowering / Tasseling": 65,
+    "Grain / Pod / Tuber Filling": 60,
+    "Maturity": 30
+  };
+  const soilFactors = {
+    "Sandy Loam Soil": 0.85,
+    "Alluvial Soil": 1.0,
+    "Clay Loam Soil": 1.15,
+    "Black Soil (Regur)": 1.25,
+    "Red Soil": 0.95,
+    "Laterite Soil": 0.90
+  };
+
+  const baseDepth = stageDepths[stage] || 50;
+  const soilFactor = soilFactors[soil] || 1.0;
+  const waterMm = Math.round(baseDepth * soilFactor);
+  const volumeLiters = Math.round(waterMm * 4046.86 * landAcres);
+  const pumpFlowPerHour = pumpHp * 6500; // ~6500 L/hr per HP delivery
+  const pumpHours = Math.round((volumeLiters / pumpFlowPerHour) * 10) / 10;
+
+  const rainUpcoming = (appState.weatherData && appState.weatherData.rainForecast7Day) ? appState.weatherData.rainForecast7Day : 0;
+  const postponeAlert = rainUpcoming >= 15 ?
+    `⚠️ Heavy Rain Alert (${rainUpcoming} mm forecast in 7 days): Postpone surface irrigation by 4-6 days to avoid crop root rot and nitrogen leaching!` : null;
+
+  const offlineData = {
+    crop_name: crop.charAt(0).toUpperCase() + crop.slice(1),
+    growth_stage: stage,
+    water_depth_mm: waterMm,
+    total_water_volume_liters: volumeLiters,
+    pump_run_hours: pumpHours,
+    interval_days: soil.includes("Black") ? "12-15 days" : (soil.includes("Sandy") ? "6-8 days" : "9-11 days"),
+    weather_rain_forecast_mm: rainUpcoming,
+    postpone_irrigation_alert: postponeAlert,
+    water_saving_tips: [
+      "Use Alternate Furrow Irrigation (AFI) to reduce water usage by 30-35% without yield loss.",
+      "Apply irrigation in evening or early morning hours to minimize evaporative loss by up to 20%.",
+      "Adopt straw or biological mulch to lock in soil moisture and suppress weed emergence."
+    ]
+  };
+
+  renderIrrigationResult(offlineData);
+}
+
+function renderIrrigationResult(data) {
+  if (!irrigationResultContainer) return;
+  irrigationResultContainer.classList.remove("hidden");
+
+  const rainAlertHTML = data.postpone_irrigation_alert ? `
+    <div class="bg-amber-50 border-2 border-amber-300 rounded-2xl p-4 flex items-start gap-3 shadow-sm">
+      <span class="text-2xl">🌧️</span>
+      <div>
+        <h4 class="font-bold text-amber-900 text-sm">Weather Postponement Recommendation</h4>
+        <p class="text-xs text-amber-800 mt-0.5 leading-relaxed font-semibold">${data.postpone_irrigation_alert}</p>
+      </div>
+    </div>
+  ` : `
+    <div class="bg-blue-50 border border-blue-200 rounded-xl p-3 text-xs text-blue-900 flex items-center justify-between">
+      <span>🌤️ 7-Day Rainfall Forecast: <strong>${data.weather_rain_forecast_mm || 0} mm</strong></span>
+      <span class="font-semibold text-blue-700">No heavy rainfall expected. Proceed with scheduled irrigation.</span>
+    </div>
+  `;
+
+  irrigationResultContainer.innerHTML = `
+    ${rainAlertHTML}
+
+    <div class="grid grid-cols-1 sm:grid-cols-4 gap-4">
+      <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl">
+        <span class="text-xs text-slate-500 font-semibold block">Water Depth Needed</span>
+        <span class="text-2xl font-black text-blue-900 mt-1 block">${data.water_depth_mm} mm</span>
+        <span class="text-[10px] text-slate-400">Per irrigation turn</span>
+      </div>
+
+      <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl">
+        <span class="text-xs text-slate-500 font-semibold block">Total Water Volume</span>
+        <span class="text-2xl font-black text-blue-700 mt-1 block">${(data.total_water_volume_liters || 0).toLocaleString("en-IN")} L</span>
+        <span class="text-[10px] text-slate-400">Total liters across holding</span>
+      </div>
+
+      <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl">
+        <span class="text-xs text-slate-500 font-semibold block">Motor Pump Run Time</span>
+        <span class="text-2xl font-black text-indigo-700 mt-1 block">${data.pump_run_hours} Hours</span>
+        <span class="text-[10px] text-slate-400 font-mono">Electric/Diesel runtime</span>
+      </div>
+
+      <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl">
+        <span class="text-xs text-slate-500 font-semibold block">Recommended Frequency</span>
+        <span class="text-xl font-black text-emerald-800 mt-1 block">${data.interval_days}</span>
+        <span class="text-[10px] text-slate-400">Interval between irrigations</span>
+      </div>
+    </div>
+
+    <!-- Conservation Guidance -->
+    <div class="bg-white border border-slate-200 rounded-xl p-4">
+      <h4 class="font-bold text-slate-800 text-xs uppercase tracking-wider mb-2 flex items-center gap-1.5">
+        <span>💧</span> Water Conservation & Soil Moisture Best Practices:
+      </h4>
+      <ul class="text-xs text-slate-600 space-y-1.5 pl-4 list-disc">
+        ${(data.water_saving_tips || []).map(tip => `<li>${tip}</li>`).join("")}
+      </ul>
+    </div>
+  `;
+}
+
+// ----------------- ORGANIC & NATURAL FARMING DOCTOR -----------------
+
+async function executeOrganicDoctor() {
+  const crop = organicCropSelect ? organicCropSelect.value : "wheat";
+  const land = organicLandInput ? parseFloat(organicLandInput.value) || 2.0 : 2.0;
+
+  // Try API first
+  if (appState.apiOnline) {
+    try {
+      const res = await fetch(`${API_BASE}/organic-prescription`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          crop_id: crop,
+          land_size_acres: land
+        })
+      });
+      if (res.ok) {
+        const data = await res.json();
+        renderOrganicResult(data);
+        return;
+      }
+    } catch (err) {
+      console.warn("Organic API offline, calculating locally:", err);
+    }
+  }
+
+  // Offline calculation
+  const offlineData = {
+    crop_name: crop.charAt(0).toUpperCase() + crop.slice(1),
+    land_size_acres: land,
+    jeevamrutha_liters: Math.round(200 * land),
+    beejamrit_liters: Math.round(20 * land),
+    ghanjeevamrit_kg: Math.round(200 * land),
+    neemastra_liters: Math.round(100 * land),
+    recipes: LOCAL_ORGANIC_RECIPES
+  };
+
+  renderOrganicResult(offlineData);
+}
+
+function renderOrganicResult(data) {
+  if (!organicResultContainer) return;
+  organicResultContainer.classList.remove("hidden");
+
+  organicResultContainer.innerHTML = `
+    <!-- Acreage Volume Badges -->
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs font-semibold">
+      <div class="bg-emerald-50 border border-emerald-200 p-4 rounded-xl">
+        <span class="text-emerald-700 block text-xs">Jeevamrutha (जीवामृत)</span>
+        <span class="text-2xl font-black text-emerald-900 mt-1 block">${data.jeevamrutha_liters} Liters</span>
+        <span class="text-[10px] text-emerald-600 font-normal">200 L/acre per 21 days</span>
+      </div>
+
+      <div class="bg-amber-50 border border-amber-200 p-4 rounded-xl">
+        <span class="text-amber-700 block text-xs">Beejamrit (बीजामृत)</span>
+        <span class="text-2xl font-black text-amber-900 mt-1 block">${data.beejamrit_liters} Liters</span>
+        <span class="text-[10px] text-amber-600 font-normal">For seed coating & inoculation</span>
+      </div>
+
+      <div class="bg-yellow-50 border border-yellow-200 p-4 rounded-xl">
+        <span class="text-yellow-800 block text-xs">Ghanjeevamrit (घनजीवामृत)</span>
+        <span class="text-2xl font-black text-yellow-900 mt-1 block">${data.ghanjeevamrit_kg} kg</span>
+        <span class="text-[10px] text-yellow-600 font-normal">Solid basal soil inoculant</span>
+      </div>
+
+      <div class="bg-teal-50 border border-teal-200 p-4 rounded-xl">
+        <span class="text-teal-700 block text-xs">Neemastra (नीमास्त्र)</span>
+        <span class="text-2xl font-black text-teal-900 mt-1 block">${data.neemastra_liters} Liters</span>
+        <span class="text-[10px] text-teal-600 font-normal">Biological pest repellent spray</span>
+      </div>
+    </div>
+
+    <!-- Preparation Recipes Accordion -->
+    <div class="space-y-4 pt-2">
+      <h4 class="font-bold text-slate-800 text-sm flex items-center gap-2">
+        <span>📖</span> Step-by-Step Preparation Guides & Application Schedules:
+      </h4>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        ${(data.recipes || []).map(r => `
+          <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm space-y-3">
+            <div class="border-b border-slate-100 pb-2">
+              <h5 class="font-bold text-slate-900 text-base">${r.name}</h5>
+              <p class="text-xs text-emerald-700 font-semibold">${r.hindi_name || ""}</p>
+            </div>
+
+            <div>
+              <span class="text-xs font-bold text-slate-700 block mb-1">🧪 Standard Ingredients:</span>
+              <ul class="text-xs text-slate-600 space-y-1 pl-4 list-disc">
+                ${(r.ingredients || []).map(ing => `<li>${ing}</li>`).join("")}
+              </ul>
+            </div>
+
+            <div class="bg-slate-50 p-3 rounded-xl border border-slate-200">
+              <span class="text-xs font-bold text-slate-700 block mb-1">⚙️ Preparation Method:</span>
+              <ol class="text-xs text-slate-600 space-y-1 pl-4 list-decimal">
+                ${(r.preparation_steps || []).map(step => `<li>${step}</li>`).join("")}
+              </ol>
+            </div>
+
+            <div class="bg-emerald-50/70 p-3 rounded-xl border border-emerald-200 text-xs text-emerald-900">
+              <strong>🗓️ Application:</strong> ${r.application_method} (${r.dosage_per_acre})
+            </div>
+          </div>
+        `).join("")}
+      </div>
+    </div>
+  `;
+}
+
+// ----------------- KISAN YOJANA HUB (GOVERNMENT SCHEMES) -----------------
+
+async function executeKisanYojana() {
+  const crop = yojanaCropSelect ? yojanaCropSelect.value : "wheat";
+  const land = yojanaLandInput ? parseFloat(yojanaLandInput.value) || 2.0 : 2.0;
+  const category = yojanaCategorySelect ? yojanaCategorySelect.value : "Small / Marginal (< 2 Ha)";
+
+  // Try API first
+  if (appState.apiOnline) {
+    try {
+      const res = await fetch(`${API_BASE}/government-schemes/calculate`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          crop_id: crop,
+          land_size_acres: land,
+          farmer_category: category
+        })
+      });
+      if (res.ok) {
+        const data = await res.json();
+        renderYojanaResult(data);
+        return;
+      }
+    } catch (err) {
+      console.warn("Yojana API offline, calculating locally:", err);
+    }
+  }
+
+  // Offline calculations
+  const isKharif = ["rice", "cotton", "soybean", "maize"].includes(crop);
+  const isComm = ["potato", "sugarcane", "cotton"].includes(crop);
+  const premRate = isComm ? 0.05 : (isKharif ? 0.02 : 0.015);
+  const sumInsuredPerAcre = isComm ? 65000 : (crop === "rice" ? 42000 : 38000);
+  const totalSumInsured = Math.round(sumInsuredPerAcre * land);
+  const farmerPrem = Math.round(totalSumInsured * premRate);
+  const govtSub = Math.round(totalSumInsured * 0.10);
+
+  const kccScale = isComm ? 55000 : (crop === "rice" ? 38000 : 34000);
+  const cropComponent = Math.round(kccScale * land);
+  const kccTotal = Math.round(cropComponent * 1.30); // 10% post-harvest + 20% maintenance
+
+  const isSmall = category.includes("Small");
+  const dripCost = Math.round(45000 * land);
+  const dripSubsidyPct = isSmall ? 55 : 45;
+  const dripSubsidyAmt = Math.round(dripCost * (dripSubsidyPct / 100));
+
+  const offlineData = {
+    crop_name: crop.charAt(0).toUpperCase() + crop.slice(1),
+    land_size_acres: land,
+    pmfby: {
+      season_category: isComm ? "Commercial / Horticultural" : (isKharif ? "Kharif" : "Rabi"),
+      sum_insured_inr: totalSumInsured,
+      farmer_premium_rate_percent: premRate * 100,
+      farmer_share_premium_inr: farmerPrem,
+      govt_subsidy_share_inr: govtSub,
+      official_portal: "https://pmfby.gov.in"
+    },
+    kcc: {
+      scale_of_finance_per_acre_inr: kccScale,
+      recommended_credit_limit_inr: kccTotal,
+      interest_rate_percent: 7.0,
+      prompt_repayment_incentive_percent: 3.0,
+      effective_interest_rate_percent: 4.0,
+      official_portal: "https://myscheme.gov.in"
+    },
+    pmksy_drip: {
+      farmer_category: category,
+      subsidy_percentage: dripSubsidyPct,
+      approx_equipment_cost_inr: dripCost,
+      eligible_subsidy_inr: dripSubsidyAmt,
+      farmer_payable_inr: dripCost - dripSubsidyAmt
+    },
+    pm_kisan_annual_cash_inr: 6000
+  };
+
+  renderYojanaResult(offlineData);
+}
+
+function renderYojanaResult(data) {
+  if (!yojanaResultContainer) return;
+  yojanaResultContainer.classList.remove("hidden");
+
+  yojanaResultContainer.innerHTML = `
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+      <!-- 1. PMFBY Crop Insurance -->
+      <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-4">
+        <div class="flex items-start justify-between">
+          <div>
+            <span class="text-xs font-bold uppercase tracking-wider text-amber-700">Crop Risk Protection</span>
+            <h4 class="text-lg font-bold text-slate-900 mt-1">🌾 PM Fasal Bima Yojana (PMFBY)</h4>
+            <p class="text-xs text-slate-500">${data.pmfby.season_category} Season Insurance</p>
+          </div>
+          <span class="bg-amber-100 text-amber-800 text-xs font-black px-2.5 py-1 rounded-lg">
+            ${data.pmfby.farmer_premium_rate_percent}% Premium
+          </span>
+        </div>
+
+        <div class="space-y-2 text-xs border-y border-slate-100 py-3">
+          <div class="flex justify-between"><span class="text-slate-600">Total Sum Insured Coverage:</span> <strong class="font-mono text-slate-900">₹${(data.pmfby.sum_insured_inr || 0).toLocaleString("en-IN")}</strong></div>
+          <div class="flex justify-between"><span class="text-slate-600">Farmer Payable Share:</span> <strong class="font-mono text-emerald-700 text-sm">₹${(data.pmfby.farmer_share_premium_inr || 0).toLocaleString("en-IN")}</strong></div>
+          <div class="flex justify-between"><span class="text-slate-600">Govt Premium Subsidy:</span> <strong class="font-mono text-slate-700">₹${(data.pmfby.govt_subsidy_share_inr || 0).toLocaleString("en-IN")}</strong></div>
+        </div>
+
+        <a href="https://pmfby.gov.in" target="_blank" rel="noopener" class="inline-flex items-center gap-1 text-xs font-bold text-amber-700 hover:text-amber-900 hover:underline">
+          <span>Apply on PMFBY Portal</span> <span>↗</span>
+        </a>
+      </div>
+
+      <!-- 2. Kisan Credit Card (KCC) -->
+      <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-4">
+        <div class="flex items-start justify-between">
+          <div>
+            <span class="text-xs font-bold uppercase tracking-wider text-indigo-700">Working Capital Credit</span>
+            <h4 class="text-lg font-bold text-slate-900 mt-1">💳 Kisan Credit Card (KCC)</h4>
+            <p class="text-xs text-slate-500">Subsidized Institutional Crop Loan</p>
+          </div>
+          <span class="bg-emerald-100 text-emerald-800 text-xs font-black px-2.5 py-1 rounded-lg">
+            ${data.kcc.effective_interest_rate_percent}% Effective Interest
+          </span>
+        </div>
+
+        <div class="space-y-2 text-xs border-y border-slate-100 py-3">
+          <div class="flex justify-between"><span class="text-slate-600">Scale of Finance / Acre:</span> <strong class="font-mono text-slate-900">₹${(data.kcc.scale_of_finance_per_acre_inr || 0).toLocaleString("en-IN")}</strong></div>
+          <div class="flex justify-between"><span class="text-slate-600">Max Sanction Limit (with 30% add-on):</span> <strong class="font-mono text-indigo-700 text-sm">₹${(data.kcc.recommended_credit_limit_inr || 0).toLocaleString("en-IN")}</strong></div>
+          <div class="flex justify-between"><span class="text-slate-600">Interest Subvention:</span> <span class="text-slate-700">7% base - 3% prompt incentive = <strong>4% net</strong></span></div>
+        </div>
+
+        <span class="text-xs text-slate-500 block">Available at nearest Commercial, Regional Rural (RRB), or Cooperative Bank.</span>
+      </div>
+
+      <!-- 3. PMKSY Micro-Irrigation Drip Subsidy -->
+      <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-4">
+        <div class="flex items-start justify-between">
+          <div>
+            <span class="text-xs font-bold uppercase tracking-wider text-blue-700">Micro-Irrigation Subsidy</span>
+            <h4 class="text-lg font-bold text-slate-900 mt-1">🚿 PM Krishi Sinchayee Yojana (PMKSY)</h4>
+            <p class="text-xs text-slate-500">Per Drop More Crop Drip / Sprinkler Support</p>
+          </div>
+          <span class="bg-blue-100 text-blue-800 text-xs font-black px-2.5 py-1 rounded-lg">
+            ${data.pmksy_drip.subsidy_percentage}% Subsidy
+          </span>
+        </div>
+
+        <div class="space-y-2 text-xs border-y border-slate-100 py-3">
+          <div class="flex justify-between"><span class="text-slate-600">Est. Drip Installation Cost:</span> <strong class="font-mono text-slate-900">₹${(data.pmksy_drip.approx_equipment_cost_inr || 0).toLocaleString("en-IN")}</strong></div>
+          <div class="flex justify-between"><span class="text-slate-600">Eligible Govt Subsidy:</span> <strong class="font-mono text-emerald-700 text-sm">₹${(data.pmksy_drip.eligible_subsidy_inr || 0).toLocaleString("en-IN")}</strong></div>
+          <div class="flex justify-between"><span class="text-slate-600">Farmer Net Contribution:</span> <strong class="font-mono text-slate-700">₹${(data.pmksy_drip.farmer_payable_inr || 0).toLocaleString("en-IN")}</strong></div>
+        </div>
+
+        <span class="text-xs text-slate-500 block">Apply via state horticulture department or e-Horticulture portal.</span>
+      </div>
+
+      <!-- 4. PM-KISAN Cash Support -->
+      <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-4">
+        <div class="flex items-start justify-between">
+          <div>
+            <span class="text-xs font-bold uppercase tracking-wider text-emerald-700">Direct Income Support</span>
+            <h4 class="text-lg font-bold text-slate-900 mt-1">🏦 PM-KISAN Samman Nidhi</h4>
+            <p class="text-xs text-slate-500">Direct Bank Transfer (DBT) to Landholding Farmers</p>
+          </div>
+          <span class="bg-emerald-100 text-emerald-800 text-xs font-black px-2.5 py-1 rounded-lg">
+            ₹6,000 / Year
+          </span>
+        </div>
+
+        <div class="space-y-2 text-xs border-y border-slate-100 py-3">
+          <div class="flex justify-between"><span class="text-slate-600">Total Annual Assistance:</span> <strong class="font-mono text-emerald-700 text-base">₹${(data.pm_kisan_annual_cash_inr || 6000).toLocaleString("en-IN")}</strong></div>
+          <div class="flex justify-between"><span class="text-slate-600">Installments:</span> <span class="text-slate-800 font-medium">3 equal tranches of <strong>₹2,000</strong> every 4 months</span></div>
+          <div class="flex justify-between"><span class="text-slate-600">eKYC Requirement:</span> <span class="text-slate-800 font-semibold">Aadhaar seeded bank account mandatory</span></div>
+        </div>
+
+        <a href="https://pmkisan.gov.in" target="_blank" rel="noopener" class="inline-flex items-center gap-1 text-xs font-bold text-emerald-700 hover:text-emerald-900 hover:underline">
+          <span>Check Beneficiary Status on PM-KISAN</span> <span>↗</span>
+        </a>
+      </div>
+
+    </div>
+  `;
+}
+
+// ----------------- KISAN BAHI-KHATA (FARM LEDGER & EXPENSE TRACKER) -----------------
+
+const KHATA_STORAGE_KEY = "agriassist_bahi_khata";
+
+function initKisanKhata() {
+  const existing = localStorage.getItem(KHATA_STORAGE_KEY);
+  if (!existing) {
+    const initial = [
+      { id: "tx_1", date: new Date(Date.now() - 86400000 * 3).toISOString(), type: "Expense", category: "Seeds", amount: 1800, notes: "Wheat HD-2967 certified seed" },
+      { id: "tx_2", date: new Date(Date.now() - 86400000 * 2).toISOString(), type: "Expense", category: "Fertilizer", amount: 2700, notes: "2 bags DAP + 1 bag Urea" }
+    ];
+    localStorage.setItem(KHATA_STORAGE_KEY, JSON.stringify(initial));
+  }
+}
+
+function getKhataEntries() {
+  try {
+    const raw = localStorage.getItem(KHATA_STORAGE_KEY);
+    return raw ? JSON.parse(raw) : [];
+  } catch (e) {
+    return [];
+  }
+}
+
+function saveKhataEntries(entries) {
+  localStorage.setItem(KHATA_STORAGE_KEY, JSON.stringify(entries));
+}
+
+function addKhataTransaction(e) {
+  e.preventDefault();
+  const type = khataType ? khataType.value : "Expense";
+  const cat = khataCategory ? khataCategory.value : "Seeds";
+  const amt = khataAmount ? parseFloat(khataAmount.value) : 0;
+  const notes = khataNotes ? khataNotes.value.trim() : "";
+
+  if (isNaN(amt) || amt <= 0) {
+    alert("Please enter a valid amount greater than zero.");
+    return;
+  }
+
+  const entries = getKhataEntries();
+  const newTx = {
+    id: "tx_" + Date.now(),
+    date: new Date().toISOString(),
+    type: type,
+    category: cat,
+    amount: amt,
+    notes: notes || "-"
+  };
+
+  entries.unshift(newTx);
+  saveKhataEntries(entries);
+
+  // Reset inputs
+  if (khataAmount) khataAmount.value = "";
+  if (khataNotes) khataNotes.value = "";
+
+  renderKhataLedger();
+}
+
+function deleteKhataTransaction(id) {
+  const entries = getKhataEntries().filter(t => t.id !== id);
+  saveKhataEntries(entries);
+  renderKhataLedger();
+}
+window.deleteKhataTransaction = deleteKhataTransaction;
+
+function clearKhataLedger() {
+  if (confirm("Are you sure you want to delete all entries from your farm ledger? This cannot be undone.")) {
+    localStorage.removeItem(KHATA_STORAGE_KEY);
+    renderKhataLedger();
+  }
+}
+
+function renderKhataLedger() {
+  const entries = getKhataEntries();
+  let totalExpense = 0;
+  let totalRevenue = 0;
+
+  entries.forEach(t => {
+    if (t.type === "Expense") {
+      totalExpense += t.amount;
+    } else {
+      totalRevenue += t.amount;
+    }
+  });
+
+  const net = totalRevenue - totalExpense;
+
+  if (khataTotalExpense) khataTotalExpense.textContent = `₹${totalExpense.toLocaleString("en-IN")}`;
+  if (khataTotalRevenue) khataTotalRevenue.textContent = `₹${totalRevenue.toLocaleString("en-IN")}`;
+  if (khataNetBalance) {
+    khataNetBalance.textContent = `₹${net.toLocaleString("en-IN")}`;
+    khataNetBalance.className = `text-2xl font-black mt-1 ${net >= 0 ? 'text-emerald-800' : 'text-rose-800'}`;
+  }
+  if (khataEntryCount) {
+    khataEntryCount.textContent = `${entries.length} record${entries.length === 1 ? '' : 's'}`;
+  }
+
+  if (!khataTableBody) return;
+  if (entries.length === 0) {
+    khataTableBody.innerHTML = `
+      <tr>
+        <td colspan="6" class="p-8 text-center text-slate-400 italic">
+          No records yet. Add an expense or income entry above to start your farm ledger.
+        </td>
+      </tr>
+    `;
+    return;
+  }
+
+  khataTableBody.innerHTML = entries.map(t => {
+    const formattedDate = new Date(t.date).toLocaleDateString("en-IN", {
+      day: "numeric", month: "short", year: "numeric"
+    });
+    const typeBadge = t.type === "Expense" ?
+      `<span class="bg-rose-100 text-rose-800 px-2 py-0.5 rounded-full font-bold text-[10px]">🔴 Expense</span>` :
+      `<span class="bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full font-bold text-[10px]">🟢 Income</span>`;
+    const amtColor = t.type === "Expense" ? "text-rose-700" : "text-emerald-700";
+
+    return `
+      <tr class="hover:bg-slate-50 transition border-b border-slate-100">
+        <td class="p-3 text-slate-600 whitespace-nowrap font-mono">${formattedDate}</td>
+        <td class="p-3">${typeBadge}</td>
+        <td class="p-3 font-semibold text-slate-800">${t.category}</td>
+        <td class="p-3 text-slate-600 max-w-xs truncate">${t.notes}</td>
+        <td class="p-3 text-right font-black font-mono ${amtColor}">₹${t.amount.toLocaleString("en-IN")}</td>
+        <td class="p-3 text-center">
+          <button type="button" class="text-rose-500 hover:text-rose-700 font-bold text-xs p-1" onclick="deleteKhataTransaction('${t.id}')" title="Delete entry">
+            ✕
+          </button>
+        </td>
+      </tr>
+    `;
+  }).join("");
+}
+
