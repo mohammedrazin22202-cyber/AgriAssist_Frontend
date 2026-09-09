@@ -759,6 +759,203 @@
       </section>
     </div>
 
+    <!-- ==================== TAB 7: ORGANIC & NATURAL FARMING (JAIVIK KHETI) ==================== -->
+    <div id="organicTabContent" class="hidden space-y-8">
+      <div class="bg-gradient-to-r from-emerald-900 via-green-950 to-teal-950 text-white rounded-2xl p-6 sm:p-8 shadow-lg relative overflow-hidden">
+        <div class="relative z-10 max-w-3xl">
+          <h2 class="text-2xl sm:text-3xl font-extrabold mb-2" data-i18n="organicHeroTitle">🌿 Organic & Natural Farming (Jaivik Kheti / ZBNF)</h2>
+          <p class="text-emerald-100 text-sm sm:text-base leading-relaxed" data-i18n="organicHeroDesc">
+            Zero-chemical biological prescriptions. Calculate exact volumes of Jeevamrutha, Beejamrit seed treatment, Ghanjeevamrit solid manure, and botanical pest repellents tailored to your acreage.
+          </p>
+        </div>
+      </div>
+
+      <section class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 sm:p-8 space-y-6">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="organicCropSelect">Target Crop</label>
+            <select id="organicCropSelect" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-sm">
+              <option value="wheat">Wheat (गेहूं)</option>
+              <option value="rice">Rice (धान)</option>
+              <option value="chickpea">Chickpea / Gram (चना)</option>
+              <option value="cotton">Cotton (कपास)</option>
+              <option value="soybean">Soybean (सोयाबीन)</option>
+              <option value="mustard">Mustard (सरसों)</option>
+              <option value="tomato">Tomato (टमाटर)</option>
+              <option value="potato">Potato (आलू)</option>
+              <option value="onion">Onion (प्याज़)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="organicLandInput">Land Size (Acres)</label>
+            <input id="organicLandInput" type="number" step="0.5" min="0.25" max="500" value="2.0" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-sm font-bold">
+          </div>
+        </div>
+
+        <button id="calcOrganicBtn" type="button" class="px-7 py-3 bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-sm rounded-xl shadow-md transition flex items-center gap-2">
+          <span>🌿</span> <span>Calculate Organic Prescriptions & Recipes</span>
+        </button>
+
+        <!-- Organic Output Container -->
+        <div id="organicResultContainer" class="hidden pt-6 border-t border-slate-200 space-y-6">
+          <!-- Injected by app.js -->
+        </div>
+      </section>
+    </div>
+
+    <!-- ==================== TAB 8: KISAN YOJANA HUB (GOVERNMENT SCHEMES) ==================== -->
+    <div id="yojanaTabContent" class="hidden space-y-8">
+      <div class="bg-gradient-to-r from-amber-800 via-yellow-950 to-slate-900 text-white rounded-2xl p-6 sm:p-8 shadow-lg relative overflow-hidden">
+        <div class="relative z-10 max-w-3xl">
+          <h2 class="text-2xl sm:text-3xl font-extrabold mb-2" data-i18n="yojanaHeroTitle">🏛️ Kisan Yojana Hub (Government Schemes & Subsidies)</h2>
+          <p class="text-amber-100 text-sm sm:text-base leading-relaxed" data-i18n="yojanaHeroDesc">
+            Maximize your government entitlements. Calculate PM Fasal Bima crop insurance premiums, check subsidized Kisan Credit Card (KCC) loan limits, PM-KISAN cash support, and PMKSY drip irrigation subsidies.
+          </p>
+        </div>
+      </div>
+
+      <section class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 sm:p-8 space-y-6">
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="yojanaCropSelect">Primary Crop</label>
+            <select id="yojanaCropSelect" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-sm">
+              <option value="wheat">Wheat (गेहूं - Rabi)</option>
+              <option value="rice">Rice / Paddy (धान - Kharif)</option>
+              <option value="cotton">Cotton (कपास - Commercial)</option>
+              <option value="mustard">Mustard (सरसों)</option>
+              <option value="chickpea">Chickpea (चना)</option>
+              <option value="soybean">Soybean (सोयाबीन)</option>
+              <option value="potato">Potato (आलू - Commercial)</option>
+              <option value="sugarcane">Sugarcane (गन्ना)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="yojanaLandInput">Total Land Holding (Acres)</label>
+            <input id="yojanaLandInput" type="number" step="0.5" min="0.25" max="500" value="2.0" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-sm font-bold">
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="yojanaCategorySelect">Farmer Category</label>
+            <select id="yojanaCategorySelect" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-sm">
+              <option value="Small / Marginal (< 2 Ha)">Small / Marginal (&lt; 5 Acres / 2 Ha) - 55% Drip Subsidy</option>
+              <option value="General (> 2 Ha)">General (&gt; 5 Acres / 2 Ha) - 45% Drip Subsidy</option>
+            </select>
+          </div>
+        </div>
+
+        <button id="calcYojanaBtn" type="button" class="px-7 py-3 bg-amber-700 hover:bg-amber-800 text-white font-bold text-sm rounded-xl shadow-md transition flex items-center gap-2">
+          <span>🏛️</span> <span>Compute Eligible Subsidies & Benefits</span>
+        </button>
+
+        <!-- Yojana Results Container -->
+        <div id="yojanaResultContainer" class="hidden pt-6 border-t border-slate-200 space-y-6">
+          <!-- Populated by app.js -->
+        </div>
+      </section>
+    </div>
+
+    <!-- ==================== TAB 9: KISAN BAHI-KHATA (FARM EXPENSE DIARY) ==================== -->
+    <div id="khataTabContent" class="hidden space-y-8">
+      <div class="bg-gradient-to-r from-slate-800 via-indigo-950 to-slate-900 text-white rounded-2xl p-6 sm:p-8 shadow-lg relative overflow-hidden">
+        <div class="relative z-10 max-w-3xl">
+          <h2 class="text-2xl sm:text-3xl font-extrabold mb-2" data-i18n="khataHeroTitle">📒 Kisan Bahi-Khata (Farm Diary & Expense Tracker)</h2>
+          <p class="text-slate-200 text-sm sm:text-base leading-relaxed" data-i18n="khataHeroDesc">
+            Your private, 100% offline farm account book. Record seed costs, labor, fertilizers, and crop sale receipts directly on your phone or computer. Calculate real net profit season-over-season.
+          </p>
+        </div>
+      </div>
+
+      <!-- Financial Balance Card -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs font-semibold">
+        <div class="bg-rose-50 border border-rose-200 p-4 rounded-xl">
+          <div class="text-rose-600 text-xs">Total Expenses (कुल खर्च)</div>
+          <div class="text-2xl font-black text-rose-800 mt-1" id="khataTotalExpense">₹0</div>
+        </div>
+        <div class="bg-emerald-50 border border-emerald-200 p-4 rounded-xl">
+          <div class="text-emerald-600 text-xs">Total Revenue (कुल आमदनी)</div>
+          <div class="text-2xl font-black text-emerald-800 mt-1" id="khataTotalRevenue">₹0</div>
+        </div>
+        <div class="bg-indigo-50 border border-indigo-200 p-4 rounded-xl">
+          <div class="text-indigo-600 text-xs">Net Farm Balance (शुद्ध बचत / लाभ)</div>
+          <div class="text-2xl font-black text-indigo-800 mt-1" id="khataNetBalance">₹0</div>
+        </div>
+      </div>
+
+      <!-- Transaction Entry Form -->
+      <section class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 space-y-4">
+        <h4 class="font-bold text-slate-800 text-sm flex items-center gap-2">
+          <span>✍️</span> <span>Add Farm Transaction (नया लेन-देन दर्ज करें)</span>
+        </h4>
+
+        <form id="khataForm" class="grid grid-cols-1 sm:grid-cols-4 gap-4 text-xs">
+          <div>
+            <label class="block font-semibold text-slate-700 mb-1" for="khataType">Type</label>
+            <select id="khataType" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-sm font-semibold">
+              <option value="Expense">🔴 Expense (खर्च)</option>
+              <option value="Income">🟢 Income / Sale (आमदनी)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-semibold text-slate-700 mb-1" for="khataCategory">Category</label>
+            <select id="khataCategory" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-sm">
+              <option value="Seeds">Certified Seeds (बीज)</option>
+              <option value="Fertilizer">Fertilizers / DAP / Urea (खाद)</option>
+              <option value="Pesticides">Pesticides / Fungicides (कीटनाशक)</option>
+              <option value="Labor">Farm Labor / Weeding (मजदूरी)</option>
+              <option value="Tillage">Tractor / Plowing (जुताई / बुवाई)</option>
+              <option value="Irrigation">Diesel / Electricity / Tube-well (सिंचाई)</option>
+              <option value="Crop Sale">Crop Mandi Sale (फसल बिक्री)</option>
+              <option value="Subsidy">Govt Subsidy / PM-KISAN (सब्सिडी)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-semibold text-slate-700 mb-1" for="khataAmount">Amount (₹)</label>
+            <input id="khataAmount" type="number" step="50" min="1" required placeholder="e.g. 2400" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-sm font-bold">
+          </div>
+          <div>
+            <label class="block font-semibold text-slate-700 mb-1" for="khataNotes">Description / Note</label>
+            <input id="khataNotes" type="text" placeholder="e.g. 2 bags Urea, Mandi sale 10 qtl..." class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-sm">
+          </div>
+          <div class="sm:col-span-4 flex items-center gap-3 pt-2">
+            <button type="submit" class="px-6 py-2.5 bg-brand-700 hover:bg-brand-800 text-white font-bold text-xs sm:text-sm rounded-xl shadow-sm transition">
+              + Save Entry to Farm Ledger
+            </button>
+            <button id="clearKhataBtn" type="button" class="text-xs text-rose-600 hover:underline">
+              Clear All Ledger Data
+            </button>
+          </div>
+        </form>
+      </section>
+
+      <!-- Ledger Table -->
+      <section class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 overflow-hidden">
+        <div class="flex items-center justify-between mb-4">
+          <h4 class="font-bold text-slate-800 text-sm flex items-center gap-2">
+            <span>📜</span> <span>Ledger Records (लेन-देन इतिहास)</span>
+          </h4>
+          <span class="text-xs text-slate-500 font-mono" id="khataEntryCount">0 records</span>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-xs text-left">
+            <thead class="bg-slate-50 text-slate-700 border-b border-slate-200">
+              <tr>
+                <th class="p-3">Date</th>
+                <th class="p-3">Type</th>
+                <th class="p-3">Category</th>
+                <th class="p-3">Note</th>
+                <th class="p-3 text-right">Amount (₹)</th>
+                <th class="p-3 text-center">Action</th>
+              </tr>
+            </thead>
+            <tbody id="khataTableBody" class="divide-y divide-slate-100">
+              <!-- Rendered by app.js -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+
+
   </main>
 
   <!-- FLOATING COMPARISON BAR (Shows when crops are checked for comparison) -->
