@@ -959,6 +959,18 @@ const yojanaLandInput = document.getElementById("yojanaLandInput");
 const yojanaCategorySelect = document.getElementById("yojanaCategorySelect");
 const calcYojanaBtn = document.getElementById("calcYojanaBtn");
 const yojanaResultContainer = document.getElementById("yojanaResultContainer");
+const kccLoanAmount = document.getElementById("kccLoanAmount");
+const kccLoanAmountDisplay = document.getElementById("kccLoanAmountDisplay");
+const kccLoanTenure = document.getElementById("kccLoanTenure");
+const kccPromptRepayCheck = document.getElementById("kccPromptRepayCheck");
+const kccGrossInterest = document.getElementById("kccGrossInterest");
+const kccSubventionSavings = document.getElementById("kccSubventionSavings");
+const kccNetInterest = document.getElementById("kccNetInterest");
+const kccTotalPayable = document.getElementById("kccTotalPayable");
+const schemeSearchInput = document.getElementById("schemeSearchInput");
+const schemesDirectoryGrid = document.getElementById("schemesDirectoryGrid");
+let activeSchemeCategory = "All";
+
 
 // Khata Elements
 const khataForm = document.getElementById("khataForm");
@@ -1060,6 +1072,8 @@ document.addEventListener("DOMContentLoaded", () => {
   populateFertilizerCropOptions();
   initDistrictSelector();
   initKisanKhata();
+  calculateKccLoanEstimator();
+  renderSchemesDirectory();
   checkApiHealth();
   updateSoilPresets();
   executeRecommendation();
@@ -1157,6 +1171,27 @@ function setupEventListeners() {
 
   // Yojana Hub controls
   calcYojanaBtn?.addEventListener("click", executeKisanYojana);
+  kccLoanAmount?.addEventListener("input", calculateKccLoanEstimator);
+  kccLoanTenure?.addEventListener("change", calculateKccLoanEstimator);
+  kccPromptRepayCheck?.addEventListener("change", calculateKccLoanEstimator);
+  schemeSearchInput?.addEventListener("input", (e) => {
+    renderSchemesDirectory(e.target.value, activeSchemeCategory);
+  });
+
+  const schemeFilterBtns = document.querySelectorAll(".scheme-filter-btn");
+  schemeFilterBtns.forEach(btn => {
+    btn.addEventListener("click", () => {
+      schemeFilterBtns.forEach(b => {
+        b.classList.remove("active", "bg-amber-800", "text-white");
+        b.classList.add("bg-slate-100", "text-slate-700");
+      });
+      btn.classList.add("active", "bg-amber-800", "text-white");
+      btn.classList.remove("bg-slate-100", "text-slate-700");
+      activeSchemeCategory = btn.getAttribute("data-category") || "All";
+      renderSchemesDirectory(schemeSearchInput ? schemeSearchInput.value : "", activeSchemeCategory);
+    });
+  });
+
 
   // Kisan Khata controls
   khataForm?.addEventListener("submit", addKhataTransaction);
@@ -3381,7 +3416,173 @@ function renderYojanaResult(data) {
   `;
 }
 
+// ----------------- KCC LOAN CALCULATOR & SCHEMES DIRECTORY -----------------
+
+function calculateKccLoanEstimator() {
+  if (!kccLoanAmount) return;
+  const principal = parseFloat(kccLoanAmount.value) || 100000;
+  const tenureMonths = parseInt(kccLoanTenure ? kccLoanTenure.value : "12") || 12;
+  const isPrompt = kccPromptRepayCheck ? kccPromptRepayCheck.checked : true;
+
+  if (kccLoanAmountDisplay) {
+    kccLoanAmountDisplay.textContent = `₹${principal.toLocaleString("en-IN")}`;
+  }
+
+  const yearFraction = tenureMonths / 12.0;
+  // Baseline 7% per annum
+  const grossInterest = Math.round(principal * 0.07 * yearFraction);
+  // Prompt Repayment Incentive (3% per annum subvention)
+  const subventionSavings = isPrompt ? Math.round(principal * 0.03 * yearFraction) : 0;
+  // Net Interest
+  const netInterest = Math.max(0, grossInterest - subventionSavings);
+  const totalPayable = principal + netInterest;
+
+  if (kccGrossInterest) kccGrossInterest.textContent = `₹${grossInterest.toLocaleString("en-IN")}`;
+  if (kccSubventionSavings) {
+    kccSubventionSavings.textContent = isPrompt ? `-₹${subventionSavings.toLocaleString("en-IN")}` : "₹0 (Lost)";
+    kccSubventionSavings.className = `text-base font-bold font-mono ${isPrompt ? 'text-emerald-700' : 'text-slate-400'}`;
+  }
+  if (kccNetInterest) {
+    kccNetInterest.textContent = `₹${netInterest.toLocaleString("en-IN")}`;
+    kccNetInterest.className = `text-base font-black font-mono ${isPrompt ? 'text-indigo-800' : 'text-rose-800'}`;
+  }
+  if (kccTotalPayable) kccTotalPayable.textContent = `₹${totalPayable.toLocaleString("en-IN")}`;
+}
+
+const SCHEMES_DIRECTORY = [
+  {
+    id: "pm_kisan",
+    name: "PM-KISAN Samman Nidhi",
+    category: "Direct Benefit",
+    tag: "Central DBT",
+    eligibility: "All landholding farmer families across India with cultivable landholdings.",
+    benefits: "₹6,000 per year paid in 3 four-monthly installments of ₹2,000 directly via DBT into Aadhaar-linked accounts.",
+    action_link: "https://pmkisan.gov.in"
+  },
+  {
+    id: "pmfby",
+    name: "Pradhan Mantri Fasal Bima Yojana (PMFBY)",
+    category: "Crop Insurance",
+    tag: "Risk Coverage",
+    eligibility: "All farmers growing notified food crops, oilseeds, and annual commercial/horticultural crops.",
+    benefits: "Comprehensive crop insurance against drought, floods, pest epidemics, unseasonal rains. Farmer premium capped at 1.5% to 2.0%.",
+    action_link: "https://pmfby.gov.in"
+  },
+  {
+    id: "kcc",
+    name: "Kisan Credit Card (KCC) Scheme",
+    category: "Subsidized Credit",
+    tag: "4% Net Interest",
+    eligibility: "Owner cultivators, tenant farmers, oral lessees, and self-help groups (SHGs).",
+    benefits: "Subsidized institutional crop loans at 7% p.a., reduced to effective 4% p.a. upon prompt repayment within 1 year.",
+    action_link: "https://myscheme.gov.in"
+  },
+  {
+    id: "pmksy_drip",
+    name: "PMKSY - Per Drop More Crop (Micro-Irrigation)",
+    category: "Irrigation Infrastructure",
+    tag: "Water Saving",
+    eligibility: "Farmers with assured irrigation source adopting drip or sprinkler irrigation.",
+    benefits: "55% financial subsidy for small & marginal farmers and 45% for other farmers on micro-irrigation system cost.",
+    action_link: "https://pmksy.gov.in"
+  },
+  {
+    id: "pm_kusum",
+    name: "PM-KUSUM Solar Agriculture Pumps",
+    category: "Irrigation Infrastructure",
+    tag: "Solar Energy",
+    eligibility: "Individual farmers, water user associations, and farmer producer organizations (FPOs).",
+    benefits: "Up to 60% capital subsidy for installing standalone solar agriculture pumps (3HP to 7.5HP) replacing diesel engines.",
+    action_link: "https://pmkusum.mnre.gov.in"
+  },
+  {
+    id: "smam",
+    name: "Sub-Mission on Agricultural Mechanization (SMAM)",
+    category: "Farm Machinery",
+    tag: "Mechanization",
+    eligibility: "Individual farmers, SHGs, and cooperative Custom Hiring Centers (CHCs).",
+    benefits: "40% to 50% capital subsidy on farm machinery: laser land levelers, happy seeders, rotavators, power tillers, and drone sprayers.",
+    action_link: "https://agrimachinery.nic.in"
+  },
+  {
+    id: "soil_health",
+    name: "Soil Health Card (SHC) Scheme",
+    category: "Direct Benefit",
+    tag: "Soil Health",
+    eligibility: "Every registered farmer across all states.",
+    benefits: "Free periodic soil testing for 12 essential nutrients with crop-wise customized fertilizer dosage recommendations.",
+    action_link: "https://soilhealth.dac.gov.in"
+  },
+  {
+    id: "pkvy",
+    name: "Paramparagat Krishi Vikas Yojana (PKVY)",
+    category: "Direct Benefit",
+    tag: "Jaivik Kheti",
+    eligibility: "Farmers practicing or transitioning to organic farming in clusters.",
+    benefits: "₹50,000 per hectare financial assistance for organic inputs, PGS-India certification, packaging, and marketing.",
+    action_link: "https://pgsindia-ncof.gov.in"
+  }
+];
+
+function renderSchemesDirectory(searchTerm = "", categoryFilter = "All") {
+  if (!schemesDirectoryGrid) return;
+
+  const term = (searchTerm || "").toLowerCase().trim();
+  const filtered = SCHEMES_DIRECTORY.filter(s => {
+    const matchesCategory = categoryFilter === "All" || s.category === categoryFilter;
+    const matchesSearch = !term ||
+      s.name.toLowerCase().includes(term) ||
+      s.category.toLowerCase().includes(term) ||
+      s.tag.toLowerCase().includes(term) ||
+      s.eligibility.toLowerCase().includes(term) ||
+      s.benefits.toLowerCase().includes(term);
+    return matchesCategory && matchesSearch;
+  });
+
+  if (filtered.length === 0) {
+    schemesDirectoryGrid.innerHTML = `
+      <div class="col-span-1 md:col-span-2 p-8 text-center text-slate-400 italic bg-slate-50 rounded-2xl border border-slate-200">
+        No agricultural schemes matched your query. Try searching for "drip", "kcc", "solar", or "insurance".
+      </div>
+    `;
+    return;
+  }
+
+  schemesDirectoryGrid.innerHTML = filtered.map(s => `
+    <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm space-y-3 hover:border-amber-400 transition">
+      <div class="flex items-start justify-between gap-2 border-b border-slate-100 pb-3">
+        <div>
+          <span class="text-[10px] font-bold uppercase tracking-wider text-amber-800">${s.category}</span>
+          <h4 class="font-bold text-slate-900 text-sm mt-0.5">${s.name}</h4>
+        </div>
+        <span class="bg-amber-100 text-amber-900 text-[10px] font-black px-2 py-0.5 rounded-full shrink-0">
+          ${s.tag}
+        </span>
+      </div>
+
+      <div class="space-y-2 text-xs">
+        <div>
+          <strong class="text-slate-700 block">👤 Who is Eligible:</strong>
+          <p class="text-slate-600 leading-relaxed">${s.eligibility}</p>
+        </div>
+        <div>
+          <strong class="text-slate-700 block">🎁 Entitlement & Benefits:</strong>
+          <p class="text-slate-600 leading-relaxed">${s.benefits}</p>
+        </div>
+      </div>
+
+      <div class="pt-2 border-t border-slate-100 flex items-center justify-between">
+        <span class="text-[10px] text-slate-400">Govt of India / MoA&FW</span>
+        <a href="${s.action_link}" target="_blank" rel="noopener" class="inline-flex items-center gap-1 text-xs font-bold text-amber-700 hover:text-amber-900 hover:underline">
+          <span>Official Portal</span> <span>↗</span>
+        </a>
+      </div>
+    </div>
+  `).join("");
+}
+
 // ----------------- KISAN BAHI-KHATA (FARM LEDGER & EXPENSE TRACKER) -----------------
+
 
 const KHATA_STORAGE_KEY = "agriassist_bahi_khata";
 
