@@ -928,11 +928,49 @@
 
       <!-- Ledger Table -->
       <section class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 overflow-hidden">
-        <div class="flex items-center justify-between mb-4">
-          <h4 class="font-bold text-slate-800 text-sm flex items-center gap-2">
-            <span>📜</span> <span>Ledger Records (लेन-देन इतिहास)</span>
-          </h4>
-          <span class="text-xs text-slate-500 font-mono" id="khataEntryCount">0 records</span>
+        <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+          <div>
+            <h4 class="font-bold text-slate-800 text-sm flex items-center gap-2">
+              <span>📜</span> <span>Ledger Records (लेन-देन इतिहास)</span>
+            </h4>
+            <span class="text-xs text-slate-500 font-mono" id="khataEntryCount">0 records</span>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-2">
+            <!-- Filter by category -->
+            <select id="khataFilterCategory" class="bg-slate-50 border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs text-slate-700 font-medium">
+              <option value="All">All Categories (सभी)</option>
+              <option value="Seeds">Seeds (बीज)</option>
+              <option value="Fertilizer">Fertilizer (खाद)</option>
+              <option value="Pesticides">Pesticides (कीटनाशक)</option>
+              <option value="Labor">Labor (मजदूरी)</option>
+              <option value="Tillage">Tillage (जुताई)</option>
+              <option value="Irrigation">Irrigation (सिंचाई)</option>
+              <option value="Crop Sale">Crop Sale (बिक्री)</option>
+              <option value="Subsidy">Subsidy (सब्सिडी)</option>
+            </select>
+
+            <!-- Export to CSV -->
+            <button id="exportKhataCsvBtn" type="button" class="flex items-center gap-1 text-xs bg-emerald-700 hover:bg-emerald-800 text-white font-semibold px-3 py-1.5 rounded-lg shadow-sm transition" title="Download Excel-compatible CSV">
+              <span>📥</span> <span>Export CSV</span>
+            </button>
+
+            <!-- Backup JSON -->
+            <button id="backupKhataJsonBtn" type="button" class="flex items-center gap-1 text-xs bg-slate-700 hover:bg-slate-800 text-white font-semibold px-3 py-1.5 rounded-lg shadow-sm transition" title="Save offline JSON backup">
+              <span>💾</span> <span>Backup JSON</span>
+            </button>
+
+            <!-- Restore JSON -->
+            <button id="restoreKhataBtn" type="button" class="flex items-center gap-1 text-xs bg-indigo-700 hover:bg-indigo-800 text-white font-semibold px-3 py-1.5 rounded-lg shadow-sm transition" title="Restore ledger from JSON backup">
+              <span>📤</span> <span>Restore</span>
+            </button>
+            <input type="file" id="restoreKhataInput" accept=".json" class="hidden">
+          </div>
+        </div>
+
+        <!-- Category Spending Analytics Bar -->
+        <div id="khataCategoryBreakdown" class="mb-4 p-3 bg-slate-50/80 rounded-xl border border-slate-200 flex flex-wrap gap-2 text-[11px]">
+          <!-- Dynamically populated in app.js -->
         </div>
 
         <div class="overflow-x-auto">

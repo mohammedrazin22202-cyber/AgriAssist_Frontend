@@ -972,6 +972,13 @@ const khataNetBalance = document.getElementById("khataNetBalance");
 const khataTableBody = document.getElementById("khataTableBody");
 const khataEntryCount = document.getElementById("khataEntryCount");
 const clearKhataBtn = document.getElementById("clearKhataBtn");
+const khataFilterCategory = document.getElementById("khataFilterCategory");
+const exportKhataCsvBtn = document.getElementById("exportKhataCsvBtn");
+const backupKhataJsonBtn = document.getElementById("backupKhataJsonBtn");
+const restoreKhataBtn = document.getElementById("restoreKhataBtn");
+const restoreKhataInput = document.getElementById("restoreKhataInput");
+const khataCategoryBreakdown = document.getElementById("khataCategoryBreakdown");
+
 
 // Language Modal Elements
 const langModal = document.getElementById("langModal");
@@ -1154,6 +1161,12 @@ function setupEventListeners() {
   // Kisan Khata controls
   khataForm?.addEventListener("submit", addKhataTransaction);
   clearKhataBtn?.addEventListener("click", clearKhataLedger);
+  khataFilterCategory?.addEventListener("change", renderKhataLedger);
+  exportKhataCsvBtn?.addEventListener("click", exportKhataToCSV);
+  backupKhataJsonBtn?.addEventListener("click", backupKhataToJSON);
+  restoreKhataBtn?.addEventListener("click", () => restoreKhataInput?.click());
+  restoreKhataInput?.addEventListener("change", handleRestoreKhataFile);
+
 
   // Print report
   printReportBtn?.addEventListener("click", () => {
@@ -3442,6 +3455,106 @@ function clearKhataLedger() {
   }
 }
 
+function exportKhataToCSV() {
+  const entries = getKhataEntries();
+  if (entries.length === 0) {
+    alert("No ledger entries to export.");
+    return;
+  }
+  const headers = ["ID", "Date", "Type", "Category", "Amount_INR", "Notes"];
+  const rows = entries.map(t => [
+    t.id,
+    new Date(t.date).toISOString().split("T")[0],
+    t.type,
+    `"${(t.category || "").replace(/"/g, '""')}"`,
+    t.amount,
+    `"${(t.notes || "").replace(/"/g, '""')}"`
+  ]);
+  const csvContent = [headers.join(","), ...rows.map(r => r.join(","))].join("\r\n");
+  const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  const today = new Date().toISOString().split("T")[0];
+  link.setAttribute("href", url);
+  link.setAttribute("download", `AgriAssist_Kisan_Bahi_Khata_${today}.csv`);
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
+}
+
+function backupKhataToJSON() {
+  const entries = getKhataEntries();
+  if (entries.length === 0) {
+    alert("No ledger entries to backup.");
+    return;
+  }
+  const backupData = {
+    appName: "AgriAssist",
+    module: "Kisan Bahi-Khata",
+    exportDate: new Date().toISOString(),
+    version: "1.0",
+    recordCount: entries.length,
+    entries: entries
+  };
+  const jsonContent = JSON.stringify(backupData, null, 2);
+  const blob = new Blob([jsonContent], { type: "application/json;charset=utf-8;" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  const today = new Date().toISOString().split("T")[0];
+  link.setAttribute("href", url);
+  link.setAttribute("download", `AgriAssist_BahiKhata_Backup_${today}.json`);
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
+}
+
+function handleRestoreKhataFile(event) {
+  const file = event.target.files?.[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      const parsed = JSON.parse(e.target.result);
+      let newEntries = [];
+      if (Array.isArray(parsed)) {
+        newEntries = parsed;
+      } else if (parsed && Array.isArray(parsed.entries)) {
+        newEntries = parsed.entries;
+      } else {
+        throw new Error("Invalid ledger backup file structure.");
+      }
+
+      if (newEntries.length === 0) {
+        alert("Backup file contained 0 entries.");
+        return;
+      }
+
+      const merge = confirm(`Found ${newEntries.length} records in backup.\n\nClick 'OK' to MERGE with existing records, or 'Cancel' to REPLACE all current records.`);
+      const current = getKhataEntries();
+      let finalEntries;
+      if (merge) {
+        const existingIds = new Set(current.map(c => c.id));
+        const nonDuplicates = newEntries.filter(n => !existingIds.has(n.id));
+        finalEntries = [...nonDuplicates, ...current];
+      } else {
+        finalEntries = newEntries;
+      }
+
+      saveKhataEntries(finalEntries);
+      renderKhataLedger();
+      alert(`Successfully restored ${finalEntries.length} farm records!`);
+    } catch (err) {
+      alert("Error restoring backup: " + err.message);
+    } finally {
+      event.target.value = "";
+    }
+  };
+  reader.readAsText(file);
+}
+
 function renderKhataLedger() {
   const entries = getKhataEntries();
   let totalExpense = 0;
@@ -3467,6 +3580,33 @@ function renderKhataLedger() {
     khataEntryCount.textContent = `${entries.length} record${entries.length === 1 ? '' : 's'}`;
   }
 
+  // Render Category Spending Breakdown Chips
+  if (khataCategoryBreakdown) {
+    const catExpenses = {};
+    entries.forEach(t => {
+      if (t.type === "Expense") {
+        catExpenses[t.category] = (catExpenses[t.category] || 0) + t.amount;
+      }
+    });
+
+    const catKeys = Object.keys(catExpenses);
+    if (catKeys.length === 0) {
+      khataCategoryBreakdown.innerHTML = `<span class="text-slate-400 italic">No farm expenses recorded yet.</span>`;
+    } else {
+      khataCategoryBreakdown.innerHTML = catKeys.map(cat => {
+        const val = catExpenses[cat];
+        const pct = totalExpense > 0 ? Math.round((val / totalExpense) * 100) : 0;
+        return `
+          <div class="inline-flex items-center gap-1.5 bg-white border border-slate-200 px-2.5 py-1 rounded-lg shadow-2xs">
+            <span class="font-bold text-slate-700">${cat}:</span>
+            <span class="font-black text-rose-700 font-mono">₹${val.toLocaleString("en-IN")}</span>
+            <span class="text-[10px] text-slate-400">(${pct}%)</span>
+          </div>
+        `;
+      }).join("");
+    }
+  }
+
   if (!khataTableBody) return;
   if (entries.length === 0) {
     khataTableBody.innerHTML = `
@@ -3479,7 +3619,24 @@ function renderKhataLedger() {
     return;
   }
 
-  khataTableBody.innerHTML = entries.map(t => {
+  // Filter entries if category filter selected
+  const selectedFilter = khataFilterCategory ? khataFilterCategory.value : "All";
+  const displayedEntries = selectedFilter === "All"
+    ? entries
+    : entries.filter(t => t.category === selectedFilter);
+
+  if (displayedEntries.length === 0) {
+    khataTableBody.innerHTML = `
+      <tr>
+        <td colspan="6" class="p-8 text-center text-slate-400 italic">
+          No records found under category "${selectedFilter}".
+        </td>
+      </tr>
+    `;
+    return;
+  }
+
+  khataTableBody.innerHTML = displayedEntries.map(t => {
     const formattedDate = new Date(t.date).toLocaleDateString("en-IN", {
       day: "numeric", month: "short", year: "numeric"
     });
@@ -3504,4 +3661,5 @@ function renderKhataLedger() {
     `;
   }).join("");
 }
+
 
