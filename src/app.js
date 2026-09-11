@@ -59,7 +59,11 @@ const TRANSLATIONS = {
     btnGetRecommendations: "Get Crop Recommendations",
     btnPrintAdvisory: "Download / Print Advisory",
     noResults: "No matching crops found",
-    langSwitch: "🌐 Language / भाषा"
+    langSwitch: "🌐 Language / भाषा",
+    viewAdvice: "View Agronomic Advice ▼",
+    hideAdvice: "Hide Agronomic Advice ▲",
+    viewCompleteAdvice: "View Complete Agronomic Advice ▼",
+    hideCompleteAdvice: "Hide Complete Advice ▲"
   },
   hi: {
     tagline: "कृषि निर्णय प्रणाली",
@@ -101,7 +105,11 @@ const TRANSLATIONS = {
     btnGetRecommendations: "फसल सुझाव प्राप्त करें",
     btnPrintAdvisory: "सलाहकार कार्ड डाउनलोड / प्रिंट करें",
     noResults: "कोई उपयुक्त फसल नहीं मिली",
-    langSwitch: "🌐 भाषा / Language"
+    langSwitch: "🌐 भाषा / Language",
+    viewAdvice: "कृषि सलाह देखें ▼",
+    hideAdvice: "सलाह छिपाएं ▲",
+    viewCompleteAdvice: "विस्तृत सलाह देखें ▼",
+    hideCompleteAdvice: "सलाह छिपाएं ▲"
   },
   mr: {
     tagline: "कृषी निर्णय प्रणाली",
@@ -143,7 +151,11 @@ const TRANSLATIONS = {
     btnGetRecommendations: "पीक शिफारसी मिळवा",
     btnPrintAdvisory: "सल्लागार पत्रक प्रिंट करा",
     noResults: "योग्य पीक आढळले नाही",
-    langSwitch: "🌐 भाषा निवडा"
+    langSwitch: "🌐 भाषा निवडा",
+    viewAdvice: "कृषी सल्ला पहा ▼",
+    hideAdvice: "सल्ला लपवा ▲",
+    viewCompleteAdvice: "सविस्तर सल्ला पहा ▼",
+    hideCompleteAdvice: "सल्ला लपवा ▲"
   },
   pa: {
     tagline: "ਖੇਤੀ ਫੈਸਲਾ ਪ੍ਰਣਾਲੀ",
@@ -185,7 +197,11 @@ const TRANSLATIONS = {
     btnGetRecommendations: "ਫਸਲ ਸੁਝਾਅ ਪ੍ਰਾਪਤ ਕਰੋ",
     btnPrintAdvisory: "ਸਲਾਹਕਾਰ ਕਾਰਡ ਪ੍ਰਿੰਟ ਕਰੋ",
     noResults: "ਕੋਈ ਫਸਲ ਨਹੀਂ ਮਿਲੀ",
-    langSwitch: "🌐 ਭਾਸ਼ਾ ਚੁਣੋ"
+    langSwitch: "🌐 ਭਾਸ਼ਾ ਚੁਣੋ",
+    viewAdvice: "ਖੇਤੀ ਸਲਾਹ ਵੇਖੋ ▼",
+    hideAdvice: "ਸਲਾਹ ਲੁਕਾਓ ▲",
+    viewCompleteAdvice: "ਵਿਸਤ੍ਰਿਤ ਸਲਾਹ ਵੇਖੋ ▼",
+    hideCompleteAdvice: "ਸਲਾਹ ਲੁਕਾਓ ▲"
   },
   gu: {
     tagline: "કૃષિ નિર્ણય પ્રણાલી",
@@ -227,7 +243,11 @@ const TRANSLATIONS = {
     btnGetRecommendations: "પાક ભલામણ મેળવો",
     btnPrintAdvisory: "સલાહકાર કાર્ડ પ્રિન્ટ કરો",
     noResults: "કોઈ પાક મળ્યો નથી",
-    langSwitch: "🌐 ભાષા પસંદ કરો"
+    langSwitch: "🌐 ભાષા પસંદ કરો",
+    viewAdvice: "ખેતી સલાહ જુઓ ▼",
+    hideAdvice: "સલાહ છુપાવો ▲",
+    viewCompleteAdvice: "સંપૂર્ણ સલાહ જુઓ ▼",
+    hideCompleteAdvice: "સલાહ છુપાવો ▲"
   }
 };
 
@@ -1549,7 +1569,7 @@ function speakCropAdvice(cropId) {
 // ----------------- WHATSAPP SHARE GENERATOR -----------------
 
 function shareOnWhatsApp(cropId) {
-  const crop = appState.recommendations.find(c => c.crop_id === cropId);
+  const crop = appState.recommendations.find(c => c.crop_id === cropId) || (appState.topPick && appState.topPick.crop_id === cropId ? appState.topPick : null);
   if (!crop) return;
 
   const netProfit = crop.financials ? `₹${Math.round(crop.financials.profit_per_acre_inr).toLocaleString("en-IN")}` : "High";
@@ -1976,7 +1996,7 @@ function renderTopPick(top) {
     <!-- Toggle button for Top Pick Details -->
     <div class="pt-3 mt-2 border-t border-emerald-200/60 no-print text-center">
       <button type="button" class="top-pick-toggle-btn text-xs font-bold text-emerald-800 hover:text-emerald-950 py-1 px-4 hover:bg-emerald-100/60 rounded-xl transition">
-        ${isHi ? "विस्तृत सलाह देखें ▼" : "View Complete Agronomic Advice ▼"}
+        ${(TRANSLATIONS[appState.currentLang] || TRANSLATIONS.en).viewCompleteAdvice || "View Complete Agronomic Advice ▼"}
       </button>
     </div>
   `;
@@ -1991,12 +2011,8 @@ function renderTopPick(top) {
     const details = topPickCard.querySelector(".top-pick-expanded-details");
     const isHidden = details.classList.contains("hidden");
     details.classList.toggle("hidden");
-    const isHindiNow = appState.currentLang === "hi";
-    if (isHindiNow) {
-      e.target.textContent = isHidden ? "सलाह छिपाएं ▲" : "विस्तृत सलाह देखें ▼";
-    } else {
-      e.target.textContent = isHidden ? "Hide Complete Advice ▲" : "View Complete Agronomic Advice ▼";
-    }
+    const t = TRANSLATIONS[appState.currentLang] || TRANSLATIONS.en;
+    e.target.textContent = isHidden ? (t.hideCompleteAdvice || "Hide Complete Advice ▲") : (t.viewCompleteAdvice || "View Complete Agronomic Advice ▼");
   });
 }
 
@@ -2041,12 +2057,8 @@ function filterAndRenderCrops() {
       const details = card.querySelector(".card-expanded-details");
       const isHidden = details.classList.contains("hidden");
       details.classList.toggle("hidden");
-      const isHi = appState.currentLang === "hi";
-      if (isHi) {
-        btn.textContent = isHidden ? "सलाह छिपाएं ▲" : "कृषि सलाह देखें ▼";
-      } else {
-        btn.textContent = isHidden ? "Hide Agronomic Advice ▲" : "View Agronomic Advice ▼";
-      }
+      const t = TRANSLATIONS[appState.currentLang] || TRANSLATIONS.en;
+      btn.textContent = isHidden ? (t.hideAdvice || "Hide Agronomic Advice ▲") : (t.viewAdvice || "View Agronomic Advice ▼");
     });
   });
 
@@ -2234,7 +2246,7 @@ function createCropCardHTML(crop) {
       <!-- Action Button to Expand -->
       <div class="pt-3 mt-2 border-t border-slate-100 no-print">
         <button type="button" class="card-toggle-details w-full py-1.5 text-center text-xs font-bold text-brand-700 hover:text-brand-800 hover:bg-emerald-50 rounded-xl transition">
-          ${isHi ? "कृषि सलाह देखें ▼" : "View Agronomic Advice ▼"}
+          ${(TRANSLATIONS[appState.currentLang] || TRANSLATIONS.en).viewAdvice || "View Agronomic Advice ▼"}
         </button>
       </div>
     </div>
@@ -2415,8 +2427,9 @@ function renderFertilizerDoctorResult(data, payload) {
 
   // Determine crop display name from LOCAL_CROPS_DB or payload
   let cropDisplayName = "Selected Crop";
-  if (window.LOCAL_CROPS_DB && payload.crop_id) {
-    const found = window.LOCAL_CROPS_DB.find(c => c.id === payload.crop_id);
+  const cropsDb = (typeof LOCAL_CROPS_DB !== "undefined" && LOCAL_CROPS_DB) || (typeof window !== "undefined" && window.LOCAL_CROPS_DB) || null;
+  if (cropsDb && payload.crop_id) {
+    const found = cropsDb.find(c => c.id === payload.crop_id);
     if (found) cropDisplayName = found.name;
   }
   if (cropDisplayName === "Selected Crop" && payload.crop_id) {
@@ -2609,7 +2622,7 @@ function openComparisonModal() {
           ${row("Est. Yield / Acre", c => c.estimated_yield_per_acre)}
           ${row("Sowing Window", c => c.sowing_window)}
           ${row("Key Sowing Advice", c => c.sowing_tips)}
-          ${row("Cautions & Risks", c => `<span class="text-rose-700 font-medium">${c.cautions || "Standard vigilance for localized pests."}</span>`)}
+          ${row("Cautions & Risks", c => `<span class="text-rose-700 font-medium">${(Array.isArray(c.warnings) ? c.warnings.join("; ") : c.warnings) || c.cautions || "Standard vigilance for localized pests."}</span>`)}
           ${row("Fertilizer Advice", c => c.fertilizer_advice)}
           ${row("Soil Considerations", c => c.soil_notes)}
         </tbody>
@@ -2703,7 +2716,9 @@ async function executePlantDoctor() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           crop_id: crop === "all" ? null : crop,
+          plant_part: part === "all" ? null : part,
           affected_part: part === "all" ? null : part,
+          search_term: query || null,
           symptom_query: query || null
         })
       });
@@ -2850,7 +2865,7 @@ async function executeMandiPrices() {
       const res = await fetch(url);
       if (res.ok) {
         const data = await res.json();
-        renderMandiPrices(data.markets || []);
+        renderMandiPrices(data.prices || data.markets || []);
         return;
       }
     } catch (err) {
@@ -3003,7 +3018,9 @@ async function executeIrrigationScheduler() {
           growth_stage: stage,
           soil_type: soil,
           land_size_acres: landAcres,
-          pump_capacity_hp: pumpHp
+          pump_hp: pumpHp,
+          pump_capacity_hp: pumpHp,
+          forecast_rain_mm: (appState.weatherData && (appState.weatherData.rainForecast7Day || appState.weatherData.rain7d)) ? (appState.weatherData.rainForecast7Day || appState.weatherData.rain7d) : 0.0
         })
       });
       if (res.ok) {
@@ -3067,6 +3084,11 @@ function renderIrrigationResult(data) {
   if (!irrigationResultContainer) return;
   irrigationResultContainer.classList.remove("hidden");
 
+  const rainUpcoming = data.weather_rain_forecast_mm ?? data.forecast_rain_mm ?? 0;
+  const totalVolume = data.total_water_volume_liters ?? data.water_volume_liters ?? 0;
+  const pumpRuntime = data.pump_run_hours ?? data.pump_runtime_hours ?? 0;
+  const interval = data.interval_days ?? data.irrigation_interval_days ?? "7-10 days";
+
   const rainAlertHTML = data.postpone_irrigation_alert ? `
     <div class="bg-amber-50 border-2 border-amber-300 rounded-2xl p-4 flex items-start gap-3 shadow-sm">
       <span class="text-2xl">🌧️</span>
@@ -3077,7 +3099,7 @@ function renderIrrigationResult(data) {
     </div>
   ` : `
     <div class="bg-blue-50 border border-blue-200 rounded-xl p-3 text-xs text-blue-900 flex items-center justify-between">
-      <span>🌤️ 7-Day Rainfall Forecast: <strong>${data.weather_rain_forecast_mm || 0} mm</strong></span>
+      <span>🌤️ 7-Day Rainfall Forecast: <strong>${rainUpcoming} mm</strong></span>
       <span class="font-semibold text-blue-700">No heavy rainfall expected. Proceed with scheduled irrigation.</span>
     </div>
   `;
@@ -3094,19 +3116,19 @@ function renderIrrigationResult(data) {
 
       <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl">
         <span class="text-xs text-slate-500 font-semibold block">Total Water Volume</span>
-        <span class="text-2xl font-black text-blue-700 mt-1 block">${(data.total_water_volume_liters || 0).toLocaleString("en-IN")} L</span>
+        <span class="text-2xl font-black text-blue-700 mt-1 block">${(totalVolume).toLocaleString("en-IN")} L</span>
         <span class="text-[10px] text-slate-400">Total liters across holding</span>
       </div>
 
       <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl">
         <span class="text-xs text-slate-500 font-semibold block">Motor Pump Run Time</span>
-        <span class="text-2xl font-black text-indigo-700 mt-1 block">${data.pump_run_hours} Hours</span>
+        <span class="text-2xl font-black text-indigo-700 mt-1 block">${pumpRuntime} Hours</span>
         <span class="text-[10px] text-slate-400 font-mono">Electric/Diesel runtime</span>
       </div>
 
       <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl">
         <span class="text-xs text-slate-500 font-semibold block">Recommended Frequency</span>
-        <span class="text-xl font-black text-emerald-800 mt-1 block">${data.interval_days}</span>
+        <span class="text-xl font-black text-emerald-800 mt-1 block">${interval}</span>
         <span class="text-[10px] text-slate-400">Interval between irrigations</span>
       </div>
     </div>
@@ -3168,30 +3190,35 @@ function renderOrganicResult(data) {
   if (!organicResultContainer) return;
   organicResultContainer.classList.remove("hidden");
 
+  const jeeva = data.jeevamrutha_liters ?? data.total_jeevamrutha_liters ?? 0;
+  const beeja = data.beejamrit_liters ?? data.beejamrit_kg ?? 0;
+  const ghan = data.ghanjeevamrit_kg ?? data.ghanjeevamrit_liters ?? 0;
+  const neem = data.neemastra_liters ?? 0;
+
   organicResultContainer.innerHTML = `
     <!-- Acreage Volume Badges -->
     <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs font-semibold">
       <div class="bg-emerald-50 border border-emerald-200 p-4 rounded-xl">
         <span class="text-emerald-700 block text-xs">Jeevamrutha (जीवामृत)</span>
-        <span class="text-2xl font-black text-emerald-900 mt-1 block">${data.jeevamrutha_liters} Liters</span>
+        <span class="text-2xl font-black text-emerald-900 mt-1 block">${jeeva} Liters</span>
         <span class="text-[10px] text-emerald-600 font-normal">200 L/acre per 21 days</span>
       </div>
 
       <div class="bg-amber-50 border border-amber-200 p-4 rounded-xl">
         <span class="text-amber-700 block text-xs">Beejamrit (बीजामृत)</span>
-        <span class="text-2xl font-black text-amber-900 mt-1 block">${data.beejamrit_liters} Liters</span>
+        <span class="text-2xl font-black text-amber-900 mt-1 block">${beeja} Liters</span>
         <span class="text-[10px] text-amber-600 font-normal">For seed coating & inoculation</span>
       </div>
 
       <div class="bg-yellow-50 border border-yellow-200 p-4 rounded-xl">
         <span class="text-yellow-800 block text-xs">Ghanjeevamrit (घनजीवामृत)</span>
-        <span class="text-2xl font-black text-yellow-900 mt-1 block">${data.ghanjeevamrit_kg} kg</span>
+        <span class="text-2xl font-black text-yellow-900 mt-1 block">${ghan} kg</span>
         <span class="text-[10px] text-yellow-600 font-normal">Solid basal soil inoculant</span>
       </div>
 
       <div class="bg-teal-50 border border-teal-200 p-4 rounded-xl">
         <span class="text-teal-700 block text-xs">Neemastra (नीमास्त्र)</span>
-        <span class="text-2xl font-black text-teal-900 mt-1 block">${data.neemastra_liters} Liters</span>
+        <span class="text-2xl font-black text-teal-900 mt-1 block">${neem} Liters</span>
         <span class="text-[10px] text-teal-600 font-normal">Biological pest repellent spray</span>
       </div>
     </div>
@@ -3314,8 +3341,31 @@ async function executeKisanYojana() {
 }
 
 function renderYojanaResult(data) {
-  if (!yojanaResultContainer) return;
+  if (!yojanaResultContainer || !data) return;
   yojanaResultContainer.classList.remove("hidden");
+
+  const pmfby = data.pmfby || {
+    season_category: data.pmfby_season_category || "Seasonal",
+    farmer_premium_rate_percent: data.pmfby_farmer_premium_rate_percent || 2.0,
+    sum_insured_inr: data.pmfby_sum_insured_inr || data.sum_insured_inr || 0,
+    farmer_share_premium_inr: data.pmfby_farmer_share_premium_inr || data.farmer_share_premium_inr || 0,
+    govt_subsidy_share_inr: data.pmfby_govt_subsidy_share_inr || data.govt_subsidy_share_inr || 0
+  };
+
+  const kcc = data.kcc || {
+    effective_interest_rate_percent: data.kcc_effective_interest_rate_percent || 4.0,
+    scale_of_finance_per_acre_inr: data.kcc_scale_of_finance_per_acre_inr || data.scale_of_finance_per_acre_inr || 0,
+    recommended_credit_limit_inr: data.kcc_recommended_credit_limit_inr || data.recommended_credit_limit_inr || 0
+  };
+
+  const pmksy = data.pmksy_drip || {
+    subsidy_percentage: data.pmksy_subsidy_percentage || data.subsidy_percentage || 45,
+    approx_equipment_cost_inr: data.pmksy_approx_equipment_cost_inr || data.approx_equipment_cost_inr || 0,
+    eligible_subsidy_inr: data.pmksy_eligible_subsidy_inr || data.eligible_subsidy_inr || 0,
+    farmer_payable_inr: data.pmksy_farmer_payable_inr || data.farmer_payable_inr || 0
+  };
+
+  const pmKisan = data.pm_kisan_annual_cash_inr || 6000;
 
   yojanaResultContainer.innerHTML = `
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -3326,17 +3376,17 @@ function renderYojanaResult(data) {
           <div>
             <span class="text-xs font-bold uppercase tracking-wider text-amber-700">Crop Risk Protection</span>
             <h4 class="text-lg font-bold text-slate-900 mt-1">🌾 PM Fasal Bima Yojana (PMFBY)</h4>
-            <p class="text-xs text-slate-500">${data.pmfby.season_category} Season Insurance</p>
+            <p class="text-xs text-slate-500">${pmfby.season_category} Season Insurance</p>
           </div>
           <span class="bg-amber-100 text-amber-800 text-xs font-black px-2.5 py-1 rounded-lg">
-            ${data.pmfby.farmer_premium_rate_percent}% Premium
+            ${pmfby.farmer_premium_rate_percent}% Premium
           </span>
         </div>
 
         <div class="space-y-2 text-xs border-y border-slate-100 py-3">
-          <div class="flex justify-between"><span class="text-slate-600">Total Sum Insured Coverage:</span> <strong class="font-mono text-slate-900">₹${(data.pmfby.sum_insured_inr || 0).toLocaleString("en-IN")}</strong></div>
-          <div class="flex justify-between"><span class="text-slate-600">Farmer Payable Share:</span> <strong class="font-mono text-emerald-700 text-sm">₹${(data.pmfby.farmer_share_premium_inr || 0).toLocaleString("en-IN")}</strong></div>
-          <div class="flex justify-between"><span class="text-slate-600">Govt Premium Subsidy:</span> <strong class="font-mono text-slate-700">₹${(data.pmfby.govt_subsidy_share_inr || 0).toLocaleString("en-IN")}</strong></div>
+          <div class="flex justify-between"><span class="text-slate-600">Total Sum Insured Coverage:</span> <strong class="font-mono text-slate-900">₹${(pmfby.sum_insured_inr || 0).toLocaleString("en-IN")}</strong></div>
+          <div class="flex justify-between"><span class="text-slate-600">Farmer Payable Share:</span> <strong class="font-mono text-emerald-700 text-sm">₹${(pmfby.farmer_share_premium_inr || 0).toLocaleString("en-IN")}</strong></div>
+          <div class="flex justify-between"><span class="text-slate-600">Govt Premium Subsidy:</span> <strong class="font-mono text-slate-700">₹${(pmfby.govt_subsidy_share_inr || 0).toLocaleString("en-IN")}</strong></div>
         </div>
 
         <a href="https://pmfby.gov.in" target="_blank" rel="noopener" class="inline-flex items-center gap-1 text-xs font-bold text-amber-700 hover:text-amber-900 hover:underline">
@@ -3353,13 +3403,13 @@ function renderYojanaResult(data) {
             <p class="text-xs text-slate-500">Subsidized Institutional Crop Loan</p>
           </div>
           <span class="bg-emerald-100 text-emerald-800 text-xs font-black px-2.5 py-1 rounded-lg">
-            ${data.kcc.effective_interest_rate_percent}% Effective Interest
+            ${kcc.effective_interest_rate_percent}% Effective Interest
           </span>
         </div>
 
         <div class="space-y-2 text-xs border-y border-slate-100 py-3">
-          <div class="flex justify-between"><span class="text-slate-600">Scale of Finance / Acre:</span> <strong class="font-mono text-slate-900">₹${(data.kcc.scale_of_finance_per_acre_inr || 0).toLocaleString("en-IN")}</strong></div>
-          <div class="flex justify-between"><span class="text-slate-600">Max Sanction Limit (with 30% add-on):</span> <strong class="font-mono text-indigo-700 text-sm">₹${(data.kcc.recommended_credit_limit_inr || 0).toLocaleString("en-IN")}</strong></div>
+          <div class="flex justify-between"><span class="text-slate-600">Scale of Finance / Acre:</span> <strong class="font-mono text-slate-900">₹${(kcc.scale_of_finance_per_acre_inr || 0).toLocaleString("en-IN")}</strong></div>
+          <div class="flex justify-between"><span class="text-slate-600">Max Sanction Limit (with 30% add-on):</span> <strong class="font-mono text-indigo-700 text-sm">₹${(kcc.recommended_credit_limit_inr || 0).toLocaleString("en-IN")}</strong></div>
           <div class="flex justify-between"><span class="text-slate-600">Interest Subvention:</span> <span class="text-slate-700">7% base - 3% prompt incentive = <strong>4% net</strong></span></div>
         </div>
 
@@ -3375,14 +3425,14 @@ function renderYojanaResult(data) {
             <p class="text-xs text-slate-500">Per Drop More Crop Drip / Sprinkler Support</p>
           </div>
           <span class="bg-blue-100 text-blue-800 text-xs font-black px-2.5 py-1 rounded-lg">
-            ${data.pmksy_drip.subsidy_percentage}% Subsidy
+            ${pmksy.subsidy_percentage}% Subsidy
           </span>
         </div>
 
         <div class="space-y-2 text-xs border-y border-slate-100 py-3">
-          <div class="flex justify-between"><span class="text-slate-600">Est. Drip Installation Cost:</span> <strong class="font-mono text-slate-900">₹${(data.pmksy_drip.approx_equipment_cost_inr || 0).toLocaleString("en-IN")}</strong></div>
-          <div class="flex justify-between"><span class="text-slate-600">Eligible Govt Subsidy:</span> <strong class="font-mono text-emerald-700 text-sm">₹${(data.pmksy_drip.eligible_subsidy_inr || 0).toLocaleString("en-IN")}</strong></div>
-          <div class="flex justify-between"><span class="text-slate-600">Farmer Net Contribution:</span> <strong class="font-mono text-slate-700">₹${(data.pmksy_drip.farmer_payable_inr || 0).toLocaleString("en-IN")}</strong></div>
+          <div class="flex justify-between"><span class="text-slate-600">Est. Drip Installation Cost:</span> <strong class="font-mono text-slate-900">₹${(pmksy.approx_equipment_cost_inr || 0).toLocaleString("en-IN")}</strong></div>
+          <div class="flex justify-between"><span class="text-slate-600">Eligible Govt Subsidy:</span> <strong class="font-mono text-emerald-700 text-sm">₹${(pmksy.eligible_subsidy_inr || 0).toLocaleString("en-IN")}</strong></div>
+          <div class="flex justify-between"><span class="text-slate-600">Farmer Net Contribution:</span> <strong class="font-mono text-slate-700">₹${(pmksy.farmer_payable_inr || 0).toLocaleString("en-IN")}</strong></div>
         </div>
 
         <span class="text-xs text-slate-500 block">Apply via state horticulture department or e-Horticulture portal.</span>
@@ -3402,7 +3452,7 @@ function renderYojanaResult(data) {
         </div>
 
         <div class="space-y-2 text-xs border-y border-slate-100 py-3">
-          <div class="flex justify-between"><span class="text-slate-600">Total Annual Assistance:</span> <strong class="font-mono text-emerald-700 text-base">₹${(data.pm_kisan_annual_cash_inr || 6000).toLocaleString("en-IN")}</strong></div>
+          <div class="flex justify-between"><span class="text-slate-600">Total Annual Assistance:</span> <strong class="font-mono text-emerald-700 text-base">₹${(pmKisan).toLocaleString("en-IN")}</strong></div>
           <div class="flex justify-between"><span class="text-slate-600">Installments:</span> <span class="text-slate-800 font-medium">3 equal tranches of <strong>₹2,000</strong> every 4 months</span></div>
           <div class="flex justify-between"><span class="text-slate-600">eKYC Requirement:</span> <span class="text-slate-800 font-semibold">Aadhaar seeded bank account mandatory</span></div>
         </div>
