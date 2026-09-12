@@ -57,6 +57,18 @@
         </div>
 
         <div class="flex items-center flex-wrap gap-2.5">
+          <!-- Land Converter Quick Button -->
+          <button id="openLandConverterBtn" type="button" class="flex items-center space-x-1.5 text-xs bg-amber-600 hover:bg-amber-500 text-white font-bold px-3 py-1.5 rounded-full shadow-sm transition border border-amber-400">
+            <span>📐</span>
+            <span data-i18n="landConverterBtn">Land Converter</span>
+          </button>
+
+          <!-- GPS Field Walk-Meter Quick Button -->
+          <button id="openFieldWalkBtn" type="button" class="flex items-center space-x-1.5 text-xs bg-indigo-700 hover:bg-indigo-600 text-white font-bold px-3 py-1.5 rounded-full shadow-sm transition border border-indigo-500">
+            <span>🚶</span>
+            <span data-i18n="fieldWalkBtn">GPS Walk-Meter</span>
+          </button>
+
           <!-- Live Weather Auto-Detect Button -->
           <button id="detectWeatherBtn" type="button" class="flex items-center space-x-1.5 text-xs bg-emerald-700 hover:bg-emerald-600 text-white px-3 py-1.5 rounded-full shadow-sm transition border border-emerald-500">
             <span>📍</span>
@@ -109,17 +121,32 @@
         <button id="tabAdvisorBtn" class="nav-tab active px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold border border-brand-800 bg-brand-800 text-white transition flex items-center gap-1.5 whitespace-nowrap shadow-sm">
           <span>🌱</span> <span data-i18n="tabAdvisor">Crop Sowing Advisor</span>
         </button>
+        <button id="tabSeedBtn" class="nav-tab px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-600 hover:bg-slate-100 border border-transparent transition flex items-center gap-1.5 whitespace-nowrap">
+          <span>🌾</span> <span data-i18n="tabSeed">Seed & Spacing</span>
+        </button>
         <button id="tabDoctorBtn" class="nav-tab px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-600 hover:bg-slate-100 border border-transparent transition flex items-center gap-1.5 whitespace-nowrap">
           <span>🩺</span> <span data-i18n="tabDoctor">Plant Doctor (IPM)</span>
         </button>
         <button id="tabMandiBtn" class="nav-tab px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-600 hover:bg-slate-100 border border-transparent transition flex items-center gap-1.5 whitespace-nowrap">
           <span>📈</span> <span data-i18n="tabMandi">Mandi Prices & Trends</span>
         </button>
+        <button id="tabSprayerBtn" class="nav-tab px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-600 hover:bg-slate-100 border border-transparent transition flex items-center gap-1.5 whitespace-nowrap">
+          <span>🚜</span> <span data-i18n="tabSprayer">Sprayer & Dilution</span>
+        </button>
         <button id="tabIrrigationBtn" class="nav-tab px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-600 hover:bg-slate-100 border border-transparent transition flex items-center gap-1.5 whitespace-nowrap">
           <span>💧</span> <span data-i18n="tabIrrigation">Smart Irrigation</span>
         </button>
+        <button id="tabSolarBtn" class="nav-tab px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-600 hover:bg-slate-100 border border-transparent transition flex items-center gap-1.5 whitespace-nowrap">
+          <span>☀️</span> <span data-i18n="tabSolar">Solar Pump (KUSUM)</span>
+        </button>
         <button id="tabOrganicBtn" class="nav-tab px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-600 hover:bg-slate-100 border border-transparent transition flex items-center gap-1.5 whitespace-nowrap">
           <span>🌿</span> <span data-i18n="tabOrganic">Organic / Jaivik Kheti</span>
+        </button>
+        <button id="tabIntercropBtn" class="nav-tab px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-600 hover:bg-slate-100 border border-transparent transition flex items-center gap-1.5 whitespace-nowrap">
+          <span>🍀</span> <span data-i18n="tabIntercrop">Intercropping Matrix</span>
+        </button>
+        <button id="tabStorageBtn" class="nav-tab px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-600 hover:bg-slate-100 border border-transparent transition flex items-center gap-1.5 whitespace-nowrap">
+          <span>📦</span> <span data-i18n="tabStorage">Grain Storage Doctor</span>
         </button>
         <button id="tabRotationBtn" class="nav-tab px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-600 hover:bg-slate-100 border border-transparent transition flex items-center gap-1.5 whitespace-nowrap">
           <span>🔄</span> <span data-i18n="tabRotation">1-Year Rotation</span>
@@ -419,9 +446,10 @@
           </div>
 
           <!-- Search Input -->
-          <div class="w-full sm:w-64 relative">
-            <input id="cropSearchInput" type="text" placeholder="Search crops (e.g. Wheat, Chana)..." class="w-full bg-white border border-slate-300 rounded-xl pl-9 pr-3 py-1.5 text-xs text-slate-800 placeholder-slate-400 focus:ring-2 focus:ring-brand-500 outline-none">
+          <div class="w-full sm:w-64 relative flex items-center">
+            <input id="cropSearchInput" type="text" placeholder="Search crops (e.g. Wheat, Chana)..." class="w-full bg-white border border-slate-300 rounded-xl pl-9 pr-9 py-1.5 text-xs text-slate-800 placeholder-slate-400 focus:ring-2 focus:ring-brand-500 outline-none">
             <span class="absolute left-3 top-2 text-slate-400 text-xs">🔍</span>
+            <button id="voiceCropBtn" type="button" class="voice-search-btn absolute right-2.5 top-1.5 text-slate-400 hover:text-brand-700 transition" title="Voice Search / बोलकर खोजें">🎙️</button>
           </div>
         </div>
 
@@ -598,9 +626,10 @@
 
           <div>
             <label class="block font-bold text-slate-700 mb-1" for="doctorSearchInput">3. Search Disease / Symptom</label>
-            <div class="relative">
-              <input id="doctorSearchInput" type="text" placeholder="e.g. Pink bollworm, Yellow rust, Wilt, Holes..." class="w-full bg-slate-50 border border-slate-300 rounded-xl pl-9 pr-3 py-2 text-sm outline-none focus:ring-2 focus:ring-rose-500">
+            <div class="relative flex items-center">
+              <input id="doctorSearchInput" type="text" placeholder="e.g. Pink bollworm, Yellow rust, Wilt, Holes..." class="w-full bg-slate-50 border border-slate-300 rounded-xl pl-9 pr-9 py-2 text-sm outline-none focus:ring-2 focus:ring-rose-500">
               <span class="absolute left-3 top-2.5 text-slate-400 text-xs">🔍</span>
+              <button id="voiceDoctorBtn" type="button" class="voice-search-btn absolute right-2.5 top-2 text-slate-400 hover:text-rose-600 transition" title="Voice Search / बोलकर खोजें">🎙️</button>
             </div>
           </div>
         </div>
@@ -671,7 +700,10 @@
           </div>
           <div>
             <label class="block font-bold text-slate-700 mb-1" for="mandiSearchInput">3. Filter Market / APMC</label>
-            <input id="mandiSearchInput" type="text" placeholder="e.g. Khanna, Lasalgaon, Rajkot..." class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-sm outline-none focus:ring-2 focus:ring-emerald-500">
+            <div class="relative flex items-center">
+              <input id="mandiSearchInput" type="text" placeholder="e.g. Khanna, Lasalgaon, Rajkot..." class="w-full bg-slate-50 border border-slate-300 rounded-xl pl-3 pr-9 py-2.5 text-sm outline-none focus:ring-2 focus:ring-emerald-500">
+              <button id="voiceMandiBtn" type="button" class="voice-search-btn absolute right-2.5 top-2.5 text-slate-400 hover:text-emerald-700 transition" title="Voice Search / बोलकर खोजें">🎙️</button>
+            </div>
           </div>
         </div>
       </section>
@@ -1092,6 +1124,329 @@
       </section>
     </div>
 
+    <!-- ==================== TAB 10: SEED RATE & PLANT GEOMETRY ==================== -->
+    <div id="seedTabContent" class="hidden space-y-8">
+      <div class="bg-gradient-to-r from-amber-800 via-yellow-900 to-stone-900 text-white rounded-2xl p-6 sm:p-8 shadow-lg relative overflow-hidden">
+        <div class="relative z-10 max-w-3xl">
+          <h2 class="text-2xl sm:text-3xl font-extrabold mb-2" data-i18n="seedHeroTitle">🌱 Seed Rate & Plant Geometry Calculator</h2>
+          <p class="text-amber-100 text-sm sm:text-base leading-relaxed" data-i18n="seedHeroDesc">
+            Precision planting density and seed requirements. Calculate exact seed weight in kg, optimal row-to-row and plant-to-plant spacing, germination compensation, and bio-seed treatment recipes.
+          </p>
+        </div>
+      </div>
+
+      <section class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 sm:p-8 space-y-6">
+        <form id="seedForm" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="seedCropSelect">Target Crop (फसल)</label>
+            <select id="seedCropSelect" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-sm outline-none focus:ring-2 focus:ring-amber-500">
+              <!-- Dynamically populated from LOCAL_CROPS_DB -->
+            </select>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="seedLandAcres">
+              Land Area (Acres) 
+              <button type="button" class="text-amber-700 hover:underline font-normal text-[11px] ml-1 open-land-converter-trigger">📐 Convert Unit</button>
+            </label>
+            <input id="seedLandAcres" type="number" step="0.25" min="0.1" value="1.0" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-sm font-bold">
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="seedGerminationPct">Germination Rate (%) (अंकुरण %)</label>
+            <input id="seedGerminationPct" type="number" step="5" min="50" max="100" value="85" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-sm font-bold">
+            <span class="text-[10px] text-slate-400">Standard certified seed is 85%</span>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="seedSowingMethod">Sowing Method (बुवाई विधि)</label>
+            <select id="seedSowingMethod" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-sm">
+              <option value="Line Sowing using Seed Drill">Line Sowing (सीड-ड्रिल / कतार बुवाई)</option>
+              <option value="Broadcasting">Broadcasting (छिटकवां विधि)</option>
+              <option value="Dibbling">Dibbling (थापा विधि)</option>
+              <option value="Transplanting">Transplanting (रोपाई)</option>
+              <option value="Ridge and Furrow">Ridge & Furrow (मेंड़ विधि)</option>
+            </select>
+          </div>
+        </form>
+
+        <div class="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-slate-100">
+          <div class="flex items-center gap-4 text-xs">
+            <label class="inline-flex items-center gap-1.5 cursor-pointer font-semibold text-slate-700">
+              <input type="checkbox" id="seedCustomSpacingCheck" class="rounded text-amber-600 focus:ring-amber-500">
+              <span>Customize Spacing (कस्टम कतार-पौधा दूरी)</span>
+            </label>
+          </div>
+          <button id="calcSeedBtn" type="button" class="px-6 py-2.5 bg-amber-700 hover:bg-amber-800 text-white font-bold text-sm rounded-xl shadow-sm transition flex items-center gap-2">
+            <span>🌱</span> Calculate Seed & Spacing
+          </button>
+        </div>
+
+        <div id="seedCustomSpacingBox" class="hidden p-4 bg-amber-50/60 rounded-xl border border-amber-200 grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+          <div>
+            <label class="block font-semibold text-slate-700 mb-1" for="seedRowSpacingCm">Row-to-Row Spacing (cm)</label>
+            <input id="seedRowSpacingCm" type="number" step="2.5" min="5" placeholder="e.g. 22.5" class="w-full bg-white border border-slate-300 rounded-xl p-2 text-sm">
+          </div>
+          <div>
+            <label class="block font-semibold text-slate-700 mb-1" for="seedPlantSpacingCm">Plant-to-Plant Spacing (cm)</label>
+            <input id="seedPlantSpacingCm" type="number" step="1" min="2" placeholder="e.g. 5.0" class="w-full bg-white border border-slate-300 rounded-xl p-2 text-sm">
+          </div>
+        </div>
+
+        <!-- Seed Results Card -->
+        <div id="seedResultContainer" class="hidden pt-6 border-t border-slate-200">
+          <!-- Populated by app.js -->
+        </div>
+      </section>
+    </div>
+
+    <!-- ==================== TAB 11: KNAPSACK SPRAYER & DILUTION ==================== -->
+    <div id="sprayerTabContent" class="hidden space-y-8">
+      <div class="bg-gradient-to-r from-teal-900 via-emerald-950 to-slate-900 text-white rounded-2xl p-6 sm:p-8 shadow-lg relative overflow-hidden">
+        <div class="relative z-10 max-w-3xl">
+          <h2 class="text-2xl sm:text-3xl font-extrabold mb-2" data-i18n="sprayerHeroTitle">🚜 Knapsack Sprayer & Chemical Dilution Calculator</h2>
+          <p class="text-teal-100 text-sm sm:text-base leading-relaxed" data-i18n="sprayerHeroDesc">
+            Eliminate crop leaf burn and chemical wastage. Calculate exact milliliters or grams to pour into each 15L or 16L spray pump, total tanks needed for your acreage, and essential protective safety guidelines.
+          </p>
+        </div>
+      </div>
+
+      <section class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 sm:p-8 space-y-6">
+        <form id="sprayerForm" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 text-xs">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="sprayTankCap">Spray Tank Capacity (पंप क्षमता)</label>
+            <select id="sprayTankCap" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-sm font-semibold">
+              <option value="16">16 Liters (Standard Backpack Knapsack)</option>
+              <option value="15">15 Liters (Compact Knapsack)</option>
+              <option value="20">20 Liters (Heavy Duty / Battery Sprayer)</option>
+              <option value="10">10 Liters (Hand Pump)</option>
+              <option value="200">200 Liters (Tractor Mounted Barrel)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="sprayLandAcres">
+              Land Area to Spray (Acres)
+              <button type="button" class="text-teal-700 hover:underline font-normal text-[11px] ml-1 open-land-converter-trigger">📐 Convert Unit</button>
+            </label>
+            <input id="sprayLandAcres" type="number" step="0.25" min="0.1" value="1.0" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-sm font-bold">
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="sprayDosageMode">Dosage Instruction Mode (खुराक आधार)</label>
+            <select id="sprayDosageMode" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-sm">
+              <option value="per_liter">Dose per Liter of Water (e.g. 2 ml/L)</option>
+              <option value="per_acre">Total Dose per Acre (e.g. 250 ml/acre)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="sprayChemForm">Chemical Formulation (दवा का रूप)</label>
+            <select id="sprayChemForm" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-sm">
+              <option value="Liquid (ml)">Liquid (EC, SC, SL, ME) - ml</option>
+              <option value="Powder (g)">Powder / Granules (WP, WDG, SP) - grams</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="sprayDoseAmount">Recommended Dose Value</label>
+            <input id="sprayDoseAmount" type="number" step="0.5" min="0.1" value="2.0" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-sm font-bold">
+            <span class="text-[10px] text-slate-400" id="sprayDoseHint">e.g. 2 ml per liter water</span>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="sprayWaterRate">Water Rate per Acre (Liters)</label>
+            <input id="sprayWaterRate" type="number" step="10" min="50" max="500" value="150" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-sm font-bold">
+            <span class="text-[10px] text-slate-400">Standard knapsack is 150-200 L/acre</span>
+          </div>
+        </form>
+
+        <div class="flex justify-end pt-2 border-t border-slate-100">
+          <button id="calcSprayerBtn" type="button" class="px-6 py-2.5 bg-teal-700 hover:bg-teal-800 text-white font-bold text-sm rounded-xl shadow-sm transition flex items-center gap-2">
+            <span>🚜</span> Calculate Spray Dilution & Tanks
+          </button>
+        </div>
+
+        <!-- Sprayer Results Card -->
+        <div id="sprayerResultContainer" class="hidden pt-6 border-t border-slate-200">
+          <!-- Injected by app.js -->
+        </div>
+      </section>
+    </div>
+
+    <!-- ==================== TAB 12: SOLAR PUMP & PM-KUSUM ==================== -->
+    <div id="solarTabContent" class="hidden space-y-8">
+      <div class="bg-gradient-to-r from-amber-700 via-orange-900 to-slate-900 text-white rounded-2xl p-6 sm:p-8 shadow-lg relative overflow-hidden">
+        <div class="relative z-10 max-w-3xl">
+          <h2 class="text-2xl sm:text-3xl font-extrabold mb-2" data-i18n="solarHeroTitle">☀️ Solar Ag-Pump Sizing & PM-KUSUM Subsidy Estimator</h2>
+          <p class="text-amber-100 text-sm sm:text-base leading-relaxed" data-i18n="solarHeroDesc">
+            Free yourself from erratic electricity and rising diesel costs. Size the right 2 HP to 7.5 HP solar water pump for your borewell or canal and calculate up to 70% PM-KUSUM Component-B government subsidies.
+          </p>
+        </div>
+      </div>
+
+      <section class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 sm:p-8 space-y-6">
+        <form id="solarForm" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 text-xs">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="solarWaterSource">Water Source (जल स्रोत)</label>
+            <select id="solarWaterSource" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-sm font-semibold">
+              <option value="Borewell">Borewell / Tube-well (बोरवेल)</option>
+              <option value="Open Well">Open Well / Bawdi (खुला कुआं)</option>
+              <option value="Canal / Surface">Canal / River / Farm Pond (नहर / तालाब)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="solarDepthFeet">Water Table Depth (Feet / फीट)</label>
+            <input id="solarDepthFeet" type="number" step="10" min="10" max="600" value="150" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-sm font-bold">
+            <span class="text-[10px] text-slate-400">Total lift head from dynamic water level</span>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="solarLandAcres">
+              Irrigated Land (Acres)
+              <button type="button" class="text-amber-700 hover:underline font-normal text-[11px] ml-1 open-land-converter-trigger">📐 Convert Unit</button>
+            </label>
+            <input id="solarLandAcres" type="number" step="0.5" min="0.5" value="2.0" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-sm font-bold">
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="solarIrrigType">Irrigation System Type</label>
+            <select id="solarIrrigType" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-sm">
+              <option value="Drip / Sprinkler">Drip / Micro-Sprinkler (सूक्ष्म सिंचाई - 50% less water)</option>
+              <option value="Flood">Flood / Surface Irrigation (खुला पानी)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="solarFarmerCategory">Farmer Category (आरक्षण / श्रेणी)</label>
+            <select id="solarFarmerCategory" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-sm">
+              <option value="Small / Marginal (< 2 Ha)">Small / Marginal (लघु-सीमांत किसान - Higher Subsidy)</option>
+              <option value="General / Large (> 2 Ha)">General / Large (> 2 Hectares)</option>
+            </select>
+          </div>
+        </form>
+
+        <div class="flex justify-end pt-2 border-t border-slate-100">
+          <button id="calcSolarBtn" type="button" class="px-6 py-2.5 bg-amber-700 hover:bg-amber-800 text-white font-bold text-sm rounded-xl shadow-sm transition flex items-center gap-2">
+            <span>☀️</span> Calculate Solar Pump & PM-KUSUM Subsidy
+          </button>
+        </div>
+
+        <!-- Solar Results Card -->
+        <div id="solarResultContainer" class="hidden pt-6 border-t border-slate-200">
+          <!-- Injected by app.js -->
+        </div>
+      </section>
+    </div>
+
+    <!-- ==================== TAB 13: INTERCROPPING MATRIX ==================== -->
+    <div id="intercropTabContent" class="hidden space-y-8">
+      <div class="bg-gradient-to-r from-emerald-900 via-green-950 to-slate-900 text-white rounded-2xl p-6 sm:p-8 shadow-lg relative overflow-hidden">
+        <div class="relative z-10 max-w-3xl">
+          <h2 class="text-2xl sm:text-3xl font-extrabold mb-2" data-i18n="intercropHeroTitle">🌿 Intercropping & Companion Crop Matrix</h2>
+          <p class="text-emerald-100 text-sm sm:text-base leading-relaxed" data-i18n="intercropHeroDesc">
+            Multiply farm yield and reduce climate risk with biological companion planting. Discover scientifically validated Indian crop combinations with 20% to 40% Land Equivalent Ratio (LER) boosts, natural nitrogen fixation, and biological pest trap crops.
+          </p>
+        </div>
+      </div>
+
+      <section class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 space-y-5">
+        <div class="flex flex-wrap items-center justify-between gap-4">
+          <div class="flex flex-wrap items-center gap-2 text-xs">
+            <span class="font-bold text-slate-700">Filter by Main Crop:</span>
+            <select id="intercropFilterSelect" class="bg-slate-50 border border-slate-300 rounded-xl px-3 py-1.5 text-sm font-semibold outline-none focus:ring-2 focus:ring-emerald-500">
+              <option value="all">All Combinations (सभी जोड़ियां)</option>
+              <option value="sugarcane">Sugarcane (गन्ना)</option>
+              <option value="cotton">Cotton (कपास)</option>
+              <option value="maize">Maize (मक्का)</option>
+              <option value="wheat">Wheat (गेहूं)</option>
+              <option value="tomato">Tomato (टमाटर)</option>
+            </select>
+          </div>
+          <div class="text-xs text-slate-500 font-mono" id="intercropCount">Showing all combinations</div>
+        </div>
+
+        <div id="intercropGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pt-2">
+          <!-- Injected by app.js -->
+        </div>
+      </section>
+    </div>
+
+    <!-- ==================== TAB 14: POST-HARVEST GRAIN STORAGE DOCTOR ==================== -->
+    <div id="storageTabContent" class="hidden space-y-8">
+      <div class="bg-gradient-to-r from-amber-900 via-stone-900 to-slate-900 text-white rounded-2xl p-6 sm:p-8 shadow-lg relative overflow-hidden">
+        <div class="relative z-10 max-w-3xl">
+          <h2 class="text-2xl sm:text-3xl font-extrabold mb-2" data-i18n="storageHeroTitle">📦 Post-Harvest Grain Storage & Moisture Doctor</h2>
+          <p class="text-amber-100 text-sm sm:text-base leading-relaxed" data-i18n="storageHeroDesc">
+            Stop losing 15-20% of your harvest to fungal rot and grain weevils. Check safe moisture limits, get zero-cost organic preservation recipes, and learn how to get bank pledge loans against e-NWR warehouse receipts.
+          </p>
+        </div>
+      </div>
+
+      <section class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 sm:p-8 space-y-6">
+        <div class="border-b border-slate-100 pb-4">
+          <h3 class="text-base font-bold text-slate-900 flex items-center gap-2">
+            <span>🔬</span> Interactive Moisture & Spoilage Risk Checker
+          </h3>
+          <p class="text-xs text-slate-500">Test if your harvested grain is dry enough to bag safely without mold or rotting</p>
+        </div>
+
+        <form id="storageRiskForm" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="storageCropSelect">Harvested Crop (फसल)</label>
+            <select id="storageCropSelect" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-sm font-semibold">
+              <option value="wheat">Wheat (गेहूं)</option>
+              <option value="rice">Paddy / Rice (धान)</option>
+              <option value="maize">Maize (मक्का)</option>
+              <option value="pearl_millet">Bajra (बाजरा)</option>
+              <option value="chickpea">Chickpea / Chana (चना)</option>
+              <option value="pigeon_pea">Arhar / Tur (तुअर)</option>
+              <option value="mustard">Mustard (सरसों)</option>
+              <option value="soybean">Soybean (सोयाबीन)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="storageMoistureInput">Measured Grain Moisture (%) (नमी %)</label>
+            <input id="storageMoistureInput" type="number" step="0.5" min="5" max="30" value="12.0" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-sm font-bold">
+            <span class="text-[10px] text-slate-400">Tested by moisture meter or salt test</span>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="storageMethodSelect">Storage Container (भंडारण साधन)</label>
+            <select id="storageMethodSelect" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-sm">
+              <option value="Jute Gunny Bags">Jute Gunny Bags (बोरी / टाट)</option>
+              <option value="HDPE Hermetic Bags">Hermetic SuperGrain Bags (एयरटाइट बैग)</option>
+              <option value="Metal Bins">Galvanized Metal Bins (लोहे की कोठी / टंकी)</option>
+              <option value="Mud Kothi">Traditional Mud Kothi / Silo (मिट्टी की कोठी)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="storageDurationInput">Planned Storage (Months / माह)</label>
+            <input id="storageDurationInput" type="number" min="1" max="24" value="6" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-sm font-bold">
+          </div>
+        </form>
+
+        <div class="flex justify-end pt-2 border-t border-slate-100">
+          <button id="checkStorageRiskBtn" type="button" class="px-6 py-2.5 bg-amber-800 hover:bg-amber-900 text-white font-bold text-sm rounded-xl shadow-sm transition flex items-center gap-2">
+            <span>🔍</span> Check Spoilage Risk & Prescriptions
+          </button>
+        </div>
+
+        <!-- Storage Risk Results Card -->
+        <div id="storageRiskResultContainer" class="hidden pt-6 border-t border-slate-200">
+          <!-- Injected by app.js -->
+        </div>
+
+        <!-- Safe Moisture Reference Table -->
+        <div class="pt-6 border-t border-slate-200">
+          <h4 class="text-xs font-bold text-slate-700 mb-3 uppercase tracking-wider">ICAR Standard Safe Moisture Thresholds for Grain Storage:</h4>
+          <div class="overflow-x-auto">
+            <table class="w-full text-xs text-left">
+              <thead class="bg-slate-50 text-slate-700 border-b border-slate-200">
+                <tr>
+                  <th class="p-2.5">Crop</th>
+                  <th class="p-2.5 text-center">Safe Moisture Limit</th>
+                  <th class="p-2.5 text-center">Max Shelf Life</th>
+                  <th class="p-2.5">Key Storage Pests</th>
+                  <th class="p-2.5">Natural Protectant</th>
+                </tr>
+              </thead>
+              <tbody id="storageCatalogTableBody" class="divide-y divide-slate-100">
+                <!-- Injected by app.js -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </div>
 
   </main>
 
@@ -1153,6 +1508,202 @@
         </button>
       </div>
     </div>
+  </div>
+
+  <!-- REGIONAL LAND UNIT CONVERTER MODAL -->
+  <div id="landConverterModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 modal-backdrop no-print">
+    <div class="bg-white w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden flex flex-col">
+      <div class="bg-amber-700 text-white px-6 py-4 flex items-center justify-between">
+        <h3 class="font-bold text-base flex items-center gap-2">
+          <span>📐</span> Regional Indian Land Unit Converter (क्षेत्रीय भूमि मापक)
+        </h3>
+        <button id="closeLandConverterBtn" class="text-amber-200 hover:text-white text-xl font-bold">&times;</button>
+      </div>
+      <div class="p-6 space-y-5 text-xs">
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="converterStateSelect">Region / State Standard</label>
+            <select id="converterStateSelect" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-sm font-semibold">
+              <option value="up_bihar">Uttar Pradesh & Bihar (Pucca Bigha)</option>
+              <option value="up_kaccha">Western UP (Kaccha Bigha)</option>
+              <option value="maharashtra">Maharashtra (Guntha / गुंठा)</option>
+              <option value="punjab_haryana">Punjab & Haryana (Kanal / Marla)</option>
+              <option value="rajasthan">Rajasthan (Bigha)</option>
+              <option value="gujarat">Gujarat (Vigha / વીઘા)</option>
+              <option value="bengal">West Bengal (Bigha / Kattha)</option>
+              <option value="south_india">Tamil Nadu & Kerala (Cent / Ground)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="converterInputValue">Enter Area Value</label>
+            <input id="converterInputValue" type="number" step="0.5" min="0.01" value="1.0" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-sm font-bold">
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="converterUnitSelect">Source Unit</label>
+            <select id="converterUnitSelect" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-sm font-semibold">
+              <option value="bigha">Bigha (बीघा)</option>
+              <option value="guntha">Guntha (गुंठा - MH/KA)</option>
+              <option value="kanal">Kanal (कनाल - PB/HR)</option>
+              <option value="marla">Marla (मरला - PB/HR)</option>
+              <option value="biswa">Biswa (बिस्वा)</option>
+              <option value="kattha">Kattha (कट्ठा)</option>
+              <option value="cent">Cent (सेंट - South India)</option>
+              <option value="ground">Ground (ग्राउंड - 2400 sq ft)</option>
+              <option value="acre">Acre (एकड़)</option>
+              <option value="hectare">Hectare (हेक्टेयर)</option>
+              <option value="sq_meter">Square Meter (वर्ग मीटर)</option>
+              <option value="sq_feet">Square Feet (वर्ग फुट)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Real-time Converted Units Grid -->
+        <div class="bg-amber-50/70 border border-amber-200 rounded-xl p-4 space-y-3">
+          <div class="text-xs font-bold text-amber-900 uppercase tracking-wider">Equivalent Land Measurements:</div>
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs" id="converterResultsGrid">
+            <div class="bg-white p-3 rounded-lg border border-amber-100 shadow-xs">
+              <span class="text-slate-500 block">Acres (एकड़):</span>
+              <span class="text-base font-black text-slate-900" id="convResAcre">1.00</span>
+            </div>
+            <div class="bg-white p-3 rounded-lg border border-amber-100 shadow-xs">
+              <span class="text-slate-500 block">Hectares (हेक्टेयर):</span>
+              <span class="text-base font-black text-slate-900" id="convResHectare">0.40</span>
+            </div>
+            <div class="bg-white p-3 rounded-lg border border-amber-100 shadow-xs">
+              <span class="text-slate-500 block">Guntha (गुंठा):</span>
+              <span class="text-base font-black text-emerald-800" id="convResGuntha">40.0</span>
+            </div>
+            <div class="bg-white p-3 rounded-lg border border-amber-100 shadow-xs">
+              <span class="text-slate-500 block">State Bigha (बीघा):</span>
+              <span class="text-base font-black text-amber-800" id="convResBigha">1.60</span>
+            </div>
+            <div class="bg-white p-3 rounded-lg border border-amber-100 shadow-xs">
+              <span class="text-slate-500 block">Kanal (कनाल):</span>
+              <span class="text-base font-black text-indigo-800" id="convResKanal">8.00</span>
+            </div>
+            <div class="bg-white p-3 rounded-lg border border-amber-100 shadow-xs">
+              <span class="text-slate-500 block">Marla (मरला):</span>
+              <span class="text-base font-black text-indigo-800" id="convResMarla">160.0</span>
+            </div>
+            <div class="bg-white p-3 rounded-lg border border-amber-100 shadow-xs">
+              <span class="text-slate-500 block">Square Feet:</span>
+              <span class="text-base font-black text-slate-900" id="convResSqFt">43,560</span>
+            </div>
+            <div class="bg-white p-3 rounded-lg border border-amber-100 shadow-xs">
+              <span class="text-slate-500 block">Square Meters:</span>
+              <span class="text-base font-black text-slate-900" id="convResSqM">4,047</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap items-center justify-between gap-3 pt-2">
+          <span class="text-slate-500 text-[11px] italic" id="converterFormulaHint">1 Acre = 43,560 sq ft = 40 Gunthas</span>
+          <button id="applyConverterToFormsBtn" type="button" class="bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs px-4 py-2.5 rounded-xl shadow-sm transition">
+            ✓ Apply Converted Acres to AgriAssist Forms
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- OFFLINE GPS FIELD PERIMETER & WALK-METER MODAL -->
+  <div id="fieldMeterModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 modal-backdrop no-print">
+    <div class="bg-white w-full max-w-3xl rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[92vh]">
+      <div class="bg-indigo-800 text-white px-6 py-4 flex items-center justify-between">
+        <h3 class="font-bold text-base flex items-center gap-2">
+          <span>🚶</span> Offline GPS Field Perimeter & Acreage Walk-Meter (खेत जीपीएस मापक)
+        </h3>
+        <button id="closeFieldMeterBtn" class="text-indigo-200 hover:text-white text-xl font-bold">&times;</button>
+      </div>
+
+      <div class="p-6 overflow-y-auto space-y-4 text-xs">
+        <div class="bg-indigo-50 border border-indigo-200 rounded-xl p-3 flex flex-wrap items-center justify-between gap-2">
+          <div class="flex items-center space-x-2">
+            <span class="w-3 h-3 rounded-full bg-emerald-500 animate-pulse" id="gpsStatusDot"></span>
+            <span class="font-bold text-indigo-950" id="gpsStatusText">GPS Idle • Ready to Walk Boundary</span>
+          </div>
+          <div class="text-slate-600 font-mono text-[11px]" id="gpsAccuracyText">Accuracy: --</div>
+        </div>
+
+        <!-- Action Controls -->
+        <div class="flex flex-wrap items-center gap-2">
+          <button id="gpsStartBtn" type="button" class="bg-emerald-700 hover:bg-emerald-800 text-white font-bold px-4 py-2 rounded-xl transition flex items-center gap-1.5 shadow-sm">
+            <span>▶️</span> <span>Start Walking Field</span>
+          </button>
+          <button id="gpsAddPointBtn" disabled type="button" class="bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 text-white font-bold px-3.5 py-2 rounded-xl transition flex items-center gap-1.5 shadow-sm">
+            <span>📍</span> <span>Mark Corner Point</span>
+          </button>
+          <button id="gpsFinishBtn" disabled type="button" class="bg-brand-700 hover:bg-brand-800 disabled:opacity-50 text-white font-bold px-4 py-2 rounded-xl transition flex items-center gap-1.5 shadow-sm">
+            <span>🏁</span> <span>Finish & Calculate Area</span>
+          </button>
+          <button id="gpsResetBtn" type="button" class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold px-3 py-2 rounded-xl transition">
+            Reset
+          </button>
+          <button id="toggleManualDimsBtn" type="button" class="text-indigo-700 hover:underline font-semibold ml-auto">
+            Manual Length/Width Mode 📐
+          </button>
+        </div>
+
+        <!-- Manual Dimensions Box -->
+        <div id="manualDimsBox" class="hidden p-3.5 bg-slate-50 rounded-xl border border-slate-200 grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <div>
+            <label class="block font-semibold text-slate-700 mb-1" for="manualFieldLength">Length (Feet / फीट)</label>
+            <input id="manualFieldLength" type="number" step="10" placeholder="e.g. 330" class="w-full bg-white border border-slate-300 rounded-xl p-2 text-sm font-bold">
+          </div>
+          <div>
+            <label class="block font-semibold text-slate-700 mb-1" for="manualFieldWidth">Width (Feet / फीट)</label>
+            <input id="manualFieldWidth" type="number" step="10" placeholder="e.g. 132" class="w-full bg-white border border-slate-300 rounded-xl p-2 text-sm font-bold">
+          </div>
+          <div class="flex items-end">
+            <button id="calcManualAreaBtn" type="button" class="w-full bg-indigo-700 hover:bg-indigo-800 text-white font-bold p-2 text-sm rounded-xl transition">
+              Calculate from Dimensions
+            </button>
+          </div>
+        </div>
+
+        <!-- Live Canvas Visualizer -->
+        <div class="border border-slate-300 rounded-xl bg-slate-900 p-2 overflow-hidden flex flex-col items-center justify-center relative">
+          <canvas id="fieldCanvas" width="600" height="260" class="w-full max-w-full bg-slate-950 rounded-lg"></canvas>
+          <div class="absolute bottom-4 left-4 text-[10px] text-slate-400 font-mono" id="canvasPointsCount">Points logged: 0</div>
+        </div>
+
+        <!-- Calculated Live Statistics -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <div class="bg-indigo-50 border border-indigo-200 p-3 rounded-xl text-center">
+            <span class="text-slate-500 block text-[11px]">Field Area (Acres):</span>
+            <span class="text-xl font-black text-indigo-900" id="walkCalculatedAcres">0.00</span>
+          </div>
+          <div class="bg-amber-50 border border-amber-200 p-3 rounded-xl text-center">
+            <span class="text-slate-500 block text-[11px]">Guntha (गुंठा):</span>
+            <span class="text-xl font-black text-amber-900" id="walkCalculatedGuntha">0.0</span>
+          </div>
+          <div class="bg-emerald-50 border border-emerald-200 p-3 rounded-xl text-center">
+            <span class="text-slate-500 block text-[11px]">Bigha (बीघा):</span>
+            <span class="text-xl font-black text-emerald-900" id="walkCalculatedBigha">0.0</span>
+          </div>
+          <div class="bg-slate-50 border border-slate-200 p-3 rounded-xl text-center">
+            <span class="text-slate-500 block text-[11px]">Perimeter (तारबंदी):</span>
+            <span class="text-xl font-black text-slate-900" id="walkCalculatedPerimeter">0 m</span>
+          </div>
+        </div>
+
+        <div class="flex justify-end pt-2 border-t border-slate-100">
+          <button id="applyWalkAcresBtn" type="button" class="bg-emerald-700 hover:bg-emerald-800 text-white font-bold px-4 py-2 rounded-xl transition shadow-sm">
+            ✓ Apply Measured Acres to AgriAssist
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FLOATING VOICE INPUT STATUS PILL -->
+  <div id="voiceStatusPill" class="hidden fixed bottom-6 right-6 z-50 bg-slate-900/95 text-white px-4 py-3 rounded-2xl shadow-2xl border border-emerald-500/50 flex items-center space-x-3 no-print">
+    <span class="w-3 h-3 rounded-full bg-rose-500 animate-ping"></span>
+    <div class="text-xs">
+      <div class="font-bold text-emerald-300" id="voiceStatusTitle">Listening... बोलिए...</div>
+      <div class="text-slate-300 text-[11px]" id="voiceTranscriptPreview">Speak clearly into microphone...</div>
+    </div>
+    <button id="closeVoiceBtn" type="button" class="text-slate-400 hover:text-white font-bold ml-2 text-sm">&times;</button>
   </div>
 
   <!-- FOOTER -->
