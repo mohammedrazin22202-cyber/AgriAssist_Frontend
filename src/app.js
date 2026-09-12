@@ -23,17 +23,34 @@ const TRANSLATIONS = {
     tagline: "Decision Support",
     subtitle: "Kisan Fasal Salahkaar • Empowering Indian Agriculture",
     detectLocation: "Detect Weather",
+    landConverterBtn: "Land Converter",
+    fieldWalkBtn: "GPS Walk-Meter",
     tabAdvisor: "Crop Sowing Advisor",
+    tabSeed: "Seed & Spacing",
     tabDoctor: "Plant Doctor (IPM)",
     tabMandi: "Mandi Prices & Trends",
+    tabSprayer: "Sprayer & Dilution",
     tabIrrigation: "Smart Irrigation",
+    tabSolar: "Solar Pump (KUSUM)",
     tabOrganic: "Organic / Jaivik Kheti",
+    tabIntercrop: "Intercropping Matrix",
+    tabStorage: "Grain Storage Doctor",
     tabRotation: "1-Year Rotation",
     tabFertilizer: "Fertilizer Doctor",
     tabYojana: "Kisan Yojana Hub",
     tabKhata: "Kisan Bahi-Khata",
     heroTitle: "What Should You Sow This Season?",
     heroDesc: "Make confident, high-yield planting decisions. Tell us about your soil, season, and irrigation, and AgriAssist will rank the most profitable, climate-resilient crops with exact fertilizer bags, cost estimates, and stage-wise agronomic guidance.",
+    seedHeroTitle: "🌱 Seed Rate & Plant Geometry Calculator",
+    seedHeroDesc: "Precision planting density and seed requirements. Calculate exact seed weight in kg, optimal row-to-row and plant-to-plant spacing, germination compensation, and bio-seed treatment recipes.",
+    sprayerHeroTitle: "🚜 Knapsack Sprayer & Chemical Dilution Calculator",
+    sprayerHeroDesc: "Eliminate crop leaf burn and chemical wastage. Calculate exact milliliters or grams to pour into each 15L or 16L spray pump, total tanks needed for your acreage, and essential protective safety guidelines.",
+    solarHeroTitle: "☀️ Solar Ag-Pump Sizing & PM-KUSUM Subsidy Estimator",
+    solarHeroDesc: "Free yourself from erratic electricity and rising diesel costs. Size the right 2 HP to 7.5 HP solar water pump for your borewell or canal and calculate up to 70% PM-KUSUM Component-B government subsidies.",
+    intercropHeroTitle: "🌿 Intercropping & Companion Crop Matrix",
+    intercropHeroDesc: "Multiply farm yield and reduce climate risk with biological companion planting. Discover scientifically validated Indian crop combinations with 20% to 40% Land Equivalent Ratio (LER) boosts, natural nitrogen fixation, and biological pest trap crops.",
+    storageHeroTitle: "📦 Post-Harvest Grain Storage & Moisture Doctor",
+    storageHeroDesc: "Stop losing 15-20% of your harvest to fungal rot and grain weevils. Check safe moisture limits, get zero-cost organic preservation recipes, and learn how to get bank pledge loans against e-NWR warehouse receipts.",
     doctorHeroTitle: "🩺 Kisan Plant Doctor & Pest Diagnostic",
     doctorHeroDesc: "Identify crop pests, fungal diseases, and nutrient deficiencies. Get biological Integrated Pest Management (IPM) recipes, exact chemical dosages, and Pre-Harvest Interval (PHI) waiting periods.",
     mandiHeroTitle: "📈 Mandi Market Prices & Trend Analytics",
@@ -69,17 +86,34 @@ const TRANSLATIONS = {
     tagline: "कृषि निर्णय प्रणाली",
     subtitle: "किसान फसल सलाहकार • भारतीय कृषि सशक्तिकरण",
     detectLocation: "मौसम जांचें",
+    landConverterBtn: "भूमि मापक",
+    fieldWalkBtn: "जीपीएस खेत मापक",
     tabAdvisor: "फसल बुवाई सलाहकार",
+    tabSeed: "बीज एवं दूरी",
     tabDoctor: "प्लांट डॉक्टर (कीट-रोग)",
     tabMandi: "मंडी भाव एवं रुझान",
+    tabSprayer: "स्प्रेयर एवं दवा",
     tabIrrigation: "सटीक सिंचाई योजना",
+    tabSolar: "सोलर पंप (कुसुम)",
     tabOrganic: "जैविक / प्राकृतिक खेती",
+    tabIntercrop: "मिश्रित फसल",
+    tabStorage: "अनाज भंडारण डॉक्टर",
     tabRotation: "1-वर्षीय फसल चक्र",
     tabFertilizer: "खाद एवं मृदा डॉक्टर",
     tabYojana: "किसान योजना हब",
     tabKhata: "किसान बही-खाता",
     heroTitle: "इस मौसम में कौन सी फसल बोएं?",
     heroDesc: "वैज्ञानिक एवं सटीक फसल निर्णय लें। अपनी मिट्टी, मौसम और सिंचाई की जानकारी दें, और एग्रीअसिस्ट आपको अधिकतम मुनाफे वाली, उपयुक्त फसलों की सिफारिश के साथ सटीक खाद की बोरी, लागत और पैदावार का हिसाब देगा।",
+    seedHeroTitle: "🌱 बीज दर एवं पौध दूरी कैलकुलेटर",
+    seedHeroDesc: "सटीक पौध संख्या एवं बीज आवश्यकता। एकड़ के अनुसार सही बीज की मात्रा (किलो), कतार-से-कतार व पौधे-से-पौधे की दूरी और जैविक बीज उपचार जानें।",
+    sprayerHeroTitle: "🚜 नैपसैक स्प्रेयर एवं कीटनाशक घोल कैलकुलेटर",
+    sprayerHeroDesc: "फसल जलने और दवा की बर्बादी से बचें। प्रत्येक 15 या 16 लीटर स्प्रे पंप में दवा की सही मात्रा (मिलीलीटर/ग्राम), आवश्यक कुल पंप और सुरक्षा नियम जानें।",
+    solarHeroTitle: "☀️ सोलर पंप क्षमता एवं पीएम-कुसुम सब्सिडी",
+    solarHeroDesc: "डीजल खर्च और बिजली कटौती से मुक्ति। अपने बोरवेल या कुएं के लिए सही सोलर पंप (2 से 7.5 HP) चुनें और 70% तक सरकारी सब्सिडी का हिसाब लगाएं।",
+    intercropHeroTitle: "🌿 मिश्रित एवं सहफसली खेती मैट्रिक्स",
+    intercropHeroDesc: "एक साथ दो फसलें लेकर मुनाफा बढ़ाएं और जोखिम घटाएं। वैज्ञानिक रूप से प्रमाणित भारतीय सहफसली जोड़ियां, भूमि उपयोग अनुपात (LER) और नाइट्रोजन लाभ जानें।",
+    storageHeroTitle: "📦 फसल कटाई उपरांत अनाज भंडारण डॉक्टर",
+    storageHeroDesc: "फफूंद, घुन और सड़न से 20% फसल नुकसान रोकें। सुरक्षित नमी प्रतिशत, मुफ्त देसी जैविक संरक्षण उपाय और e-NWR वेयरहाउस रसीद पर बैंक ऋण की जानकारी।",
     doctorHeroTitle: "🩺 किसान प्लांट डॉक्टर एवं कीट निदान",
     doctorHeroDesc: "फसल के रोगों और कीटों की तुरंत पहचान करें। जैविक (IPM) उपचार, सटीक रासायनिक कीटनाशक खुराक और फसल कटाई से पहले सुरक्षित प्रतीक्षा अवधि (PHI) जानें।",
     mandiHeroTitle: "📈 मंडी भाव एवं मूल्य विश्लेषण",
@@ -930,6 +964,13 @@ const tabFertilizerBtn = document.getElementById("tabFertilizerBtn");
 const tabYojanaBtn = document.getElementById("tabYojanaBtn");
 const tabKhataBtn = document.getElementById("tabKhataBtn");
 
+// 5 New Navigation Tabs & Content
+const tabSeedBtn = document.getElementById("tabSeedBtn");
+const tabSprayerBtn = document.getElementById("tabSprayerBtn");
+const tabSolarBtn = document.getElementById("tabSolarBtn");
+const tabIntercropBtn = document.getElementById("tabIntercropBtn");
+const tabStorageBtn = document.getElementById("tabStorageBtn");
+
 const advisorTabContent = document.getElementById("advisorTabContent");
 const doctorTabContent = document.getElementById("doctorTabContent");
 const mandiTabContent = document.getElementById("mandiTabContent");
@@ -939,6 +980,103 @@ const rotationTabContent = document.getElementById("rotationTabContent");
 const fertilizerTabContent = document.getElementById("fertilizerTabContent");
 const yojanaTabContent = document.getElementById("yojanaTabContent");
 const khataTabContent = document.getElementById("khataTabContent");
+
+const seedTabContent = document.getElementById("seedTabContent");
+const sprayerTabContent = document.getElementById("sprayerTabContent");
+const solarTabContent = document.getElementById("solarTabContent");
+const intercropTabContent = document.getElementById("intercropTabContent");
+const storageTabContent = document.getElementById("storageTabContent");
+
+// Quick Header Actions
+const openLandConverterBtn = document.getElementById("openLandConverterBtn");
+const closeLandConverterBtn = document.getElementById("closeLandConverterBtn");
+const landConverterModal = document.getElementById("landConverterModal");
+const converterStateSelect = document.getElementById("converterStateSelect");
+const converterInputValue = document.getElementById("converterInputValue");
+const converterUnitSelect = document.getElementById("converterUnitSelect");
+const applyConverterToFormsBtn = document.getElementById("applyConverterToFormsBtn");
+
+const openFieldWalkBtn = document.getElementById("openFieldWalkBtn");
+const closeFieldMeterBtn = document.getElementById("closeFieldMeterBtn");
+const fieldMeterModal = document.getElementById("fieldMeterModal");
+const gpsStatusDot = document.getElementById("gpsStatusDot");
+const gpsStatusText = document.getElementById("gpsStatusText");
+const gpsAccuracyText = document.getElementById("gpsAccuracyText");
+const gpsStartBtn = document.getElementById("gpsStartBtn");
+const gpsAddPointBtn = document.getElementById("gpsAddPointBtn");
+const gpsFinishBtn = document.getElementById("gpsFinishBtn");
+const gpsResetBtn = document.getElementById("gpsResetBtn");
+const toggleManualDimsBtn = document.getElementById("toggleManualDimsBtn");
+const manualDimsBox = document.getElementById("manualDimsBox");
+const manualFieldLength = document.getElementById("manualFieldLength");
+const manualFieldWidth = document.getElementById("manualFieldWidth");
+const calcManualAreaBtn = document.getElementById("calcManualAreaBtn");
+const fieldCanvas = document.getElementById("fieldCanvas");
+const canvasPointsCount = document.getElementById("canvasPointsCount");
+const walkCalculatedAcres = document.getElementById("walkCalculatedAcres");
+const walkCalculatedGuntha = document.getElementById("walkCalculatedGuntha");
+const walkCalculatedBigha = document.getElementById("walkCalculatedBigha");
+const walkCalculatedPerimeter = document.getElementById("walkCalculatedPerimeter");
+const applyWalkAcresBtn = document.getElementById("applyWalkAcresBtn");
+
+// Voice Search Elements
+const voiceCropBtn = document.getElementById("voiceCropBtn");
+const voiceDoctorBtn = document.getElementById("voiceDoctorBtn");
+const voiceMandiBtn = document.getElementById("voiceMandiBtn");
+const voiceStatusPill = document.getElementById("voiceStatusPill");
+const voiceStatusTitle = document.getElementById("voiceStatusTitle");
+const voiceTranscriptPreview = document.getElementById("voiceTranscriptPreview");
+const closeVoiceBtn = document.getElementById("closeVoiceBtn");
+
+// Seed Elements
+const seedForm = document.getElementById("seedForm");
+const seedCropSelect = document.getElementById("seedCropSelect");
+const seedLandAcres = document.getElementById("seedLandAcres");
+const seedGerminationPct = document.getElementById("seedGerminationPct");
+const seedSowingMethod = document.getElementById("seedSowingMethod");
+const seedCustomSpacingCheck = document.getElementById("seedCustomSpacingCheck");
+const seedCustomSpacingBox = document.getElementById("seedCustomSpacingBox");
+const seedRowSpacingCm = document.getElementById("seedRowSpacingCm");
+const seedPlantSpacingCm = document.getElementById("seedPlantSpacingCm");
+const calcSeedBtn = document.getElementById("calcSeedBtn");
+const seedResultContainer = document.getElementById("seedResultContainer");
+
+// Sprayer Elements
+const sprayerForm = document.getElementById("sprayerForm");
+const sprayTankCap = document.getElementById("sprayTankCap");
+const sprayLandAcres = document.getElementById("sprayLandAcres");
+const sprayDosageMode = document.getElementById("sprayDosageMode");
+const sprayChemForm = document.getElementById("sprayChemForm");
+const sprayDoseAmount = document.getElementById("sprayDoseAmount");
+const sprayDoseHint = document.getElementById("sprayDoseHint");
+const sprayWaterRate = document.getElementById("sprayWaterRate");
+const calcSprayerBtn = document.getElementById("calcSprayerBtn");
+const sprayerResultContainer = document.getElementById("sprayerResultContainer");
+
+// Solar Pump Elements
+const solarForm = document.getElementById("solarForm");
+const solarWaterSource = document.getElementById("solarWaterSource");
+const solarDepthFeet = document.getElementById("solarDepthFeet");
+const solarLandAcres = document.getElementById("solarLandAcres");
+const solarIrrigType = document.getElementById("solarIrrigType");
+const solarFarmerCategory = document.getElementById("solarFarmerCategory");
+const calcSolarBtn = document.getElementById("calcSolarBtn");
+const solarResultContainer = document.getElementById("solarResultContainer");
+
+// Intercropping Elements
+const intercropFilterSelect = document.getElementById("intercropFilterSelect");
+const intercropCount = document.getElementById("intercropCount");
+const intercropGrid = document.getElementById("intercropGrid");
+
+// Storage Elements
+const storageRiskForm = document.getElementById("storageRiskForm");
+const storageCropSelect = document.getElementById("storageCropSelect");
+const storageMoistureInput = document.getElementById("storageMoistureInput");
+const storageMethodSelect = document.getElementById("storageMethodSelect");
+const storageDurationInput = document.getElementById("storageDurationInput");
+const checkStorageRiskBtn = document.getElementById("checkStorageRiskBtn");
+const storageRiskResultContainer = document.getElementById("storageRiskResultContainer");
+const storageCatalogTableBody = document.getElementById("storageCatalogTableBody");
 
 // District Preset Elements
 const stateSelect = document.getElementById("stateSelect");
@@ -1098,6 +1236,12 @@ document.addEventListener("DOMContentLoaded", () => {
   updateSoilPresets();
   executeRecommendation();
 
+  // 5 New Ag-Tech Features Initialization
+  populateSeedCropOptions();
+  initLandConverter();
+  recalculateLandConverter();
+  renderGrainStorageCatalog();
+
   // Load saved language if any
   const savedLang = localStorage.getItem("agriassist_lang");
   if (savedLang && TRANSLATIONS[savedLang]) {
@@ -1121,7 +1265,7 @@ function populateFertilizerCropOptions() {
 }
 
 function setupEventListeners() {
-  // Navigation Tabs (All 9 Modules)
+  // Navigation Tabs (All 14 Modules)
   tabAdvisorBtn?.addEventListener("click", () => switchTab("advisor"));
   tabDoctorBtn?.addEventListener("click", () => switchTab("doctor"));
   tabMandiBtn?.addEventListener("click", () => switchTab("mandi"));
@@ -1131,6 +1275,111 @@ function setupEventListeners() {
   tabFertilizerBtn?.addEventListener("click", () => switchTab("fertilizer"));
   tabYojanaBtn?.addEventListener("click", () => switchTab("yojana"));
   tabKhataBtn?.addEventListener("click", () => switchTab("khata"));
+
+  // 5 New Feature Tabs
+  tabSeedBtn?.addEventListener("click", () => switchTab("seed"));
+  tabSprayerBtn?.addEventListener("click", () => switchTab("sprayer"));
+  tabSolarBtn?.addEventListener("click", () => switchTab("solar"));
+  tabIntercropBtn?.addEventListener("click", () => switchTab("intercrop"));
+  tabStorageBtn?.addEventListener("click", () => switchTab("storage"));
+
+  // Header Quick Actions: Land Converter Modal
+  openLandConverterBtn?.addEventListener("click", openLandConverterModal);
+  closeLandConverterBtn?.addEventListener("click", closeLandConverterModal);
+  landConverterModal?.addEventListener("click", (e) => {
+    if (e.target === landConverterModal) closeLandConverterModal();
+  });
+  converterStateSelect?.addEventListener("change", recalculateLandConverter);
+  converterInputValue?.addEventListener("input", recalculateLandConverter);
+  converterUnitSelect?.addEventListener("change", recalculateLandConverter);
+  applyConverterToFormsBtn?.addEventListener("click", applyConvertedAcresToForms);
+
+  // Header Quick Actions: GPS Field Walk-Meter Modal
+  openFieldWalkBtn?.addEventListener("click", openFieldMeterModal);
+  closeFieldMeterBtn?.addEventListener("click", closeFieldMeterModal);
+  fieldMeterModal?.addEventListener("click", (e) => {
+    if (e.target === fieldMeterModal) closeFieldMeterModal();
+  });
+  gpsStartBtn?.addEventListener("click", startFieldWalking);
+  gpsAddPointBtn?.addEventListener("click", recordFieldPoint);
+  gpsFinishBtn?.addEventListener("click", finishFieldWalking);
+  gpsResetBtn?.addEventListener("click", resetFieldMeter);
+  toggleManualDimsBtn?.addEventListener("click", () => {
+    manualDimsBox?.classList.toggle("hidden");
+  });
+  calcManualAreaBtn?.addEventListener("click", calculateManualFieldArea);
+  applyWalkAcresBtn?.addEventListener("click", applyWalkAcresToForms);
+
+  // Kisan Voice Search Buttons
+  voiceCropBtn?.addEventListener("click", () => startVoiceRecognition("cropSearchInput"));
+  voiceDoctorBtn?.addEventListener("click", () => startVoiceRecognition("doctorSearchInput"));
+  voiceMandiBtn?.addEventListener("click", () => startVoiceRecognition("mandiSearchInput"));
+  closeVoiceBtn?.addEventListener("click", stopVoiceRecognition);
+
+  // Seed & Population Calculator controls
+  seedCropSelect?.addEventListener("change", executeSeedCalculation);
+  seedLandAcres?.addEventListener("input", executeSeedCalculation);
+  seedGerminationPct?.addEventListener("input", executeSeedCalculation);
+  seedSowingMethod?.addEventListener("change", executeSeedCalculation);
+  seedCustomSpacingCheck?.addEventListener("change", (e) => {
+    seedCustomSpacingBox?.classList.toggle("hidden", !e.target.checked);
+    executeSeedCalculation();
+  });
+  seedRowSpacingCm?.addEventListener("input", executeSeedCalculation);
+  seedPlantSpacingCm?.addEventListener("input", executeSeedCalculation);
+  calcSeedBtn?.addEventListener("click", executeSeedCalculation);
+  seedForm?.addEventListener("submit", (e) => {
+    e.preventDefault();
+    executeSeedCalculation();
+  });
+
+  // Knapsack Sprayer & Dilution Calculator controls
+  sprayDosageMode?.addEventListener("change", (e) => {
+    if (sprayDoseHint) {
+      sprayDoseHint.textContent = e.target.value === "per_acre"
+        ? "Standard recommended dose per 1 Acre of crop"
+        : "Dilution rate per 1 Liter of clean spray water";
+    }
+    executeSprayerCalculation();
+  });
+  sprayChemForm?.addEventListener("change", executeSprayerCalculation);
+  sprayTankCap?.addEventListener("change", executeSprayerCalculation);
+  sprayLandAcres?.addEventListener("input", executeSprayerCalculation);
+  sprayDoseAmount?.addEventListener("input", executeSprayerCalculation);
+  sprayWaterRate?.addEventListener("input", executeSprayerCalculation);
+  calcSprayerBtn?.addEventListener("click", executeSprayerCalculation);
+  sprayerForm?.addEventListener("submit", (e) => {
+    e.preventDefault();
+    executeSprayerCalculation();
+  });
+
+  // Solar Pump & PM-KUSUM controls
+  solarWaterSource?.addEventListener("change", executeSolarCalculation);
+  solarDepthFeet?.addEventListener("input", executeSolarCalculation);
+  solarLandAcres?.addEventListener("input", executeSolarCalculation);
+  solarIrrigType?.addEventListener("change", executeSolarCalculation);
+  solarFarmerCategory?.addEventListener("change", executeSolarCalculation);
+  calcSolarBtn?.addEventListener("click", executeSolarCalculation);
+  solarForm?.addEventListener("submit", (e) => {
+    e.preventDefault();
+    executeSolarCalculation();
+  });
+
+  // Intercropping Catalog controls
+  intercropFilterSelect?.addEventListener("change", (e) => {
+    renderIntercroppingCatalog(e.target.value);
+  });
+
+  // Grain Storage Doctor controls
+  storageCropSelect?.addEventListener("change", executeStorageRiskCheck);
+  storageMoistureInput?.addEventListener("input", executeStorageRiskCheck);
+  storageMethodSelect?.addEventListener("change", executeStorageRiskCheck);
+  storageDurationInput?.addEventListener("input", executeStorageRiskCheck);
+  checkStorageRiskBtn?.addEventListener("click", executeStorageRiskCheck);
+  storageRiskForm?.addEventListener("submit", (e) => {
+    e.preventDefault();
+    executeStorageRiskCheck();
+  });
 
   // Weather detection
   detectWeatherBtn?.addEventListener("click", detectLocationAndWeather);
@@ -1288,6 +1537,12 @@ function setupEventListeners() {
       if (langModal && !langModal.classList.contains("hidden")) {
         langModal.classList.add("hidden");
       }
+      if (landConverterModal && !landConverterModal.classList.contains("hidden")) {
+        closeLandConverterModal();
+      }
+      if (fieldMeterModal && !fieldMeterModal.classList.contains("hidden")) {
+        closeFieldMeterModal();
+      }
     }
   });
 }
@@ -1303,7 +1558,12 @@ function switchTab(tab) {
     { id: "rotation", btn: tabRotationBtn, content: rotationTabContent },
     { id: "fertilizer", btn: tabFertilizerBtn, content: fertilizerTabContent },
     { id: "yojana", btn: tabYojanaBtn, content: yojanaTabContent },
-    { id: "khata", btn: tabKhataBtn, content: khataTabContent }
+    { id: "khata", btn: tabKhataBtn, content: khataTabContent },
+    { id: "seed", btn: tabSeedBtn, content: seedTabContent },
+    { id: "sprayer", btn: tabSprayerBtn, content: sprayerTabContent },
+    { id: "solar", btn: tabSolarBtn, content: solarTabContent },
+    { id: "intercrop", btn: tabIntercropBtn, content: intercropTabContent },
+    { id: "storage", btn: tabStorageBtn, content: storageTabContent }
   ];
 
   allTabs.forEach(t => {
@@ -1344,6 +1604,16 @@ function switchTab(tab) {
     executeKisanYojana();
   } else if (tab === "khata") {
     renderKhataLedger();
+  } else if (tab === "seed" && seedResultContainer && !seedResultContainer.children.length) {
+    executeSeedCalculation();
+  } else if (tab === "sprayer" && sprayerResultContainer && !sprayerResultContainer.children.length) {
+    executeSprayerCalculation();
+  } else if (tab === "solar" && solarResultContainer && !solarResultContainer.children.length) {
+    executeSolarCalculation();
+  } else if (tab === "intercrop" && intercropGrid && !intercropGrid.children.length) {
+    renderIntercroppingCatalog();
+  } else if (tab === "storage" && storageRiskResultContainer && !storageRiskResultContainer.children.length) {
+    executeStorageRiskCheck();
   }
 }
 
@@ -1377,10 +1647,18 @@ function setLanguage(lang) {
   }
   filterAndRenderCrops();
 
-  // If Plant doctor or mandi is currently open, refresh them
+  // If Plant doctor, mandi, khata, or new tools are open, refresh them
   if (appState.activeTab === "doctor") executePlantDoctor();
   if (appState.activeTab === "mandi") executeMandiPrices();
   if (appState.activeTab === "khata") renderKhataLedger();
+  if (appState.activeTab === "seed") executeSeedCalculation();
+  if (appState.activeTab === "sprayer") executeSprayerCalculation();
+  if (appState.activeTab === "solar") executeSolarCalculation();
+  if (appState.activeTab === "intercrop") renderIntercroppingCatalog();
+  if (appState.activeTab === "storage") {
+    renderGrainStorageCatalog();
+    executeStorageRiskCheck();
+  }
 }
 
 function toggleLanguage() {
@@ -3912,5 +4190,1501 @@ function renderKhataLedger() {
     `;
   }).join("");
 }
+
+
+// ============================================================================
+// 1. REGIONAL LAND UNIT CONVERTER (क्षेत्रीय भूमि मापक)
+// ============================================================================
+
+const STATE_BIGHA_ACRE_FACTORS = {
+  "Uttar Pradesh": 0.625,        // Pucca Bigha (27,225 sq ft)
+  "Bihar": 0.625,                // Standard Pucca Bigha
+  "Punjab": 0.2066,              // 5 Bighas = 1 Killa / Acre approx
+  "Haryana": 0.2066,
+  "Rajasthan": 0.625,            // Pucca Bigha (Kaccha is ~0.38)
+  "Gujarat": 0.574,              // Vigha (25,000 sq ft approx)
+  "West Bengal": 0.3306,         // 14,400 sq ft (3 Bighas = ~1 Acre)
+  "Madhya Pradesh": 0.5,         // 1 Bigha = 0.5 Acre approx
+  "Maharashtra": 0.625
+};
+
+let currentCalculatedAcres = 1.0;
+
+function initLandConverter() {
+  if (converterStateSelect && stateSelect) {
+    converterStateSelect.value = stateSelect.value || "Uttar Pradesh";
+  }
+}
+
+function recalculateLandConverter() {
+  const val = parseFloat(converterInputValue?.value) || 0;
+  const unit = converterUnitSelect?.value || "acre";
+  const state = converterStateSelect?.value || "Uttar Pradesh";
+  const bighaFactor = STATE_BIGHA_ACRE_FACTORS[state] || 0.625;
+
+  // Convert input unit to normalized Acres
+  let acres = 0;
+  switch (unit) {
+    case "acre":
+      acres = val;
+      break;
+    case "hectare":
+      acres = val * 2.47105;
+      break;
+    case "guntha":
+      acres = val / 40.0;
+      break;
+    case "bigha":
+      acres = val * bighaFactor;
+      break;
+    case "biswa":
+      acres = (val * (bighaFactor / 20.0));
+      break;
+    case "kanal":
+      acres = val * 0.125;
+      break;
+    case "marla":
+      acres = val * 0.00625;
+      break;
+    case "cent":
+      acres = val * 0.01;
+      break;
+    case "ground":
+      acres = val * (2400.0 / 43560.0);
+      break;
+    case "sq_feet":
+      acres = val / 43560.0;
+      break;
+    case "sq_meters":
+      acres = val / 4046.86;
+      break;
+    default:
+      acres = val;
+  }
+
+  currentCalculatedAcres = acres;
+
+  // Update all UI cells
+  const convResAcre = document.getElementById("convResAcre");
+  const convResHectare = document.getElementById("convResHectare");
+  const convResGuntha = document.getElementById("convResGuntha");
+  const convResBigha = document.getElementById("convResBigha");
+  const convResKanal = document.getElementById("convResKanal");
+  const convResMarla = document.getElementById("convResMarla");
+  const convResSqFt = document.getElementById("convResSqFt");
+  const convResSqM = document.getElementById("convResSqM");
+  const formulaHint = document.getElementById("converterFormulaHint");
+
+  if (convResAcre) convResAcre.textContent = acres.toFixed(3);
+  if (convResHectare) convResHectare.textContent = (acres / 2.47105).toFixed(3);
+  if (convResGuntha) convResGuntha.textContent = (acres * 40.0).toFixed(2);
+  if (convResBigha) convResBigha.textContent = (acres / bighaFactor).toFixed(3);
+  if (convResKanal) convResKanal.textContent = (acres * 8.0).toFixed(2);
+  if (convResMarla) convResMarla.textContent = (acres * 160.0).toFixed(1);
+  if (convResSqFt) convResSqFt.textContent = Math.round(acres * 43560.0).toLocaleString("en-IN");
+  if (convResSqM) convResSqM.textContent = Math.round(acres * 4046.86).toLocaleString("en-IN");
+
+  if (formulaHint) {
+    formulaHint.textContent = `In ${state}: 1 Bigha = ${(bighaFactor).toFixed(3)} Acre (1 Acre = ${(1 / bighaFactor).toFixed(2)} Bigha) • 1 Guntha = 1,089 sq ft`;
+  }
+}
+
+function openLandConverterModal() {
+  landConverterModal?.classList.remove("hidden");
+  recalculateLandConverter();
+}
+
+function closeLandConverterModal() {
+  landConverterModal?.classList.add("hidden");
+}
+
+function applyConvertedAcresToForms() {
+  const acresVal = parseFloat(currentCalculatedAcres.toFixed(2));
+  if (acresVal <= 0) {
+    alert("Please enter a valid land measurement greater than 0.");
+    return;
+  }
+
+  // Update AgriAssist form inputs
+  if (landSize) {
+    landSize.value = acresVal;
+    appState.landSize = acresVal;
+  }
+  if (seedLandAcres) seedLandAcres.value = acresVal;
+  if (sprayLandAcres) sprayLandAcres.value = acresVal;
+  if (solarLandAcres) solarLandAcres.value = acresVal;
+  const irrigLand = document.getElementById("irrigLandInput");
+  if (irrigLand) irrigLand.value = acresVal;
+
+  closeLandConverterModal();
+  alert(`✓ Applied ${acresVal} Acres across all AgriAssist calculation modules!`);
+}
+
+
+// ============================================================================
+// 2. OFFLINE GPS FIELD PERIMETER & WALK-METER (खेत जीपीएस मापक)
+// ============================================================================
+
+const fieldWalkState = {
+  watching: false,
+  watchId: null,
+  points: [],
+  lastGps: null,
+  calculatedAreaSqM: 0,
+  calculatedAcres: 0,
+  calculatedPerimeterM: 0
+};
+
+function openFieldMeterModal() {
+  fieldMeterModal?.classList.remove("hidden");
+  setTimeout(drawFieldPolygon, 100);
+}
+
+function closeFieldMeterModal() {
+  fieldMeterModal?.classList.add("hidden");
+}
+
+function startFieldWalking() {
+  if (!("geolocation" in navigator)) {
+    alert("GPS Geolocation is not supported by your browser or device.");
+    return;
+  }
+
+  if (fieldWalkState.watching) return;
+
+  fieldWalkState.watching = true;
+  fieldWalkState.points = [];
+  gpsStartBtn.disabled = true;
+  gpsStartBtn.classList.add("opacity-50");
+  gpsAddPointBtn.disabled = false;
+  gpsFinishBtn.disabled = false;
+
+  if (gpsStatusDot) {
+    gpsStatusDot.className = "w-3 h-3 rounded-full bg-amber-500 animate-ping";
+  }
+  if (gpsStatusText) {
+    gpsStatusText.textContent = "Acquiring GPS Satellite Lock...";
+  }
+
+  fieldWalkState.watchId = navigator.geolocation.watchPosition(
+    onGpsLocationSuccess,
+    onGpsLocationError,
+    { enableHighAccuracy: true, timeout: 15000, maximumAge: 1000 }
+  );
+}
+
+function onGpsLocationSuccess(pos) {
+  const { latitude, longitude, accuracy } = pos.coords;
+  fieldWalkState.lastGps = { lat: latitude, lng: longitude, acc: accuracy };
+
+  if (gpsStatusDot) {
+    gpsStatusDot.className = "w-3 h-3 rounded-full bg-emerald-500";
+  }
+  if (gpsStatusText) {
+    gpsStatusText.textContent = `GPS Active • Walk along your field edge`;
+  }
+  if (gpsAccuracyText) {
+    gpsAccuracyText.textContent = `Accuracy: ±${Math.round(accuracy)} m`;
+  }
+
+  // Auto-record first point or if moved > 5 meters
+  if (fieldWalkState.points.length === 0) {
+    recordFieldPoint();
+  } else {
+    const lastPt = fieldWalkState.points[fieldWalkState.points.length - 1];
+    const dist = calculateGpsDistanceMeters(lastPt.lat, lastPt.lng, latitude, longitude);
+    if (dist >= 4.0) {
+      recordFieldPoint();
+    }
+  }
+}
+
+function onGpsLocationError(err) {
+  console.warn("GPS Location error:", err);
+  if (gpsStatusText) {
+    gpsStatusText.textContent = `GPS Error: ${err.message || "Cannot acquire signal"}`;
+  }
+  if (gpsStatusDot) {
+    gpsStatusDot.className = "w-3 h-3 rounded-full bg-rose-500";
+  }
+}
+
+function calculateGpsDistanceMeters(lat1, lon1, lat2, lon2) {
+  const R = 6371e3; // Earth radius in meters
+  const phi1 = (lat1 * Math.PI) / 180;
+  const phi2 = (lat2 * Math.PI) / 180;
+  const deltaPhi = ((lat2 - lat1) * Math.PI) / 180;
+  const deltaLambda = ((lon2 - lon1) * Math.PI) / 180;
+
+  const a = Math.sin(deltaPhi / 2) * Math.sin(deltaPhi / 2) +
+            Math.cos(phi1) * Math.cos(phi2) *
+            Math.sin(deltaLambda / 2) * Math.sin(deltaLambda / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  return R * c;
+}
+
+function recordFieldPoint() {
+  if (!fieldWalkState.lastGps) {
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        fieldWalkState.lastGps = {
+          lat: pos.coords.latitude,
+          lng: pos.coords.longitude,
+          acc: pos.coords.accuracy
+        };
+        recordFieldPoint();
+      },
+      (err) => alert("Could not fetch GPS fix. Please ensure location is enabled.")
+    );
+    return;
+  }
+
+  fieldWalkState.points.push({
+    lat: fieldWalkState.lastGps.lat,
+    lng: fieldWalkState.lastGps.lng
+  });
+
+  if (canvasPointsCount) {
+    canvasPointsCount.textContent = `Points logged: ${fieldWalkState.points.length}`;
+  }
+
+  computeFieldGeometry();
+  drawFieldPolygon();
+}
+
+function finishFieldWalking() {
+  if (fieldWalkState.watchId !== null) {
+    navigator.geolocation.clearWatch(fieldWalkState.watchId);
+    fieldWalkState.watchId = null;
+  }
+  fieldWalkState.watching = false;
+
+  gpsStartBtn.disabled = false;
+  gpsStartBtn.classList.remove("opacity-50");
+  gpsAddPointBtn.disabled = true;
+  gpsFinishBtn.disabled = true;
+
+  if (gpsStatusDot) {
+    gpsStatusDot.className = "w-3 h-3 rounded-full bg-brand-600";
+  }
+  if (gpsStatusText) {
+    gpsStatusText.textContent = `Survey Finished • ${fieldWalkState.points.length} boundary stakes surveyed`;
+  }
+
+  computeFieldGeometry();
+  drawFieldPolygon();
+}
+
+function resetFieldMeter() {
+  if (fieldWalkState.watchId !== null) {
+    navigator.geolocation.clearWatch(fieldWalkState.watchId);
+    fieldWalkState.watchId = null;
+  }
+  fieldWalkState.watching = false;
+  fieldWalkState.points = [];
+  fieldWalkState.lastGps = null;
+  fieldWalkState.calculatedAreaSqM = 0;
+  fieldWalkState.calculatedAcres = 0;
+  fieldWalkState.calculatedPerimeterM = 0;
+
+  gpsStartBtn.disabled = false;
+  gpsStartBtn.classList.remove("opacity-50");
+  gpsAddPointBtn.disabled = true;
+  gpsFinishBtn.disabled = true;
+
+  if (gpsStatusDot) gpsStatusDot.className = "w-3 h-3 rounded-full bg-emerald-500 animate-pulse";
+  if (gpsStatusText) gpsStatusText.textContent = "GPS Idle • Ready to Walk Boundary";
+  if (gpsAccuracyText) gpsAccuracyText.textContent = "Accuracy: --";
+  if (canvasPointsCount) canvasPointsCount.textContent = "Points logged: 0";
+
+  updateFieldMeterStats(0, 0, 0);
+  drawFieldPolygon();
+}
+
+function computeFieldGeometry() {
+  const pts = fieldWalkState.points;
+  if (pts.length < 3) {
+    let perim = 0;
+    if (pts.length === 2) {
+      perim = calculateGpsDistanceMeters(pts[0].lat, pts[0].lng, pts[1].lat, pts[1].lng);
+    }
+    updateFieldMeterStats(0, 0, perim);
+    return;
+  }
+
+  // Equirectangular local Cartesian projection
+  const lat0 = pts[0].lat;
+  const lon0 = pts[0].lng;
+  const R = 6378137.0; // Earth radius in meters
+  const cosLat0 = Math.cos((lat0 * Math.PI) / 180.0);
+
+  const xy = pts.map(p => {
+    const x = ((p.lng - lon0) * Math.PI / 180.0) * R * cosLat0;
+    const y = ((p.lat - lat0) * Math.PI / 180.0) * R;
+    return { x, y };
+  });
+
+  // Shoelace formula for polygon area
+  let areaSum = 0;
+  let perimSum = 0;
+  const n = xy.length;
+
+  for (let i = 0; i < n; i++) {
+    const j = (i + 1) % n;
+    areaSum += (xy[i].x * xy[j].y) - (xy[j].x * xy[i].y);
+    const dx = xy[j].x - xy[i].x;
+    const dy = xy[j].y - xy[i].y;
+    perimSum += Math.sqrt(dx * dx + dy * dy);
+  }
+
+  const areaSqM = Math.abs(areaSum) * 0.5;
+  const acres = areaSqM / 4046.86;
+
+  fieldWalkState.calculatedAreaSqM = areaSqM;
+  fieldWalkState.calculatedAcres = acres;
+  fieldWalkState.calculatedPerimeterM = perimSum;
+
+  updateFieldMeterStats(acres, areaSqM, perimSum);
+}
+
+function updateFieldMeterStats(acres, areaSqM, perimM) {
+  if (walkCalculatedAcres) walkCalculatedAcres.textContent = acres.toFixed(2);
+  if (walkCalculatedGuntha) walkCalculatedGuntha.textContent = (acres * 40.0).toFixed(1);
+  if (walkCalculatedBigha) walkCalculatedBigha.textContent = (acres / 0.625).toFixed(2);
+  if (walkCalculatedPerimeter) walkCalculatedPerimeter.textContent = `${Math.round(perimM)} m`;
+}
+
+function calculateManualFieldArea() {
+  const lenFt = parseFloat(manualFieldLength?.value) || 0;
+  const widFt = parseFloat(manualFieldWidth?.value) || 0;
+
+  if (lenFt <= 0 || widFt <= 0) {
+    alert("Please enter both length and width in feet.");
+    return;
+  }
+
+  const sqFt = lenFt * widFt;
+  const acres = sqFt / 43560.0;
+  const perimFt = 2 * (lenFt + widFt);
+  const perimM = perimFt * 0.3048;
+
+  fieldWalkState.calculatedAcres = acres;
+  fieldWalkState.calculatedPerimeterM = perimM;
+
+  updateFieldMeterStats(acres, sqFt * 0.092903, perimM);
+
+  // Draw simulated rectangular polygon
+  if (fieldCanvas) {
+    const ctx = fieldCanvas.getContext("2d");
+    const cw = fieldCanvas.width;
+    const ch = fieldCanvas.height;
+
+    ctx.clearRect(0, 0, cw, ch);
+    ctx.fillStyle = "#0f172a";
+    ctx.fillRect(0, 0, cw, ch);
+
+    const aspect = lenFt / widFt;
+    let boxW = 280;
+    let boxH = boxW / aspect;
+    if (boxH > 180) {
+      boxH = 180;
+      boxW = boxH * aspect;
+    }
+
+    const startX = (cw - boxW) / 2;
+    const startY = (ch - boxH) / 2;
+
+    ctx.fillStyle = "rgba(16, 185, 129, 0.25)";
+    ctx.fillRect(startX, startY, boxW, boxH);
+
+    ctx.strokeStyle = "#10b981";
+    ctx.lineWidth = 3;
+    ctx.strokeRect(startX, startY, boxW, boxH);
+
+    ctx.fillStyle = "#ffffff";
+    ctx.font = "bold 12px sans-serif";
+    ctx.textAlign = "center";
+    ctx.fillText(`${lenFt} ft`, cw / 2, startY - 8);
+    ctx.textAlign = "left";
+    ctx.fillText(`${widFt} ft`, startX + boxW + 8, ch / 2);
+    ctx.textAlign = "center";
+    ctx.fillStyle = "#34d399";
+    ctx.font = "bold 14px sans-serif";
+    ctx.fillText(`${acres.toFixed(2)} Acres (${(acres * 40).toFixed(1)} Gunthas)`, cw / 2, ch / 2 + 5);
+  }
+}
+
+function drawFieldPolygon() {
+  if (!fieldCanvas) return;
+  const ctx = fieldCanvas.getContext("2d");
+  const cw = fieldCanvas.width;
+  const ch = fieldCanvas.height;
+
+  ctx.clearRect(0, 0, cw, ch);
+  ctx.fillStyle = "#090d16";
+  ctx.fillRect(0, 0, cw, ch);
+
+  const pts = fieldWalkState.points;
+  if (!pts || pts.length === 0) {
+    ctx.fillStyle = "#64748b";
+    ctx.font = "12px sans-serif";
+    ctx.textAlign = "center";
+    ctx.fillText("GPS Visualizer: Walk along boundary or enter dimensions", cw / 2, ch / 2);
+    return;
+  }
+
+  if (pts.length === 1) {
+    ctx.fillStyle = "#10b981";
+    ctx.beginPath();
+    ctx.arc(cw / 2, ch / 2, 8, 0, 2 * Math.PI);
+    ctx.fill();
+    ctx.fillStyle = "#ffffff";
+    ctx.font = "11px sans-serif";
+    ctx.textAlign = "center";
+    ctx.fillText("Point 1 logged • Walk forward...", cw / 2, ch / 2 + 25);
+    return;
+  }
+
+  // Find bounding box in GPS coords
+  let minLat = Infinity, maxLat = -Infinity, minLng = Infinity, maxLng = -Infinity;
+  pts.forEach(p => {
+    if (p.lat < minLat) minLat = p.lat;
+    if (p.lat > maxLat) maxLat = p.lat;
+    if (p.lng < minLng) minLng = p.lng;
+    if (p.lng > maxLng) maxLng = p.lng;
+  });
+
+  const spanLat = Math.max(maxLat - minLat, 0.00005);
+  const spanLng = Math.max(maxLng - minLng, 0.00005);
+  const pad = 40;
+  const drawW = cw - 2 * pad;
+  const drawH = ch - 2 * pad;
+
+  const toCanvasX = (lng) => pad + ((lng - minLng) / spanLng) * drawW;
+  const toCanvasY = (lat) => pad + ((maxLat - lat) / spanLat) * drawH;
+
+  // Draw polygon path
+  ctx.beginPath();
+  pts.forEach((p, idx) => {
+    const x = toCanvasX(p.lng);
+    const y = toCanvasY(p.lat);
+    if (idx === 0) ctx.moveTo(x, y);
+    else ctx.lineTo(x, y);
+  });
+
+  if (pts.length >= 3) {
+    ctx.closePath();
+    ctx.fillStyle = "rgba(16, 185, 129, 0.22)";
+    ctx.fill();
+  }
+
+  ctx.strokeStyle = "#10b981";
+  ctx.lineWidth = 3;
+  ctx.stroke();
+
+  // Draw point markers
+  pts.forEach((p, idx) => {
+    const x = toCanvasX(p.lng);
+    const y = toCanvasY(p.lat);
+    ctx.beginPath();
+    ctx.arc(x, y, 5, 0, 2 * Math.PI);
+    ctx.fillStyle = idx === 0 ? "#22c55e" : (idx === pts.length - 1 ? "#38bdf8" : "#f59e0b");
+    ctx.fill();
+    ctx.strokeStyle = "#ffffff";
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+  });
+}
+
+function applyWalkAcresToForms() {
+  const acres = parseFloat(fieldWalkState.calculatedAcres.toFixed(2));
+  if (acres <= 0) {
+    alert("Please walk and record at least 3 perimeter points or calculate manual dimensions.");
+    return;
+  }
+
+  if (landSize) {
+    landSize.value = acres;
+    appState.landSize = acres;
+  }
+  if (seedLandAcres) seedLandAcres.value = acres;
+  if (sprayLandAcres) sprayLandAcres.value = acres;
+  if (solarLandAcres) solarLandAcres.value = acres;
+  const irrigLand = document.getElementById("irrigLandInput");
+  if (irrigLand) irrigLand.value = acres;
+
+  closeFieldMeterModal();
+  alert(`✓ Measured field size (${acres} Acres) applied to all AgriAssist calculators!`);
+}
+
+
+// ============================================================================
+// 3. KISAN VOICE SEARCH (WEB SPEECH RECOGNITION - 100% FREE / BROWSER NATIVE)
+// ============================================================================
+
+let activeVoiceRecognition = null;
+let activeTargetInputElement = null;
+
+function startVoiceRecognition(targetInputId) {
+  const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SpeechRec) {
+    alert("Voice recognition is not supported in this browser. Please use Google Chrome or Microsoft Edge on your mobile or desktop.");
+    return;
+  }
+
+  stopVoiceRecognition();
+
+  activeTargetInputElement = document.getElementById(targetInputId);
+  if (!activeTargetInputElement) return;
+
+  const langCodeMap = {
+    hi: "hi-IN",
+    pa: "pa-IN",
+    mr: "mr-IN",
+    gu: "gu-IN",
+    en: "en-IN"
+  };
+  const chosenLang = langCodeMap[appState.currentLang] || "hi-IN";
+
+  activeVoiceRecognition = new SpeechRec();
+  activeVoiceRecognition.continuous = false;
+  activeVoiceRecognition.interimResults = true;
+  activeVoiceRecognition.lang = chosenLang;
+
+  voiceStatusPill?.classList.remove("hidden");
+  if (voiceStatusTitle) {
+    voiceStatusTitle.textContent = appState.currentLang === "hi" ? "सुन रहे हैं... बोलिए" : "Listening... Speak now";
+  }
+  if (voiceTranscriptPreview) {
+    voiceTranscriptPreview.textContent = "...";
+  }
+
+  activeVoiceRecognition.onresult = (event) => {
+    let transcript = "";
+    for (let i = event.resultIndex; i < event.results.length; i++) {
+      transcript += event.results[i][0].transcript;
+    }
+    if (voiceTranscriptPreview) voiceTranscriptPreview.textContent = transcript;
+
+    if (activeTargetInputElement) {
+      activeTargetInputElement.value = transcript;
+      activeTargetInputElement.dispatchEvent(new Event("input", { bubbles: true }));
+    }
+  };
+
+  activeVoiceRecognition.onerror = (event) => {
+    console.warn("Speech recognition error:", event.error);
+    stopVoiceRecognition();
+  };
+
+  activeVoiceRecognition.onend = () => {
+    stopVoiceRecognition();
+  };
+
+  try {
+    activeVoiceRecognition.start();
+  } catch (err) {
+    console.error("Failed to start speech recognition:", err);
+    stopVoiceRecognition();
+  }
+}
+
+function stopVoiceRecognition() {
+  if (activeVoiceRecognition) {
+    try {
+      activeVoiceRecognition.stop();
+    } catch (_) {}
+    activeVoiceRecognition = null;
+  }
+  voiceStatusPill?.classList.add("hidden");
+}
+
+
+// ============================================================================
+// 4. SEED RATE & PLANT POPULATION / GEOMETRY CALCULATOR
+// ============================================================================
+
+const LOCAL_SEED_CATALOG = [
+  {
+    id: "wheat",
+    name: "Wheat (गेहूं)",
+    baseSeedRateKg: 40.0,
+    testWeightG: 40.0,
+    defRowCm: 22.5,
+    defPlantCm: 5.0,
+    stdGerm: 85,
+    notes: "Normal sowing: 40 kg/acre; Late sowing: 50 kg/acre. Seed treatment with Trichoderma (5g/kg) + Azotobacter / PSB biofertilizer."
+  },
+  {
+    id: "rice_trans",
+    name: "Paddy / Rice - Transplanted (धान - रोपाई)",
+    baseSeedRateKg: 18.0,
+    testWeightG: 25.0,
+    defRowCm: 20.0,
+    defPlantCm: 15.0,
+    stdGerm: 80,
+    notes: "Nursery area: 1/10th acre per 1 acre transplant. Treat seed with Carbendazim 2g/kg or Trichoderma viride."
+  },
+  {
+    id: "rice_dsr",
+    name: "Paddy / Rice - DSR Direct Seeded (धान - सीधी बिजाई)",
+    baseSeedRateKg: 9.0,
+    testWeightG: 25.0,
+    defRowCm: 20.0,
+    defPlantCm: 10.0,
+    stdGerm: 80,
+    notes: "Requires tar-watter field moisture at sowing. Spray Pendimethalin 30% EC within 24 hours to control weeds."
+  },
+  {
+    id: "maize",
+    name: "Maize / Corn (मक्का)",
+    baseSeedRateKg: 8.0,
+    testWeightG: 280.0,
+    defRowCm: 60.0,
+    defPlantCm: 20.0,
+    stdGerm: 90,
+    notes: "Drop 1 seed per hill at 4-5 cm depth. Treat with Imidacloprid 600FS (4ml/kg) to protect against shoot fly."
+  },
+  {
+    id: "cotton",
+    name: "Cotton - Bt Hybrid (कपास)",
+    baseSeedRateKg: 1.8,
+    testWeightG: 100.0,
+    defRowCm: 90.0,
+    defPlantCm: 60.0,
+    stdGerm: 75,
+    notes: "Approx 2 packets (450g + refuge) per acre. Dibble 1 seed per hole in moist soil."
+  },
+  {
+    id: "mustard",
+    name: "Mustard / Sarson (सरसों)",
+    baseSeedRateKg: 1.8,
+    testWeightG: 4.5,
+    defRowCm: 30.0,
+    defPlantCm: 10.0,
+    stdGerm: 85,
+    notes: "Mix seeds with fine sand or ash for uniform line sowing. Thin out to 10 cm plant spacing at 18-20 days."
+  },
+  {
+    id: "chickpea",
+    name: "Chickpea / Chana (चना)",
+    baseSeedRateKg: 28.0,
+    testWeightG: 220.0,
+    defRowCm: 30.0,
+    defPlantCm: 10.0,
+    stdGerm: 85,
+    notes: "Deep sowing at 8-10 cm in conserved moisture. Treat with Rhizobium ciceri + Trichoderma."
+  },
+  {
+    id: "soybean",
+    name: "Soybean (सोयाबीन)",
+    baseSeedRateKg: 28.0,
+    testWeightG: 130.0,
+    defRowCm: 45.0,
+    defPlantCm: 5.0,
+    stdGerm: 70,
+    notes: "Do not sow deeper than 3 cm. Inoculate with Bradyrhizobium japonicum culture before sowing."
+  },
+  {
+    id: "groundnut",
+    name: "Groundnut / Peanut (मूंगफली)",
+    baseSeedRateKg: 45.0,
+    testWeightG: 400.0,
+    defRowCm: 30.0,
+    defPlantCm: 10.0,
+    stdGerm: 80,
+    notes: "Use hand-shelled sound mature kernels. Treat with Trichoderma (4g/kg) and Rhizobium."
+  },
+  {
+    id: "sugarcane",
+    name: "Sugarcane (गन्ना)",
+    baseSeedRateKg: 3000.0,
+    testWeightG: 1000.0,
+    defRowCm: 120.0,
+    defPlantCm: 30.0,
+    stdGerm: 90,
+    notes: "Approx 35,000 two-bud setts (3.0-3.5 tonnes) per acre. Dip setts in Carbendazim 0.1% for 15 minutes."
+  },
+  {
+    id: "potato",
+    name: "Potato (आलू)",
+    baseSeedRateKg: 900.0,
+    testWeightG: 45.0,
+    defRowCm: 60.0,
+    defPlantCm: 20.0,
+    stdGerm: 95,
+    notes: "Use certified seed tubers (35-45mm diameter, 40-50g weight). Treat with Mancozeb (2.5g/L) before planting."
+  },
+  {
+    id: "tomato",
+    name: "Tomato - Hybrid (टमाटर)",
+    baseSeedRateKg: 0.08,
+    testWeightG: 3.2,
+    defRowCm: 60.0,
+    defPlantCm: 45.0,
+    stdGerm: 85,
+    notes: "60-80 grams seed per acre nursery. Grow in pro-trays with coco-peat + Trichoderma for vigorous root plugs."
+  },
+  {
+    id: "onion",
+    name: "Onion (प्याज)",
+    baseSeedRateKg: 4.0,
+    testWeightG: 3.8,
+    defRowCm: 15.0,
+    defPlantCm: 10.0,
+    stdGerm: 80,
+    notes: "Nursery area: 0.05 acre. Transplant 6-7 week old seedlings on raised beds with light irrigation."
+  },
+  {
+    id: "moong",
+    name: "Moong / Green Gram (मूंग)",
+    baseSeedRateKg: 8.5,
+    testWeightG: 40.0,
+    defRowCm: 30.0,
+    defPlantCm: 10.0,
+    stdGerm: 80,
+    notes: "Treat seed with Rhizobium and PSB culture. Suitable for summer catch-crop or Kharif pulse."
+  }
+];
+
+function populateSeedCropOptions() {
+  if (!seedCropSelect) return;
+  seedCropSelect.innerHTML = LOCAL_SEED_CATALOG.map(c => `
+    <option value="${c.id}">${c.name}</option>
+  `).join("");
+}
+
+function executeSeedCalculation() {
+  const cropId = seedCropSelect?.value || "wheat";
+  const crop = LOCAL_SEED_CATALOG.find(c => c.id === cropId) || LOCAL_SEED_CATALOG[0];
+
+  const acres = parseFloat(seedLandAcres?.value) || 1.0;
+  const germPct = Math.max(40, Math.min(100, parseFloat(seedGerminationPct?.value) || crop.stdGerm));
+  const sowingMethod = seedSowingMethod?.value || "line_sowing";
+
+  // Method factor
+  let methodMultiplier = 1.0;
+  if (sowingMethod === "broadcasting") methodMultiplier = 1.25;
+  else if (sowingMethod === "dibbling") methodMultiplier = 0.85;
+  else if (sowingMethod === "transplanting") methodMultiplier = 1.0;
+
+  // Geometry
+  const isCustom = seedCustomSpacingCheck?.checked;
+  const rowCm = isCustom ? (parseFloat(seedRowSpacingCm?.value) || crop.defRowCm) : crop.defRowCm;
+  const plantCm = isCustom ? (parseFloat(seedPlantSpacingCm?.value) || crop.defPlantCm) : crop.defPlantCm;
+
+  // 1 Acre = 4046.86 m² = 40,468,600 cm²
+  const plantPopulationPerAcre = Math.round(40468600 / (rowCm * plantCm));
+  const totalFieldPopulation = Math.round(plantPopulationPerAcre * acres);
+
+  // Adjusted seed rate
+  const germCorrection = crop.stdGerm / germPct;
+  const seedRatePerAcreKg = crop.baseSeedRateKg * methodMultiplier * germCorrection;
+  const totalSeedRequiredKg = seedRatePerAcreKg * acres;
+
+  renderSeedResult({
+    crop,
+    acres,
+    germPct,
+    sowingMethod,
+    rowCm,
+    plantCm,
+    plantPopulationPerAcre,
+    totalFieldPopulation,
+    seedRatePerAcreKg,
+    totalSeedRequiredKg
+  });
+}
+
+function renderSeedResult(res) {
+  if (!seedResultContainer) return;
+
+  const totalSeedDisplay = res.totalSeedRequiredKg >= 1000
+    ? `${(res.totalSeedRequiredKg / 1000).toFixed(2)} Tonnes`
+    : (res.totalSeedRequiredKg < 1
+      ? `${Math.round(res.totalSeedRequiredKg * 1000)} grams`
+      : `${res.totalSeedRequiredKg.toFixed(1)} kg`);
+
+  const perAcreSeedDisplay = res.seedRatePerAcreKg < 1
+    ? `${Math.round(res.seedRatePerAcreKg * 1000)} g/acre`
+    : `${res.seedRatePerAcreKg.toFixed(1)} kg/acre`;
+
+  seedResultContainer.innerHTML = `
+    <div class="bg-white rounded-2xl p-6 border border-brand-200 shadow-sm space-y-6 animate-fadeIn">
+      <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-4">
+        <div>
+          <span class="text-xs font-bold text-brand-700 uppercase tracking-wider">Seed & Population Prescription</span>
+          <h3 class="text-xl font-black text-slate-900">${res.crop.name}</h3>
+        </div>
+        <div class="text-right">
+          <span class="bg-brand-50 text-brand-800 text-xs font-bold px-3 py-1.5 rounded-full border border-brand-200">
+            🌾 Area: ${res.acres} Acre(s)
+          </span>
+        </div>
+      </div>
+
+      <!-- Key Metrics 4-Grid -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+        <div class="bg-emerald-50/80 border border-emerald-200 p-4 rounded-xl text-center shadow-xs">
+          <span class="text-[11px] font-bold text-emerald-800 uppercase block">Total Seed Needed</span>
+          <span class="text-2xl font-black text-emerald-950">${totalSeedDisplay}</span>
+          <span class="text-[10px] text-emerald-700 block mt-0.5">${perAcreSeedDisplay}</span>
+        </div>
+
+        <div class="bg-indigo-50/80 border border-indigo-200 p-4 rounded-xl text-center shadow-xs">
+          <span class="text-[11px] font-bold text-indigo-800 uppercase block">Target Population</span>
+          <span class="text-2xl font-black text-indigo-950">${res.totalFieldPopulation.toLocaleString("en-IN")}</span>
+          <span class="text-[10px] text-indigo-700 block mt-0.5">${res.plantPopulationPerAcre.toLocaleString("en-IN")} plants/ac</span>
+        </div>
+
+        <div class="bg-amber-50/80 border border-amber-200 p-4 rounded-xl text-center shadow-xs">
+          <span class="text-[11px] font-bold text-amber-800 uppercase block">Spacing Geometry</span>
+          <span class="text-xl font-black text-amber-950">${res.rowCm} × ${res.plantCm} cm</span>
+          <span class="text-[10px] text-amber-700 block mt-0.5">Row × Plant distance</span>
+        </div>
+
+        <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl text-center shadow-xs">
+          <span class="text-[11px] font-bold text-slate-600 uppercase block">Plant Density</span>
+          <span class="text-2xl font-black text-slate-900">${(res.plantPopulationPerAcre / 4046.86).toFixed(1)}</span>
+          <span class="text-[10px] text-slate-500 block mt-0.5">plants / m²</span>
+        </div>
+      </div>
+
+      <!-- Advisory Box -->
+      <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 text-xs space-y-2">
+        <div class="font-bold text-slate-800 flex items-center gap-1.5">
+          <span>🛡️</span> <span>Agronomic Seed Treatment & Sowing Protocol:</span>
+        </div>
+        <p class="text-slate-600 leading-relaxed">${res.crop.notes}</p>
+        <div class="text-[11px] text-brand-800 font-medium pt-1">
+          ✓ Calculated for <strong>${res.germPct}% Germination</strong> standard under <strong>${res.sowingMethod.replace("_", " ")}</strong> method.
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+
+// ============================================================================
+// 5. KNAPSACK SPRAYER & CHEMICAL DILUTION CALCULATOR
+// ============================================================================
+
+async function executeSprayerCalculation() {
+  const tankCap = parseFloat(sprayTankCap?.value) || 16.0;
+  const acres = parseFloat(sprayLandAcres?.value) || 1.0;
+  const dosageMode = sprayDosageMode?.value || "per_acre";
+  const chemForm = sprayChemForm?.value || "liquid_ml";
+  const doseAmt = parseFloat(sprayDoseAmount?.value) || 250.0;
+  const waterRate = parseFloat(sprayWaterRate?.value) || 150.0;
+
+  try {
+    const res = await fetch("/api/sprayer-calculator", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        tank_capacity_liters: tankCap,
+        field_acres: acres,
+        dosage_mode: dosageMode,
+        chemical_formulation: chemForm,
+        dosage_amount: doseAmt,
+        water_volume_liters_per_acre: waterRate
+      })
+    });
+    if (res.ok) {
+      const data = await res.json();
+      renderSprayerResult(data);
+      return;
+    }
+  } catch (_) {
+    // Offline client fallback
+  }
+
+  // Pure Offline calculation
+  const totalWater = acres * waterRate;
+  const totalTanks = Math.ceil(totalWater / tankCap);
+  let totalChem = 0;
+  let chemPerTank = 0;
+
+  if (dosageMode === "per_acre") {
+    totalChem = acres * doseAmt;
+    chemPerTank = totalChem / totalTanks;
+  } else {
+    chemPerTank = tankCap * doseAmt;
+    totalChem = totalWater * doseAmt;
+  }
+
+  const unit = chemForm === "liquid_ml" ? "ml" : "grams";
+  const bulkUnit = chemForm === "liquid_ml" ? (totalChem >= 1000 ? "Liters" : "ml") : (totalChem >= 1000 ? "kg" : "g");
+  const bulkVal = totalChem >= 1000 ? (totalChem / 1000).toFixed(2) : totalChem.toFixed(0);
+
+  renderSprayerResult({
+    total_spray_tanks: totalTanks,
+    chemical_per_tank: parseFloat(chemPerTank.toFixed(1)),
+    chemical_unit: unit,
+    total_chemical_required: parseFloat(bulkVal),
+    total_chemical_unit: bulkUnit,
+    total_water_liters: Math.round(totalWater),
+    recommendations: [
+      `Add exactly ${chemPerTank.toFixed(1)} ${unit} per ${tankCap}L knapsack tank.`,
+      `Always pre-mix chemical in 1-2 Liters bucket before pouring into tank.`,
+      `Use Hollow Cone nozzle for foliar fungicides/insecticides and Flat Fan nozzle for weedicides.`,
+      `Spray during calm morning or evening hours with the wind at your back.`
+    ]
+  });
+}
+
+function renderSprayerResult(res) {
+  if (!sprayerResultContainer) return;
+
+  sprayerResultContainer.innerHTML = `
+    <div class="bg-white rounded-2xl p-6 border border-brand-200 shadow-sm space-y-6 animate-fadeIn">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-4">
+        <div>
+          <span class="text-xs font-bold text-brand-700 uppercase tracking-wider">Sprayer Calibration Results</span>
+          <h3 class="text-xl font-black text-slate-900">Knapsack Dilution Schedule</h3>
+        </div>
+        <span class="bg-indigo-50 text-indigo-800 text-xs font-bold px-3 py-1.5 rounded-full border border-indigo-200">
+          🧪 Precise Dose
+        </span>
+      </div>
+
+      <!-- 4 Stats Cards -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+        <div class="bg-amber-50 border border-amber-200 p-4 rounded-xl text-center shadow-xs">
+          <span class="text-[11px] font-bold text-amber-800 uppercase block">Total Tanks</span>
+          <span class="text-3xl font-black text-amber-950">${res.total_spray_tanks}</span>
+          <span class="text-[10px] text-amber-700 block mt-0.5">tanks for whole field</span>
+        </div>
+
+        <div class="bg-emerald-50 border border-emerald-200 p-4 rounded-xl text-center shadow-xs">
+          <span class="text-[11px] font-bold text-emerald-800 uppercase block">Dose Per Tank</span>
+          <span class="text-3xl font-black text-emerald-950">${res.chemical_per_tank}</span>
+          <span class="text-[10px] text-emerald-700 block mt-0.5 font-bold">${res.chemical_unit} / tank</span>
+        </div>
+
+        <div class="bg-indigo-50 border border-indigo-200 p-4 rounded-xl text-center shadow-xs">
+          <span class="text-[11px] font-bold text-indigo-800 uppercase block">Total Chemical</span>
+          <span class="text-2xl font-black text-indigo-950">${res.total_chemical_required}</span>
+          <span class="text-[10px] text-indigo-700 block mt-0.5 font-bold">${res.total_chemical_unit}</span>
+        </div>
+
+        <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl text-center shadow-xs">
+          <span class="text-[11px] font-bold text-slate-600 uppercase block">Water Needed</span>
+          <span class="text-2xl font-black text-slate-900">${res.total_water_liters} L</span>
+          <span class="text-[10px] text-slate-500 block mt-0.5">clean spray water</span>
+        </div>
+      </div>
+
+      <!-- Measuring Guide & Precautions -->
+      <div class="bg-slate-50 rounded-xl p-4 border border-slate-200 text-xs space-y-2.5">
+        <div class="font-bold text-slate-800 flex items-center gap-2">
+          <span>📋</span> <span>Mixing & Field Application Protocol:</span>
+        </div>
+        <ul class="space-y-1.5 text-slate-600 list-disc list-inside">
+          ${res.recommendations.map(r => `<li>${r}</li>`).join("")}
+        </ul>
+      </div>
+    </div>
+  `;
+}
+
+
+// ============================================================================
+// 6. SOLAR AG-PUMP SIZING & PM-KUSUM SUBSIDY ESTIMATOR
+// ============================================================================
+
+async function executeSolarCalculation() {
+  const source = solarWaterSource?.value || "borewell";
+  const depthFt = parseFloat(solarDepthFeet?.value) || 120.0;
+  const acres = parseFloat(solarLandAcres?.value) || 3.0;
+  const irrigType = solarIrrigType?.value || "drip";
+  const category = solarFarmerCategory?.value || "General";
+
+  try {
+    const res = await fetch("/api/solar-pump-calculator", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        water_source: source,
+        water_depth_feet: depthFt,
+        command_area_acres: acres,
+        irrigation_method: irrigType,
+        farmer_category: category
+      })
+    });
+    if (res.ok) {
+      const data = await res.json();
+      renderSolarResult(data);
+      return;
+    }
+  } catch (_) {
+    // Offline fallback
+  }
+
+  // Client Offline Sizing
+  const tdhMeters = Math.round(depthFt * 0.3048 * 1.25);
+  let hp = 3.0;
+  if (tdhMeters > 75 || acres > 5.0) hp = 7.5;
+  else if (tdhMeters > 50 || acres > 3.5) hp = 5.0;
+  else if (tdhMeters < 25 && acres <= 2.0) hp = 2.0;
+
+  const arrayKw = hp;
+  const pumpType = source === "borewell" ? "Submersible (AC)" : "Surface Monoblock";
+  const baseCost = hp * 65000;
+
+  const centralPct = (category === "Hilly_NE" || category === "SC_ST") ? 0.50 : 0.30;
+  const statePct = 0.30;
+  const centralSubsidy = baseCost * centralPct;
+  const stateSubsidy = baseCost * statePct;
+  const farmerShare = baseCost - (centralSubsidy + stateSubsidy);
+
+  const annualDieselLiters = Math.round(hp * 220);
+  const annualDieselSavingRs = annualDieselLiters * 92;
+  const co2Tons = parseFloat((annualDieselLiters * 0.00268).toFixed(1));
+
+  renderSolarResult({
+    recommended_pump_hp: hp,
+    pump_type: pumpType,
+    solar_array_kwp: arrayKw,
+    total_dynamic_head_meters: tdhMeters,
+    estimated_total_cost: baseCost,
+    central_subsidy: centralSubsidy,
+    state_subsidy: stateSubsidy,
+    farmer_share: farmerShare,
+    bank_loan_available: baseCost * 0.30,
+    annual_diesel_saved_liters: annualDieselLiters,
+    annual_diesel_cost_savings_rs: annualDieselSavingRs,
+    co2_reduction_tons_per_year: co2Tons
+  });
+}
+
+function renderSolarResult(res) {
+  if (!solarResultContainer) return;
+
+  solarResultContainer.innerHTML = `
+    <div class="bg-white rounded-2xl p-6 border border-brand-200 shadow-sm space-y-6 animate-fadeIn">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-4">
+        <div>
+          <span class="text-xs font-bold text-amber-700 uppercase tracking-wider">PM-KUSUM Solar Feasibility</span>
+          <h3 class="text-xl font-black text-slate-900">${res.recommended_pump_hp} HP Solar Ag-Pump Recommendation</h3>
+        </div>
+        <span class="bg-amber-100 text-amber-900 text-xs font-bold px-3 py-1.5 rounded-full">
+          ☀️ 60% Govt Subsidy
+        </span>
+      </div>
+
+      <!-- 3 Key Highlights -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+        <div class="bg-emerald-50 border border-emerald-200 p-4 rounded-xl text-center">
+          <span class="text-xs font-bold text-emerald-800 uppercase block">Pump & Array Capacity</span>
+          <span class="text-2xl font-black text-emerald-950">${res.recommended_pump_hp} HP / ${res.solar_array_kwp} kWp</span>
+          <span class="text-[11px] text-emerald-700 block mt-0.5">${res.pump_type} • TDH: ${res.total_dynamic_head_meters}m</span>
+        </div>
+
+        <div class="bg-amber-50 border border-amber-200 p-4 rounded-xl text-center">
+          <span class="text-xs font-bold text-amber-800 uppercase block">Farmer Payable Share</span>
+          <span class="text-2xl font-black text-amber-950">₹${Math.round(res.farmer_share).toLocaleString("en-IN")}</span>
+          <span class="text-[11px] text-amber-700 block mt-0.5">Remaining ~60% paid by Central + State</span>
+        </div>
+
+        <div class="bg-indigo-50 border border-indigo-200 p-4 rounded-xl text-center">
+          <span class="text-xs font-bold text-indigo-800 uppercase block">Annual Diesel Saved</span>
+          <span class="text-2xl font-black text-indigo-950">₹${Math.round(res.annual_diesel_cost_savings_rs).toLocaleString("en-IN")}/yr</span>
+          <span class="text-[11px] text-indigo-700 block mt-0.5">${res.annual_diesel_saved_liters} Liters • ${res.co2_reduction_tons_per_year} t CO₂ offset</span>
+        </div>
+      </div>
+
+      <!-- Financial Breakdown Table -->
+      <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 space-y-2 text-xs">
+        <div class="font-bold text-slate-800 mb-2">PM-KUSUM Component-B Financial Breakdown:</div>
+        <div class="divide-y divide-slate-200 font-mono">
+          <div class="flex justify-between py-1.5 text-slate-700">
+            <span>Standard Benchmark Capital Cost:</span>
+            <span class="font-bold">₹${Math.round(res.estimated_total_cost).toLocaleString("en-IN")}</span>
+          </div>
+          <div class="flex justify-between py-1.5 text-emerald-700">
+            <span>Central Govt Subsidy (CFA):</span>
+            <span class="font-bold">- ₹${Math.round(res.central_subsidy).toLocaleString("en-IN")}</span>
+          </div>
+          <div class="flex justify-between py-1.5 text-emerald-700">
+            <span>State Govt Subsidy:</span>
+            <span class="font-bold">- ₹${Math.round(res.state_subsidy).toLocaleString("en-IN")}</span>
+          </div>
+          <div class="flex justify-between py-1.5 text-slate-900 font-bold bg-white px-2 rounded-lg">
+            <span>Net Farmer Upfront Contribution:</span>
+            <span class="text-brand-800">₹${Math.round(res.farmer_share).toLocaleString("en-IN")}</span>
+          </div>
+        </div>
+        <div class="text-[11px] text-slate-500 pt-1">
+          * Optional NABARD/Bank loan can finance up to 30% of total cost, leaving only 10% cash margin for the farmer.
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+
+// ============================================================================
+// 7. INTERCROPPING & COMPANION CROP MATRIX
+// ============================================================================
+
+const LOCAL_INTERCROPPING_CATALOG = [
+  {
+    main_crop: "Sugarcane",
+    companion_crop: "Potato",
+    spatial_ratio: "1 Row Sugarcane : 2 Rows Potato",
+    ler: 1.42,
+    biological_benefit: "High financial return; potato matures in 85 days before sugarcane canopy closes. Improves soil tilth.",
+    recommended_season: "Autumn / Rabi",
+    water_compatibility: "Excellent - Furrows utilized simultaneously."
+  },
+  {
+    main_crop: "Sugarcane",
+    companion_crop: "Moong / Green Gram",
+    spatial_ratio: "1 Row Sugarcane : 2 Rows Moong",
+    ler: 1.35,
+    biological_benefit: "Atmospheric Nitrogen fixation (30-40 kg N/ha), suppresses early weeds, provides quick early harvest.",
+    recommended_season: "Spring / Summer",
+    water_compatibility: "High compatibility."
+  },
+  {
+    main_crop: "Maize",
+    companion_crop: "Pigeonpea / Arhar",
+    spatial_ratio: "2 Rows Maize : 1 Row Arhar",
+    ler: 1.38,
+    biological_benefit: "Deep taproot of arhar and shallow fibrous root of maize access different soil zones without moisture competition.",
+    recommended_season: "Kharif",
+    water_compatibility: "Rainfed / Conserved moisture."
+  },
+  {
+    main_crop: "Maize",
+    companion_crop: "Soybean",
+    spatial_ratio: "2 Rows Maize : 2 Rows Soybean",
+    ler: 1.28,
+    biological_benefit: "Balances protein and starch production; soybean canopy smothers weed growth between maize rows.",
+    recommended_season: "Kharif",
+    water_compatibility: "Moderate."
+  },
+  {
+    main_crop: "Cotton",
+    companion_crop: "Moong / Green Gram",
+    spatial_ratio: "1 Row Cotton : 2 Rows Moong",
+    ler: 1.30,
+    biological_benefit: "Moong is harvested in 60-65 days providing early cash flow and leguminous nitrogen residue for cotton boll formation.",
+    recommended_season: "Kharif",
+    water_compatibility: "High."
+  },
+  {
+    main_crop: "Cotton",
+    companion_crop: "Marigold (Trap Crop)",
+    spatial_ratio: "1 Row Marigold every 10-15 Rows Cotton",
+    ler: 1.15,
+    biological_benefit: "Ecological pest trap: Marigold yellow flowers attract Helicoverpa bollworms away from cotton squares.",
+    recommended_season: "Kharif",
+    water_compatibility: "High."
+  },
+  {
+    main_crop: "Wheat",
+    companion_crop: "Mustard",
+    spatial_ratio: "9 Rows Wheat : 1 Row Mustard",
+    ler: 1.22,
+    biological_benefit: "Traditional risk insurance; mustard flowers attract beneficial honeybees for cross-pollination and yields valuable cooking oil.",
+    recommended_season: "Rabi",
+    water_compatibility: "High."
+  },
+  {
+    main_crop: "Chickpea",
+    companion_crop: "Mustard",
+    spatial_ratio: "4 Rows Chickpea : 1 Row Mustard",
+    ler: 1.25,
+    biological_benefit: "Mustard pungent root exudates repel soil pests, and provides mixed pulse-oilseed harvest.",
+    recommended_season: "Rabi",
+    water_compatibility: "Conserved residual moisture."
+  },
+  {
+    main_crop: "Sorghum (Jowar)",
+    companion_crop: "Cowpea (Lobia)",
+    spatial_ratio: "2 Rows Jowar : 2 Rows Cowpea",
+    ler: 1.32,
+    biological_benefit: "Superior dairy fodder mix: high energy sorghum balanced with high protein cowpea vines.",
+    recommended_season: "Kharif",
+    water_compatibility: "Drought hardy."
+  },
+  {
+    main_crop: "Tomato",
+    companion_crop: "African Marigold",
+    spatial_ratio: "Border Crop + 1 Row every 8 Rows Tomato",
+    ler: 1.20,
+    biological_benefit: "Root exudate alpha-terthienyl suppresses harmful root-knot nematodes; traps tomato fruit borer.",
+    recommended_season: "All seasons",
+    water_compatibility: "Drip compatible."
+  }
+];
+
+async function renderIntercroppingCatalog(filterCrop = "all") {
+  let catalog = LOCAL_INTERCROPPING_CATALOG;
+  try {
+    const url = filterCrop === "all" ? "/api/intercropping" : `/api/intercropping?main_crop=${encodeURIComponent(filterCrop)}`;
+    const res = await fetch(url);
+    if (res.ok) {
+      const data = await res.json();
+      if (data.pairs && data.pairs.length) {
+        catalog = data.pairs;
+      }
+    }
+  } catch (_) {}
+
+  const filtered = filterCrop === "all"
+    ? catalog
+    : catalog.filter(c => c.main_crop.toLowerCase() === filterCrop.toLowerCase());
+
+  if (intercropCount) {
+    intercropCount.textContent = `Showing ${filtered.length} proven intercropping pairing(s)`;
+  }
+
+  if (!intercropGrid) return;
+  if (!filtered.length) {
+    intercropGrid.innerHTML = `
+      <div class="col-span-full p-8 text-center text-slate-400 italic bg-white rounded-2xl border border-slate-200">
+        No companion crop recommendations registered yet for ${filterCrop}.
+      </div>
+    `;
+    return;
+  }
+
+  intercropGrid.innerHTML = filtered.map(pair => {
+    const bonusPct = Math.round((pair.ler - 1.0) * 100);
+    return `
+      <div class="bg-white rounded-2xl p-5 border border-slate-200 hover:border-emerald-500 shadow-xs hover:shadow-md transition space-y-3.5 flex flex-col justify-between">
+        <div class="space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="bg-emerald-100 text-emerald-900 font-bold text-xs px-2.5 py-1 rounded-full">
+              LER: ${pair.ler.toFixed(2)} (+${bonusPct}% Yield Advantage)
+            </span>
+            <span class="text-[11px] text-slate-500 font-semibold">${pair.recommended_season}</span>
+          </div>
+
+          <div class="pt-1">
+            <h4 class="font-black text-slate-900 text-base">
+              ${pair.main_crop} + <span class="text-brand-700">${pair.companion_crop}</span>
+            </h4>
+            <span class="inline-block bg-slate-100 text-slate-700 text-[11px] font-mono font-bold px-2 py-0.5 rounded mt-1">
+              📐 ${pair.spatial_ratio}
+            </span>
+          </div>
+
+          <p class="text-xs text-slate-600 leading-relaxed pt-1">
+            ${pair.biological_benefit}
+          </p>
+        </div>
+
+        <div class="pt-2 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-500">
+          <span>💧 ${pair.water_compatibility}</span>
+          <span class="font-bold text-brand-800">Zero Chemical Extra</span>
+        </div>
+      </div>
+    `;
+  }).join("");
+}
+
+
+// ============================================================================
+// 8. POST-HARVEST GRAIN STORAGE DOCTOR & RISK CHECKER
+// ============================================================================
+
+const LOCAL_GRAIN_STORAGE_CATALOG = [
+  {
+    crop: "Wheat (गेहूं)",
+    safe_moisture_pct: 12.0,
+    max_safe_duration_months: 18,
+    major_pests: "Khapra beetle (Trogoderma granarium), Lesser grain borer",
+    safe_practices: "Sun dry grain to <= 12% moisture. Mix with dry neem leaves (1 kg per 100 kg grain) or store in airtight hermetic bags."
+  },
+  {
+    crop: "Paddy / Rice (धान)",
+    safe_moisture_pct: 13.0,
+    max_safe_duration_months: 12,
+    major_pests: "Rice weevil (Sitophilus oryzae), Angoumois grain moth",
+    safe_practices: "Dry to 13% for raw paddy, 14% for parboiled. Keep bags 1 foot off ground on wooden pallets away from damp walls."
+  },
+  {
+    crop: "Maize (मक्का)",
+    safe_moisture_pct: 13.5,
+    max_safe_duration_months: 9,
+    major_pests: "Maize weevil, Aflatoxin fungus (Aspergillus flavus)",
+    safe_practices: "Critically vulnerable to Aflatoxin fungus if moisture > 14%. Dry thoroughly before bagging in HDPE / metal bins."
+  },
+  {
+    crop: "Chickpea / Chana (चना)",
+    safe_moisture_pct: 10.0,
+    max_safe_duration_months: 12,
+    major_pests: "Pulse beetle / Dhora (Callosobruchus maculatus)",
+    safe_practices: "Pulse beetles multiply exponentially in humidity. Coat grain with edible mustard oil (500ml/100kg) or use Pusa Bin."
+  },
+  {
+    crop: "Mustard / Rapeseed (सरसों)",
+    safe_moisture_pct: 8.0,
+    max_safe_duration_months: 12,
+    major_pests: "High oil rancidity, fungal heating",
+    safe_practices: "Oilseeds require low moisture <= 8%. Store in galvanized iron bins in a cool, ventilated godown."
+  },
+  {
+    crop: "Soybean (सोयाबीन)",
+    safe_moisture_pct: 11.0,
+    max_safe_duration_months: 9,
+    major_pests: "Rapid loss of seed germination vigour, fungal mold",
+    safe_practices: "Store at <= 11% moisture. Do not drop bags from height to prevent seed coat mechanical cracking."
+  },
+  {
+    crop: "Moong / Pulses (मूंग / दालें)",
+    safe_moisture_pct: 9.5,
+    max_safe_duration_months: 12,
+    major_pests: "Bruchid weevil, grain borer",
+    safe_practices: "Add dry red chillies or clean wood ash in grain layers. Use hermetic SuperGrain bags."
+  }
+];
+
+async function renderGrainStorageCatalog() {
+  let catalog = LOCAL_GRAIN_STORAGE_CATALOG;
+  try {
+    const res = await fetch("/api/grain-storage/advisory");
+    if (res.ok) {
+      const data = await res.json();
+      if (data.crops && data.crops.length) {
+        catalog = data.crops;
+      }
+    }
+  } catch (_) {}
+
+  if (!storageCatalogTableBody) return;
+
+  storageCatalogTableBody.innerHTML = catalog.map(c => `
+    <tr class="hover:bg-slate-50 transition border-b border-slate-100">
+      <td class="p-3.5 font-bold text-slate-800">${c.crop}</td>
+      <td class="p-3.5 text-center font-mono font-bold text-emerald-700 bg-emerald-50/50">
+        ≤ ${c.safe_moisture_pct}%
+      </td>
+      <td class="p-3.5 text-center text-slate-600 font-mono">${c.max_safe_duration_months} mos</td>
+      <td class="p-3.5 text-rose-700 text-xs">${c.major_pests}</td>
+      <td class="p-3.5 text-slate-600 text-xs">${c.safe_practices}</td>
+    </tr>
+  `).join("");
+}
+
+async function executeStorageRiskCheck() {
+  const crop = storageCropSelect?.value || "Wheat";
+  const moisture = parseFloat(storageMoistureInput?.value) || 12.0;
+  const method = storageMethodSelect?.value || "Jute Bags";
+  const duration = parseFloat(storageDurationInput?.value) || 6.0;
+
+  try {
+    const res = await fetch("/api/grain-storage/check-risk", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        crop_name: crop,
+        current_moisture_pct: moisture,
+        storage_method: method,
+        planned_duration_months: duration
+      })
+    });
+    if (res.ok) {
+      const data = await res.json();
+      renderStorageRiskResult(data);
+      return;
+    }
+  } catch (_) {}
+
+  // Pure Offline fallback
+  const found = LOCAL_GRAIN_STORAGE_CATALOG.find(c => c.crop.toLowerCase().includes(crop.toLowerCase()))
+    || LOCAL_GRAIN_STORAGE_CATALOG[0];
+
+  const diff = moisture - found.safe_moisture_pct;
+  let risk = "Safe";
+  const warnings = [];
+  const actionPlan = [];
+
+  if (diff <= 0) {
+    risk = "Safe";
+    warnings.push("Grain moisture is at or below safe physiological limits.");
+    actionPlan.push("Clean storage container thoroughly before grain loading.");
+    actionPlan.push("Keep bags elevated on wooden pallets away from ground dampness.");
+  } else if (diff <= 2.0) {
+    risk = "Caution";
+    warnings.push(`Moisture is ${diff.toFixed(1)}% above ideal threshold. High risk of insect breeding (weevils) within 60-90 days.`);
+    actionPlan.push(`Spread grain in bright sunlight for 2 consecutive days (6-8 hours/day) before storage.`);
+    actionPlan.push(`Mix with dried neem leaves (1-2 kg per 100 kg grain) or coat with vegetable oil.`);
+  } else {
+    risk = "High Risk";
+    warnings.push(`CRITICAL: Moisture is ${diff.toFixed(1)}% above safe storage threshold!`);
+    warnings.push(`Imminent danger of fungal mold (Aspergillus / Aflatoxin) and severe heating/spoilage.`);
+    actionPlan.push(`DO NOT STORE GRAIN IMMEDIATELY IN SEALED BAGS.`);
+    actionPlan.push(`Immediately spread on clean tarpaulin for intensive sun drying until moisture drops below ${found.safe_moisture_pct}%.`);
+    actionPlan.push(`Use Hermetic Super Grain Bags or Metal Silo with moisture absorbers.`);
+  }
+
+  if (method === "Jute Bags" && (risk === "Caution" || risk === "High Risk")) {
+    warnings.push("Jute bags absorb atmospheric humidity during monsoon rains.");
+  }
+
+  renderStorageRiskResult({
+    crop_name: crop,
+    current_moisture_pct: moisture,
+    safe_moisture_pct: found.safe_moisture_pct,
+    risk_level: risk,
+    spoilage_warnings: warnings,
+    drying_action_plan: actionPlan
+  });
+}
+
+function renderStorageRiskResult(res) {
+  if (!storageRiskResultContainer) return;
+
+  const riskColor = res.risk_level === "Safe"
+    ? "bg-emerald-100 text-emerald-900 border-emerald-300"
+    : (res.risk_level === "Caution"
+      ? "bg-amber-100 text-amber-950 border-amber-300"
+      : "bg-rose-100 text-rose-950 border-rose-300");
+
+  const badgeColor = res.risk_level === "Safe"
+    ? "bg-emerald-600 text-white"
+    : (res.risk_level === "Caution"
+      ? "bg-amber-600 text-white"
+      : "bg-rose-600 text-white");
+
+  storageRiskResultContainer.innerHTML = `
+    <div class="rounded-2xl p-5 border ${riskColor} space-y-4 animate-fadeIn">
+      <div class="flex flex-wrap items-center justify-between gap-2 border-b border-black/10 pb-3">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider">Moisture Risk Diagnostic:</span>
+          <h4 class="text-lg font-black">${res.crop_name}</h4>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="text-xs font-mono font-bold">Tested: ${res.current_moisture_pct}% (Safe: ≤ ${res.safe_moisture_pct}%)</span>
+          <span class="${badgeColor} px-3 py-1 rounded-full text-xs font-black uppercase">
+            ${res.risk_level}
+          </span>
+        </div>
+      </div>
+
+      <div class="space-y-2 text-xs">
+        <div class="font-bold">⚠️ Spoilage & Infestation Warnings:</div>
+        <ul class="list-disc list-inside space-y-1 opacity-90">
+          ${res.spoilage_warnings.map(w => `<li>${w}</li>`).join("")}
+        </ul>
+      </div>
+
+      <div class="bg-white/80 rounded-xl p-4 text-xs space-y-2 text-slate-800 border border-black/5">
+        <div class="font-bold text-slate-900 flex items-center gap-1.5">
+          <span>☀️</span> <span>Recommended Drying & Preservation Protocol:</span>
+        </div>
+        <ol class="list-decimal list-inside space-y-1 text-slate-700">
+          ${res.drying_action_plan.map(p => `<li>${p}</li>`).join("")}
+        </ol>
+      </div>
+    </div>
+  `;
+}
+
 
 
