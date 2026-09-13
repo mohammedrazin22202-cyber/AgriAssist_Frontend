@@ -4975,7 +4975,7 @@ function populateSeedCropOptions() {
   `).join("");
 }
 
-function executeSeedCalculation() {
+async function executeSeedCalculation() {
   const cropId = seedCropSelect?.value || "wheat";
   const crop = LOCAL_SEED_CATALOG.find(c => c.id === cropId) || LOCAL_SEED_CATALOG[0];
 
@@ -4983,16 +4983,50 @@ function executeSeedCalculation() {
   const germPct = Math.max(40, Math.min(100, parseFloat(seedGerminationPct?.value) || crop.stdGerm));
   const sowingMethod = seedSowingMethod?.value || "line_sowing";
 
+  // Geometry
+  const isCustom = seedCustomSpacingCheck?.checked;
+  const rowCm = isCustom ? (parseFloat(seedRowSpacingCm?.value) || crop.defRowCm) : crop.defRowCm;
+  const plantCm = isCustom ? (parseFloat(seedPlantSpacingCm?.value) || crop.defPlantCm) : crop.defPlantCm;
+
+  if (appState.apiOnline) {
+    try {
+      const res = await fetch(`${API_BASE}/seed-calculator`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          crop_id: cropId,
+          land_size_acres: acres,
+          row_spacing_cm: rowCm,
+          plant_spacing_cm: plantCm,
+          germination_rate_pct: germPct,
+          sowing_method: sowingMethod
+        })
+      });
+      if (res.ok) {
+        const data = await res.json();
+        renderSeedResult({
+          crop: { ...crop, name: data.crop_name || crop.name, notes: data.agronomic_advisory || crop.notes },
+          acres: data.land_size_acres || acres,
+          germPct: germPct,
+          sowingMethod: data.sowing_method || sowingMethod,
+          rowCm: data.effective_row_spacing_cm || rowCm,
+          plantCm: data.effective_plant_spacing_cm || plantCm,
+          plantPopulationPerAcre: data.population_per_acre || Math.round(40468600 / (rowCm * plantCm)),
+          totalFieldPopulation: data.estimated_plant_population || Math.round(Math.round(40468600 / (rowCm * plantCm)) * acres),
+          seedRatePerAcreKg: data.recommended_seed_rate_kg_per_acre || (crop.baseSeedRateKg * (crop.stdGerm / germPct)),
+          totalSeedRequiredKg: data.total_seed_required_kg || (crop.baseSeedRateKg * (crop.stdGerm / germPct) * acres),
+          seedTreatmentProtocol: data.seed_treatment_protocol
+        });
+        return;
+      }
+    } catch (_) {}
+  }
+
   // Method factor
   let methodMultiplier = 1.0;
   if (sowingMethod === "broadcasting") methodMultiplier = 1.25;
   else if (sowingMethod === "dibbling") methodMultiplier = 0.85;
   else if (sowingMethod === "transplanting") methodMultiplier = 1.0;
-
-  // Geometry
-  const isCustom = seedCustomSpacingCheck?.checked;
-  const rowCm = isCustom ? (parseFloat(seedRowSpacingCm?.value) || crop.defRowCm) : crop.defRowCm;
-  const plantCm = isCustom ? (parseFloat(seedPlantSpacingCm?.value) || crop.defPlantCm) : crop.defPlantCm;
 
   // 1 Acre = 4046.86 m² = 40,468,600 cm²
   const plantPopulationPerAcre = Math.round(40468600 / (rowCm * plantCm));
@@ -5029,6 +5063,10 @@ function renderSeedResult(res) {
   const perAcreSeedDisplay = res.seedRatePerAcreKg < 1
     ? `${Math.round(res.seedRatePerAcreKg * 1000)} g/acre`
     : `${res.seedRatePerAcreKg.toFixed(1)} kg/acre`;
+
+  const treatmentText = res.seedTreatmentProtocol
+    ? `<div class="font-bold text-amber-900 mt-2">🧪 Seed Bio-Treatment Protocol:</div><p class="text-slate-700 leading-relaxed">${res.seedTreatmentProtocol}</p>`
+    : "";
 
   seedResultContainer.innerHTML = `
     <div class="bg-white rounded-2xl p-6 border border-brand-200 shadow-sm space-y-6 animate-fadeIn">
@@ -5077,6 +5115,7 @@ function renderSeedResult(res) {
           <span>🛡️</span> <span>Agronomic Seed Treatment & Sowing Protocol:</span>
         </div>
         <p class="text-slate-600 leading-relaxed">${res.crop.notes}</p>
+        ${treatmentText}
         <div class="text-[11px] text-brand-800 font-medium pt-1">
           ✓ Calculated for <strong>${res.germPct}% Germination</strong> standard under <strong>${res.sowingMethod.replace("_", " ")}</strong> method.
         </div>
