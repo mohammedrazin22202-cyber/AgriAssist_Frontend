@@ -1293,6 +1293,9 @@ function setupEventListeners() {
   converterInputValue?.addEventListener("input", recalculateLandConverter);
   converterUnitSelect?.addEventListener("change", recalculateLandConverter);
   applyConverterToFormsBtn?.addEventListener("click", applyConvertedAcresToForms);
+  document.querySelectorAll(".open-land-converter-trigger").forEach(btn => {
+    btn.addEventListener("click", openLandConverterModal);
+  });
 
   // Header Quick Actions: GPS Field Walk-Meter Modal
   openFieldWalkBtn?.addEventListener("click", openFieldMeterModal);
@@ -4305,9 +4308,10 @@ function applyConvertedAcresToForms() {
     return;
   }
 
-  // Update AgriAssist form inputs
-  if (landSize) {
-    landSize.value = acresVal;
+  // Update AgriAssist form inputs across all modules
+  const mainLand = document.getElementById("landSizeInput");
+  if (mainLand) {
+    mainLand.value = acresVal;
     appState.landSize = acresVal;
   }
   if (seedLandAcres) seedLandAcres.value = acresVal;
@@ -4315,6 +4319,14 @@ function applyConvertedAcresToForms() {
   if (solarLandAcres) solarLandAcres.value = acresVal;
   const irrigLand = document.getElementById("irrigLandInput");
   if (irrigLand) irrigLand.value = acresVal;
+  const fertLand = document.getElementById("fertLandAcres");
+  if (fertLand) fertLand.value = acresVal;
+  const rotLand = document.getElementById("rotLandInput");
+  if (rotLand) rotLand.value = acresVal;
+  const organicLand = document.getElementById("organicLandInput");
+  if (organicLand) organicLand.value = acresVal;
+  const yojanaLand = document.getElementById("yojanaLandInput");
+  if (yojanaLand) yojanaLand.value = acresVal;
 
   closeLandConverterModal();
   alert(`✓ Applied ${acresVal} Acres across all AgriAssist calculation modules!`);
@@ -4703,8 +4715,9 @@ function applyWalkAcresToForms() {
     return;
   }
 
-  if (landSize) {
-    landSize.value = acres;
+  const mainLand = document.getElementById("landSizeInput");
+  if (mainLand) {
+    mainLand.value = acres;
     appState.landSize = acres;
   }
   if (seedLandAcres) seedLandAcres.value = acres;
@@ -4712,6 +4725,14 @@ function applyWalkAcresToForms() {
   if (solarLandAcres) solarLandAcres.value = acres;
   const irrigLand = document.getElementById("irrigLandInput");
   if (irrigLand) irrigLand.value = acres;
+  const fertLand = document.getElementById("fertLandAcres");
+  if (fertLand) fertLand.value = acres;
+  const rotLand = document.getElementById("rotLandInput");
+  if (rotLand) rotLand.value = acres;
+  const organicLand = document.getElementById("organicLandInput");
+  if (organicLand) organicLand.value = acres;
+  const yojanaLand = document.getElementById("yojanaLandInput");
+  if (yojanaLand) yojanaLand.value = acres;
 
   closeFieldMeterModal();
   alert(`✓ Measured field size (${acres} Acres) applied to all AgriAssist calculators!`);
