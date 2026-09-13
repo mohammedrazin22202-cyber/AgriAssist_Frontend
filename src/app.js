@@ -5138,15 +5138,18 @@ async function executeSprayerCalculation() {
   const waterRate = parseFloat(sprayWaterRate?.value) || 150.0;
 
   try {
-    const res = await fetch("/api/sprayer-calculator", {
+    const res = await fetch(`${API_BASE}/sprayer-calculator`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         tank_capacity_liters: tankCap,
+        land_size_acres: acres,
         field_acres: acres,
         dosage_mode: dosageMode,
+        chemical_form: chemForm === "liquid_ml" ? "Liquid (ml)" : "Powder (g)",
         chemical_formulation: chemForm,
         dosage_amount: doseAmt,
+        spray_volume_liters_per_acre: waterRate,
         water_volume_liters_per_acre: waterRate
       })
     });
@@ -5196,6 +5199,14 @@ async function executeSprayerCalculation() {
 function renderSprayerResult(res) {
   if (!sprayerResultContainer) return;
 
+  const totalTanks = res.total_spray_tanks ?? res.tanks_needed_total ?? 0;
+  const chemPerTank = res.chemical_per_tank ?? 0;
+  const chemUnit = res.chemical_unit || "ml";
+  const totalChem = res.total_chemical_required ?? res.total_chemical_needed ?? 0;
+  const totalChemUnit = res.total_chemical_unit || (chemUnit === "ml" ? "Liters" : "kg");
+  const waterNeeded = res.total_water_liters ?? 0;
+  const tips = res.recommendations || (res.application_tips ? [res.nozzle_recommendation, ...(res.application_tips || []), ...(res.safety_checklist || [])] : []);
+
   sprayerResultContainer.innerHTML = `
     <div class="bg-white rounded-2xl p-6 border border-brand-200 shadow-sm space-y-6 animate-fadeIn">
       <div class="flex items-center justify-between border-b border-slate-100 pb-4">
@@ -5212,25 +5223,25 @@ function renderSprayerResult(res) {
       <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
         <div class="bg-amber-50 border border-amber-200 p-4 rounded-xl text-center shadow-xs">
           <span class="text-[11px] font-bold text-amber-800 uppercase block">Total Tanks</span>
-          <span class="text-3xl font-black text-amber-950">${res.total_spray_tanks}</span>
+          <span class="text-3xl font-black text-amber-950">${totalTanks}</span>
           <span class="text-[10px] text-amber-700 block mt-0.5">tanks for whole field</span>
         </div>
 
         <div class="bg-emerald-50 border border-emerald-200 p-4 rounded-xl text-center shadow-xs">
           <span class="text-[11px] font-bold text-emerald-800 uppercase block">Dose Per Tank</span>
-          <span class="text-3xl font-black text-emerald-950">${res.chemical_per_tank}</span>
-          <span class="text-[10px] text-emerald-700 block mt-0.5 font-bold">${res.chemical_unit} / tank</span>
+          <span class="text-3xl font-black text-emerald-950">${chemPerTank}</span>
+          <span class="text-[10px] text-emerald-700 block mt-0.5 font-bold">${chemUnit} / tank</span>
         </div>
 
         <div class="bg-indigo-50 border border-indigo-200 p-4 rounded-xl text-center shadow-xs">
           <span class="text-[11px] font-bold text-indigo-800 uppercase block">Total Chemical</span>
-          <span class="text-2xl font-black text-indigo-950">${res.total_chemical_required}</span>
-          <span class="text-[10px] text-indigo-700 block mt-0.5 font-bold">${res.total_chemical_unit}</span>
+          <span class="text-2xl font-black text-indigo-950">${totalChem}</span>
+          <span class="text-[10px] text-indigo-700 block mt-0.5 font-bold">${totalChemUnit}</span>
         </div>
 
         <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl text-center shadow-xs">
           <span class="text-[11px] font-bold text-slate-600 uppercase block">Water Needed</span>
-          <span class="text-2xl font-black text-slate-900">${res.total_water_liters} L</span>
+          <span class="text-2xl font-black text-slate-900">${waterNeeded} L</span>
           <span class="text-[10px] text-slate-500 block mt-0.5">clean spray water</span>
         </div>
       </div>
@@ -5241,7 +5252,7 @@ function renderSprayerResult(res) {
           <span>📋</span> <span>Mixing & Field Application Protocol:</span>
         </div>
         <ul class="space-y-1.5 text-slate-600 list-disc list-inside">
-          ${res.recommendations.map(r => `<li>${r}</li>`).join("")}
+          ${tips.map(r => `<li>${r}</li>`).join("")}
         </ul>
       </div>
     </div>
@@ -5261,15 +5272,18 @@ async function executeSolarCalculation() {
   const category = solarFarmerCategory?.value || "General";
 
   try {
-    const res = await fetch("/api/solar-pump-calculator", {
+    const res = await fetch(`${API_BASE}/solar-pump-calculator`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         water_source: source,
         water_depth_feet: depthFt,
+        land_size_acres: acres,
         command_area_acres: acres,
+        irrigation_type: irrigType,
         irrigation_method: irrigType,
-        farmer_category: category
+        farmer_category: category,
+        state: "All-India"
       })
     });
     if (res.ok) {
@@ -5321,12 +5335,24 @@ async function executeSolarCalculation() {
 function renderSolarResult(res) {
   if (!solarResultContainer) return;
 
+  const hp = res.recommended_pump_hp ?? 3.0;
+  const kwp = res.solar_array_kwp ?? res.recommended_solar_array_kw ?? hp;
+  const pumpType = res.pump_type || "Submersible (AC)";
+  const tdh = res.total_dynamic_head_meters ?? Math.round((parseFloat(solarDepthFeet?.value) || 120) * 0.3048 * 1.25);
+  const farmerShare = res.farmer_share ?? res.farmer_share_inr ?? 0;
+  const totalCost = res.estimated_total_cost ?? res.total_estimated_cost_inr ?? 0;
+  const dieselSavings = res.annual_diesel_cost_savings_rs ?? res.annual_diesel_savings_inr ?? 0;
+  const dieselLiters = res.annual_diesel_saved_liters ?? Math.round(hp * 220);
+  const co2Tons = res.co2_reduction_tons_per_year ?? parseFloat((dieselLiters * 0.00268).toFixed(1));
+  const centralSubsidy = res.central_subsidy ?? res.central_subsidy_inr ?? 0;
+  const stateSubsidy = res.state_subsidy ?? res.state_subsidy_inr ?? 0;
+
   solarResultContainer.innerHTML = `
     <div class="bg-white rounded-2xl p-6 border border-brand-200 shadow-sm space-y-6 animate-fadeIn">
       <div class="flex items-center justify-between border-b border-slate-100 pb-4">
         <div>
           <span class="text-xs font-bold text-amber-700 uppercase tracking-wider">PM-KUSUM Solar Feasibility</span>
-          <h3 class="text-xl font-black text-slate-900">${res.recommended_pump_hp} HP Solar Ag-Pump Recommendation</h3>
+          <h3 class="text-xl font-black text-slate-900">${hp} HP Solar Ag-Pump Recommendation</h3>
         </div>
         <span class="bg-amber-100 text-amber-900 text-xs font-bold px-3 py-1.5 rounded-full">
           ☀️ 60% Govt Subsidy
@@ -5337,20 +5363,20 @@ function renderSolarResult(res) {
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
         <div class="bg-emerald-50 border border-emerald-200 p-4 rounded-xl text-center">
           <span class="text-xs font-bold text-emerald-800 uppercase block">Pump & Array Capacity</span>
-          <span class="text-2xl font-black text-emerald-950">${res.recommended_pump_hp} HP / ${res.solar_array_kwp} kWp</span>
-          <span class="text-[11px] text-emerald-700 block mt-0.5">${res.pump_type} • TDH: ${res.total_dynamic_head_meters}m</span>
+          <span class="text-2xl font-black text-emerald-950">${hp} HP / ${kwp} kWp</span>
+          <span class="text-[11px] text-emerald-700 block mt-0.5">${pumpType} • TDH: ${tdh}m</span>
         </div>
 
         <div class="bg-amber-50 border border-amber-200 p-4 rounded-xl text-center">
           <span class="text-xs font-bold text-amber-800 uppercase block">Farmer Payable Share</span>
-          <span class="text-2xl font-black text-amber-950">₹${Math.round(res.farmer_share).toLocaleString("en-IN")}</span>
+          <span class="text-2xl font-black text-amber-950">₹${Math.round(farmerShare).toLocaleString("en-IN")}</span>
           <span class="text-[11px] text-amber-700 block mt-0.5">Remaining ~60% paid by Central + State</span>
         </div>
 
         <div class="bg-indigo-50 border border-indigo-200 p-4 rounded-xl text-center">
           <span class="text-xs font-bold text-indigo-800 uppercase block">Annual Diesel Saved</span>
-          <span class="text-2xl font-black text-indigo-950">₹${Math.round(res.annual_diesel_cost_savings_rs).toLocaleString("en-IN")}/yr</span>
-          <span class="text-[11px] text-indigo-700 block mt-0.5">${res.annual_diesel_saved_liters} Liters • ${res.co2_reduction_tons_per_year} t CO₂ offset</span>
+          <span class="text-2xl font-black text-indigo-950">₹${Math.round(dieselSavings).toLocaleString("en-IN")}/yr</span>
+          <span class="text-[11px] text-indigo-700 block mt-0.5">${dieselLiters} Liters • ${co2Tons} t CO₂ offset</span>
         </div>
       </div>
 
@@ -5360,19 +5386,19 @@ function renderSolarResult(res) {
         <div class="divide-y divide-slate-200 font-mono">
           <div class="flex justify-between py-1.5 text-slate-700">
             <span>Standard Benchmark Capital Cost:</span>
-            <span class="font-bold">₹${Math.round(res.estimated_total_cost).toLocaleString("en-IN")}</span>
+            <span class="font-bold">₹${Math.round(totalCost).toLocaleString("en-IN")}</span>
           </div>
           <div class="flex justify-between py-1.5 text-emerald-700">
             <span>Central Govt Subsidy (CFA):</span>
-            <span class="font-bold">- ₹${Math.round(res.central_subsidy).toLocaleString("en-IN")}</span>
+            <span class="font-bold">- ₹${Math.round(centralSubsidy).toLocaleString("en-IN")}</span>
           </div>
           <div class="flex justify-between py-1.5 text-emerald-700">
             <span>State Govt Subsidy:</span>
-            <span class="font-bold">- ₹${Math.round(res.state_subsidy).toLocaleString("en-IN")}</span>
+            <span class="font-bold">- ₹${Math.round(stateSubsidy).toLocaleString("en-IN")}</span>
           </div>
           <div class="flex justify-between py-1.5 text-slate-900 font-bold bg-white px-2 rounded-lg">
             <span>Net Farmer Upfront Contribution:</span>
-            <span class="text-brand-800">₹${Math.round(res.farmer_share).toLocaleString("en-IN")}</span>
+            <span class="text-brand-800">₹${Math.round(farmerShare).toLocaleString("en-IN")}</span>
           </div>
         </div>
         <div class="text-[11px] text-slate-500 pt-1">
@@ -5484,7 +5510,7 @@ const LOCAL_INTERCROPPING_CATALOG = [
 async function renderIntercroppingCatalog(filterCrop = "all") {
   let catalog = LOCAL_INTERCROPPING_CATALOG;
   try {
-    const url = filterCrop === "all" ? "/api/intercropping" : `/api/intercropping?main_crop=${encodeURIComponent(filterCrop)}`;
+    const url = filterCrop === "all" ? `${API_BASE}/intercropping` : `${API_BASE}/intercropping?main_crop=${encodeURIComponent(filterCrop)}&crop_id=${encodeURIComponent(filterCrop)}`;
     const res = await fetch(url);
     if (res.ok) {
       const data = await res.json();
@@ -5496,7 +5522,10 @@ async function renderIntercroppingCatalog(filterCrop = "all") {
 
   const filtered = filterCrop === "all"
     ? catalog
-    : catalog.filter(c => c.main_crop.toLowerCase() === filterCrop.toLowerCase());
+    : catalog.filter(c => {
+        const name = (c.main_crop || c.main_crop_name || "").toLowerCase();
+        return name.includes(filterCrop.toLowerCase());
+      });
 
   if (intercropCount) {
     intercropCount.textContent = `Showing ${filtered.length} proven intercropping pairing(s)`;
@@ -5513,33 +5542,41 @@ async function renderIntercroppingCatalog(filterCrop = "all") {
   }
 
   intercropGrid.innerHTML = filtered.map(pair => {
-    const bonusPct = Math.round((pair.ler - 1.0) * 100);
+    const mainName = pair.main_crop || pair.main_crop_name || "";
+    const compName = pair.companion_crop || pair.companion_crop_name || "";
+    const ratio = pair.spatial_ratio || pair.row_ratio || "Intercrop";
+    const lerVal = pair.ler ?? pair.land_equivalent_ratio ?? 1.25;
+    const bonusPct = Math.round((lerVal - 1.0) * 100);
+    const season = pair.recommended_season || "Kharif / Rabi";
+    const benefit = pair.biological_benefit || pair.economic_advisory || pair.pest_repellent_benefit || "";
+    const water = pair.water_compatibility || "High compatibility";
+
     return `
       <div class="bg-white rounded-2xl p-5 border border-slate-200 hover:border-emerald-500 shadow-xs hover:shadow-md transition space-y-3.5 flex flex-col justify-between">
         <div class="space-y-2">
           <div class="flex items-center justify-between">
             <span class="bg-emerald-100 text-emerald-900 font-bold text-xs px-2.5 py-1 rounded-full">
-              LER: ${pair.ler.toFixed(2)} (+${bonusPct}% Yield Advantage)
+              LER: ${lerVal.toFixed(2)} (+${bonusPct}% Yield Advantage)
             </span>
-            <span class="text-[11px] text-slate-500 font-semibold">${pair.recommended_season}</span>
+            <span class="text-[11px] text-slate-500 font-semibold">${season}</span>
           </div>
 
           <div class="pt-1">
             <h4 class="font-black text-slate-900 text-base">
-              ${pair.main_crop} + <span class="text-brand-700">${pair.companion_crop}</span>
+              ${mainName} + <span class="text-brand-700">${compName}</span>
             </h4>
             <span class="inline-block bg-slate-100 text-slate-700 text-[11px] font-mono font-bold px-2 py-0.5 rounded mt-1">
-              📐 ${pair.spatial_ratio}
+              📐 ${ratio}
             </span>
           </div>
 
           <p class="text-xs text-slate-600 leading-relaxed pt-1">
-            ${pair.biological_benefit}
+            ${benefit}
           </p>
         </div>
 
         <div class="pt-2 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-500">
-          <span>💧 ${pair.water_compatibility}</span>
+          <span>💧 ${water}</span>
           <span class="font-bold text-brand-800">Zero Chemical Extra</span>
         </div>
       </div>
@@ -5607,28 +5644,36 @@ const LOCAL_GRAIN_STORAGE_CATALOG = [
 async function renderGrainStorageCatalog() {
   let catalog = LOCAL_GRAIN_STORAGE_CATALOG;
   try {
-    const res = await fetch("/api/grain-storage/advisory");
+    const res = await fetch(`${API_BASE}/grain-storage/advisory`);
     if (res.ok) {
       const data = await res.json();
-      if (data.crops && data.crops.length) {
-        catalog = data.crops;
+      const list = Array.isArray(data) ? data : (data.crops || []);
+      if (list.length) {
+        catalog = list;
       }
     }
   } catch (_) {}
 
   if (!storageCatalogTableBody) return;
 
-  storageCatalogTableBody.innerHTML = catalog.map(c => `
-    <tr class="hover:bg-slate-50 transition border-b border-slate-100">
-      <td class="p-3.5 font-bold text-slate-800">${c.crop}</td>
-      <td class="p-3.5 text-center font-mono font-bold text-emerald-700 bg-emerald-50/50">
-        ≤ ${c.safe_moisture_pct}%
-      </td>
-      <td class="p-3.5 text-center text-slate-600 font-mono">${c.max_safe_duration_months} mos</td>
-      <td class="p-3.5 text-rose-700 text-xs">${c.major_pests}</td>
-      <td class="p-3.5 text-slate-600 text-xs">${c.safe_practices}</td>
-    </tr>
-  `).join("");
+  storageCatalogTableBody.innerHTML = catalog.map(c => {
+    const cropName = c.crop || c.crop_name || "";
+    const safeMoist = c.safe_moisture_pct ?? c.safe_moisture_limit_pct ?? 12.0;
+    const maxDur = c.max_safe_duration_months ?? c.max_shelf_life_months ?? 12;
+    const pests = c.major_pests || (Array.isArray(c.common_storage_pests) ? c.common_storage_pests.join(", ") : "");
+    const practices = c.safe_practices || (Array.isArray(c.natural_protectants) ? c.natural_protectants.join(". ") : (c.stacking_and_storage_guidelines || ""));
+    return `
+      <tr class="hover:bg-slate-50 transition border-b border-slate-100">
+        <td class="p-3.5 font-bold text-slate-800">${cropName}</td>
+        <td class="p-3.5 text-center font-mono font-bold text-emerald-700 bg-emerald-50/50">
+          ≤ ${safeMoist}%
+        </td>
+        <td class="p-3.5 text-center text-slate-600 font-mono">${maxDur} mos</td>
+        <td class="p-3.5 text-rose-700 text-xs">${pests}</td>
+        <td class="p-3.5 text-slate-600 text-xs">${practices}</td>
+      </tr>
+    `;
+  }).join("");
 }
 
 async function executeStorageRiskCheck() {
@@ -5638,14 +5683,17 @@ async function executeStorageRiskCheck() {
   const duration = parseFloat(storageDurationInput?.value) || 6.0;
 
   try {
-    const res = await fetch("/api/grain-storage/check-risk", {
+    const res = await fetch(`${API_BASE}/grain-storage/check-risk`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
+        crop_id: crop.toLowerCase().split(" ")[0],
         crop_name: crop,
+        measured_moisture_pct: moisture,
         current_moisture_pct: moisture,
         storage_method: method,
-        planned_duration_months: duration
+        intended_duration_months: Math.round(duration),
+        planned_duration_months: Math.round(duration)
       })
     });
     if (res.ok) {
@@ -5700,29 +5748,44 @@ async function executeStorageRiskCheck() {
 function renderStorageRiskResult(res) {
   if (!storageRiskResultContainer) return;
 
-  const riskColor = res.risk_level === "Safe"
+  const isSafe = (res.risk_level || "").toLowerCase().includes("safe");
+  const isCaution = (res.risk_level || "").toLowerCase().includes("moderate") || (res.risk_level || "").toLowerCase().includes("caution") || (res.risk_level || "").toLowerCase().includes("yellow");
+
+  const riskLabel = isSafe ? "Safe" : (isCaution ? "Caution" : "High Risk");
+  const riskColor = isSafe
     ? "bg-emerald-100 text-emerald-900 border-emerald-300"
-    : (res.risk_level === "Caution"
+    : (isCaution
       ? "bg-amber-100 text-amber-950 border-amber-300"
       : "bg-rose-100 text-rose-950 border-rose-300");
 
-  const badgeColor = res.risk_level === "Safe"
+  const badgeColor = isSafe
     ? "bg-emerald-600 text-white"
-    : (res.risk_level === "Caution"
+    : (isCaution
       ? "bg-amber-600 text-white"
       : "bg-rose-600 text-white");
+
+  const cropName = res.crop_name || res.crop_id || "Grain";
+  const measuredMoist = res.current_moisture_pct ?? res.measured_moisture_pct ?? 12.0;
+  const safeMoist = res.safe_moisture_pct ?? res.safe_moisture_limit_pct ?? 12.0;
+
+  const warnings = res.spoilage_warnings || (res.risk_explanation ? [res.risk_explanation] : []);
+  const actionPlan = res.drying_action_plan || [
+    ...(res.sun_drying_hours_needed ? [`Sun drying needed: approximately ${res.sun_drying_hours_needed} hours.`] : []),
+    ...(res.traditional_preservation_tips || []),
+    ...(res.enwr_warehouse_pledge_benefit ? [res.enwr_warehouse_pledge_benefit] : [])
+  ];
 
   storageRiskResultContainer.innerHTML = `
     <div class="rounded-2xl p-5 border ${riskColor} space-y-4 animate-fadeIn">
       <div class="flex flex-wrap items-center justify-between gap-2 border-b border-black/10 pb-3">
         <div>
           <span class="text-xs font-bold uppercase tracking-wider">Moisture Risk Diagnostic:</span>
-          <h4 class="text-lg font-black">${res.crop_name}</h4>
+          <h4 class="text-lg font-black">${cropName}</h4>
         </div>
         <div class="flex items-center gap-2">
-          <span class="text-xs font-mono font-bold">Tested: ${res.current_moisture_pct}% (Safe: ≤ ${res.safe_moisture_pct}%)</span>
+          <span class="text-xs font-mono font-bold">Tested: ${measuredMoist}% (Safe: ≤ ${safeMoist}%)</span>
           <span class="${badgeColor} px-3 py-1 rounded-full text-xs font-black uppercase">
-            ${res.risk_level}
+            ${riskLabel}
           </span>
         </div>
       </div>
@@ -5730,7 +5793,7 @@ function renderStorageRiskResult(res) {
       <div class="space-y-2 text-xs">
         <div class="font-bold">⚠️ Spoilage & Infestation Warnings:</div>
         <ul class="list-disc list-inside space-y-1 opacity-90">
-          ${res.spoilage_warnings.map(w => `<li>${w}</li>`).join("")}
+          ${warnings.map(w => `<li>${w}</li>`).join("")}
         </ul>
       </div>
 
@@ -5739,7 +5802,7 @@ function renderStorageRiskResult(res) {
           <span>☀️</span> <span>Recommended Drying & Preservation Protocol:</span>
         </div>
         <ol class="list-decimal list-inside space-y-1 text-slate-700">
-          ${res.drying_action_plan.map(p => `<li>${p}</li>`).join("")}
+          ${actionPlan.map(p => `<li>${p}</li>`).join("")}
         </ol>
       </div>
     </div>
