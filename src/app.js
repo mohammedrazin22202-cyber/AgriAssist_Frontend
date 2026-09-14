@@ -149,17 +149,34 @@ const TRANSLATIONS = {
     tagline: "कृषी निर्णय प्रणाली",
     subtitle: "शेतकरी पीक सल्लागार • प्रगत शेती मार्गदर्शन",
     detectLocation: "हवामान तपासा",
+    landConverterBtn: "जमीन मापक",
+    fieldWalkBtn: "जीपीएस शेत मापक",
     tabAdvisor: "पीक पेरणी सल्लागार",
+    tabSeed: "बियाणे व अंतर",
     tabDoctor: "प्लँट डॉक्टर (रोग व कीड)",
     tabMandi: "बाजारभाव व कल",
+    tabSprayer: "स्प्रेअर व औषध",
     tabIrrigation: "पाणी व्यवस्थापन",
+    tabSolar: "सौर पंप (कुसुम)",
     tabOrganic: "सेंद्रिय / नैसर्गिक शेती",
+    tabIntercrop: "आंतरपीक मॅट्रिक्स",
+    tabStorage: "धान्य साठवणूक डॉक्टर",
     tabRotation: "१-वर्षीय पीक फेरपालट",
     tabFertilizer: "खत व माती डॉक्टर",
     tabYojana: "शासकीय योजना केंद्र",
     tabKhata: "शेतकरी वही-खाते",
     heroTitle: "ह्या हंगामात कोणते पीक घ्यावे?",
     heroDesc: "शास्त्रीय पद्धतीने पीक निवड करा. माती, हवामान आणि पाण्याचे नियोजन करून योग्य पिकांची शिफारस आणि खतांचे अचूक प्रमाण मिळवा.",
+    seedHeroTitle: "🌱 बियाणे दर व झाडांमधील अंतर कॅल्क्युलेटर",
+    seedHeroDesc: "शास्त्रीय पद्धतीने बियाण्याचे प्रमाण (किलो), दोन ओळींतील व दोन रोपांतील योग्य अंतर, उगवण क्षमता व बीजप्रक्रिया पद्धती मोजा.",
+    sprayerHeroTitle: "🚜 स्प्रेअर पंप व औषध प्रमाण कॅल्क्युलेटर",
+    sprayerHeroDesc: "औषधाचा अपव्यय व पिकांचे नुकसान टाळा. प्रति १५-१६ लिटर पंपात लागणारे अचूक औषध आणि एकूण लागणारे पंप मोजा.",
+    solarHeroTitle: "☀️ सौर कृषी पंप व पीएम-कुसुम अनुदान",
+    solarHeroDesc: "विजेच्या लपंडावापासून मुक्ती मिळवा. आपल्या विहिरीसाठी किंवा बोअरवेलसाठी योग्य सौर पंप (२ HP ते ७.५ HP) व शासकीय अनुदान मोजा.",
+    intercropHeroTitle: "🌿 आंतरपीक व मिश्र पीक पद्धती",
+    intercropHeroDesc: "नैसर्गिक पद्धतीने जमिनीची सुपीकता वाढवा आणि एकाच वेळी दोन पिकांचे फायदेशीर उत्पादन मिळवा.",
+    storageHeroTitle: "📦 काढणीपश्चात धान्य साठवणूक व आर्द्रता डॉक्टर",
+    storageHeroDesc: "बुरशी व किडींपासून धान्याचे होणारे १५-२०% नुकसान टाळा. सुरक्षित साठवणुकीसाठी योग्य आर्द्रता मर्यादा व उपाय जाणून घ्या.",
     doctorHeroTitle: "🩺 शेतकरी प्लँट डॉक्टर व कीड नियंत्रण",
     doctorHeroDesc: "पिकांवरील रोग व किडींचे अचूक निदान, सेंद्रिय (IPM) व रासायनिक औषधांचे योग्य प्रमाण आणि सुरक्षित काढणी कालावधी (PHI).",
     mandiHeroTitle: "📈 कृषी उत्पन्न बाजारभाव व कल",
@@ -195,17 +212,34 @@ const TRANSLATIONS = {
     tagline: "ਖੇਤੀ ਫੈਸਲਾ ਪ੍ਰਣਾਲੀ",
     subtitle: "ਕਿਸਾਨ ਫਸਲ ਸਲਾਹਕਾਰ • ਪੰਜਾਬ ਤੇ ਹਰਿਆਣਾ ਖੇਤੀਬਾੜੀ",
     detectLocation: "ਮੌਸਮ ਵੇਖੋ",
+    landConverterBtn: "ਜ਼ਮੀਨ ਮਾਪਕ",
+    fieldWalkBtn: "ਜੀਪੀਐਸ ਖੇਤ ਮਾਪਕ",
     tabAdvisor: "ਫਸਲ ਬਿਜਾਈ ਸਲਾਹਕਾਰ",
+    tabSeed: "ਬੀਜ ਤੇ ਦੂਰੀ",
     tabDoctor: "ਪਲਾਂਟ ਡਾਕਟਰ (ਕੀੜੇ ਤੇ ਬਿਮਾਰੀਆਂ)",
     tabMandi: "ਮੰਡੀ ਭਾਅ ਤੇ ਰੁਝਾਨ",
+    tabSprayer: "ਸਪਰੇਅਰ ਤੇ ਦਵਾਈ",
     tabIrrigation: "ਸਿੰਚਾਈ ਪ੍ਰਬੰਧਨ",
+    tabSolar: "ਸੋਲਰ ਪੰਪ (ਕੁਸੁਮ)",
     tabOrganic: "ਕੁਦਰਤੀ / ਜੈਵਿਕ ਖੇਤੀ",
+    tabIntercrop: "ਅੰਤਰ-ਫਸਲੀ ਮੈਟ੍ਰਿਕਸ",
+    tabStorage: "ਅਨਾਜ ਭੰਡਾਰਨ ਡਾਕਟਰ",
     tabRotation: "੧-ਸਾਲਾ ਫਸਲੀ ਚੱਕਰ",
     tabFertilizer: "ਖਾਦ ਤੇ ਮਿੱਟੀ ਡਾਕਟਰ",
     tabYojana: "ਸਰਕਾਰੀ ਸਕੀਮਾਂ ਕੇਂਦਰ",
     tabKhata: "ਕਿਸਾਨ ਬਹੀ-ਖਾਤਾ",
     heroTitle: "ਇਸ ਸੀਜ਼ਨ ਕਿਹੜੀ ਫਸਲ ਬੀਜੀਏ?",
     heroDesc: "ਵਿਗਿਆਨਕ ਅਤੇ ਸਹੀ ਫਸਲ ਫੈਸਲੇ ਲਓ। ਆਪਣੀ ਜ਼ਮੀਨ ਅਤੇ ਪਾਣੀ ਅਨੁਸਾਰ ਵੱਧ ਮੁਨਾਫਾ ਦੇਣ ਵਾਲੀਆਂ ਫਸਲਾਂ ਅਤੇ ਖਾਦ ਦੀ ਸਹੀ ਮਾਤਰਾ ਜਾਣੋ।",
+    seedHeroTitle: "🌱 ਬੀਜ ਦੀ ਮਾਤਰਾ ਅਤੇ ਫਾਸਲਾ ਕੈਲਕੁਲੇਟਰ",
+    seedHeroDesc: "ਪ੍ਰਤੀ ਏਕੜ ਬੀਜ ਦੀ ਸਹੀ ਮਾਤਰਾ (ਕਿਲੋ), ਲਾਈਨਾਂ ਅਤੇ ਬੂਟਿਆਂ ਵਿਚਲਾ ਫਾਸਲਾ ਅਤੇ ਬੀਜ ਸੋਧ ਦੇ ਨੁਸਖੇ ਜਾਣੋ।",
+    sprayerHeroTitle: "🚜 ਸਪਰੇਅ ਪੰਪ ਅਤੇ ਦਵਾਈ ਮਾਤਰਾ ਕੈਲਕੁਲੇਟਰ",
+    sprayerHeroDesc: "ਫਸਲ ਦੇ ਨੁਕਸਾਨ ਅਤੇ ਵਾਧੂ ਦਵਾਈ ਤੋਂ ਬਚੋ। ਪ੍ਰਤੀ ੧੫-੧੬ ਲੀਟਰ ਟੈਂਕੀ ਲਈ ਸਹੀ ਦਵਾਈ ਅਤੇ ਕੁੱਲ ਟੈਂਕੀਆਂ ਦਾ ਹਿਸਾਬ ਲਗਾਓ।",
+    solarHeroTitle: "☀️ ਸੋਲਰ ਪੰਪ ਅਤੇ ਪੀਐਮ-ਕੁਸੁਮ ਸਬਸਿਡੀ",
+    solarHeroDesc: "ਬਿਜਲੀ ਕੱਟਾਂ ਅਤੇ ਡੀਜ਼ਲ ਖਰਚੇ ਤੋਂ ਛੁਟਕਾਰਾ ਪਾਓ। ਆਪਣੇ ਬੋਰਵੈਲ ਲਈ ਸਹੀ ਸੋਲਰ ਪੰਪ ਚੁਣੋ ਅਤੇ ਸਰਕਾਰੀ ਸਬਸਿਡੀ ਵੇਖੋ।",
+    intercropHeroTitle: "🌿 ਰਲਵੀਂ ਖੇਤੀ ਅਤੇ ਅੰਤਰ-ਫਸਲ ਪ੍ਰਣਾਲੀ",
+    intercropHeroDesc: "ਜ਼ਮੀਨ ਦੀ ਉਪਜਾਊ ਸ਼ਕਤੀ ਵਧਾਓ ਅਤੇ ਇਕੋ ਸਮੇਂ ਦੋ ਫਸਲਾਂ ਤੋਂ ਵੱਧ ਮੁਨਾਫਾ ਕਮਾਓ।",
+    storageHeroTitle: "📦 ਵਾਢੀ ਉਪਰੰਤ ਅਨਾਜ ਸਾਂਭ-ਸੰਭਾਲ ਡਾਕਟਰ",
+    storageHeroDesc: "ਸਿੱਲ੍ਹ ਅਤੇ ਕੀੜਿਆਂ ਤੋਂ ਅਨਾਜ ਨੂੰ ਬਚਾਓ। ਸੁਰੱਖਿਅਤ ਨਮੀ ਦਾ ਪੱਧਰ ਅਤੇ ਦੇਸੀ ਸਾਂਭ-ਸੰਭਾਲ ਦੇ ਤਰੀਕੇ ਜਾਣੋ।",
     doctorHeroTitle: "🩺 ਕਿਸਾਨ ਪਲਾਂਟ ਡਾਕਟਰ",
     doctorHeroDesc: "ਫਸਲਾਂ ਦੇ ਕੀੜਿਆਂ ਤੇ ਬਿਮਾਰੀਆਂ ਦੀ ਪਛਾਣ, ਜੈਵਿਕ ਅਤੇ ਰਸਾਇਣਕ ਰੋਕਥਾਮ ਦੀ ਸਹੀ ਖੁਰਾਕ ਅਤੇ ਸੁਚੇਤ ਸਪਰੇਅ ਸਮਾਂ।",
     mandiHeroTitle: "📈 ਮੰਡੀ ਭਾਅ ਅਤੇ ਰੁਝਾਨ",
@@ -241,17 +275,34 @@ const TRANSLATIONS = {
     tagline: "કૃષિ નિર્ણય પ્રણાલી",
     subtitle: "ખેડૂત પાક સલાહકાર • ગુજરાત કૃષિ વિકાસ",
     detectLocation: "હવામાન તપાસો",
+    landConverterBtn: "જમીન માપક",
+    fieldWalkBtn: "જીપીએસ ખેતર માપક",
     tabAdvisor: "પાક વાવણી સલાહકાર",
+    tabSeed: "બિયારણ અને અંતર",
     tabDoctor: "પ્લાન્ટ ડૉક્ટર (રોગ-જીવાત)",
     tabMandi: "બજારભાવ અને વલણ",
+    tabSprayer: "સ્પ્રેયર અને દવા",
     tabIrrigation: "સ્માર્ટ પિયત વ્યવસ્થાપન",
+    tabSolar: "સોલર પંપ (કુસુમ)",
     tabOrganic: "પ્રાકૃતિક / જૈવિક ખેતી",
+    tabIntercrop: "મિશ્ર પાક પદ્ધતિ",
+    tabStorage: "અનાજ સંગ્રહ ડૉક્ટર",
     tabRotation: "૧-વાર્ષિક પાક ચક્ર",
     tabFertilizer: "ખાતર અને જમીન ડૉક્ટર",
     tabYojana: "સરકારી યોજના કેન્દ્ર",
     tabKhata: "ખેડૂત વહી-ખાતું",
     heroTitle: "આ સીઝનમાં કયો પાક વાવવો?",
     heroDesc: "વૈજ્ઞાનિક રીતે સાચી પાક પસંદગી કરો. જમીન, ઋતુ અને પાણીની સુવિધા મુજબ સૌથી વધુ નફાકારક પાકની ભલામણ મેળવો.",
+    seedHeroTitle: "🌱 બિયારણ દર અને અંતર કેલ્ક્યુલેટર",
+    seedHeroDesc: "એકર દીઠ બિયારણનો ચોક્કસ જથ્થો (કિલો), બે હાર અને છોડ વચ્ચેનું સાચું અંતર અને બીજ માવજત પદ્ધતિઓ જાણો.",
+    sprayerHeroTitle: "🚜 સ્પ્રે પંપ અને દવા માપ કેલ્ક્યુલેટર",
+    sprayerHeroDesc: "પાકના પાન બળતા અટકાવો અને દવાનો બગાડ રોકો. ૧૫-૧૬ લીટરના પંપ દીઠ દવાનો સાચો ડોઝ અને કુલ પંપની ગણતરી કરો.",
+    solarHeroTitle: "☀️ સોલર કૃષિ પંપ અને પીએમ-કુસુમ સહાય",
+    solarHeroDesc: "વીજળી કાપ અને ડીઝલ ખર્ચથી મુક્તિ મેળવો. તમારા બોરવેલ કે કુવા માટે યોગ્ય સોલર પંપ અને સરકારી સબસિડી ગણો.",
+    intercropHeroTitle: "🌿 મિશ્ર પાક અને આંતરપાક વ્યવસ્થા",
+    intercropHeroDesc: "જમીનની ફળદ્રુપતા વધારો અને કુદરતી રીતે રોગ-જીવાત નિયંત્રણ સાથે બમણો નફો મેળવો.",
+    storageHeroTitle: "📦 પાક લણણી પછી અનાજ સંગ્રહ ડૉક્ટર",
+    storageHeroDesc: "ભેજ અને ધનેડાથી થતું અનાજનું નુકસાન અટકાવો. સુરક્ષિત ભેજ મર્યાદા અને સાચવણીના દેશી ઉપાયો જાણો.",
     doctorHeroTitle: "🩺 ખેડૂત પ્લાન્ટ ડૉક્ટર",
     doctorHeroDesc: "પાકના રોગ અને જીવાતનું સચોટ નિદાન, જૈવિક ઉપચાર અને દવા છંટકાવનો યોગ્ય ડોઝ.",
     mandiHeroTitle: "📈 માર્કેટ યાર્ડ બજારભાવ",
@@ -1222,6 +1273,47 @@ const fertPrescriptionResult = document.getElementById("fertPrescriptionResult")
 
 
 
+// ----------------- TOAST NOTIFICATIONS SYSTEM -----------------
+
+function showToast(message, type = "info") {
+  const container = document.getElementById("toastContainer");
+  if (!container) return;
+  const toast = document.createElement("div");
+  const icons = {
+    success: "✅",
+    warning: "⚠️",
+    error: "❌",
+    info: "ℹ️"
+  };
+  const icon = icons[type] || "ℹ️";
+  const bgColors = {
+    success: "bg-emerald-900/95 border-emerald-500 text-white",
+    warning: "bg-amber-900/95 border-amber-500 text-white",
+    error: "bg-rose-900/95 border-rose-500 text-white",
+    info: "bg-slate-900/95 border-slate-700 text-white"
+  };
+  const colorClass = bgColors[type] || bgColors.info;
+
+  toast.className = `flex items-center gap-2.5 px-4 py-3 rounded-xl border shadow-xl text-xs font-semibold backdrop-blur-md transform transition-all duration-300 translate-y-2 opacity-0 pointer-events-auto ${colorClass}`;
+  toast.innerHTML = `<span>${icon}</span><span class="flex-1">${message}</span>`;
+
+  container.appendChild(toast);
+
+  requestAnimationFrame(() => {
+    toast.classList.remove("translate-y-2", "opacity-0");
+    toast.classList.add("translate-y-0", "opacity-100");
+  });
+
+  setTimeout(() => {
+    toast.classList.remove("translate-y-0", "opacity-100");
+    toast.classList.add("translate-y-2", "opacity-0");
+    setTimeout(() => {
+      if (toast.parentNode) toast.parentNode.removeChild(toast);
+    }, 300);
+  }, 3500);
+}
+window.showToast = showToast;
+
 // ----------------- INITIALIZATION -----------------
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -1230,6 +1322,7 @@ document.addEventListener("DOMContentLoaded", () => {
   populateFertilizerCropOptions();
   initDistrictSelector();
   initKisanKhata();
+  updateKhataCategoryOptions();
   calculateKccLoanEstimator();
   renderSchemesDirectory();
   checkApiHealth();
@@ -1242,11 +1335,9 @@ document.addEventListener("DOMContentLoaded", () => {
   recalculateLandConverter();
   renderGrainStorageCatalog();
 
-  // Load saved language if any
+  // Load saved language or default to en
   const savedLang = localStorage.getItem("agriassist_lang");
-  if (savedLang && TRANSLATIONS[savedLang]) {
-    setLanguage(savedLang);
-  }
+  setLanguage(savedLang && TRANSLATIONS[savedLang] ? savedLang : "en");
 });
 
 function registerServiceWorker() {
@@ -1396,18 +1487,24 @@ function setupEventListeners() {
   // Language modal controls
   langToggleBtn?.addEventListener("click", () => {
     langModal?.classList.remove("hidden");
+    document.body.style.overflow = "hidden";
   });
   closeLangModalBtn?.addEventListener("click", () => {
     langModal?.classList.add("hidden");
+    document.body.style.overflow = "";
   });
   langModal?.addEventListener("click", (e) => {
-    if (e.target === langModal) langModal.classList.add("hidden");
+    if (e.target === langModal) {
+      langModal.classList.add("hidden");
+      document.body.style.overflow = "";
+    }
   });
   document.querySelectorAll(".lang-choice-btn").forEach(btn => {
     btn.addEventListener("click", () => {
       const lang = btn.getAttribute("data-lang");
       setLanguage(lang);
       langModal?.classList.add("hidden");
+      document.body.style.overflow = "";
     });
   });
 
@@ -1466,6 +1563,7 @@ function setupEventListeners() {
 
 
   // Kisan Khata controls
+  khataType?.addEventListener("change", updateKhataCategoryOptions);
   khataForm?.addEventListener("submit", addKhataTransaction);
   clearKhataBtn?.addEventListener("click", clearKhataLedger);
   khataFilterCategory?.addEventListener("change", renderKhataLedger);
@@ -1539,6 +1637,7 @@ function setupEventListeners() {
       }
       if (langModal && !langModal.classList.contains("hidden")) {
         langModal.classList.add("hidden");
+        document.body.style.overflow = "";
       }
       if (landConverterModal && !landConverterModal.classList.contains("hidden")) {
         closeLandConverterModal();
@@ -1584,6 +1683,7 @@ function switchTab(tab) {
     if (selected.btn) {
       selected.btn.classList.add("active", "bg-brand-800", "text-white", "border-brand-800", "shadow-sm");
       selected.btn.classList.remove("text-slate-600", "hover:bg-slate-100", "border-transparent");
+      selected.btn.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
     }
     if (selected.content) {
       selected.content.classList.remove("hidden");
@@ -1667,6 +1767,7 @@ function setLanguage(lang) {
 function toggleLanguage() {
   if (langModal) {
     langModal.classList.remove("hidden");
+    document.body.style.overflow = "hidden";
   } else {
     const nextLang = appState.currentLang === "en" ? "hi" : "en";
     setLanguage(nextLang);
@@ -1717,6 +1818,7 @@ async function fetchWeatherByCoords(lat, lon, locationLabel) {
       temp: currentTemp,
       humidity: humidity,
       rain7d: rainForecast7Day,
+      rainForecast7Day: rainForecast7Day,
       code: weatherCode
     };
 
@@ -1780,7 +1882,7 @@ async function fetchWeatherByCoords(lat, lon, locationLabel) {
 
 function speakCropAdvice(cropId) {
   if (!("speechSynthesis" in window)) {
-    alert("Audio readout is not supported on this browser.");
+    showToast("Audio readout is not supported on this browser.", "info");
     return;
   }
 
@@ -1798,16 +1900,17 @@ function speakCropAdvice(cropId) {
   const crop = appState.recommendations.find(c => c.crop_id === cropId) || (appState.topPick?.crop_id === cropId ? appState.topPick : null);
   if (!crop) return;
 
-  const isHindi = appState.currentLang === "hi";
+  const currentLang = appState.currentLang || "en";
+  const isIndianLang = ["hi", "mr", "pa", "gu"].includes(currentLang);
   let script = "";
 
-  if (isHindi) {
-    const hindiTitle = crop.hindi_name ? crop.hindi_name : crop.name;
+  if (isIndianLang) {
+    const cropTitle = crop.hindi_name ? crop.hindi_name : crop.name;
     const netProfit = crop.financials ? Math.round(crop.financials.profit_per_acre_inr).toLocaleString("en-IN") : "";
     const urea = crop.fertilizer_prescription ? crop.fertilizer_prescription.urea_bags_50kg : "";
     const dap = crop.fertilizer_prescription ? crop.fertilizer_prescription.dap_bags_50kg : "";
 
-    script = `${hindiTitle} की फसल। अनुकूलता स्कोर ${crop.suitability_score} प्रतिशत है। अनुमानित शुद्ध लाभ ${netProfit} रुपये प्रति एकड़। खाद की आवश्यकता: यूरिया ${urea} बोरी, डीएपी ${dap} बोरी। मुख्य बुवाई सलाह: ${crop.sowing_tips}।`;
+    script = `${cropTitle} की फसल। अनुकूलता स्कोर ${crop.suitability_score} प्रतिशत है। अनुमानित शुद्ध लाभ ${netProfit} रुपये प्रति एकड़। खाद की आवश्यकता: यूरिया ${urea} बोरी, डीएपी ${dap} बोरी। मुख्य बुवाई सलाह: ${crop.sowing_tips}।`;
   } else {
     const netProfit = crop.financials ? Math.round(crop.financials.profit_per_acre_inr).toLocaleString("en-IN") : "";
     const urea = crop.fertilizer_prescription ? crop.fertilizer_prescription.urea_bags_50kg : "";
@@ -1821,8 +1924,17 @@ function speakCropAdvice(cropId) {
 
   // Find appropriate voice
   const voices = window.speechSynthesis.getVoices();
-  const targetLangCode = isHindi ? "hi" : "en";
-  const voice = voices.find(v => v.lang.startsWith(targetLangCode));
+  const langVoiceCodeMap = {
+    hi: "hi-IN",
+    pa: "pa-IN",
+    mr: "mr-IN",
+    gu: "gu-IN",
+    en: "en-IN"
+  };
+  utterance.lang = langVoiceCodeMap[currentLang] || "en-US";
+  const voice = voices.find(v => v.lang && v.lang.toLowerCase().startsWith(currentLang)) ||
+                voices.find(v => v.lang && v.lang.toLowerCase().startsWith("hi")) ||
+                voices.find(v => v.lang && v.lang.toLowerCase().startsWith("en"));
   if (voice) utterance.voice = voice;
 
   // Highlight all voice buttons for this crop (spotlight + grid)
@@ -1928,11 +2040,13 @@ function updateWaterHint() {
 // ----------------- API INTERACTION -----------------
 
 async function checkApiHealth() {
+  const apiStatusDot = document.getElementById("apiStatusDot");
   try {
     const res = await fetch(`${API_BASE}/health`, { method: "GET" });
     if (res.ok) {
       appState.apiOnline = true;
       apiStatusBadge.className = "flex items-center space-x-1.5 text-xs bg-emerald-900/90 px-3 py-1.5 rounded-full border border-emerald-600";
+      if (apiStatusDot) apiStatusDot.className = "w-2 h-2 rounded-full bg-emerald-400 animate-pulse";
       apiStatusText.textContent = "Backend Online • FastAPI";
     } else {
       throw new Error("API not healthy");
@@ -1940,6 +2054,7 @@ async function checkApiHealth() {
   } catch (err) {
     appState.apiOnline = false;
     apiStatusBadge.className = "flex items-center space-x-1.5 text-xs bg-amber-900/90 px-3 py-1.5 rounded-full border border-amber-600";
+    if (apiStatusDot) apiStatusDot.className = "w-2 h-2 rounded-full bg-amber-400";
     apiStatusText.textContent = "Local Offline Mode (Port 4343)";
   }
 }
@@ -2808,7 +2923,7 @@ function toggleCropComparison(cropId, isChecked) {
 
   if (isChecked) {
     if (appState.selectedForComparison.length >= 3) {
-      alert("You can compare up to 3 crops at once.");
+      showToast("You can compare up to 3 crops at once.", "warning");
       document.querySelectorAll(`.compare-checkbox[data-crop-id="${cropId}"]`).forEach(cb => cb.checked = false);
       return;
     }
@@ -2863,7 +2978,7 @@ function clearComparison() {
 
 function openComparisonModal() {
   if (appState.selectedForComparison.length < 2) {
-    alert("Please select at least 2 crops to compare side-by-side.");
+    showToast("Please select at least 2 crops to compare side-by-side.", "warning");
     return;
   }
 
@@ -2921,16 +3036,31 @@ function closeComparisonModal() {
 
 // ----------------- AUDIO SPEECH SYNTHESIS -----------------
 
-function speakDiagnosis(text, lang = "hi") {
+function speakDiagnosis(text, lang) {
   if (!("speechSynthesis" in window)) {
-    alert("Voice speech synthesis is not supported on your browser/device.");
+    showToast("Voice speech synthesis is not supported on your browser/device.", "info");
     return;
   }
+  const current = lang || appState.currentLang || "hi";
   window.speechSynthesis.cancel(); // Stop any active utterance
   const utterance = new SpeechSynthesisUtterance(text);
-  utterance.lang = lang === "hi" ? "hi-IN" : "en-IN";
+  const langMap = {
+    hi: "hi-IN",
+    pa: "pa-IN",
+    mr: "mr-IN",
+    gu: "gu-IN",
+    en: "en-IN"
+  };
+  utterance.lang = langMap[current] || "hi-IN";
   utterance.rate = 0.9;
   utterance.pitch = 1.0;
+
+  const voices = window.speechSynthesis.getVoices();
+  const voice = voices.find(v => v.lang && v.lang.toLowerCase().startsWith(current)) ||
+                voices.find(v => v.lang && v.lang.toLowerCase().startsWith("hi")) ||
+                voices.find(v => v.lang && v.lang.toLowerCase().startsWith("en"));
+  if (voice) utterance.voice = voice;
+
   window.speechSynthesis.speak(utterance);
 }
 window.speakDiagnosis = speakDiagnosis;
@@ -3077,7 +3207,7 @@ function renderPlantDoctor(issues) {
             </div>
 
             <!-- Audio Speak Button -->
-            <button type="button" class="shrink-0 p-2.5 rounded-xl bg-slate-100 hover:bg-rose-100 text-slate-700 hover:text-rose-700 transition" title="Listen to Audio Advisory (ऑडियो सलाह सुनें)" onclick="speakDiagnosis(decodeURIComponent('${escapedScript}'), 'hi')">
+            <button type="button" class="shrink-0 p-2.5 rounded-xl bg-slate-100 hover:bg-rose-100 text-slate-700 hover:text-rose-700 transition" title="Listen to Audio Advisory (ऑडियो सलाह सुनें)" onclick="speakDiagnosis(decodeURIComponent('${escapedScript}'), '${appState.currentLang}')">
               🔊
             </button>
           </div>
@@ -3338,7 +3468,7 @@ async function executeIrrigationScheduler() {
   const pumpFlowPerHour = pumpHp * 6500; // ~6500 L/hr per HP delivery
   const pumpHours = Math.round((volumeLiters / pumpFlowPerHour) * 10) / 10;
 
-  const rainUpcoming = (appState.weatherData && appState.weatherData.rainForecast7Day) ? appState.weatherData.rainForecast7Day : 0;
+  const rainUpcoming = appState.weatherData?.rainForecast7Day ?? appState.weatherData?.rain7d ?? 0;
   const postponeAlert = rainUpcoming >= 15 ?
     `⚠️ Heavy Rain Alert (${rainUpcoming} mm forecast in 7 days): Postpone surface irrigation by 4-6 days to avoid crop root rot and nitrogen leaching!` : null;
 
@@ -3928,6 +4058,33 @@ function initKisanKhata() {
   }
 }
 
+const KHATA_EXPENSE_CATEGORIES = [
+  { value: "Seeds", label: "Certified Seeds (बीज)" },
+  { value: "Fertilizer", label: "Fertilizers / DAP / Urea (खाद)" },
+  { value: "Pesticides", label: "Pesticides / Fungicides (कीटनाशक)" },
+  { value: "Labor", label: "Farm Labor / Weeding (मजदूरी)" },
+  { value: "Tillage", label: "Tractor / Plowing (जुताई / बुवाई)" },
+  { value: "Irrigation", label: "Diesel / Electricity / Tube-well (सिंचाई)" },
+  { value: "Machinery", label: "Machinery / Equipment (उपकरण)" },
+  { value: "Other Expense", label: "Other Farm Expense (अन्य खर्च)" }
+];
+
+const KHATA_INCOME_CATEGORIES = [
+  { value: "Crop Sale", label: "Crop Mandi Sale (फसल बिक्री)" },
+  { value: "Subsidy", label: "Govt Subsidy / PM-KISAN (सब्सिडी)" },
+  { value: "Dairy / Livestock", label: "Dairy / Livestock (पशुपालन / दुग्ध)" },
+  { value: "Lease / Rent", label: "Land Lease / Custom Hiring (किराया)" },
+  { value: "Other Income", label: "Other Farm Income (अन्य आय)" }
+];
+
+function updateKhataCategoryOptions() {
+  if (!khataType || !khataCategory) return;
+  const isIncome = khataType.value === "Income";
+  const list = isIncome ? KHATA_INCOME_CATEGORIES : KHATA_EXPENSE_CATEGORIES;
+  khataCategory.innerHTML = list.map(c => `<option value="${c.value}">${c.label}</option>`).join("");
+}
+window.updateKhataCategoryOptions = updateKhataCategoryOptions;
+
 function getKhataEntries() {
   try {
     const raw = localStorage.getItem(KHATA_STORAGE_KEY);
@@ -3949,7 +4106,7 @@ function addKhataTransaction(e) {
   const notes = khataNotes ? khataNotes.value.trim() : "";
 
   if (isNaN(amt) || amt <= 0) {
-    alert("Please enter a valid amount greater than zero.");
+    showToast("Please enter a valid amount greater than zero.", "warning");
     return;
   }
 
@@ -3971,12 +4128,15 @@ function addKhataTransaction(e) {
   if (khataNotes) khataNotes.value = "";
 
   renderKhataLedger();
+  showToast("✓ Record added to farm ledger", "success");
 }
 
 function deleteKhataTransaction(id) {
+  if (!confirm("Are you sure you want to delete this farm record?")) return;
   const entries = getKhataEntries().filter(t => t.id !== id);
   saveKhataEntries(entries);
   renderKhataLedger();
+  showToast("Record deleted from farm ledger", "info");
 }
 window.deleteKhataTransaction = deleteKhataTransaction;
 
@@ -3984,13 +4144,14 @@ function clearKhataLedger() {
   if (confirm("Are you sure you want to delete all entries from your farm ledger? This cannot be undone.")) {
     localStorage.removeItem(KHATA_STORAGE_KEY);
     renderKhataLedger();
+    showToast("Farm ledger cleared", "info");
   }
 }
 
 function exportKhataToCSV() {
   const entries = getKhataEntries();
   if (entries.length === 0) {
-    alert("No ledger entries to export.");
+    showToast("No ledger entries to export.", "warning");
     return;
   }
   const headers = ["ID", "Date", "Type", "Category", "Amount_INR", "Notes"];
@@ -4013,12 +4174,13 @@ function exportKhataToCSV() {
   link.click();
   document.body.removeChild(link);
   URL.revokeObjectURL(url);
+  showToast("✓ Farm ledger exported to CSV", "success");
 }
 
 function backupKhataToJSON() {
   const entries = getKhataEntries();
   if (entries.length === 0) {
-    alert("No ledger entries to backup.");
+    showToast("No ledger entries to backup.", "warning");
     return;
   }
   const backupData = {
@@ -4040,6 +4202,7 @@ function backupKhataToJSON() {
   link.click();
   document.body.removeChild(link);
   URL.revokeObjectURL(url);
+  showToast("✓ Farm ledger backup saved", "success");
 }
 
 function handleRestoreKhataFile(event) {
@@ -4060,7 +4223,7 @@ function handleRestoreKhataFile(event) {
       }
 
       if (newEntries.length === 0) {
-        alert("Backup file contained 0 entries.");
+        showToast("Backup file contained 0 entries.", "warning");
         return;
       }
 
@@ -4077,9 +4240,9 @@ function handleRestoreKhataFile(event) {
 
       saveKhataEntries(finalEntries);
       renderKhataLedger();
-      alert(`Successfully restored ${finalEntries.length} farm records!`);
+      showToast(`✓ Successfully restored ${finalEntries.length} farm records!`, "success");
     } catch (err) {
-      alert("Error restoring backup: " + err.message);
+      showToast("Error restoring backup: " + err.message, "error");
     } finally {
       event.target.value = "";
     }
@@ -4129,7 +4292,7 @@ function renderKhataLedger() {
         const val = catExpenses[cat];
         const pct = totalExpense > 0 ? Math.round((val / totalExpense) * 100) : 0;
         return `
-          <div class="inline-flex items-center gap-1.5 bg-white border border-slate-200 px-2.5 py-1 rounded-lg shadow-2xs">
+          <div class="inline-flex items-center gap-1.5 bg-white border border-slate-200 px-2.5 py-1 rounded-lg shadow-sm">
             <span class="font-bold text-slate-700">${cat}:</span>
             <span class="font-black text-rose-700 font-mono">₹${val.toLocaleString("en-IN")}</span>
             <span class="text-[10px] text-slate-400">(${pct}%)</span>
@@ -4200,29 +4363,75 @@ function renderKhataLedger() {
 // ============================================================================
 
 const STATE_BIGHA_ACRE_FACTORS = {
-  "Uttar Pradesh": 0.625,        // Pucca Bigha (27,225 sq ft)
-  "Bihar": 0.625,                // Standard Pucca Bigha
-  "Punjab": 0.2066,              // 5 Bighas = 1 Killa / Acre approx
+  // Region slugs matching converterStateSelect option values
+  "up_bihar": 0.625,        // Pucca Bigha (27,225 sq ft)
+  "up_kaccha": 0.2083,      // Western UP Kaccha Bigha (9,075 sq ft / 3 Kaccha = 1 Pucca)
+  "maharashtra": 0.625,
+  "punjab_haryana": 0.2066,  // 5 Bighas = 1 Killa / Acre approx
+  "rajasthan": 0.625,        // Pucca Bigha
+  "gujarat": 0.574,          // Vigha (25,000 sq ft approx)
+  "bengal": 0.3306,         // 14,400 sq ft (3 Bighas = ~1 Acre)
+  "south_india": 0.625,
+  // State name fallbacks matching stateSelect option values
+  "Uttar Pradesh": 0.625,
+  "Bihar": 0.625,
+  "Punjab": 0.2066,
   "Haryana": 0.2066,
-  "Rajasthan": 0.625,            // Pucca Bigha (Kaccha is ~0.38)
-  "Gujarat": 0.574,              // Vigha (25,000 sq ft approx)
-  "West Bengal": 0.3306,         // 14,400 sq ft (3 Bighas = ~1 Acre)
-  "Madhya Pradesh": 0.5,         // 1 Bigha = 0.5 Acre approx
-  "Maharashtra": 0.625
+  "Rajasthan": 0.625,
+  "Gujarat": 0.574,
+  "West Bengal": 0.3306,
+  "Madhya Pradesh": 0.5,
+  "Maharashtra": 0.625,
+  "Tamil Nadu": 0.625,
+  "Karnataka": 0.625,
+  "Andhra Pradesh": 0.625,
+  "Telangana": 0.625,
+  "Odisha": 0.625,
+  "Assam": 0.3306
+};
+
+const STATE_TO_REGION_SLUG = {
+  "Uttar Pradesh": "up_bihar",
+  "Bihar": "up_bihar",
+  "Punjab": "punjab_haryana",
+  "Haryana": "punjab_haryana",
+  "Rajasthan": "rajasthan",
+  "Gujarat": "gujarat",
+  "West Bengal": "bengal",
+  "Assam": "bengal",
+  "Maharashtra": "maharashtra",
+  "Madhya Pradesh": "up_bihar",
+  "Tamil Nadu": "south_india",
+  "Kerala": "south_india",
+  "Karnataka": "south_india",
+  "Andhra Pradesh": "south_india",
+  "Telangana": "south_india"
+};
+
+const REGION_DISPLAY_NAMES = {
+  "up_bihar": "Uttar Pradesh & Bihar",
+  "up_kaccha": "Western UP (Kaccha)",
+  "maharashtra": "Maharashtra",
+  "punjab_haryana": "Punjab & Haryana",
+  "rajasthan": "Rajasthan",
+  "gujarat": "Gujarat",
+  "bengal": "West Bengal",
+  "south_india": "South India"
 };
 
 let currentCalculatedAcres = 1.0;
 
 function initLandConverter() {
   if (converterStateSelect && stateSelect) {
-    converterStateSelect.value = stateSelect.value || "Uttar Pradesh";
+    const selectedState = stateSelect.value || "Uttar Pradesh";
+    converterStateSelect.value = STATE_TO_REGION_SLUG[selectedState] || "up_bihar";
   }
 }
 
 function recalculateLandConverter() {
   const val = parseFloat(converterInputValue?.value) || 0;
   const unit = converterUnitSelect?.value || "acre";
-  const state = converterStateSelect?.value || "Uttar Pradesh";
+  const state = converterStateSelect?.value || "up_bihar";
   const bighaFactor = STATE_BIGHA_ACRE_FACTORS[state] || 0.625;
 
   // Convert input unit to normalized Acres
@@ -4243,6 +4452,9 @@ function recalculateLandConverter() {
     case "biswa":
       acres = (val * (bighaFactor / 20.0));
       break;
+    case "kattha":
+      acres = (val * (bighaFactor / 20.0));
+      break;
     case "kanal":
       acres = val * 0.125;
       break;
@@ -4258,6 +4470,7 @@ function recalculateLandConverter() {
     case "sq_feet":
       acres = val / 43560.0;
       break;
+    case "sq_meter":
     case "sq_meters":
       acres = val / 4046.86;
       break;
@@ -4288,23 +4501,26 @@ function recalculateLandConverter() {
   if (convResSqM) convResSqM.textContent = Math.round(acres * 4046.86).toLocaleString("en-IN");
 
   if (formulaHint) {
-    formulaHint.textContent = `In ${state}: 1 Bigha = ${(bighaFactor).toFixed(3)} Acre (1 Acre = ${(1 / bighaFactor).toFixed(2)} Bigha) • 1 Guntha = 1,089 sq ft`;
+    const regionName = REGION_DISPLAY_NAMES[state] || state;
+    formulaHint.textContent = `In ${regionName}: 1 Bigha = ${(bighaFactor).toFixed(3)} Acre (1 Acre = ${(1 / bighaFactor).toFixed(2)} Bigha) • 1 Guntha = 1,089 sq ft`;
   }
 }
 
 function openLandConverterModal() {
+  document.body.style.overflow = "hidden";
   landConverterModal?.classList.remove("hidden");
   recalculateLandConverter();
 }
 
 function closeLandConverterModal() {
+  document.body.style.overflow = "";
   landConverterModal?.classList.add("hidden");
 }
 
 function applyConvertedAcresToForms() {
   const acresVal = parseFloat(currentCalculatedAcres.toFixed(2));
   if (acresVal <= 0) {
-    alert("Please enter a valid land measurement greater than 0.");
+    showToast("Please enter a valid land measurement greater than 0.", "error");
     return;
   }
 
@@ -4329,7 +4545,7 @@ function applyConvertedAcresToForms() {
   if (yojanaLand) yojanaLand.value = acresVal;
 
   closeLandConverterModal();
-  alert(`✓ Applied ${acresVal} Acres across all AgriAssist calculation modules!`);
+  showToast(`✓ Applied ${acresVal} Acres across all AgriAssist calculation modules!`, "success");
 }
 
 
@@ -4348,17 +4564,19 @@ const fieldWalkState = {
 };
 
 function openFieldMeterModal() {
+  document.body.style.overflow = "hidden";
   fieldMeterModal?.classList.remove("hidden");
   setTimeout(drawFieldPolygon, 100);
 }
 
 function closeFieldMeterModal() {
+  document.body.style.overflow = "";
   fieldMeterModal?.classList.add("hidden");
 }
 
 function startFieldWalking() {
   if (!("geolocation" in navigator)) {
-    alert("GPS Geolocation is not supported by your browser or device.");
+    showToast("GPS Geolocation is not supported by your browser or device.", "error");
     return;
   }
 
@@ -4446,7 +4664,7 @@ function recordFieldPoint() {
         };
         recordFieldPoint();
       },
-      (err) => alert("Could not fetch GPS fix. Please ensure location is enabled.")
+      (err) => showToast("Could not fetch GPS fix. Please ensure location is enabled.", "error")
     );
     return;
   }
@@ -4571,7 +4789,7 @@ function calculateManualFieldArea() {
   const widFt = parseFloat(manualFieldWidth?.value) || 0;
 
   if (lenFt <= 0 || widFt <= 0) {
-    alert("Please enter both length and width in feet.");
+    showToast("Please enter both length and width in feet.", "warning");
     return;
   }
 
@@ -4666,14 +4884,24 @@ function drawFieldPolygon() {
     if (p.lng > maxLng) maxLng = p.lng;
   });
 
-  const spanLat = Math.max(maxLat - minLat, 0.00005);
-  const spanLng = Math.max(maxLng - minLng, 0.00005);
+  const midLat = (minLat + maxLat) / 2;
+  const cosLat = Math.cos((midLat * Math.PI) / 180.0);
+  const spanLatM = Math.max((maxLat - minLat) * 111139.0, 5.0);
+  const spanLngM = Math.max((maxLng - minLng) * 111139.0 * cosLat, 5.0);
+
   const pad = 40;
   const drawW = cw - 2 * pad;
   const drawH = ch - 2 * pad;
 
-  const toCanvasX = (lng) => pad + ((lng - minLng) / spanLng) * drawW;
-  const toCanvasY = (lat) => pad + ((maxLat - lat) / spanLat) * drawH;
+  // Uniform scale to preserve true ground aspect ratio
+  const scale = Math.min(drawW / spanLngM, drawH / spanLatM);
+  const polyW = spanLngM * scale;
+  const polyH = spanLatM * scale;
+  const offsetX = pad + (drawW - polyW) / 2;
+  const offsetY = pad + (drawH - polyH) / 2;
+
+  const toCanvasX = (lng) => offsetX + ((lng - minLng) * 111139.0 * cosLat) * scale;
+  const toCanvasY = (lat) => offsetY + ((maxLat - lat) * 111139.0) * scale;
 
   // Draw polygon path
   ctx.beginPath();
@@ -4711,7 +4939,7 @@ function drawFieldPolygon() {
 function applyWalkAcresToForms() {
   const acres = parseFloat(fieldWalkState.calculatedAcres.toFixed(2));
   if (acres <= 0) {
-    alert("Please walk and record at least 3 perimeter points or calculate manual dimensions.");
+    showToast("Please walk and record at least 3 perimeter points or calculate manual dimensions.", "warning");
     return;
   }
 
@@ -4735,7 +4963,7 @@ function applyWalkAcresToForms() {
   if (yojanaLand) yojanaLand.value = acres;
 
   closeFieldMeterModal();
-  alert(`✓ Measured field size (${acres} Acres) applied to all AgriAssist calculators!`);
+  showToast(`✓ Measured field size (${acres} Acres) applied to all AgriAssist calculators!`, "success");
 }
 
 
@@ -4749,7 +4977,7 @@ let activeTargetInputElement = null;
 function startVoiceRecognition(targetInputId) {
   const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
   if (!SpeechRec) {
-    alert("Voice recognition is not supported in this browser. Please use Google Chrome or Microsoft Edge on your mobile or desktop.");
+    showToast("Voice recognition is not supported in this browser. Please use Google Chrome or Microsoft Edge on your mobile or desktop.", "info");
     return;
   }
 
@@ -5023,10 +5251,11 @@ async function executeSeedCalculation() {
   }
 
   // Method factor
+  const sowingMethodLower = (sowingMethod || "").toLowerCase();
   let methodMultiplier = 1.0;
-  if (sowingMethod === "broadcasting") methodMultiplier = 1.25;
-  else if (sowingMethod === "dibbling") methodMultiplier = 0.85;
-  else if (sowingMethod === "transplanting") methodMultiplier = 1.0;
+  if (sowingMethodLower.includes("broadcasting")) methodMultiplier = 1.25;
+  else if (sowingMethodLower.includes("dibbling")) methodMultiplier = 0.85;
+  else if (sowingMethodLower.includes("transplanting")) methodMultiplier = 1.0;
 
   // 1 Acre = 4046.86 m² = 40,468,600 cm²
   const plantPopulationPerAcre = Math.round(40468600 / (rowCm * plantCm));
@@ -5053,6 +5282,7 @@ async function executeSeedCalculation() {
 
 function renderSeedResult(res) {
   if (!seedResultContainer) return;
+  seedResultContainer.classList.remove("hidden");
 
   const totalSeedDisplay = res.totalSeedRequiredKg >= 1000
     ? `${(res.totalSeedRequiredKg / 1000).toFixed(2)} Tonnes`
@@ -5084,25 +5314,25 @@ function renderSeedResult(res) {
 
       <!-- Key Metrics 4-Grid -->
       <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
-        <div class="bg-emerald-50/80 border border-emerald-200 p-4 rounded-xl text-center shadow-xs">
+        <div class="bg-emerald-50/80 border border-emerald-200 p-4 rounded-xl text-center shadow-sm">
           <span class="text-[11px] font-bold text-emerald-800 uppercase block">Total Seed Needed</span>
           <span class="text-2xl font-black text-emerald-950">${totalSeedDisplay}</span>
           <span class="text-[10px] text-emerald-700 block mt-0.5">${perAcreSeedDisplay}</span>
         </div>
 
-        <div class="bg-indigo-50/80 border border-indigo-200 p-4 rounded-xl text-center shadow-xs">
+        <div class="bg-indigo-50/80 border border-indigo-200 p-4 rounded-xl text-center shadow-sm">
           <span class="text-[11px] font-bold text-indigo-800 uppercase block">Target Population</span>
           <span class="text-2xl font-black text-indigo-950">${res.totalFieldPopulation.toLocaleString("en-IN")}</span>
           <span class="text-[10px] text-indigo-700 block mt-0.5">${res.plantPopulationPerAcre.toLocaleString("en-IN")} plants/ac</span>
         </div>
 
-        <div class="bg-amber-50/80 border border-amber-200 p-4 rounded-xl text-center shadow-xs">
+        <div class="bg-amber-50/80 border border-amber-200 p-4 rounded-xl text-center shadow-sm">
           <span class="text-[11px] font-bold text-amber-800 uppercase block">Spacing Geometry</span>
           <span class="text-xl font-black text-amber-950">${res.rowCm} × ${res.plantCm} cm</span>
           <span class="text-[10px] text-amber-700 block mt-0.5">Row × Plant distance</span>
         </div>
 
-        <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl text-center shadow-xs">
+        <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl text-center shadow-sm">
           <span class="text-[11px] font-bold text-slate-600 uppercase block">Plant Density</span>
           <span class="text-2xl font-black text-slate-900">${(res.plantPopulationPerAcre / 4046.86).toFixed(1)}</span>
           <span class="text-[10px] text-slate-500 block mt-0.5">plants / m²</span>
@@ -5198,6 +5428,7 @@ async function executeSprayerCalculation() {
 
 function renderSprayerResult(res) {
   if (!sprayerResultContainer) return;
+  sprayerResultContainer.classList.remove("hidden");
 
   const totalTanks = res.total_spray_tanks ?? res.tanks_needed_total ?? 0;
   const chemPerTank = res.chemical_per_tank ?? 0;
@@ -5221,25 +5452,25 @@ function renderSprayerResult(res) {
 
       <!-- 4 Stats Cards -->
       <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
-        <div class="bg-amber-50 border border-amber-200 p-4 rounded-xl text-center shadow-xs">
+        <div class="bg-amber-50 border border-amber-200 p-4 rounded-xl text-center shadow-sm">
           <span class="text-[11px] font-bold text-amber-800 uppercase block">Total Tanks</span>
           <span class="text-3xl font-black text-amber-950">${totalTanks}</span>
           <span class="text-[10px] text-amber-700 block mt-0.5">tanks for whole field</span>
         </div>
 
-        <div class="bg-emerald-50 border border-emerald-200 p-4 rounded-xl text-center shadow-xs">
+        <div class="bg-emerald-50 border border-emerald-200 p-4 rounded-xl text-center shadow-sm">
           <span class="text-[11px] font-bold text-emerald-800 uppercase block">Dose Per Tank</span>
           <span class="text-3xl font-black text-emerald-950">${chemPerTank}</span>
           <span class="text-[10px] text-emerald-700 block mt-0.5 font-bold">${chemUnit} / tank</span>
         </div>
 
-        <div class="bg-indigo-50 border border-indigo-200 p-4 rounded-xl text-center shadow-xs">
+        <div class="bg-indigo-50 border border-indigo-200 p-4 rounded-xl text-center shadow-sm">
           <span class="text-[11px] font-bold text-indigo-800 uppercase block">Total Chemical</span>
           <span class="text-2xl font-black text-indigo-950">${totalChem}</span>
           <span class="text-[10px] text-indigo-700 block mt-0.5 font-bold">${totalChemUnit}</span>
         </div>
 
-        <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl text-center shadow-xs">
+        <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl text-center shadow-sm">
           <span class="text-[11px] font-bold text-slate-600 uppercase block">Water Needed</span>
           <span class="text-2xl font-black text-slate-900">${waterNeeded} L</span>
           <span class="text-[10px] text-slate-500 block mt-0.5">clean spray water</span>
@@ -5334,6 +5565,7 @@ async function executeSolarCalculation() {
 
 function renderSolarResult(res) {
   if (!solarResultContainer) return;
+  solarResultContainer.classList.remove("hidden");
 
   const hp = res.recommended_pump_hp ?? 3.0;
   const kwp = res.solar_array_kwp ?? res.recommended_solar_array_kw ?? hp;
@@ -5552,7 +5784,7 @@ async function renderIntercroppingCatalog(filterCrop = "all") {
     const water = pair.water_compatibility || "High compatibility";
 
     return `
-      <div class="bg-white rounded-2xl p-5 border border-slate-200 hover:border-emerald-500 shadow-xs hover:shadow-md transition space-y-3.5 flex flex-col justify-between">
+      <div class="bg-white rounded-2xl p-5 border border-slate-200 hover:border-emerald-500 shadow-sm hover:shadow-md transition space-y-3.5 flex flex-col justify-between">
         <div class="space-y-2">
           <div class="flex items-center justify-between">
             <span class="bg-emerald-100 text-emerald-900 font-bold text-xs px-2.5 py-1 rounded-full">
@@ -5747,6 +5979,7 @@ async function executeStorageRiskCheck() {
 
 function renderStorageRiskResult(res) {
   if (!storageRiskResultContainer) return;
+  storageRiskResultContainer.classList.remove("hidden");
 
   const isSafe = (res.risk_level || "").toLowerCase().includes("safe");
   const isCaution = (res.risk_level || "").toLowerCase().includes("moderate") || (res.risk_level || "").toLowerCase().includes("caution") || (res.risk_level || "").toLowerCase().includes("yellow");
