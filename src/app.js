@@ -6710,3 +6710,356 @@ function generateOfflineCropCalendar(cropId, sowingDateStr, acres) {
 }
 
 // ----------------------------------------------------------------------------
+// 3. LEAF DISEASE SCANNER & OPTICAL SPECTRUM ANALYZER (HTML5 Canvas)
+// ----------------------------------------------------------------------------
+
+function handleLeafPhotoUpload(event) {
+  const file = event.target.files && event.target.files[0];
+  if (!file) return;
+
+  const fileNameEl = document.getElementById("leafFileName");
+  if (fileNameEl) fileNameEl.textContent = `📷 ${file.name} (${Math.round(file.size / 1024)} KB)`;
+
+  const canvas = document.getElementById("leafCanvas");
+  const placeholder = document.getElementById("leafCanvasPlaceholder");
+
+  if (!canvas) return;
+  const ctx = canvas.getContext("2d");
+
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    const img = new Image();
+    img.onload = () => {
+      canvas.width = 320;
+      canvas.height = 220;
+      ctx.drawImage(img, 0, 0, 320, 220);
+      if (placeholder) placeholder.classList.add("hidden");
+      canvas.classList.remove("hidden");
+
+      analyzeLeafPixels(ctx, 320, 220);
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+function analyzeLeafPixels(ctx, w, h) {
+  const imgData = ctx.getImageData(0, 0, w, h);
+  const data = imgData.data;
+
+  let totalSampled = 0;
+  let greenCount = 0;
+  let yellowCount = 0;
+  let brownCount = 0;
+  let whiteCount = 0;
+
+  for (let i = 0; i < data.length; i += 16) {
+    const r = data[i];
+    const g = data[i + 1];
+    const b = data[i + 2];
+    const a = data[i + 3];
+
+    if (a < 128) continue;
+    const brightness = (r + g + b) / 3;
+    if (brightness < 20 || brightness > 245) continue;
+
+    totalSampled++;
+
+    if (g > r * 1.15 && g > b * 1.15) {
+      greenCount++;
+    } else if (r > 130 && g > 130 && b < 100 && Math.abs(r - g) < 55) {
+      yellowCount++;
+    } else if (r > 60 && r < 160 && g < 110 && b < 85 && r > g) {
+      brownCount++;
+    } else if (r > 175 && g > 175 && b > 165 && Math.abs(r - g) < 25 && Math.abs(g - b) < 25) {
+      whiteCount++;
+    } else if (g >= r && g >= b) {
+      greenCount++;
+    } else {
+      brownCount++;
+    }
+  }
+
+  if (totalSampled === 0) totalSampled = 1;
+
+  const greenPct = Math.round((greenCount / totalSampled) * 100);
+  const yellowPct = Math.round((yellowCount / totalSampled) * 100);
+  const brownPct = Math.round((brownCount / totalSampled) * 100);
+  const whitePct = Math.round((whiteCount / totalSampled) * 100);
+
+  const spectrumBars = document.getElementById("leafSpectrumBars");
+  if (spectrumBars) spectrumBars.classList.remove("hidden");
+
+  const specG = document.getElementById("specGreenPct");
+  const barG = document.getElementById("barGreen");
+  const specY = document.getElementById("specYellowPct");
+  const barY = document.getElementById("barYellow");
+  const specB = document.getElementById("specBrownPct");
+  const barB = document.getElementById("barBrown");
+  const specW = document.getElementById("specWhitePct");
+  const barW = document.getElementById("barWhite");
+
+  if (specG) specG.textContent = `${greenPct}%`;
+  if (barG) barG.style.width = `${greenPct}%`;
+  if (specY) specY.textContent = `${yellowPct}%`;
+  if (barY) barY.style.width = `${yellowPct}%`;
+  if (specB) specB.textContent = `${brownPct}%`;
+  if (barB) barB.style.width = `${brownPct}%`;
+  if (specW) specW.textContent = `${whitePct}%`;
+  if (barW) barW.style.width = `${whitePct}%`;
+
+  const verdictEl = document.getElementById("leafScannerVerdict");
+  if (!verdictEl) return;
+  verdictEl.classList.remove("hidden");
+
+  let verdictTitle = "Healthy Plant Canopy";
+  let diagnosis = "";
+  let searchKeyword = "";
+
+  if (brownPct > 20) {
+    verdictTitle = "⚠️ Necrosis / Fungal Blight Lesions Detected";
+    diagnosis = `High necrotic brown surface (${brownPct}%). Characteristic of Early/Late Blight, Cercospora Leaf Spot, or Anthracnose fungal damage.`;
+    searchKeyword = "Blight";
+  } else if (whitePct > 18) {
+    verdictTitle = "⚠️ Powdery / Downy Mildew Infection Detected";
+    diagnosis = `White superficial mycelium patches detected (${whitePct}%). High likelihood of Powdery Mildew or Sucking Pest Honeydew mold.`;
+    searchKeyword = "Mildew";
+  } else if (yellowPct > 25) {
+    verdictTitle = "⚠️ Chlorosis / Severe Nutrient Deficiency Detected";
+    diagnosis = `Interveinal or marginal yellowing detected (${yellowPct}%). Points to Nitrogen/Iron deficiency or Yellow Mosaic Virus.`;
+    searchKeyword = "Mosaic";
+  } else if (greenPct >= 70) {
+    verdictTitle = "✅ Dominantly Healthy Foliage";
+    diagnosis = `Over ${greenPct}% active green photosynthetic tissue. Minimal necrotic or chlorotic spots observed.`;
+    searchKeyword = "";
+  } else {
+    verdictTitle = "⚠️ Mixed Leaf Stress Symptoms";
+    diagnosis = `Moderate discoloration (Yellow ${yellowPct}%, Brown ${brownPct}%). Suggests early pest infestation or moisture stress.`;
+    searchKeyword = "Rot";
+  }
+
+  verdictEl.innerHTML = `
+    <div class="space-y-1 text-left">
+      <div class="font-extrabold text-xs text-rose-950">${verdictTitle}</div>
+      <p class="text-[11px] font-normal leading-tight text-slate-700">${diagnosis}</p>
+      ${searchKeyword ? `
+        <div class="pt-1.5 flex justify-end">
+          <button type="button" onclick="autoFilterDoctorWithKeyword('${searchKeyword}')" class="bg-rose-700 hover:bg-rose-800 text-white font-bold text-[11px] px-2.5 py-1 rounded-lg shadow-sm transition">
+            🩺 Filter "${searchKeyword}" in Plant Doctor
+          </button>
+        </div>
+      ` : ""}
+    </div>
+  `;
+}
+
+function autoFilterDoctorWithKeyword(kw) {
+  switchTab("doctor");
+  if (doctorSearchInput) {
+    doctorSearchInput.value = kw;
+    doctorSearchInput.dispatchEvent(new Event("input"));
+  }
+}
+window.autoFilterDoctorWithKeyword = autoFilterDoctorWithKeyword;
+
+// ----------------------------------------------------------------------------
+// 5. SOIL HEALTH CARD MICRONUTRIENT DOCTOR
+// ----------------------------------------------------------------------------
+
+function populateMicronutrientCropOptions() {
+  const sel = document.getElementById("microCropSelect");
+  if (!sel) return;
+  sel.innerHTML = LOCAL_CROPS_DB.map(c => `
+    <option value="${c.id}">${c.name}${c.hindi_name ? ` (${c.hindi_name})` : ""}</option>
+  `).join("");
+}
+
+async function executeMicronutrientDoctor() {
+  const cropId = document.getElementById("microCropSelect")?.value || "wheat";
+  const acres = parseFloat(document.getElementById("microAcresInput")?.value) || 1.0;
+  const zn = parseFloat(document.getElementById("microZincInput")?.value) || 0.45;
+  const s = parseFloat(document.getElementById("microSulfurInput")?.value) || 8.0;
+  const b = parseFloat(document.getElementById("microBoronInput")?.value) || 0.35;
+  const fe = parseFloat(document.getElementById("microIronInput")?.value) || 3.8;
+  const oc = parseFloat(document.getElementById("microOCInput")?.value) || 0.45;
+
+  const container = document.getElementById("micronutrientResultContainer");
+  if (!container) return;
+  container.classList.remove("hidden");
+  container.innerHTML = `<div class="p-6 text-center text-slate-500 font-bold animate-pulse">Analyzing Soil Health Card micronutrients...</div>`;
+
+  try {
+    const res = await fetch(`${API_BASE}/fertilizer/micronutrients`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        crop_id: cropId,
+        land_size_acres: acres,
+        zinc_ppm: zn,
+        sulfur_ppm: s,
+        boron_ppm: b,
+        iron_ppm: fe,
+        organic_carbon_pct: oc
+      })
+    });
+    if (!res.ok) throw new Error("API offline");
+    const data = await res.json();
+    renderMicronutrientResult(data);
+  } catch (err) {
+    console.warn("Using offline Micronutrient calculation:", err);
+    const pres = [];
+    let totCost = 0;
+    if (zn < 0.6) {
+      const kg = Math.round(10 * acres);
+      totCost += kg * 45;
+      pres.push({
+        nutrient: "Zinc (Zn)",
+        soil_status: zn < 0.4 ? "Critical Deficient" : "Low / Deficient",
+        measured_value: zn,
+        critical_threshold: "0.60 ppm",
+        recommended_fertilizer: "Zinc Sulphate Heptahydrate (ZnSO4 21%)",
+        dosage_kg_per_acre: 10.0,
+        total_dosage_kg: kg,
+        application_method: "Broadcast as basal dose before final plowing. DO NOT mix directly with DAP.",
+        visual_deficiency_symptom: "Khaira disease in paddy (rusty brown patches on middle leaves); white bud in maize; bleached interveinal bands in wheat."
+      });
+    }
+    if (s < 10.0) {
+      const kg = Math.round(10 * acres);
+      totCost += kg * 38;
+      pres.push({
+        nutrient: "Sulfur (S)",
+        soil_status: s < 6.0 ? "Critical Deficient" : "Low / Deficient",
+        measured_value: s,
+        critical_threshold: "10.0 ppm",
+        recommended_fertilizer: "Bentonite Sulphur (90% S) or Agricultural Gypsum",
+        dosage_kg_per_acre: 10.0,
+        total_dosage_kg: kg,
+        application_method: "Broadcast at sowing. In alkaline soil, Gypsum (50 kg/acre) supplies both Calcium and Sulfur.",
+        visual_deficiency_symptom: "Uniform pale yellowing starting on younger top leaves; low seed oil percentage."
+      });
+    }
+    if (b < 0.5) {
+      const kg = Math.round(1.5 * acres);
+      totCost += kg * 120;
+      pres.push({
+        nutrient: "Boron (B)",
+        soil_status: "Low / Deficient",
+        measured_value: b,
+        critical_threshold: "0.50 ppm",
+        recommended_fertilizer: "Agricultural Borax (10.5% B) or Solubor",
+        dosage_kg_per_acre: 1.5,
+        total_dosage_kg: kg,
+        application_method: "Apply with sand/FYM at sowing or 2 foliar sprays of Solubor (1g/L) before flowering.",
+        visual_deficiency_symptom: "Hollow heart in cauliflower; tomato fruit cracking; poor pollen viability and seed set."
+      });
+    }
+    if (fe < 4.5) {
+      const kg = Math.round(8.0 * acres);
+      totCost += kg * 30;
+      pres.push({
+        nutrient: "Iron (Fe)",
+        soil_status: "Low / Deficient",
+        measured_value: fe,
+        critical_threshold: "4.50 ppm",
+        recommended_fertilizer: "Ferrous Sulphate (FeSO4 19% Fe)",
+        dosage_kg_per_acre: 8.0,
+        total_dosage_kg: kg,
+        application_method: "Foliar spray: 0.5% FeSO4 (5g/L) + 0.1% Citric Acid (1g/L) at 30-40 days.",
+        visual_deficiency_symptom: "Interveinal chlorosis on young emerging leaves; leaf veins stay dark green while blade turns pale ivory."
+      });
+    }
+
+    renderMicronutrientResult({
+      land_size_acres: acres,
+      prescriptions: pres,
+      organic_manure_advice: oc < 0.5
+        ? `CRITICAL: Soil Organic Carbon is low (${oc}% < 0.50%). Apply ${(2.5 * acres).toFixed(1)} Tons FYM or 1 Ton Vermicompost before sowing.`
+        : `Soil Organic Carbon is ${oc}%. Maintain humus by regular compost addition.`,
+      foliar_spray_options: [
+        "Zinc Emergency Spray: Dissolve 500g ZnSO4 (21%) + 250g unslaked Lime in 100 Liters of water per acre at 30 & 45 days after sowing.",
+        "Boron Foliar Spray: Dissolve 100g to 150g Solubor (20% B) in 100 Liters of water per acre during vegetative and pre-flowering stage.",
+        "Iron Emergency Spray: Dissolve 500g FeSO4 + 100g Citric Acid in 100 Liters of water per acre for rapid recovery from chlorosis."
+      ],
+      approx_total_cost_inr: totCost
+    });
+  }
+}
+
+function renderMicronutrientResult(res) {
+  const container = document.getElementById("micronutrientResultContainer");
+  if (!container) return;
+
+  const presList = (res.prescriptions || []).map(p => {
+    const isDef = p.soil_status.toLowerCase().includes("defic");
+    const badgeColor = isDef ? "bg-rose-100 text-rose-800 border-rose-300" : "bg-emerald-100 text-emerald-800 border-emerald-300";
+
+    return `
+      <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm space-y-2.5">
+        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-2">
+          <div class="flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full ${isDef ? "bg-rose-500" : "bg-emerald-500"}"></span>
+            <strong class="text-sm text-slate-900">${p.nutrient}</strong>
+            <span class="text-[11px] font-mono text-slate-500">(Tested: ${p.measured_value} ppm vs Limit: ${p.critical_threshold})</span>
+          </div>
+          <span class="${badgeColor} px-2.5 py-0.5 rounded-full text-xs font-bold border">
+            ${p.soil_status}
+          </span>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+          <div>
+            <span class="text-slate-500 block text-[11px]">Recommended Commercial Fertilizer:</span>
+            <strong class="text-teal-900">${p.recommended_fertilizer}</strong>
+          </div>
+          <div>
+            <span class="text-slate-500 block text-[11px]">Required Quantity (${res.land_size_acres} Acres):</span>
+            <strong class="text-slate-900">${p.total_dosage_kg} kg (${p.dosage_kg_per_acre} kg/acre)</strong>
+          </div>
+        </div>
+
+        <div class="bg-slate-50 p-2.5 rounded-lg text-xs space-y-1 text-slate-700">
+          <div><strong class="text-slate-900">Application Method:</strong> ${p.application_method}</div>
+          <div class="text-[11px] text-amber-900"><strong class="text-slate-900">Deficiency Symptom:</strong> ${p.visual_deficiency_symptom}</div>
+        </div>
+      </div>
+    `;
+  }).join("");
+
+  container.innerHTML = `
+    <div class="bg-teal-50 border border-teal-200 rounded-2xl p-5 space-y-5 animate-fadeIn">
+      <div class="flex flex-wrap items-center justify-between gap-3 border-b border-teal-200/80 pb-3">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider text-teal-950">Soil Health Card Prescription:</span>
+          <h4 class="text-base font-black text-slate-900">Micronutrient & Soil Organic Carbon Doctor</h4>
+        </div>
+        <div class="text-right">
+          <span class="text-xs text-slate-600 block">Est. Micronutrient Investment:</span>
+          <strong class="text-lg font-black text-teal-950">₹${Math.round(res.approx_total_cost_inr || 0).toLocaleString("en-IN")}</strong>
+        </div>
+      </div>
+
+      <div class="space-y-3">
+        ${presList}
+      </div>
+
+      <div class="bg-white p-4 rounded-xl border border-teal-300 space-y-2 text-xs">
+        <div class="font-bold text-slate-900 flex items-center gap-1.5 text-sm">
+          <span>🌿</span> <span>Soil Organic Carbon (Humus) Diagnostic:</span>
+        </div>
+        <p class="text-slate-700 leading-relaxed">${res.organic_manure_advice}</p>
+      </div>
+
+      <div class="bg-white/80 p-4 rounded-xl border border-teal-200 text-xs space-y-2">
+        <div class="font-bold text-slate-900 flex items-center gap-1.5">
+          <span>💧</span> <span>Zero-Waste Emergency Foliar Spray Recipes:</span>
+        </div>
+        <ul class="list-disc list-inside space-y-1 text-slate-600 text-[11px]">
+          ${(res.foliar_spray_options || []).map(f => `<li>${f}</li>`).join("")}
+        </ul>
+      </div>
+    </div>
+  `;
+}
+
+// ----------------------------------------------------------------------------

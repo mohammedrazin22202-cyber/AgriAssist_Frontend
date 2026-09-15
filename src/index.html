@@ -591,7 +591,81 @@
       </section>
     </div>
 
-    <!-- ==================== TAB 4: KISAN PLANT DOCTOR ==================== -->
+<!-- SOIL HEALTH CARD MICRONUTRIENT DOCTOR -->
+      <section class="bg-white rounded-2xl border border-teal-200 shadow-sm p-6 sm:p-8 space-y-6">
+        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-teal-100 pb-4">
+          <div>
+            <h3 class="text-lg font-bold text-teal-950 flex items-center gap-2">
+              <span>🔬</span> <span data-i18n="micronutrientTitle">Soil Health Card (SHC) Micronutrient Doctor (सूक्ष्म पोषक तत्व जांच)</span>
+            </h3>
+            <p class="text-xs text-slate-500">Diagnose deficiencies of Zinc, Sulfur, Boron, Iron, and Organic Carbon with exact bag & foliar spray prescriptions.</p>
+          </div>
+          <span class="bg-teal-100 text-teal-800 text-xs font-bold px-3 py-1 rounded-full">ICAR Soil Standards</span>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 text-xs">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="microCropSelect">Crop</label>
+            <select id="microCropSelect" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-sm">
+              <option value="wheat">Wheat (गेहूं)</option>
+              <option value="rice">Rice (धान)</option>
+              <option value="mustard">Mustard (सरसों)</option>
+              <option value="chickpea">Chickpea (चना)</option>
+              <option value="cotton">Cotton (कपास)</option>
+              <option value="soybean">Soybean (सोयाबीन)</option>
+              <option value="maize">Maize (मक्का)</option>
+              <option value="tomato">Tomato (टमाटर)</option>
+              <option value="potato">Potato (आलू)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="microZincInput">Zinc (Zn ppm)</label>
+            <input id="microZincInput" type="number" step="0.05" min="0" max="10" value="0.45" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-sm font-bold">
+            <span class="text-[10px] text-slate-400">Critical: &lt; 0.60 ppm</span>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="microSulfurInput">Sulfur (S ppm)</label>
+            <input id="microSulfurInput" type="number" step="0.5" min="0" max="100" value="7.5" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-sm font-bold">
+            <span class="text-[10px] text-slate-400">Critical: &lt; 10.0 ppm</span>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="microBoronInput">Boron (B ppm)</label>
+            <input id="microBoronInput" type="number" step="0.05" min="0" max="5" value="0.35" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-sm font-bold">
+            <span class="text-[10px] text-slate-400">Critical: &lt; 0.50 ppm</span>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="microIronInput">Iron (Fe ppm)</label>
+            <input id="microIronInput" type="number" step="0.1" min="0" max="50" value="3.8" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-sm font-bold">
+            <span class="text-[10px] text-slate-400">Critical: &lt; 4.50 ppm</span>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="microOCInput">Soil Organic Carbon (OC %)</label>
+            <input id="microOCInput" type="number" step="0.05" min="0" max="5" value="0.42" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-sm font-bold">
+            <span class="text-[10px] text-slate-400">Low: &lt; 0.50% | Medium: 0.5-0.75% | High: &gt; 0.75%</span>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="microAcresInput">Land Area (Acres)</label>
+            <input id="microAcresInput" type="number" step="0.5" min="0.1" value="2.0" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-sm font-bold">
+          </div>
+        </div>
+
+        <div class="flex justify-end pt-2 border-t border-slate-100">
+          <button id="calcMicronutrientsBtn" type="button" class="px-6 py-2.5 bg-teal-800 hover:bg-teal-900 text-white font-bold text-sm rounded-xl shadow-sm transition flex items-center gap-2">
+            <span>🔬</span> Calculate Micronutrient Prescription
+          </button>
+        </div>
+
+        <!-- Micronutrient Results Container -->
+        <div id="micronutrientResultContainer" class="hidden pt-6 border-t border-slate-200 space-y-4">
+          <!-- Injected by app.js -->
+        </div>
+      </section>
+    </div>
+
+        <!-- ==================== TAB 4: KISAN PLANT DOCTOR ==================== -->
     <div id="doctorTabContent" class="hidden space-y-8">
       <div class="bg-gradient-to-r from-rose-900 via-red-950 to-slate-900 text-white rounded-2xl p-6 sm:p-8 shadow-lg relative overflow-hidden">
         <div class="relative z-10 max-w-3xl">
@@ -663,7 +737,73 @@
       </div>
     </div>
 
-    <!-- ==================== TAB 5: MANDI MARKET PRICES & TRENDS ==================== -->
+<!-- CAMERA LEAF SCANNER & OPTICAL DIAGNOSTIC CARD -->
+      <section class="bg-gradient-to-r from-rose-50 to-amber-50 rounded-2xl border border-rose-200 shadow-sm p-6 space-y-4">
+        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-rose-200/60 pb-3">
+          <div>
+            <h3 class="text-base sm:text-lg font-bold text-rose-950 flex items-center gap-2">
+              <span>📷</span> <span data-i18n="leafScannerTitle">Camera Leaf Disease Scanner (पत्ती फोटो रोग स्कैनर)</span>
+            </h3>
+            <p class="text-xs text-slate-600">Take or upload a leaf photo. Uses client-side color spectrum analysis (100% offline & zero cost) to detect chlorosis, necrotic rust, and powdery mold.</p>
+          </div>
+          <span class="bg-rose-100 text-rose-800 text-xs font-bold px-3 py-1 rounded-full border border-rose-300">100% On-Device & Free</span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5 items-center">
+          <div class="space-y-3">
+            <div class="flex items-center gap-3">
+              <label for="leafPhotoInput" class="cursor-pointer bg-rose-700 hover:bg-rose-800 text-white font-bold text-xs px-4 py-2.5 rounded-xl shadow-sm transition flex items-center gap-2">
+                <span>📸</span> <span>Capture / Upload Leaf Photo</span>
+              </label>
+              <input id="leafPhotoInput" type="file" accept="image/*" capture="environment" class="hidden">
+              <span id="leafFileName" class="text-xs text-slate-500 italic">No image chosen</span>
+            </div>
+            <p class="text-[11px] text-slate-500">Works directly on smartphone camera in sunlight. Keep leaf flat against light background.</p>
+
+            <!-- Spectrum Breakdown Bars -->
+            <div id="leafSpectrumBars" class="hidden space-y-2 pt-2 text-xs">
+              <div class="font-bold text-slate-700">Detected Leaf Health Spectrum:</div>
+              <div>
+                <div class="flex justify-between text-[11px] text-slate-600"><span>Healthy Green Canopy:</span> <span id="specGreenPct">0%</span></div>
+                <div class="w-full bg-slate-200 rounded-full h-2"><div id="barGreen" class="bg-emerald-500 h-2 rounded-full" style="width: 0%"></div></div>
+              </div>
+              <div>
+                <div class="flex justify-between text-[11px] text-slate-600"><span>Chlorosis / Yellowing (पीलापन):</span> <span id="specYellowPct">0%</span></div>
+                <div class="w-full bg-slate-200 rounded-full h-2"><div id="barYellow" class="bg-amber-400 h-2 rounded-full" style="width: 0%"></div></div>
+              </div>
+              <div>
+                <div class="flex justify-between text-[11px] text-slate-600"><span>Necrotic / Brown Spots (धब्बे):</span> <span id="specBrownPct">0%</span></div>
+                <div class="w-full bg-slate-200 rounded-full h-2"><div id="barBrown" class="bg-amber-800 h-2 rounded-full" style="width: 0%"></div></div>
+              </div>
+              <div>
+                <div class="flex justify-between text-[11px] text-slate-600"><span>White / Powdery Mildew (फफूंद):</span> <span id="specWhitePct">0%</span></div>
+                <div class="w-full bg-slate-200 rounded-full h-2"><div id="barWhite" class="bg-slate-400 h-2 rounded-full" style="width: 0%"></div></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Canvas Preview -->
+          <div class="border-2 border-dashed border-rose-300 rounded-xl bg-white p-3 flex flex-col items-center justify-center min-h-[160px] text-center relative overflow-hidden">
+            <canvas id="leafCanvas" width="320" height="200" class="hidden max-h-44 w-auto rounded-lg shadow-sm"></canvas>
+            <div id="leafCanvasPlaceholder" class="text-slate-400 text-xs flex flex-col items-center gap-1">
+              <span class="text-3xl">🍃</span>
+              <span>Leaf preview & pixel analysis will appear here</span>
+            </div>
+            <div id="leafScannerVerdict" class="hidden mt-2 p-2 rounded-lg bg-rose-100 text-rose-950 font-bold text-xs w-full text-center">
+              <!-- Verdict inserted by JS -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- Doctor Results Container -->
+      <div id="doctorResultsGrid" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Rendered by app.js -->
+      </div>
+    </div>
+
+        <!-- ==================== TAB 5: MANDI MARKET PRICES & TRENDS ==================== -->
     <div id="mandiTabContent" class="hidden space-y-8">
       <div class="bg-gradient-to-r from-emerald-800 via-teal-900 to-slate-900 text-white rounded-2xl p-6 sm:p-8 shadow-lg relative overflow-hidden">
         <div class="relative z-10 max-w-3xl">
