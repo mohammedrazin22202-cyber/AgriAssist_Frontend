@@ -864,7 +864,101 @@
       </div>
     </div>
 
-    <!-- ==================== TAB 6: SMART IRRIGATION SCHEDULER ==================== -->
+<!-- MANDI DISTANCE & NET PROFIT ARBITRAGE CALCULATOR -->
+      <section class="bg-white rounded-2xl border border-emerald-300 shadow-sm p-6 sm:p-8 space-y-6">
+        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-emerald-100 pb-4">
+          <div>
+            <h3 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+              <span>🚛</span> <span data-i18n="mandiArbitrageTitle">Mandi Distance & Net Profit Arbitrage Calculator (मंडी दूरी एवं शुद्ध मुनाफा)</span>
+            </h3>
+            <p class="text-xs text-slate-500">Should you travel to a distant APMC for higher rates? Calculate exact round-trip diesel, loading fees, and true in-hand profit difference.</p>
+          </div>
+          <span class="bg-emerald-100 text-emerald-800 text-xs font-bold px-3 py-1 rounded-full">Transport Economics</span>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="arbCropSelect">Harvest Crop</label>
+            <select id="arbCropSelect" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-sm">
+              <option value="wheat">Wheat (गेहूं)</option>
+              <option value="rice">Rice (धान)</option>
+              <option value="cotton">Cotton (कपास)</option>
+              <option value="soybean">Soybean (सोयाबीन)</option>
+              <option value="mustard">Mustard (सरसों)</option>
+              <option value="onion">Onion (प्याज़)</option>
+              <option value="tomato">Tomato (टमाटर)</option>
+              <option value="potato">Potato (आलू)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="arbQuantityInput">Total Quantity (Quintals / क्विंटल)</label>
+            <input id="arbQuantityInput" type="number" step="1" min="1" max="1000" value="35.0" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-sm font-bold">
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="arbVehicleSelect">Transport Vehicle</label>
+            <select id="arbVehicleSelect" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-sm">
+              <option value="Tractor Trolley">Tractor Trolley (ट्रैक्टर ट्रॉली - 4 km/L)</option>
+              <option value="Pickup Truck (Bolero/Ace)">Pickup Truck / Bolero / Ace (9 km/L)</option>
+              <option value="3-Wheeler Loader">3-Wheeler Loader Auto (18 km/L)</option>
+              <option value="Large 6-Wheeler Truck">Large 6-Wheeler Truck (3.5 km/L)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="arbDieselPriceInput">Diesel Rate (₹/Liter)</label>
+            <input id="arbDieselPriceInput" type="number" step="0.5" min="50" max="150" value="90.0" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-sm font-bold">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs bg-slate-50 p-4 rounded-xl border border-slate-200">
+          <!-- Local Mandi Details -->
+          <div class="space-y-3">
+            <h4 class="font-bold text-slate-800 flex items-center gap-1.5 text-xs uppercase">
+              <span>🏠</span> 1. Local / Nearby Mandi
+            </h4>
+            <div class="grid grid-cols-2 gap-2">
+              <div>
+                <label class="block text-slate-600 mb-1" for="arbLocalPriceInput">Mandi Rate (₹/Qtl)</label>
+                <input id="arbLocalPriceInput" type="number" step="10" min="500" value="2250" class="w-full bg-white border border-slate-300 rounded-lg p-2 text-sm font-bold">
+              </div>
+              <div>
+                <label class="block text-slate-600 mb-1" for="arbLocalDistInput">One-Way Dist (km)</label>
+                <input id="arbLocalDistInput" type="number" step="1" min="1" value="12" class="w-full bg-white border border-slate-300 rounded-lg p-2 text-sm font-bold">
+              </div>
+            </div>
+          </div>
+
+          <!-- Distant Mandi Details -->
+          <div class="space-y-3">
+            <h4 class="font-bold text-emerald-800 flex items-center gap-1.5 text-xs uppercase">
+              <span>🛣️</span> 2. Distant / Higher-Paying Mandi
+            </h4>
+            <div class="grid grid-cols-2 gap-2">
+              <div>
+                <label class="block text-slate-600 mb-1" for="arbDistantPriceInput">Mandi Rate (₹/Qtl)</label>
+                <input id="arbDistantPriceInput" type="number" step="10" min="500" value="2420" class="w-full bg-white border border-slate-300 rounded-lg p-2 text-sm font-bold">
+              </div>
+              <div>
+                <label class="block text-slate-600 mb-1" for="arbDistantDistInput">One-Way Dist (km)</label>
+                <input id="arbDistantDistInput" type="number" step="1" min="1" value="48" class="w-full bg-white border border-slate-300 rounded-lg p-2 text-sm font-bold">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex justify-end pt-2 border-t border-slate-100">
+          <button id="calcMandiArbitrageBtn" type="button" class="px-6 py-2.5 bg-emerald-800 hover:bg-emerald-900 text-white font-bold text-sm rounded-xl shadow-sm transition flex items-center gap-2">
+            <span>⚖️</span> Calculate Net Profit Difference
+          </button>
+        </div>
+
+        <!-- Arbitrage Output Card -->
+        <div id="mandiArbitrageResultContainer" class="hidden pt-6 border-t border-slate-200">
+          <!-- Injected by app.js -->
+        </div>
+      </section>
+    </div>
+
+        <!-- ==================== TAB 6: SMART IRRIGATION SCHEDULER ==================== -->
     <div id="irrigationTabContent" class="hidden space-y-8">
       <div class="bg-gradient-to-r from-blue-800 via-cyan-900 to-slate-900 text-white rounded-2xl p-6 sm:p-8 shadow-lg relative overflow-hidden">
         <div class="relative z-10 max-w-3xl">
@@ -942,7 +1036,65 @@
       </section>
     </div>
 
-    <!-- ==================== TAB 7: ORGANIC & NATURAL FARMING (JAIVIK KHETI) ==================== -->
+<!-- FARM POND (KHET TALAB) & RAINWATER HARVESTING SIZER -->
+      <section class="bg-white rounded-2xl border border-blue-300 shadow-sm p-6 sm:p-8 space-y-6">
+        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-blue-100 pb-4">
+          <div>
+            <h3 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+              <span>🏞️</span> <span data-i18n="farmPondTitle">Farm Pond (Khet Talab) & Rainwater Harvesting Sizer (खेत तालाब मापक)</span>
+            </h3>
+            <p class="text-xs text-slate-500">Calculate harvestable rainwater runoff, exact pit dimensions (length, width, depth), HDPE lining plastic sheet, and PMKSY government subsidy.</p>
+          </div>
+          <span class="bg-blue-100 text-blue-800 text-xs font-bold px-3 py-1 rounded-full">PMKSY Khet Talab Yojana</span>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 text-xs">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="pondCatchmentAcres">Catchment Area (Acres)</label>
+            <input id="pondCatchmentAcres" type="number" step="0.5" min="0.5" value="5.0" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-sm font-bold">
+            <span class="text-[10px] text-slate-400">Total watershed / field area</span>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="pondRainfallInput">Annual Rainfall (mm)</label>
+            <input id="pondRainfallInput" type="number" step="10" min="200" value="800" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-sm font-bold">
+            <span class="text-[10px] text-slate-400">IMD / District average</span>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="pondSoilSelect">Catchment Soil Type</label>
+            <select id="pondSoilSelect" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-sm">
+              <option value="Loam">Loam / Alluvial (Runoff ~22%)</option>
+              <option value="Clay">Clay / Black Soil (Runoff ~32%)</option>
+              <option value="Sandy">Sandy / Light Soil (Runoff ~15%)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="pondIrrigAcres">Crops to Protect (Acres)</label>
+            <input id="pondIrrigAcres" type="number" step="0.5" min="0.5" value="2.0" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-sm font-bold">
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="pondDrySpellDays">Drought Buffer Target</label>
+            <select id="pondDrySpellDays" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-sm">
+              <option value="30">30 Days Dry Spell</option>
+              <option value="45">45 Days Dry Spell</option>
+              <option value="60">60 Days Critical Buffer</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="flex justify-end pt-2 border-t border-slate-100">
+          <button id="calcFarmPondBtn" type="button" class="px-6 py-2.5 bg-blue-800 hover:bg-blue-900 text-white font-bold text-sm rounded-xl shadow-sm transition flex items-center gap-2">
+            <span>📐</span> Size Farm Pond & Estimate Subsidy
+          </button>
+        </div>
+
+        <!-- Farm Pond Output Card -->
+        <div id="farmPondResultContainer" class="hidden pt-6 border-t border-slate-200">
+          <!-- Injected by app.js -->
+        </div>
+      </section>
+    </div>
+
+        <!-- ==================== TAB 7: ORGANIC & NATURAL FARMING (JAIVIK KHETI) ==================== -->
     <div id="organicTabContent" class="hidden space-y-8">
       <div class="bg-gradient-to-r from-emerald-900 via-green-950 to-teal-950 text-white rounded-2xl p-6 sm:p-8 shadow-lg relative overflow-hidden">
         <div class="relative z-10 max-w-3xl">
@@ -1275,7 +1427,59 @@
       </section>
     </div>
 
-    <!-- ==================== TAB 10: SEED RATE & PLANT GEOMETRY ==================== -->
+<!-- TRACTOR & MACHINERY RENT VS BUY CALCULATOR -->
+      <section class="bg-white rounded-2xl border border-indigo-300 shadow-sm p-6 sm:p-8 space-y-6">
+        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-indigo-100 pb-4">
+          <div>
+            <h3 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+              <span>🚜</span> <span data-i18n="machineryRentVsBuyTitle">Farm Machinery: Rent vs. Buy Calculator (कृषि यंत्र किराया बनाम खरीद)</span>
+            </h3>
+            <p class="text-xs text-slate-500">Calculate annual capital depreciation, diesel burn, custom hiring break-even acreage, and commercial rental profits to neighbors.</p>
+          </div>
+          <span class="bg-indigo-100 text-indigo-800 text-xs font-bold px-3 py-1 rounded-full">Ag-Engineering Economics</span>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="machineryTypeSelect">Machine / Implement</label>
+            <select id="machineryTypeSelect" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-sm">
+              <option value="Tractor 45-50 HP">Tractor 45-50 HP (4.0 L/hr diesel, 10-yr life)</option>
+              <option value="Rotavator (6 ft)">Rotavator (6 ft) (₹900/acre hire rate)</option>
+              <option value="Seed Cum Fert Drill">Seed Cum Fertilizer Drill (₹700/acre hire)</option>
+              <option value="Laser Land Leveller">Laser Land Leveller (₹1,100/hr hire)</option>
+              <option value="Combine Harvester">Combine Harvester (₹2,200/acre hire)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="machineryFarmAcres">Your Farm Area (Acres)</label>
+            <input id="machineryFarmAcres" type="number" step="0.5" min="0.5" value="8.0" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-sm font-bold">
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="machineryCustomAcres">Rental Acres to Neighbors (किराया)</label>
+            <input id="machineryCustomAcres" type="number" step="1.0" min="0" value="20.0" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-sm font-bold">
+            <span class="text-[10px] text-slate-400">Additional acres operated for custom hire</span>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="machineryCustomRate">Custom Hire Rate (₹/Acre or Hr)</label>
+            <input id="machineryCustomRate" type="number" step="50" min="100" placeholder="Auto-filled default" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-sm font-bold">
+            <span class="text-[10px] text-slate-400">Leave blank for regional standard</span>
+          </div>
+        </div>
+
+        <div class="flex justify-end pt-2 border-t border-slate-100">
+          <button id="calcMachineryBtn" type="button" class="px-6 py-2.5 bg-indigo-800 hover:bg-indigo-900 text-white font-bold text-sm rounded-xl shadow-sm transition flex items-center gap-2">
+            <span>⚙️</span> Analyze Rent vs. Buy Economics
+          </button>
+        </div>
+
+        <!-- Machinery Output Card -->
+        <div id="machineryResultContainer" class="hidden pt-6 border-t border-slate-200">
+          <!-- Injected by app.js -->
+        </div>
+      </section>
+    </div>
+
+        <!-- ==================== TAB 10: SEED RATE & PLANT GEOMETRY ==================== -->
     <div id="seedTabContent" class="hidden space-y-8">
       <div class="bg-gradient-to-r from-amber-800 via-yellow-900 to-stone-900 text-white rounded-2xl p-6 sm:p-8 shadow-lg relative overflow-hidden">
         <div class="relative z-10 max-w-3xl">

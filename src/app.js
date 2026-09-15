@@ -6863,6 +6863,144 @@ function autoFilterDoctorWithKeyword(kw) {
 window.autoFilterDoctorWithKeyword = autoFilterDoctorWithKeyword;
 
 // ----------------------------------------------------------------------------
+// 4. MANDI DISTANCE & NET PROFIT ARBITRAGE CALCULATOR
+// ----------------------------------------------------------------------------
+
+async function executeMandiArbitrage() {
+  const cropId = document.getElementById("arbCropSelect")?.value || "wheat";
+  const qty = parseFloat(document.getElementById("arbQuantityInput")?.value) || 35.0;
+  const vehicleType = document.getElementById("arbVehicleSelect")?.value || "Tractor Trolley";
+  const dieselPrice = parseFloat(document.getElementById("arbDieselPriceInput")?.value) || 90.0;
+
+  const localPrice = parseFloat(document.getElementById("arbLocalPriceInput")?.value) || 2250.0;
+  const localDist = parseFloat(document.getElementById("arbLocalDistInput")?.value) || 12.0;
+
+  const distPrice = parseFloat(document.getElementById("arbDistantPriceInput")?.value) || 2420.0;
+  const distDist = parseFloat(document.getElementById("arbDistantDistInput")?.value) || 48.0;
+
+  const container = document.getElementById("mandiArbitrageResultContainer");
+  if (!container) return;
+  container.classList.remove("hidden");
+  container.innerHTML = `<div class="p-6 text-center text-slate-500 font-bold animate-pulse">Calculating net arbitrage profit...</div>`;
+
+  try {
+    const res = await fetch(`${API_BASE}/mandi-prices/arbitrage`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        crop_id: cropId,
+        quantity_quintals: qty,
+        local_mandi_name: "Local Mandi",
+        local_mandi_price: localPrice,
+        local_mandi_distance_km: localDist,
+        distant_mandi_name: "Distant Terminal APMC",
+        distant_mandi_price: distPrice,
+        distant_mandi_distance_km: distDist,
+        vehicle_type: vehicleType,
+        diesel_price_per_liter: dieselPrice
+      })
+    });
+    if (!res.ok) throw new Error("API offline");
+    const data = await res.json();
+    renderMandiArbitrageResult(data);
+  } catch (err) {
+    console.warn("Using offline Mandi Arbitrage calculation:", err);
+    const vLower = vehicleType.toLowerCase();
+    const mileage = vLower.includes("tractor") ? 4.0 : (vLower.includes("pickup") ? 9.0 : 3.5);
+    const localFuel = ((localDist * 2) / mileage) * dieselPrice;
+    const distFuel = ((distDist * 2) / mileage) * dieselPrice;
+    const toll = distDist > 35 ? 100 : 0;
+    const localTransport = Math.round(localFuel + 200 + (qty * localPrice * 0.01));
+    const distTransport = Math.round(distFuel + 400 + (qty * distPrice * 0.01) + toll);
+    const localGross = Math.round(qty * localPrice);
+    const distGross = Math.round(qty * distPrice);
+    const localNet = localGross - localTransport;
+    const distNet = distGross - distTransport;
+    const netDiff = distNet - localNet;
+    const isWorth = netDiff > 0;
+
+    renderMandiArbitrageResult({
+      quantity_quintals: qty,
+      local_gross_revenue: localGross,
+      local_transport_cost: localTransport,
+      local_net_revenue: localNet,
+      distant_gross_revenue: distGross,
+      distant_transport_cost: distTransport,
+      distant_net_revenue: distNet,
+      net_profit_difference: netDiff,
+      is_distant_mandi_worth_it: isWorth,
+      break_even_price_per_quintal: Math.round((localNet + distTransport) / qty),
+      recommendation: isWorth
+        ? `✅ GO TO DISTANT MANDI: You will earn an extra net in-hand profit of ₹${netDiff.toLocaleString("en-IN")} after accounting for ₹${distTransport.toLocaleString("en-IN")} in round-trip diesel and transport.`
+        : `🛑 SELL LOCALLY: Distant rate appears higher, but extra fuel and transport costs will cause a NET LOSS of ₹${Math.abs(netDiff).toLocaleString("en-IN")}!`,
+      round_trip_km_distant: distDist * 2,
+      fuel_liters_consumed_distant: Math.round((distDist * 2) / mileage)
+    });
+  }
+}
+
+function renderMandiArbitrageResult(res) {
+  const container = document.getElementById("mandiArbitrageResultContainer");
+  if (!container) return;
+
+  const isWorth = res.is_distant_mandi_worth_it;
+  const cardColor = isWorth ? "bg-emerald-50 border-emerald-300 text-emerald-950" : "bg-rose-50 border-rose-300 text-rose-950";
+  const badgeColor = isWorth ? "bg-emerald-700 text-white" : "bg-rose-700 text-white";
+
+  container.innerHTML = `
+    <div class="rounded-2xl p-5 border ${cardColor} space-y-4 animate-fadeIn">
+      <div class="flex flex-wrap items-center justify-between gap-3 border-b border-black/10 pb-3">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider">Mandi Arbitrage Verdict:</span>
+          <h4 class="text-base font-black">${isWorth ? "Profitable to Transport" : "Better to Sell Locally"}</h4>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="text-xs font-mono font-bold">Volume: ${res.quantity_quintals} Quintals</span>
+          <span class="${badgeColor} px-3 py-1 rounded-full text-xs font-bold">
+            ${isWorth ? `+ ₹${res.net_profit_difference.toLocaleString("en-IN")} Net Extra` : `- ₹${Math.abs(res.net_profit_difference).toLocaleString("en-IN")} Net Loss`}
+          </span>
+        </div>
+      </div>
+
+      <div class="p-3 bg-white/80 rounded-xl border border-black/5 text-xs font-semibold leading-relaxed">
+        ${res.recommendation}
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+        <div class="bg-white p-3.5 rounded-xl border border-slate-200 space-y-2">
+          <div class="font-bold text-slate-900 border-b border-slate-100 pb-1 flex justify-between">
+            <span>🏠 Local Mandi</span>
+            <span class="text-slate-500">Local</span>
+          </div>
+          <div class="flex justify-between"><span>Gross Revenue:</span> <strong>₹${res.local_gross_revenue.toLocaleString("en-IN")}</strong></div>
+          <div class="flex justify-between text-rose-700"><span>Transport & Mandi Fee:</span> <strong>- ₹${res.local_transport_cost.toLocaleString("en-IN")}</strong></div>
+          <div class="flex justify-between text-slate-900 font-extrabold pt-1 border-t border-slate-100 text-sm">
+            <span>In-Hand Net:</span> <span class="text-emerald-700">₹${res.local_net_revenue.toLocaleString("en-IN")}</span>
+          </div>
+        </div>
+
+        <div class="bg-white p-3.5 rounded-xl border border-slate-200 space-y-2">
+          <div class="font-bold text-slate-900 border-b border-slate-100 pb-1 flex justify-between">
+            <span>🚛 Distant Terminal APMC</span>
+            <span class="text-slate-500 font-mono">${res.round_trip_km_distant} km RT</span>
+          </div>
+          <div class="flex justify-between"><span>Gross Revenue:</span> <strong>₹${res.distant_gross_revenue.toLocaleString("en-IN")}</strong></div>
+          <div class="flex justify-between text-rose-700"><span>Transport, Fuel & Toll:</span> <strong>- ₹${res.distant_transport_cost.toLocaleString("en-IN")}</strong></div>
+          <div class="flex justify-between text-slate-900 font-extrabold pt-1 border-t border-slate-100 text-sm">
+            <span>In-Hand Net:</span> <span class="${isWorth ? "text-emerald-700 font-black" : "text-rose-700"}">₹${res.distant_net_revenue.toLocaleString("en-IN")}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-[11px] text-slate-600 flex flex-wrap justify-between items-center pt-1 border-t border-black/5">
+        <span>Fuel Consumed: ~${res.fuel_liters_consumed_distant} Liters Diesel</span>
+        <span>Break-Even Distant Rate: <strong>₹${res.break_even_price_per_quintal} / quintal</strong></span>
+      </div>
+    </div>
+  `;
+}
+
+// ----------------------------------------------------------------------------
 // 5. SOIL HEALTH CARD MICRONUTRIENT DOCTOR
 // ----------------------------------------------------------------------------
 
@@ -7056,6 +7194,277 @@ function renderMicronutrientResult(res) {
         </div>
         <ul class="list-disc list-inside space-y-1 text-slate-600 text-[11px]">
           ${(res.foliar_spray_options || []).map(f => `<li>${f}</li>`).join("")}
+        </ul>
+      </div>
+    </div>
+  `;
+}
+
+// ----------------------------------------------------------------------------
+// 6. FARM POND (KHET TALAB) & RAINWATER SIZER
+// ----------------------------------------------------------------------------
+
+async function executeFarmPondSizing() {
+  const catchment = parseFloat(document.getElementById("pondCatchmentAcres")?.value) || 5.0;
+  const rain = parseFloat(document.getElementById("pondRainfallInput")?.value) || 800.0;
+  const soil = document.getElementById("pondSoilSelect")?.value || "Loam";
+  const irrigAcres = parseFloat(document.getElementById("pondIrrigAcres")?.value) || 2.0;
+  const dryDays = parseInt(document.getElementById("pondDrySpellDays")?.value) || 30;
+
+  const container = document.getElementById("farmPondResultContainer");
+  if (!container) return;
+  container.classList.remove("hidden");
+  container.innerHTML = `<div class="p-6 text-center text-slate-500 font-bold animate-pulse">Designing farm pond geometry & calculating subsidy...</div>`;
+
+  try {
+    const res = await fetch(`${API_BASE}/water-conservation/farm-pond`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        catchment_acres: catchment,
+        annual_rainfall_mm: rain,
+        catchment_soil_type: soil,
+        supplementary_irrigation_acres: irrigAcres,
+        dry_spell_days_target: dryDays
+      })
+    });
+    if (!res.ok) throw new Error("API offline");
+    const data = await res.json();
+    renderFarmPondResult(data);
+  } catch (err) {
+    console.warn("Using offline Farm Pond calculation:", err);
+    const cRunoff = soil.toLowerCase().includes("clay") ? 0.32 : (soil.toLowerCase().includes("sandy") ? 0.15 : 0.22);
+    const runoffVol = Math.round(catchment * 4046.86 * (rain / 1000) * cRunoff);
+    const targetCuM = Math.round(Math.min(runoffVol * 0.6, Math.max(300, irrigAcres * 4046.86 * 0.05 * 2)));
+    const depth = 3.0;
+    const topW = Math.round(Math.sqrt((targetCuM / 2.25) / 1.3) * 10) / 10;
+    const topL = Math.round(topW * 1.3 * 10) / 10;
+    const botW = Math.max(4, Math.round((topW - 9) * 10) / 10);
+    const botL = Math.max(5, Math.round((topL - 9) * 10) / 10);
+    const actualVol = Math.round((depth / 6) * ((topL * topW) + (botL * botW) + (4 * ((topL + botL) / 2) * ((topW + botW) / 2))));
+    const liters = actualVol * 1000;
+    const lakhLiters = (liters / 100000).toFixed(2);
+    const earthCost = actualVol * 65;
+    const hdpeCost = Math.round(actualVol * 1.4 * 85);
+    const totCost = earthCost + hdpeCost;
+    const subsidy = Math.round(Math.min(totCost * 0.5, 105000));
+
+    renderFarmPondResult({
+      catchment_acres: catchment,
+      annual_rainfall_mm: rain,
+      runoff_volume_cu_meters: runoffVol,
+      storage_capacity_liters: liters,
+      storage_capacity_lakh_liters: lakhLiters,
+      recommended_top_length_m: topL,
+      recommended_top_width_m: topW,
+      recommended_bottom_length_m: botL,
+      recommended_bottom_width_m: botW,
+      recommended_depth_m: depth,
+      side_slope_ratio: "1:1.5 (V:H)",
+      geomembrane_lining_area_sqm: Math.round(actualVol * 1.4),
+      estimated_earthwork_cost_inr: earthCost,
+      estimated_hdpe_lining_cost_inr: hdpeCost,
+      estimated_total_cost_inr: totCost,
+      pmksy_khet_talab_subsidy_inr: subsidy,
+      net_farmer_cost_inr: totCost - subsidy,
+      water_security_advisory: `A ${topL}m x ${topW}m pond (${depth}m deep) will impound ${lakhLiters} Lakh Liters of rainwater. This guarantees ${dryDays} days of drought buffer, sufficient for 2 lifesaver irrigations on ${irrigAcres} acres.`
+    });
+  }
+}
+
+function renderFarmPondResult(res) {
+  const container = document.getElementById("farmPondResultContainer");
+  if (!container) return;
+
+  container.innerHTML = `
+    <div class="bg-blue-50 border border-blue-200 rounded-2xl p-5 space-y-5 animate-fadeIn">
+      <div class="flex flex-wrap items-center justify-between gap-3 border-b border-blue-200 pb-3">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider text-blue-950">Rainwater Harvesting Design:</span>
+          <h4 class="text-base font-black text-slate-900">Farm Pond (Khet Talab) Engineering Specification</h4>
+        </div>
+        <div class="text-right">
+          <span class="text-xs text-slate-500 block">Total Harvest Capacity:</span>
+          <strong class="text-xl font-black text-blue-900">${res.storage_capacity_lakh_liters} Lakh Liters</strong>
+        </div>
+      </div>
+
+      <div class="p-3 bg-white/80 rounded-xl border border-blue-100 text-xs text-slate-700 leading-relaxed font-semibold">
+        💡 ${res.water_security_advisory}
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
+        <div class="bg-white p-3 rounded-xl border border-slate-200 text-center">
+          <span class="text-slate-500 block text-[11px]">Top Dimensions:</span>
+          <strong class="text-slate-900 text-sm">${res.recommended_top_length_m}m × ${res.recommended_top_width_m}m</strong>
+        </div>
+        <div class="bg-white p-3 rounded-xl border border-slate-200 text-center">
+          <span class="text-slate-500 block text-[11px]">Bottom Bed:</span>
+          <strong class="text-slate-900 text-sm">${res.recommended_bottom_length_m}m × ${res.recommended_bottom_width_m}m</strong>
+        </div>
+        <div class="bg-white p-3 rounded-xl border border-slate-200 text-center">
+          <span class="text-slate-500 block text-[11px]">Pond Depth:</span>
+          <strong class="text-slate-900 text-sm">${res.recommended_depth_m} meters (~10 ft)</strong>
+        </div>
+        <div class="bg-white p-3 rounded-xl border border-slate-200 text-center">
+          <span class="text-slate-500 block text-[11px]">Side Slope:</span>
+          <strong class="text-slate-900 text-sm">${res.side_slope_ratio}</strong>
+        </div>
+      </div>
+
+      <div class="bg-white p-4 rounded-xl border border-slate-200 space-y-3 text-xs">
+        <h5 class="font-bold text-slate-900 flex items-center justify-between border-b border-slate-100 pb-2">
+          <span>💰 Estimated Budget & PMKSY Government Subsidy</span>
+          <span class="text-emerald-700 font-extrabold">50% Subsidy Eligible</span>
+        </h5>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <div>
+            <span class="text-slate-500 block text-[11px]">Earthwork Excavation (JCB):</span>
+            <strong class="text-slate-800">₹${Math.round(res.estimated_earthwork_cost_inr).toLocaleString("en-IN")}</strong>
+          </div>
+          <div>
+            <span class="text-slate-500 block text-[11px]">500-Micron HDPE Geomembrane:</span>
+            <strong class="text-slate-800">₹${Math.round(res.estimated_hdpe_lining_cost_inr).toLocaleString("en-IN")}</strong>
+            <span class="text-[10px] text-slate-400 block">${res.geomembrane_lining_area_sqm} sq.m lining</span>
+          </div>
+          <div>
+            <span class="text-slate-500 block text-[11px]">Estimated Gross Cost:</span>
+            <strong class="text-slate-900 font-extrabold">₹${Math.round(res.estimated_total_cost_inr).toLocaleString("en-IN")}</strong>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap items-center justify-between pt-3 border-t border-slate-100 bg-emerald-50 p-3 rounded-lg text-emerald-950">
+          <div>
+            <span class="block text-[11px] font-bold">PMKSY / State Khet Talab Subsidy:</span>
+            <strong class="text-base text-emerald-800 font-black">- ₹${Math.round(res.pmksy_khet_talab_subsidy_inr).toLocaleString("en-IN")}</strong>
+          </div>
+          <div class="text-right">
+            <span class="block text-[11px] font-bold">Net Farmer Share:</span>
+            <strong class="text-lg text-slate-900 font-black">₹${Math.round(res.net_farmer_cost_inr).toLocaleString("en-IN")}</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+// ----------------------------------------------------------------------------
+// 7. TRACTOR & MACHINERY RENT VS. BUY ECONOMICS
+// ----------------------------------------------------------------------------
+
+async function executeMachineryEconomics() {
+  const machineType = document.getElementById("machineryTypeSelect")?.value || "Tractor 45-50 HP";
+  const farmAcres = parseFloat(document.getElementById("machineryFarmAcres")?.value) || 8.0;
+  const customAcres = parseFloat(document.getElementById("machineryCustomAcres")?.value) || 0.0;
+  const customRate = parseFloat(document.getElementById("machineryCustomRate")?.value) || 0;
+
+  const container = document.getElementById("machineryResultContainer");
+  if (!container) return;
+  container.classList.remove("hidden");
+  container.innerHTML = `<div class="p-6 text-center text-slate-500 font-bold animate-pulse">Evaluating machinery depreciation, diesel costs, and break-even point...</div>`;
+
+  try {
+    const res = await fetch(`${API_BASE}/machinery/rent-vs-buy`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        machine_type: machineType,
+        farm_size_acres: farmAcres,
+        purchase_price_inr: null,
+        custom_hire_rate_per_acre_or_hr: customRate > 0 ? customRate : null,
+        commercial_rental_acres_to_others: customAcres
+      })
+    });
+    if (!res.ok) throw new Error("API offline");
+    const data = await res.json();
+    renderMachineryResult(data);
+  } catch (err) {
+    console.warn("Using offline Machinery calculation:", err);
+    const isTractor = machineType.toLowerCase().includes("tractor");
+    const hoursPerAcre = isTractor ? 4.0 : 1.0;
+    const price = isTractor ? 720000 : 120000;
+    const rate = (customRate > 0 ? customRate : (isTractor ? 950 : 900)) * hoursPerAcre;
+    const totalAcres = farmAcres + customAcres;
+    const annualHiring = Math.round(farmAcres * rate);
+    const annualFixed = Math.round(price * 0.14);
+    const fuelLiters = Math.round(totalAcres * 3.8 * hoursPerAcre);
+    const annualFuel = Math.round(fuelLiters * 90);
+    const annualVar = Math.round(annualFuel + (price * 0.025) + (totalAcres * 150 * hoursPerAcre));
+    const annualOwnership = annualFixed + annualVar;
+    const commIncome = Math.round(customAcres * rate);
+    const netSaving = Math.round(annualHiring - (annualOwnership - commIncome));
+    const breakEven = Math.round((annualFixed / Math.max(100, rate - (3.8 * hoursPerAcre * 90 + 150 * hoursPerAcre))) * 10) / 10;
+    const isBuy = netSaving > 0 || totalAcres >= breakEven;
+
+    renderMachineryResult({
+      machine_type: machineType,
+      farm_size_acres: farmAcres,
+      commercial_rental_acres_to_others: customAcres,
+      total_operated_acres: totalAcres,
+      annual_hiring_cost_inr: annualHiring,
+      annual_ownership_cost_inr: annualOwnership,
+      annual_diesel_burn_liters: fuelLiters,
+      annual_fuel_cost_inr: annualFuel,
+      break_even_acres: breakEven,
+      commercial_rental_income_inr: commIncome,
+      net_annual_saving_or_loss_inr: netSaving,
+      recommendation: isBuy
+        ? `✅ BUY RECOMMENDED: Operating ${totalAcres} total acres (including ${customAcres} custom hire acres for neighbors) makes ownership profitable, saving ₹${netSaving.toLocaleString("en-IN")}/year over renting.`
+        : `🛑 RENT (CUSTOM HIRE) RECOMMENDED: For ${farmAcres} acres, renting costs ₹${annualHiring.toLocaleString("en-IN")}/year, whereas buying costs ₹${annualOwnership.toLocaleString("en-IN")}/year in fixed depreciation, fuel, and loan interest. Break-even threshold is ${breakEven} acres.`,
+      payback_period_years: Math.round((price / Math.max(1000, annualHiring + commIncome - annualVar)) * 10) / 10,
+      key_decision_factors: [
+        `Annual Fixed Depreciation & Interest: ₹${annualFixed.toLocaleString("en-IN")}`,
+        `Operational Diesel Burn: ${fuelLiters} Liters (₹${annualFuel.toLocaleString("en-IN")})`,
+        `Break-Even Operational Area: ${breakEven} acres/year`,
+        `Estimated Payback Period: ${Math.round((price / Math.max(1000, annualHiring + commIncome - annualVar)) * 10) / 10} years`
+      ]
+    });
+  }
+}
+
+function renderMachineryResult(res) {
+  const container = document.getElementById("machineryResultContainer");
+  if (!container) return;
+
+  const isBuy = res.net_annual_saving_or_loss_inr > 0 || res.total_operated_acres >= res.break_even_acres;
+  const cardColor = isBuy ? "bg-emerald-50 border-emerald-300 text-emerald-950" : "bg-amber-50 border-amber-300 text-amber-950";
+  const badgeColor = isBuy ? "bg-emerald-700 text-white" : "bg-amber-700 text-white";
+
+  container.innerHTML = `
+    <div class="rounded-2xl p-5 border ${cardColor} space-y-4 animate-fadeIn">
+      <div class="flex flex-wrap items-center justify-between gap-3 border-b border-black/10 pb-3">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider">Financial Feasibility Verdict:</span>
+          <h4 class="text-base font-black">${isBuy ? "Purchase / Ownership Feasible" : "Custom Hiring / Rental Recommended"}</h4>
+        </div>
+        <span class="${badgeColor} px-3 py-1 rounded-full text-xs font-black">
+          ${isBuy ? "✅ BUY" : "🛑 RENT (CUSTOM HIRE)"}
+        </span>
+      </div>
+
+      <div class="p-3 bg-white/85 rounded-xl border border-black/5 text-xs font-semibold leading-relaxed">
+        ${res.recommendation}
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+        <div class="bg-white p-3 rounded-xl border border-slate-200">
+          <span class="text-slate-500 block text-[11px]">Annual Custom Renting Cost:</span>
+          <strong class="text-slate-900 text-sm">₹${Math.round(res.annual_hiring_cost_inr).toLocaleString("en-IN")} / yr</strong>
+        </div>
+        <div class="bg-white p-3 rounded-xl border border-slate-200">
+          <span class="text-slate-500 block text-[11px]">Annual Ownership Total Cost:</span>
+          <strong class="text-slate-900 text-sm">₹${Math.round(res.annual_ownership_cost_inr).toLocaleString("en-IN")} / yr</strong>
+        </div>
+        <div class="bg-white p-3 rounded-xl border border-slate-200">
+          <span class="text-slate-500 block text-[11px]">Break-Even Usage Threshold:</span>
+          <strong class="text-emerald-700 text-sm font-black">${res.break_even_acres} Acres / yr</strong>
+        </div>
+      </div>
+
+      <div class="bg-white/80 p-3.5 rounded-xl border border-black/5 text-xs space-y-1.5">
+        <div class="font-bold text-slate-900 mb-1">📊 Key Economic Decision Metrics:</div>
+        <ul class="list-disc list-inside space-y-1 text-slate-700">
+          ${(res.key_decision_factors || []).map(f => `<li>${f}</li>`).join("")}
         </ul>
       </div>
     </div>
