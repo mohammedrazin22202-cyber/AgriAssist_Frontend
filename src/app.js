@@ -7472,3 +7472,350 @@ function renderMachineryResult(res) {
 }
 
 // ----------------------------------------------------------------------------
+// 8. DAIRY & LIVESTOCK HUSBANDRY MODULE (Feed Ration, Gestation & EVM)
+// ----------------------------------------------------------------------------
+
+function initLivestockTab() {
+  loadLivestockRemedies();
+  executeLivestockRation();
+  const dateInput = document.getElementById("inseminationDateInput");
+  if (dateInput && !dateInput.value) {
+    dateInput.value = new Date().toISOString().split("T")[0];
+  }
+}
+
+async function executeLivestockRation() {
+  const animType = document.getElementById("animTypeSelect")?.value || "Cow (Crossbred HF/Jersey)";
+  const weight = parseFloat(document.getElementById("animWeightInput")?.value) || 420.0;
+  const milk = parseFloat(document.getElementById("animMilkInput")?.value) || 10.0;
+  const fat = parseFloat(document.getElementById("animFatInput")?.value) || 4.0;
+  const preg = document.getElementById("animPregSelect")?.value || "None";
+
+  const container = document.getElementById("livestockRationResultContainer");
+  if (!container) return;
+  container.classList.remove("hidden");
+  container.innerHTML = `<div class="p-6 text-center text-slate-500 font-bold animate-pulse">Balancing ICAR daily dairy feed ration...</div>`;
+
+  try {
+    const res = await fetch(`${API_BASE}/livestock/ration`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        animal_type: animType,
+        body_weight_kg: weight,
+        daily_milk_yield_liters: milk,
+        milk_fat_percentage: fat,
+        pregnancy_stage: preg
+      })
+    });
+    if (!res.ok) throw new Error("API offline");
+    const data = await res.json();
+    renderLivestockRationResult(data);
+  } catch (err) {
+    console.warn("Using offline Livestock Ration calculation:", err);
+    const dmPct = animType.toLowerCase().includes("desi") ? 0.026 : (animType.toLowerCase().includes("goat") ? 0.038 : 0.030);
+    const totalDm = Math.round(weight * dmPct * 10) / 10;
+    const conc = Math.round((1.2 + (milk * 0.38) + (preg.toLowerCase().includes("last") ? 1.25 : 0)) * 10) / 10;
+    const remDm = Math.max(1, totalDm - (conc * 0.9));
+    const greenKg = Math.round(((remDm * 0.65) / 0.20) * 10) / 10;
+    const dryKg = Math.round(((remDm * 0.35) / 0.90) * 10) / 10;
+    const cost = Math.round((greenKg * 2.0) + (dryKg * 6.0) + (conc * 28.0) + 5.0);
+
+    renderLivestockRationResult({
+      animal_type: animType,
+      body_weight_kg: weight,
+      daily_milk_liters: milk,
+      dry_matter_requirement_kg: totalDm,
+      green_fodder_kg: greenKg,
+      dry_straw_bhusa_kg: dryKg,
+      concentrate_feed_kg: conc,
+      mineral_mixture_grams: 50.0,
+      salt_grams: 30.0,
+      water_requirement_liters: Math.round(45 + (milk * 3.2)),
+      estimated_daily_feed_cost_inr: cost,
+      feeding_tips: [
+        "Chaff (Kutti) all green and dry fodder to 1-2 inch pieces to reduce feed wastage by 20-30%.",
+        "Offer clean, fresh drinking water ad-libitum at least 3-4 times a day (clean water boosts milk yield by 10%).",
+        "Mix 50g area-specific mineral mixture and 30g iodized salt in concentrate daily to ensure regular heat cycles.",
+        "Provide leguminous green fodder (Berseem/Lucerne) alongside cereal fodder (Napier/Maize) for optimal crude protein."
+      ]
+    });
+  }
+}
+
+function renderLivestockRationResult(res) {
+  const container = document.getElementById("livestockRationResultContainer");
+  if (!container) return;
+
+  container.innerHTML = `
+    <div class="bg-amber-50 border border-amber-200 rounded-2xl p-5 space-y-5 animate-fadeIn">
+      <div class="flex flex-wrap items-center justify-between gap-3 border-b border-amber-200 pb-3">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider text-amber-950">Balanced Dairy Ration:</span>
+          <h4 class="text-base font-black text-slate-900">${res.animal_type} (${res.daily_milk_liters} L/day Yield)</h4>
+        </div>
+        <div class="text-right">
+          <span class="text-xs text-slate-500 block">Est. Daily Feed Cost:</span>
+          <strong class="text-xl font-black text-amber-950">₹${Math.round(res.estimated_daily_feed_cost_inr)} / day</strong>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-5 gap-3 text-xs">
+        <div class="bg-white p-3 rounded-xl border border-slate-200 text-center">
+          <span class="text-slate-500 block text-[11px]">Green Fodder (हरा चारा):</span>
+          <strong class="text-emerald-700 text-base font-black">${res.green_fodder_kg} kg</strong>
+          <span class="text-[10px] text-slate-400 block">Napier / Berseem</span>
+        </div>
+        <div class="bg-white p-3 rounded-xl border border-slate-200 text-center">
+          <span class="text-slate-500 block text-[11px]">Dry Straw (सूखा भूसा):</span>
+          <strong class="text-amber-800 text-base font-black">${res.dry_straw_bhusa_kg} kg</strong>
+          <span class="text-[10px] text-slate-400 block">Wheat / Paddy straw</span>
+        </div>
+        <div class="bg-white p-3 rounded-xl border border-slate-200 text-center">
+          <span class="text-slate-500 block text-[11px]">Concentrate (दाना/खली):</span>
+          <strong class="text-slate-900 text-base font-black">${res.concentrate_feed_kg} kg</strong>
+          <span class="text-[10px] text-slate-400 block">Pellets / Mustard cake</span>
+        </div>
+        <div class="bg-white p-3 rounded-xl border border-slate-200 text-center">
+          <span class="text-slate-500 block text-[11px]">Mineral Mix & Salt:</span>
+          <strong class="text-slate-900 text-base font-black">${res.mineral_mixture_grams}g + ${res.salt_grams}g</strong>
+          <span class="text-[10px] text-slate-400 block">Daily in feed</span>
+        </div>
+        <div class="bg-white p-3 rounded-xl border border-slate-200 text-center">
+          <span class="text-slate-500 block text-[11px]">Clean Water:</span>
+          <strong class="text-blue-700 text-base font-black">${res.water_requirement_liters} Liters</strong>
+          <span class="text-[10px] text-slate-400 block">3-4 times daily</span>
+        </div>
+      </div>
+
+      <div class="bg-white p-4 rounded-xl border border-slate-200 text-xs space-y-2">
+        <div class="font-bold text-slate-900 flex items-center gap-1.5">
+          <span>💡</span> <span>ICAR Agronomic Nutrition & Feeding Directives:</span>
+        </div>
+        <ul class="list-disc list-inside space-y-1 text-slate-700 text-[11px]">
+          ${(res.feeding_tips || []).map(t => `<li>${t}</li>`).join("")}
+        </ul>
+      </div>
+    </div>
+  `;
+}
+
+async function executeGestationSchedule() {
+  const animType = document.getElementById("gestationAnimalTypeSelect")?.value || "Cow";
+  const insDate = document.getElementById("inseminationDateInput")?.value || new Date().toISOString().split("T")[0];
+
+  const container = document.getElementById("gestationResultContainer");
+  if (!container) return;
+  container.classList.remove("hidden");
+  container.innerHTML = `<div class="p-6 text-center text-slate-500 font-bold animate-pulse">Calculating veterinary pregnancy timeline...</div>`;
+
+  try {
+    const res = await fetch(`${API_BASE}/livestock/gestation`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        animal_type: animType,
+        insemination_date: insDate
+      })
+    });
+    if (!res.ok) throw new Error("API offline");
+    const data = await res.json();
+    renderGestationResult(data);
+  } catch (err) {
+    console.warn("Using offline Gestation calculation:", err);
+    const sDate = new Date(insDate);
+    const isBuffalo = animType.toLowerCase().includes("buffalo");
+    const isGoat = animType.toLowerCase().includes("goat");
+    const gestDays = isBuffalo ? 310 : (isGoat ? 150 : 280);
+
+    const addD = (n) => {
+      const d = new Date(sDate);
+      d.setDate(d.getDate() + n);
+      return d.toISOString().split("T")[0];
+    };
+
+    renderGestationResult({
+      animal_type: animType,
+      insemination_date: insDate,
+      gestation_period_days: gestDays,
+      expected_calving_date: addD(gestDays),
+      advisory_notes: `Standard gestation period for ${animType} is ${gestDays} days. Expected delivery date: ${addD(gestDays)}.`,
+      milestones: [
+        { days_after_insemination: 21, milestone_date: addD(21), title: "First Heat Check (21-Day Estrus)", action_notes: "Observe for heat symptoms (mucus discharge, bellowing). If observed in heat, re-inseminate." },
+        { days_after_insemination: isGoat ? 45 : 60, milestone_date: addD(isGoat ? 45 : 60), title: "Veterinary Pregnancy Diagnosis (PD)", action_notes: "Veterinarian performs rectal examination or sonography to confirm conception." },
+        { days_after_insemination: isBuffalo ? 210 : (isGoat ? 100 : 180), milestone_date: addD(isBuffalo ? 210 : (isGoat ? 100 : 180)), title: "Drying-Off Milestone", action_notes: "Gradually stop milking to allow udder regeneration and build maternal colostrum." },
+        { days_after_insemination: gestDays - 30, milestone_date: addD(gestDays - 30), title: "Steaming-Up & Transition Nutrition", action_notes: "Increase concentrate feed by +1.5 kg/day. Provide Vitamin AD3E to prevent milk fever." },
+        { days_after_insemination: gestDays, milestone_date: addD(gestDays), title: `Expected Calving / Delivery Date`, action_notes: "Prepare a clean straw stall. Feed warm colostrum to newborn calf within 1 hour." }
+      ]
+    });
+  }
+}
+
+function renderGestationResult(res) {
+  const container = document.getElementById("gestationResultContainer");
+  if (!container) return;
+
+  const milestonesHTML = (res.milestones || []).map((m, idx) => `
+    <div class="relative pl-6 pb-4 border-l-2 border-stone-300 last:border-l-0">
+      <div class="absolute -left-3 top-0 w-6 h-6 rounded-full bg-stone-700 text-white flex items-center justify-center text-xs font-bold shadow">
+        ${idx + 1}
+      </div>
+      <div class="bg-white p-3.5 rounded-xl border border-slate-200 shadow-sm space-y-1.5">
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <strong class="text-slate-900 text-sm">${m.title}</strong>
+          <span class="font-mono text-xs font-bold text-stone-800 bg-stone-100 px-2 py-0.5 rounded">
+            📅 ${m.milestone_date} (+${m.days_after_insemination} days)
+          </span>
+        </div>
+        <p class="text-slate-600 text-xs leading-relaxed">${m.action_notes}</p>
+      </div>
+    </div>
+  `).join("");
+
+  container.innerHTML = `
+    <div class="bg-stone-50 border border-stone-200 rounded-2xl p-5 space-y-5 animate-fadeIn">
+      <div class="flex flex-wrap items-center justify-between gap-3 border-b border-stone-200 pb-3">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider text-stone-900">Reproduction Schedule:</span>
+          <h4 class="text-base font-black text-slate-900">${res.animal_type} Pregnancy Milestones</h4>
+        </div>
+        <div class="text-right">
+          <span class="text-xs text-slate-500 block">Expected Calving Date:</span>
+          <strong class="text-lg font-black text-emerald-800">📅 ${res.expected_calving_date}</strong>
+        </div>
+      </div>
+
+      <div class="space-y-3">
+        ${milestonesHTML}
+      </div>
+    </div>
+  `;
+}
+
+async function loadLivestockRemedies() {
+  const grid = document.getElementById("livestockRemediesGrid");
+  if (!grid || grid.children.length > 0) return;
+
+  try {
+    const res = await fetch(`${API_BASE}/livestock/remedies`);
+    if (!res.ok) throw new Error("API offline");
+    const remedies = await res.json();
+    renderLivestockRemedies(remedies);
+  } catch (err) {
+    console.warn("Using offline EVM remedies:", err);
+    renderLivestockRemedies(OFFLINE_EVM_REMEDIES);
+  }
+}
+
+const OFFLINE_EVM_REMEDIES = [
+  {
+    condition: "Sub-clinical & Clinical Mastitis (थनैला रोग / Udder Swelling)",
+    symptoms: ["Swollen, hot, painful udder", "Yellowish, curd-like or watery milk clots", "Cow resists milking"],
+    evm_formulation_name: "NDDB Haldi-Ghritkumari Lep (Turmeric-Aloe Udder Paste)",
+    ingredients: ["Fresh Aloe Vera leaf: 250 g", "Turmeric rhizome/powder: 50 g", "Slaked Lime (Chuna): 15 g"],
+    preparation_method: "Grind Aloe Vera, Turmeric, and Chuna into a smooth reddish-yellow paste. Dilute slightly with clean water to spreadable consistency.",
+    dosage_and_application: "Milk out the affected quarter completely. Wash udder with clean water, dry, and apply paste generously over the entire udder 3-4 times daily for 5 consecutive days.",
+    prevention_guidelines: "Dip teats in 0.5% povidone-iodine after every milking. Never allow cattle to lie down on wet mud for 30 minutes after milking."
+  },
+  {
+    condition: "Bloat & Ruminal Tympany (अफारा / Pet Phulna)",
+    symptoms: ["Tense, drum-like swollen left flank", "Difficulty breathing, open mouth panting", "Restlessness and kicking at belly"],
+    evm_formulation_name: "Sarson Tel-Hing Kadha (Mustard-Asafoetida Drench)",
+    ingredients: ["Pure Mustard Oil: 100-150 ml", "Asafoetida (Hing): 10 g", "Garlic (Lahsun): 50 g", "Ginger (Adrak): 50 g", "Black salt: 25 g"],
+    preparation_method: "Crush garlic and ginger into paste. Dissolve hing and black salt in lukewarm water (250 ml), then mix thoroughly with mustard oil.",
+    dosage_and_application: "Drench orally slowly using a clean bottle. Keep animal's head elevated. Massage the left flank upward. Repeat in 4 hours if gas is not released.",
+    prevention_guidelines: "Never feed excessively wet, dew-covered young legume fodder (Berseem/Lucerne) on an empty stomach. Always feed dry bhusa first."
+  },
+  {
+    condition: "Foot & Mouth Disease (FMD) Lesions (खुरपका-मुंहपका छाले)",
+    symptoms: ["Painful blisters/sores on tongue and gums", "Excessive frothy salivation", "Lameness and wounds between hooves"],
+    evm_formulation_name: "Neem-Haldi Ghee Balm (Ethno-Veterinary Antiseptic)",
+    ingredients: ["Turmeric powder: 50 g", "Neem oil or boiled neem leaf paste: 100 ml", "Pure desi ghee or coconut oil: 50 g", "Camphor (Kapur): 5 g"],
+    preparation_method: "Warm ghee/neem oil lightly and blend in turmeric powder and crushed camphor to create an antibacterial antiseptic balm.",
+    dosage_and_application: "Wash mouth ulcers with mild baking soda or alum water. Apply the soothing balm gently onto tongue and hoof fissures twice daily.",
+    prevention_guidelines: "Get cattle vaccinated bi-annually under the National Animal Disease Control Programme (NADCP). Quarantine infected animals."
+  },
+  {
+    condition: "Internal Parasites & Worms (पेट के कीड़े / Helminthiasis)",
+    symptoms: ["Pot belly in calves", "Dull coat, emaciation despite feeding", "Diarrhea or bottle jaw swelling under chin"],
+    evm_formulation_name: "Kaduwa Neem-Nirgundi Dewormer (Botanical Anthelmintic)",
+    ingredients: ["Neem leaves (Azadirachta indica): 100 g", "Nirgundi leaves: 50 g", "Karela / Bitter gourd pulp: 50 g", "Jaggery: 50 g"],
+    preparation_method: "Pound leaves into a thick paste with jaggery to form a sweet-bitter bolus.",
+    dosage_and_application: "Feed orally in morning on an empty stomach once a month.",
+    prevention_guidelines: "Rotate pastures and avoid grazing on marshy waterlogged riverbanks where snail hosts thrive."
+  }
+];
+
+function renderLivestockRemedies(remedies) {
+  const grid = document.getElementById("livestockRemediesGrid");
+  if (!grid) return;
+
+  grid.innerHTML = (remedies || []).map(r => `
+    <div class="bg-white p-5 rounded-xl border border-emerald-200 shadow-sm space-y-3 flex flex-col justify-between">
+      <div class="space-y-2">
+        <div class="flex items-start justify-between gap-2 border-b border-emerald-100 pb-2">
+          <div>
+            <span class="bg-emerald-100 text-emerald-900 font-extrabold text-[10px] px-2 py-0.5 rounded uppercase tracking-wider">EVM Remedy</span>
+            <h4 class="font-extrabold text-slate-900 text-sm mt-1">${r.condition}</h4>
+          </div>
+          <span class="text-xl">🌿</span>
+        </div>
+
+        <div class="bg-emerald-50/70 p-2.5 rounded-lg border border-emerald-100 space-y-1">
+          <strong class="text-emerald-950 font-bold block">${r.evm_formulation_name}</strong>
+          <div class="text-slate-600 text-[11px]"><strong>Ingredients:</strong> ${r.ingredients.join(" • ")}</div>
+        </div>
+
+        <div class="text-xs text-slate-700 space-y-1">
+          <div><strong>Preparation:</strong> ${r.preparation_method}</div>
+          <div class="text-emerald-900 font-semibold"><strong>Dosage & Use:</strong> ${r.dosage_and_application}</div>
+        </div>
+      </div>
+
+      <div class="pt-2 border-t border-slate-100 text-[10px] text-slate-500 italic">
+        🛡️ Prevention: ${r.prevention_guidelines}
+      </div>
+    </div>
+  `).join("");
+}
+
+// ----------------------------------------------------------------------------
+// 9. KISAN VOICE ASSISTANT KEYWORD ROUTER
+// ----------------------------------------------------------------------------
+
+function handleVoiceRecognitionResult(transcript) {
+  const clean = transcript.toLowerCase().trim();
+
+  if (clean.includes("मंडी") || clean.includes("भाव") || clean.includes("mandi") || clean.includes("price") || clean.includes("rate")) {
+    switchTab("mandi");
+    showToast(`Voice navigation: Opened Mandi Prices ("${transcript}")`, "info");
+  } else if (clean.includes("खाद") || clean.includes("यूरिया") || clean.includes("fertilizer") || clean.includes("dap") || clean.includes("मृदा")) {
+    switchTab("fertilizer");
+    showToast(`Voice navigation: Opened Fertilizer Doctor ("${transcript}")`, "info");
+  } else if (clean.includes("रोग") || clean.includes("कीट") || clean.includes("doctor") || clean.includes("pest") || clean.includes("पत्ती")) {
+    switchTab("doctor");
+    showToast(`Voice navigation: Opened Plant Doctor ("${transcript}")`, "info");
+  } else if (clean.includes("पशु") || clean.includes("गाय") || clean.includes("भैंस") || clean.includes("दूध") || clean.includes("livestock") || clean.includes("dairy")) {
+    switchTab("livestock");
+    showToast(`Voice navigation: Opened Livestock Doctor ("${transcript}")`, "info");
+  } else if (clean.includes("सिंचाई") || clean.includes("पानी") || clean.includes("irrigation") || clean.includes("talab") || clean.includes("तालाब")) {
+    switchTab("irrigation");
+    showToast(`Voice navigation: Opened Smart Irrigation ("${transcript}")`, "info");
+  } else if (clean.includes("सोलर") || clean.includes("solar") || clean.includes("पंप")) {
+    switchTab("solar");
+    showToast(`Voice navigation: Opened Solar Pump Calculator ("${transcript}")`, "info");
+  } else if (clean.includes("नक्शा") || clean.includes("खेत") || clean.includes("satellite") || clean.includes("map") || clean.includes("तारबंदी")) {
+    openSatelliteMapModal();
+    showToast(`Voice navigation: Opened Satellite Field Plotter ("${transcript}")`, "info");
+  } else if (clean.includes("बही") || clean.includes("खाता") || clean.includes("खर्च") || clean.includes("khata") || clean.includes("diary")) {
+    switchTab("khata");
+    showToast(`Voice navigation: Opened Kisan Bahi-Khata ("${transcript}")`, "info");
+  } else {
+    switchTab("advisor");
+    if (cropSearchInput) {
+      cropSearchInput.value = transcript;
+      cropSearchInput.dispatchEvent(new Event("input", { bubbles: true }));
+      showToast(`Searching crops for: "${transcript}"`, "info");
+    }
+  }
+}
