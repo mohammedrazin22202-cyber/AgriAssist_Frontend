@@ -7,6 +7,10 @@
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#166534">
   <!-- Tailwind CSS via CDN -->
+  <!-- Leaflet.js (Free Open-Source Mapping) via CDN -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -57,7 +61,13 @@
         </div>
 
         <div class="flex items-center flex-wrap gap-2.5">
-          <!-- Land Converter Quick Button -->
+<!-- Satellite Field Plotter Quick Button (Leaflet + Esri) -->
+          <button id="openSatelliteMapBtn" type="button" class="flex items-center space-x-1.5 text-xs bg-teal-700 hover:bg-teal-600 text-white font-bold px-3 py-1.5 rounded-full shadow-sm transition border border-teal-500">
+            <span>🛰️</span>
+            <span data-i18n="satelliteMapBtn">Satellite Plotter</span>
+          </button>
+
+                    <!-- Land Converter Quick Button -->
           <button id="openLandConverterBtn" type="button" class="flex items-center space-x-1.5 text-xs bg-amber-600 hover:bg-amber-500 text-white font-bold px-3 py-1.5 rounded-full shadow-sm transition border border-amber-400">
             <span>📐</span>
             <span data-i18n="landConverterBtn">Land Converter</span>
@@ -1722,5 +1732,110 @@
   <div id="toastContainer" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none max-w-sm w-full no-print" aria-live="polite"></div>
 
   <script src="app.js"></script>
+<!-- SATELLITE FIELD PLOTTER & FENCING CALCULATOR MODAL (Leaflet + Esri World Imagery) -->
+  <div id="satelliteMapModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 modal-backdrop no-print">
+    <div class="bg-white w-full max-w-4xl rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[94vh]">
+      <div class="bg-teal-800 text-white px-6 py-4 flex items-center justify-between">
+        <h3 class="font-bold text-base flex items-center gap-2">
+          <span>🛰️</span> <span>Interactive Satellite Field Plotter & Fencing Calculator (उपग्रह खेत मापक एवं तारबंदी)</span>
+        </h3>
+        <button id="closeSatelliteMapBtn" type="button" class="text-teal-200 hover:text-white text-xl font-bold">&times;</button>
+      </div>
+
+      <div class="p-5 overflow-y-auto space-y-4 text-xs">
+        <!-- Interactive Controls Bar -->
+        <div class="flex flex-wrap items-center justify-between gap-2 bg-teal-50 p-3 rounded-xl border border-teal-200">
+          <div class="flex items-center gap-2">
+            <span class="font-bold text-teal-950">Instructions:</span>
+            <span class="text-slate-600">Click on satellite imagery to outline field corners. Connect back to first point to close polygon.</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <button id="satLocateBtn" type="button" class="bg-teal-700 hover:bg-teal-800 text-white font-bold px-3 py-1.5 rounded-lg transition flex items-center gap-1 shadow-sm">
+              <span>📍</span> <span>Zoom to My Location</span>
+            </button>
+            <button id="satClearPolygonBtn" type="button" class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold px-3 py-1.5 rounded-lg transition">
+              Clear Points
+            </button>
+          </div>
+        </div>
+
+        <!-- Leaflet Map Container -->
+        <div class="relative w-full rounded-xl overflow-hidden border-2 border-slate-300 shadow-inner">
+          <div id="leafletSatelliteMap" style="height: 380px; width: 100%;" class="bg-slate-900"></div>
+          <div class="absolute bottom-2 left-2 z-[1000] bg-slate-900/80 text-white text-[10px] px-2 py-1 rounded backdrop-blur font-mono" id="satPointsBadge">
+            Corners: 0 points
+          </div>
+        </div>
+
+        <!-- Calculated Land Statistics Grid -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <div class="bg-teal-50 border border-teal-200 p-3 rounded-xl text-center">
+            <span class="text-slate-500 block text-[11px]">Field Area (Acres):</span>
+            <span class="text-xl font-black text-teal-950" id="satAreaAcres">0.00</span>
+          </div>
+          <div class="bg-amber-50 border border-amber-200 p-3 rounded-xl text-center">
+            <span class="text-slate-500 block text-[11px]">Guntha (गुंठा):</span>
+            <span class="text-xl font-black text-amber-900" id="satAreaGuntha">0.0</span>
+          </div>
+          <div class="bg-emerald-50 border border-emerald-200 p-3 rounded-xl text-center">
+            <span class="text-slate-500 block text-[11px]">Bigha (बीघा):</span>
+            <span class="text-xl font-black text-emerald-900" id="satAreaBigha">0.0</span>
+          </div>
+          <div class="bg-indigo-50 border border-indigo-200 p-3 rounded-xl text-center">
+            <span class="text-slate-500 block text-[11px]">Boundary Perimeter:</span>
+            <span class="text-xl font-black text-indigo-900" id="satPerimeterM">0 m</span>
+          </div>
+        </div>
+
+        <!-- Fencing Cost & Materials Estimator Card -->
+        <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl space-y-3">
+          <h4 class="font-bold text-slate-800 text-xs uppercase tracking-wider flex items-center gap-1.5">
+            <span>🛡️</span> Boundary Fencing Materials & Cost Estimator (तारबंदी खर्च अनुमान)
+          </h4>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div>
+              <label class="block text-slate-600 mb-1" for="fenceTypeSelect">Fencing System</label>
+              <select id="fenceTypeSelect" class="w-full bg-white border border-slate-300 rounded-lg p-2 text-xs font-semibold">
+                <option value="barbed_3">3-Strand Barbed Wire (3-तार कांटेदार)</option>
+                <option value="barbed_4" selected>4-Strand Barbed Wire (4-तार कांटेदार)</option>
+                <option value="solar_electric">Solar Electric Fence (झटका मशीन / सौर बाड़)</option>
+                <option value="chain_link">GI Chain Link Mesh (तार की जाली - 5 ft)</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-slate-600 mb-1" for="fencePoleSpacing">Pole Spacing (Distance)</label>
+              <select id="fencePoleSpacing" class="w-full bg-white border border-slate-300 rounded-lg p-2 text-xs font-semibold">
+                <option value="3">Every 3 meters (~10 feet)</option>
+                <option value="4">Every 4 meters (~13 feet)</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-slate-600 mb-1" for="fencePoleType">Pole Type</label>
+              <select id="fencePoleType" class="w-full bg-white border border-slate-300 rounded-lg p-2 text-xs font-semibold">
+                <option value="cement">RCC Cement Pole (₹280/pole)</option>
+                <option value="iron">Iron Angle / Pipe (₹350/pole)</option>
+                <option value="wood">Local Wooden / Bamboo Pole (₹120/pole)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-2 text-[11px] border-t border-slate-200 text-slate-700">
+            <div>Total Wire Needed: <strong class="text-slate-900" id="fenceWireMeters">0 m</strong></div>
+            <div>Wire Weight: <strong class="text-slate-900" id="fenceWireKg">0 kg</strong></div>
+            <div>Poles Required: <strong class="text-slate-900" id="fencePolesCount">0 poles</strong></div>
+            <div>Estimated Cost: <strong class="text-emerald-700 font-bold" id="fenceTotalCost">₹0</strong></div>
+          </div>
+        </div>
+
+        <div class="flex justify-end pt-2 border-t border-slate-100">
+          <button id="applySatAcresBtn" type="button" class="bg-teal-700 hover:bg-teal-800 text-white font-bold px-4 py-2 rounded-xl transition shadow-sm">
+            ✓ Apply Measured Acres to AgriAssist
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
 </body>
 </html>

@@ -39,6 +39,12 @@ const TRANSLATIONS = {
     tabFertilizer: "Fertilizer Doctor",
     tabYojana: "Kisan Yojana Hub",
     tabKhata: "Kisan Bahi-Khata",
+    tabLivestock: "Dairy & Livestock",
+    livestockHeroTitle: "🐄 Dairy & Livestock Husbandry Doctor (पशुपालन एवं दुग्ध सलाहकार)",
+    livestockHeroDesc: "Smallholder dairy intelligence. Calculate scientific daily cattle feed rations (Green fodder, Bhusa, and Concentrate balanced against milk yield), track 21-day heat cycles and calving pregnancy calendars, and access validated Ethno-Veterinary Herbal Remedies (EVM) for mastitis, bloat, and wounds.",
+    rationTitle: "Scientific Daily Feed & Ration Calculator (संतुलित पशु आहार)",
+    gestationTitle: "Heat Cycle & Gestation Pregnancy Tracker (गर्भावधि एवं प्रसव कैलेंडर)",
+    evmTitle: "Ethno-Veterinary Herbal Remedies (EVM / देसी प्राकृतिक पशु चिकित्सा)",
     heroTitle: "What Should You Sow This Season?",
     heroDesc: "Make confident, high-yield planting decisions. Tell us about your soil, season, and irrigation, and AgriAssist will rank the most profitable, climate-resilient crops with exact fertilizer bags, cost estimates, and stage-wise agronomic guidance.",
     seedHeroTitle: "🌱 Seed Rate & Plant Geometry Calculator",
@@ -102,6 +108,12 @@ const TRANSLATIONS = {
     tabFertilizer: "खाद एवं मृदा डॉक्टर",
     tabYojana: "किसान योजना हब",
     tabKhata: "किसान बही-खाता",
+    tabLivestock: "पशुपालन एवं दुग्ध",
+    livestockHeroTitle: "🐄 पशुपालन एवं दुग्ध सलाहकार (डेयरी डॉक्टर)",
+    livestockHeroDesc: "वैज्ञानिक पशुपालन मार्गदर्शन। दुग्ध उत्पादन व शारीरिक वजन अनुसार संतुलित दैनिक आहार (हरा चारा, सूखा भूसा व दाना), 21-दिवसीय मद चक्र व प्रसव कैलेंडर और थनैला, अफारा व खुरपका रोगों के लिए प्रमाणित देसी हर्बल (EVM) उपचार।",
+    rationTitle: "संतुलित दैनिक आहार कैलकुलेटर (पशु पोषण)",
+    gestationTitle: "मद चक्र एवं गर्भावधि कैलेंडर (प्रसव ट्रैकर)",
+    evmTitle: "देसी प्राकृतिक पशु चिकित्सा (EVM हर्बल उपचार)",
     heroTitle: "इस मौसम में कौन सी फसल बोएं?",
     heroDesc: "वैज्ञानिक एवं सटीक फसल निर्णय लें। अपनी मिट्टी, मौसम और सिंचाई की जानकारी दें, और एग्रीअसिस्ट आपको अधिकतम मुनाफे वाली, उपयुक्त फसलों की सिफारिश के साथ सटीक खाद की बोरी, लागत और पैदावार का हिसाब देगा।",
     seedHeroTitle: "🌱 बीज दर एवं पौध दूरी कैलकुलेटर",
@@ -165,6 +177,12 @@ const TRANSLATIONS = {
     tabFertilizer: "खत व माती डॉक्टर",
     tabYojana: "शासकीय योजना केंद्र",
     tabKhata: "शेतकरी वही-खाते",
+    tabLivestock: "दुग्ध व पशुपालन",
+    livestockHeroTitle: "🐄 दुग्ध व पशुपालन डॉक्टर (डेअरी सल्लागार)",
+    livestockHeroDesc: "शास्त्रीय पद्धतीने जनावरांचा दैनिक संतुलित आहार, २१-दिवसीय माज चक्र व गाभण तपासणी आणि थनैला, पोटफुगीसाठी प्रमाणित देशी (EVM) उपचार.",
+    rationTitle: "संतुलित दैनिक पशु आहार कॅल्क्युलेटर",
+    gestationTitle: "माज चक्र व गाभण तपासणी कॅलेंडर",
+    evmTitle: "देशी नैसर्गिक पशु चिकित्सा (EVM हर्बल उपचार)",
     heroTitle: "ह्या हंगामात कोणते पीक घ्यावे?",
     heroDesc: "शास्त्रीय पद्धतीने पीक निवड करा. माती, हवामान आणि पाण्याचे नियोजन करून योग्य पिकांची शिफारस आणि खतांचे अचूक प्रमाण मिळवा.",
     seedHeroTitle: "🌱 बियाणे दर व झाडांमधील अंतर कॅल्क्युलेटर",
@@ -228,6 +246,12 @@ const TRANSLATIONS = {
     tabFertilizer: "ਖਾਦ ਤੇ ਮਿੱਟੀ ਡਾਕਟਰ",
     tabYojana: "ਸਰਕਾਰੀ ਸਕੀਮਾਂ ਕੇਂਦਰ",
     tabKhata: "ਕਿਸਾਨ ਬਹੀ-ਖਾਤਾ",
+    tabLivestock: "ਡੇਅਰੀ ਤੇ ਪਸ਼ੂ ਪਾਲਣ",
+    livestockHeroTitle: "🐄 ਡੇਅਰੀ ਅਤੇ ਪਸ਼ੂ ਪਾਲਣ ਡਾਕਟਰ",
+    livestockHeroDesc: "ਦੁੱਧ ਉਤਪਾਦਨ ਅਨੁਸਾਰ ਰੋਜ਼ਾਨਾ ਸੰਤੁਲਿਤ ਖੁਰਾਕ, ਗਰਭ ਠਹਿਰਣ ਕੈਲੰਡਰ ਅਤੇ ਦੇਸੀ (EVM) ਜੜੀ-ਬੂਟੀਆਂ ਦੇ ਨੁਸਖੇ।",
+    rationTitle: "ਸੰਤੁਲਿਤ ਰੋਜ਼ਾਨਾ ਪਸ਼ੂ ਖੁਰਾਕ ਕੈਲਕੁਲੇਟਰ",
+    gestationTitle: "ਗਰਭ ਅਵਸਥਾ ਅਤੇ ਜਣੇਪਾ ਕੈਲੰਡਰ",
+    evmTitle: "ਦੇਸੀ ਕੁਦਰਤੀ ਪਸ਼ੂ ਇਲਾਜ (EVM ਜੜੀ-ਬੂਟੀਆਂ)",
     heroTitle: "ਇਸ ਸੀਜ਼ਨ ਕਿਹੜੀ ਫਸਲ ਬੀਜੀਏ?",
     heroDesc: "ਵਿਗਿਆਨਕ ਅਤੇ ਸਹੀ ਫਸਲ ਫੈਸਲੇ ਲਓ। ਆਪਣੀ ਜ਼ਮੀਨ ਅਤੇ ਪਾਣੀ ਅਨੁਸਾਰ ਵੱਧ ਮੁਨਾਫਾ ਦੇਣ ਵਾਲੀਆਂ ਫਸਲਾਂ ਅਤੇ ਖਾਦ ਦੀ ਸਹੀ ਮਾਤਰਾ ਜਾਣੋ।",
     seedHeroTitle: "🌱 ਬੀਜ ਦੀ ਮਾਤਰਾ ਅਤੇ ਫਾਸਲਾ ਕੈਲਕੁਲੇਟਰ",
@@ -291,6 +315,12 @@ const TRANSLATIONS = {
     tabFertilizer: "ખાતર અને જમીન ડૉક્ટર",
     tabYojana: "સરકારી યોજના કેન્દ્ર",
     tabKhata: "ખેડૂત વહી-ખાતું",
+    tabLivestock: "પશુપાલન અને ડેરી",
+    livestockHeroTitle: "🐄 પશુપાલન અને ડેરી સલાહકાર",
+    livestockHeroDesc: "દૈનિક સંતુલિત પશુ આહાર, ૨૧-દિવસીય ગાભણ ચક્ર અને દેશી આયુર્વેદિક (EVM) ઉપચાર.",
+    rationTitle: "સંતુલિત દૈનિક પશુ આહાર કેલ્ક્યુલેટર",
+    gestationTitle: "ગાભણ ચક્ર અને વિયાણ કૅલેન્ડર",
+    evmTitle: "દેશી આયુર્વેદિક પશુ ચિકિત્સા (EVM ઉપચાર)",
     heroTitle: "આ સીઝનમાં કયો પાક વાવવો?",
     heroDesc: "વૈજ્ઞાનિક રીતે સાચી પાક પસંદગી કરો. જમીન, ઋતુ અને પાણીની સુવિધા મુજબ સૌથી વધુ નફાકારક પાકની ભલામણ મેળવો.",
     seedHeroTitle: "🌱 બિયારણ દર અને અંતર કેલ્ક્યુલેટર",
@@ -1015,12 +1045,13 @@ const tabFertilizerBtn = document.getElementById("tabFertilizerBtn");
 const tabYojanaBtn = document.getElementById("tabYojanaBtn");
 const tabKhataBtn = document.getElementById("tabKhataBtn");
 
-// 5 New Navigation Tabs & Content
+// 6 New Navigation Tabs & Content
 const tabSeedBtn = document.getElementById("tabSeedBtn");
 const tabSprayerBtn = document.getElementById("tabSprayerBtn");
 const tabSolarBtn = document.getElementById("tabSolarBtn");
 const tabIntercropBtn = document.getElementById("tabIntercropBtn");
 const tabStorageBtn = document.getElementById("tabStorageBtn");
+const tabLivestockBtn = document.getElementById("tabLivestockBtn");
 
 const advisorTabContent = document.getElementById("advisorTabContent");
 const doctorTabContent = document.getElementById("doctorTabContent");
@@ -1037,6 +1068,31 @@ const sprayerTabContent = document.getElementById("sprayerTabContent");
 const solarTabContent = document.getElementById("solarTabContent");
 const intercropTabContent = document.getElementById("intercropTabContent");
 const storageTabContent = document.getElementById("storageTabContent");
+const livestockTabContent = document.getElementById("livestockTabContent");
+
+// Quick Header Actions
+const voiceSearchBtn = document.getElementById("voiceSearchBtn");
+const openSatelliteMapBtn = document.getElementById("openSatelliteMapBtn");
+const closeSatelliteMapBtn = document.getElementById("closeSatelliteMapBtn");
+const satelliteMapModal = document.getElementById("satelliteMapModal");
+const satLocateBtn = document.getElementById("satLocateBtn");
+const satClearPolygonBtn = document.getElementById("satClearPolygonBtn");
+const applySatAcresBtn = document.getElementById("applySatAcresBtn");
+const fenceTypeSelect = document.getElementById("fenceTypeSelect");
+const fencePoleSpacing = document.getElementById("fencePoleSpacing");
+const fencePoleType = document.getElementById("fencePoleType");
+const cropCalendarModal = document.getElementById("cropCalendarModal");
+const closeCropCalendarBtn = document.getElementById("closeCropCalendarBtn");
+const downloadIcsBtn = document.getElementById("downloadIcsBtn");
+
+// 10 Ag-Tech Sub-feature Action Buttons
+const calcLivestockRationBtn = document.getElementById("calcLivestockRationBtn");
+const calcGestationBtn = document.getElementById("calcGestationBtn");
+const calcMandiArbitrageBtn = document.getElementById("calcMandiArbitrageBtn");
+const calcMicronutrientsBtn = document.getElementById("calcMicronutrientsBtn");
+const calcFarmPondBtn = document.getElementById("calcFarmPondBtn");
+const calcMachineryBtn = document.getElementById("calcMachineryBtn");
+const leafPhotoInput = document.getElementById("leafPhotoInput");
 
 // Quick Header Actions
 const openLandConverterBtn = document.getElementById("openLandConverterBtn");
@@ -1331,6 +1387,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // 5 New Ag-Tech Features Initialization
   populateSeedCropOptions();
+  populateMicronutrientCropOptions();
   initLandConverter();
   recalculateLandConverter();
   renderGrainStorageCatalog();
@@ -1356,7 +1413,7 @@ function populateFertilizerCropOptions() {
 }
 
 function setupEventListeners() {
-  // Navigation Tabs (All 14 Modules)
+  // Navigation Tabs (All 15 Modules)
   tabAdvisorBtn?.addEventListener("click", () => switchTab("advisor"));
   tabDoctorBtn?.addEventListener("click", () => switchTab("doctor"));
   tabMandiBtn?.addEventListener("click", () => switchTab("mandi"));
@@ -1367,12 +1424,13 @@ function setupEventListeners() {
   tabYojanaBtn?.addEventListener("click", () => switchTab("yojana"));
   tabKhataBtn?.addEventListener("click", () => switchTab("khata"));
 
-  // 5 New Feature Tabs
+  // 6 Extended Feature Tabs
   tabSeedBtn?.addEventListener("click", () => switchTab("seed"));
   tabSprayerBtn?.addEventListener("click", () => switchTab("sprayer"));
   tabSolarBtn?.addEventListener("click", () => switchTab("solar"));
   tabIntercropBtn?.addEventListener("click", () => switchTab("intercrop"));
   tabStorageBtn?.addEventListener("click", () => switchTab("storage"));
+  tabLivestockBtn?.addEventListener("click", () => switchTab("livestock"));
 
   // Header Quick Actions: Land Converter Modal
   openLandConverterBtn?.addEventListener("click", openLandConverterModal);
@@ -1403,6 +1461,38 @@ function setupEventListeners() {
   });
   calcManualAreaBtn?.addEventListener("click", calculateManualFieldArea);
   applyWalkAcresBtn?.addEventListener("click", applyWalkAcresToForms);
+
+  // Header Quick Actions: Global Voice Search Button
+  voiceSearchBtn?.addEventListener("click", () => startVoiceRecognition("global"));
+
+  // Header Quick Actions: Interactive Satellite Field Plotter Modal
+  openSatelliteMapBtn?.addEventListener("click", openSatelliteMapModal);
+  closeSatelliteMapBtn?.addEventListener("click", closeSatelliteMapModal);
+  satelliteMapModal?.addEventListener("click", (e) => {
+    if (e.target === satelliteMapModal) closeSatelliteMapModal();
+  });
+  satLocateBtn?.addEventListener("click", locateUserOnSatelliteMap);
+  satClearPolygonBtn?.addEventListener("click", clearSatellitePolygon);
+  applySatAcresBtn?.addEventListener("click", applySatelliteAcres);
+  fenceTypeSelect?.addEventListener("change", updateSatelliteFencingCalc);
+  fencePoleSpacing?.addEventListener("change", updateSatelliteFencingCalc);
+  fencePoleType?.addEventListener("change", updateSatelliteFencingCalc);
+
+  // Dynamic Crop Calendar Modal
+  closeCropCalendarBtn?.addEventListener("click", closeCropCalendarModal);
+  cropCalendarModal?.addEventListener("click", (e) => {
+    if (e.target === cropCalendarModal) closeCropCalendarModal();
+  });
+  downloadIcsBtn?.addEventListener("click", downloadCropCalendarIcs);
+
+  // Sub-feature Action Listeners
+  leafPhotoInput?.addEventListener("change", handleLeafPhotoUpload);
+  calcMandiArbitrageBtn?.addEventListener("click", executeMandiArbitrage);
+  calcMicronutrientsBtn?.addEventListener("click", executeMicronutrientDoctor);
+  calcFarmPondBtn?.addEventListener("click", executeFarmPondSizing);
+  calcMachineryBtn?.addEventListener("click", executeMachineryEconomics);
+  calcLivestockRationBtn?.addEventListener("click", executeLivestockRation);
+  calcGestationBtn?.addEventListener("click", executeGestationSchedule);
 
   // Kisan Voice Search Buttons
   voiceCropBtn?.addEventListener("click", () => startVoiceRecognition("cropSearchInput"));
@@ -1645,6 +1735,12 @@ function setupEventListeners() {
       if (fieldMeterModal && !fieldMeterModal.classList.contains("hidden")) {
         closeFieldMeterModal();
       }
+      if (satelliteMapModal && !satelliteMapModal.classList.contains("hidden")) {
+        closeSatelliteMapModal();
+      }
+      if (cropCalendarModal && !cropCalendarModal.classList.contains("hidden")) {
+        closeCropCalendarModal();
+      }
     }
   });
 }
@@ -1665,7 +1761,8 @@ function switchTab(tab) {
     { id: "sprayer", btn: tabSprayerBtn, content: sprayerTabContent },
     { id: "solar", btn: tabSolarBtn, content: solarTabContent },
     { id: "intercrop", btn: tabIntercropBtn, content: intercropTabContent },
-    { id: "storage", btn: tabStorageBtn, content: storageTabContent }
+    { id: "storage", btn: tabStorageBtn, content: storageTabContent },
+    { id: "livestock", btn: tabLivestockBtn, content: livestockTabContent }
   ];
 
   allTabs.forEach(t => {
@@ -1717,6 +1814,8 @@ function switchTab(tab) {
     renderIntercroppingCatalog();
   } else if (tab === "storage" && storageRiskResultContainer && !storageRiskResultContainer.children.length) {
     executeStorageRiskCheck();
+  } else if (tab === "livestock") {
+    initLivestockTab();
   }
 }
 
@@ -1762,6 +1861,9 @@ function setLanguage(lang) {
     renderGrainStorageCatalog();
     executeStorageRiskCheck();
   }
+  if (appState.activeTab === "livestock") {
+    initLivestockTab();
+  }
 }
 
 function toggleLanguage() {
@@ -1801,7 +1903,7 @@ async function detectLocationAndWeather() {
 
 async function fetchWeatherByCoords(lat, lon, locationLabel) {
   try {
-    const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,weather_code&daily=precipitation_sum,temperature_2m_max&timezone=auto`;
+    const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m,wind_gusts_10m&daily=precipitation_sum,temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=auto`;
     const res = await fetch(url);
     if (!res.ok) throw new Error("Weather service unreachable");
     const data = await res.json();
@@ -1809,16 +1911,25 @@ async function fetchWeatherByCoords(lat, lon, locationLabel) {
     const currentTemp = Math.round(data.current?.temperature_2m || 28);
     const humidity = Math.round(data.current?.relative_humidity_2m || 65);
     const weatherCode = data.current?.weather_code ?? 1;
+    const windSpeed = Math.round(data.current?.wind_speed_10m ?? 12);
+    const windGusts = Math.round(data.current?.wind_gusts_10m ?? (windSpeed * 1.3));
+    const maxTemp = Math.round(data.daily?.temperature_2m_max?.[0] ?? currentTemp);
+    const minTemp = Math.round(data.daily?.temperature_2m_min?.[0] ?? currentTemp);
     const rainForecast7Day = Math.round(
       (data.daily?.precipitation_sum || []).slice(0, 7).reduce((a, b) => a + b, 0)
     );
+    const rainProb = Math.round(data.daily?.precipitation_probability_max?.[0] ?? (rainForecast7Day > 10 ? 60 : 10));
 
     appState.weatherData = {
+      lat: lat,
+      lon: lon,
       location: locationLabel,
       temp: currentTemp,
       humidity: humidity,
       rain7d: rainForecast7Day,
       rainForecast7Day: rainForecast7Day,
+      windSpeed: windSpeed,
+      windGusts: windGusts,
       code: weatherCode
     };
 
@@ -1852,16 +1963,58 @@ async function fetchWeatherByCoords(lat, lon, locationLabel) {
     document.getElementById("weatherHumidity").textContent = `${humidity}%`;
     document.getElementById("weatherForecastRain").textContent = `${rainForecast7Day} mm`;
 
+    const windEl = document.getElementById("weatherWindSpeed");
+    if (windEl) windEl.textContent = `${windSpeed} km/h`;
+
     const readinessEl = document.getElementById("weatherSowingReadiness");
-    if (rainForecast7Day >= 25) {
-      readinessEl.textContent = `✓ ${rainForecast7Day}mm Rain Expected: Prime Soil Moisture for Sowing`;
-      readinessEl.className = "bg-emerald-900/80 text-emerald-200 px-3 py-1 rounded-lg font-semibold border border-emerald-600";
-    } else if (rainForecast7Day < 5) {
-      readinessEl.textContent = "⚠️ Dry Spell: Assured Pre-Sowing Irrigation Needed";
-      readinessEl.className = "bg-amber-900/80 text-amber-200 px-3 py-1 rounded-lg font-semibold border border-amber-600";
-    } else {
-      readinessEl.textContent = "✓ Moderate Weather: Good for Standard Sowing Window";
-      readinessEl.className = "bg-blue-900/80 text-blue-200 px-3 py-1 rounded-lg font-semibold border border-blue-600";
+    if (readinessEl) {
+      if (rainForecast7Day >= 25) {
+        readinessEl.textContent = `✓ ${rainForecast7Day}mm Rain Expected: Prime Soil Moisture for Sowing`;
+        readinessEl.className = "bg-emerald-900/80 text-emerald-200 px-3 py-1 rounded-lg font-semibold border border-emerald-600";
+      } else if (rainForecast7Day < 5) {
+        readinessEl.textContent = "⚠️ Dry Spell: Assured Pre-Sowing Irrigation Needed";
+        readinessEl.className = "bg-amber-900/80 text-amber-200 px-3 py-1 rounded-lg font-semibold border border-amber-600";
+      } else {
+        readinessEl.textContent = "✓ Moderate Weather: Good for Standard Sowing Window";
+        readinessEl.className = "bg-blue-900/80 text-blue-200 px-3 py-1 rounded-lg font-semibold border border-blue-600";
+      }
+    }
+
+    // Spraying Feasibility Radar
+    const sprayingBadge = document.getElementById("sprayingRadarBadge");
+    const sprayingText = document.getElementById("sprayingRadarText");
+    if (sprayingBadge && sprayingText) {
+      if (windSpeed > 18 || rainProb > 40) {
+        sprayingBadge.className = "bg-rose-900/90 text-rose-200 px-3 py-1 rounded-lg font-bold border border-rose-600 flex items-center gap-1.5";
+        sprayingText.textContent = `⚠️ Spraying Unsafe: High Wind (${windSpeed} km/h) or Rain Risk (${rainProb}%)`;
+      } else if (windSpeed >= 13) {
+        sprayingBadge.className = "bg-amber-900/90 text-amber-200 px-3 py-1 rounded-lg font-bold border border-amber-600 flex items-center gap-1.5";
+        sprayingText.textContent = `⚠️ Moderate Drift: Spray in early morning or late evening`;
+      } else {
+        sprayingBadge.className = "bg-emerald-900/90 text-emerald-200 px-3 py-1 rounded-lg font-bold border border-emerald-600 flex items-center gap-1.5";
+        sprayingText.textContent = `🎯 Spraying Ideal: Calm wind (${windSpeed} km/h), rain risk low (${rainProb}%)`;
+      }
+    }
+
+    // Extreme Weather Radar Alerts (Frost, Heatwave, Wind Gusts)
+    const extremeAlerts = document.getElementById("extremeRadarAlerts");
+    if (extremeAlerts) {
+      const alerts = [];
+      if (minTemp <= 4) {
+        alerts.push(`<span class="bg-cyan-950/80 text-cyan-200 px-2.5 py-1 rounded-lg border border-cyan-500 text-[11px] font-bold">❄️ Frost Alert: ${minTemp}°C night temp expected. Irrigate or smoke fields.</span>`);
+      }
+      if (maxTemp >= 40) {
+        alerts.push(`<span class="bg-orange-950/80 text-orange-200 px-2.5 py-1 rounded-lg border border-orange-500 text-[11px] font-bold">🔥 Heatwave (Loo): ${maxTemp}°C forecast. Apply light frequent irrigation.</span>`);
+      }
+      if (windGusts >= 38) {
+        alerts.push(`<span class="bg-amber-950/80 text-amber-200 px-2.5 py-1 rounded-lg border border-amber-500 text-[11px] font-bold">🌪️ High Wind Gusts: ${windGusts} km/h. Lodging risk in tall crops.</span>`);
+      }
+
+      if (alerts.length > 0) {
+        extremeAlerts.innerHTML = alerts.join(" ");
+      } else {
+        extremeAlerts.innerHTML = `<span class="text-emerald-300 text-[11px] font-medium">✓ No extreme frost/heatwave threats detected in 48h</span>`;
+      }
     }
 
     weatherAlertBanner.classList.remove("hidden");
@@ -2296,6 +2449,10 @@ function renderTopPick(top) {
       </div>
 
       <div class="flex items-center gap-2">
+        <!-- Dynamic Crop Calendar Button -->
+        <button type="button" class="open-calendar-btn bg-white hover:bg-emerald-100 text-emerald-800 p-2.5 rounded-xl border border-emerald-300 shadow-sm transition" data-crop-id="${top.crop_id}" title="View Dynamic Growth Calendar & Phone Reminders" aria-label="View Growth Calendar">
+          📅
+        </button>
         <!-- Text-to-Speech Button -->
         <button type="button" class="voice-btn bg-white hover:bg-emerald-100 text-emerald-800 p-2.5 rounded-xl border border-emerald-300 shadow-sm transition" data-crop-id="${top.crop_id}" title="Listen to recommendation" aria-label="Listen audio advisory">
           🔊
@@ -2398,6 +2555,7 @@ function renderTopPick(top) {
   `;
 
   // Attach voice, whatsapp, compare, and details listener to top pick
+  topPickCard.querySelector(".open-calendar-btn")?.addEventListener("click", () => openCropCalendarModal(top.crop_id));
   topPickCard.querySelector(".voice-btn")?.addEventListener("click", () => speakCropAdvice(top.crop_id));
   topPickCard.querySelector(".whatsapp-btn")?.addEventListener("click", () => shareOnWhatsApp(top.crop_id));
   topPickCard.querySelector(".compare-checkbox")?.addEventListener("change", (e) => {
@@ -2455,6 +2613,13 @@ function filterAndRenderCrops() {
       details.classList.toggle("hidden");
       const t = TRANSLATIONS[appState.currentLang] || TRANSLATIONS.en;
       btn.textContent = isHidden ? (t.hideAdvice || "Hide Agronomic Advice ▲") : (t.viewAdvice || "View Agronomic Advice ▼");
+    });
+  });
+
+  cropsGrid.querySelectorAll(".open-calendar-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const cropId = btn.getAttribute("data-crop-id");
+      openCropCalendarModal(cropId);
     });
   });
 
@@ -2518,11 +2683,11 @@ function createCropCardHTML(crop) {
   const timelineHTML = `
     <div class="mt-2 pt-2 border-t border-slate-100">
       <div class="font-bold text-slate-800 text-[11px] mb-2 flex items-center gap-1">
-        <span>📅</span> Growth Timeline & IPM Pest Calendar:
+        <span>📅</span> 4-Stage Growth Timeline:
       </div>
-      <div class="grid grid-cols-2 gap-2 text-[10px]">
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[10px]">
         ${growthStages.map(st => `
-          <div class="bg-slate-50 p-2 rounded-lg border border-slate-200">
+          <div class="bg-slate-50 p-2 rounded-lg border border-slate-100">
             <span class="text-brand-700 font-bold block">${st.day_range}</span>
             <strong class="text-slate-900 block truncate" title="${st.stage_name}">${st.stage_name}</strong>
             <p class="text-slate-600 text-[9px] mt-0.5 leading-tight">${st.activities}</p>
@@ -2559,6 +2724,9 @@ function createCropCardHTML(crop) {
             <p class="text-xs text-slate-500 italic mb-2">${crop.scientific_name}</p>
           </div>
           <div class="flex items-center space-x-1 shrink-0">
+            <button type="button" class="open-calendar-btn bg-slate-50 hover:bg-emerald-50 text-slate-700 hover:text-emerald-700 p-1.5 rounded-lg border border-slate-200 transition text-xs" data-crop-id="${crop.crop_id}" title="View Dynamic Growth Calendar" aria-label="View Growth Calendar">
+              📅
+            </button>
             <button type="button" class="voice-btn bg-slate-50 hover:bg-emerald-50 text-slate-700 hover:text-emerald-700 p-1.5 rounded-lg border border-slate-200 transition text-xs" data-crop-id="${crop.crop_id}" title="Listen audio advice" aria-label="Listen audio advice">
               🔊
             </button>
@@ -4983,8 +5151,11 @@ function startVoiceRecognition(targetInputId) {
 
   stopVoiceRecognition();
 
-  activeTargetInputElement = document.getElementById(targetInputId);
-  if (!activeTargetInputElement) return;
+  if (targetInputId === "global") {
+    activeTargetInputElement = null;
+  } else {
+    activeTargetInputElement = document.getElementById(targetInputId);
+  }
 
   const langCodeMap = {
     hi: "hi-IN",
@@ -5008,11 +5179,17 @@ function startVoiceRecognition(targetInputId) {
     voiceTranscriptPreview.textContent = "...";
   }
 
+  let capturedTranscript = "";
+
   activeVoiceRecognition.onresult = (event) => {
     let transcript = "";
     for (let i = event.resultIndex; i < event.results.length; i++) {
       transcript += event.results[i][0].transcript;
+      if (event.results[i].isFinal) {
+        capturedTranscript = transcript;
+      }
     }
+    if (!capturedTranscript) capturedTranscript = transcript;
     if (voiceTranscriptPreview) voiceTranscriptPreview.textContent = transcript;
 
     if (activeTargetInputElement) {
@@ -5027,6 +5204,10 @@ function startVoiceRecognition(targetInputId) {
   };
 
   activeVoiceRecognition.onend = () => {
+    const textToRoute = capturedTranscript || voiceTranscriptPreview?.textContent;
+    if (!activeTargetInputElement && textToRoute && textToRoute !== "..." && textToRoute !== "Listening...") {
+      handleVoiceRecognitionResult(textToRoute);
+    }
     stopVoiceRecognition();
   };
 
@@ -6044,3 +6225,252 @@ function renderStorageRiskResult(res) {
 
 
 
+
+
+// ============================================================================
+// 10 NEW AG-TECH FEATURES IMPLEMENTATION (100% Zero Cost / Browser Native)
+// ============================================================================
+
+// ----------------------------------------------------------------------------
+// 1. INTERACTIVE SATELLITE FIELD PLOTTER & FENCING CALCULATOR (Leaflet + Esri)
+// ----------------------------------------------------------------------------
+
+let satMap = null;
+let satPolygonPoints = [];
+let satPolygonLayer = null;
+let satMarkersGroup = null;
+let currentSatAcres = 0;
+let currentSatPerimM = 0;
+
+function openSatelliteMapModal() {
+  if (!satelliteMapModal) return;
+  satelliteMapModal.classList.remove("hidden");
+  document.body.style.overflow = "hidden";
+  setTimeout(initSatelliteMap, 150);
+}
+
+function closeSatelliteMapModal() {
+  if (!satelliteMapModal) return;
+  satelliteMapModal.classList.add("hidden");
+  document.body.style.overflow = "";
+}
+
+function initSatelliteMap() {
+  if (satMap) {
+    satMap.invalidateSize();
+    return;
+  }
+  if (typeof L === "undefined") {
+    showToast("Leaflet mapping library is loading. Please check internet connection.", "warning");
+    return;
+  }
+
+  const lat = (appState.weatherData && appState.weatherData.lat) || 21.1458;
+  const lon = (appState.weatherData && appState.weatherData.lon) || 79.0882;
+
+  satMap = L.map("leafletSatelliteMap", {
+    center: [lat, lon],
+    zoom: 16,
+    maxZoom: 19
+  });
+
+  // Free Esri World Imagery (Zero cost, high-resolution satellite tiles)
+  L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}", {
+    maxZoom: 19,
+    attribution: "Tiles &copy; Esri, Maxar, Earthstar Geographics"
+  }).addTo(satMap);
+
+  satMarkersGroup = L.layerGroup().addTo(satMap);
+
+  satMap.on("click", (e) => {
+    addSatellitePoint(e.latlng);
+  });
+
+  locateUserOnSatelliteMap();
+}
+
+function locateUserOnSatelliteMap() {
+  if (!satMap) return;
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        const lat = pos.coords.latitude;
+        const lon = pos.coords.longitude;
+        satMap.setView([lat, lon], 17);
+        L.circleMarker([lat, lon], {
+          radius: 7,
+          color: "#38bdf8",
+          fillColor: "#0284c7",
+          fillOpacity: 0.9
+        }).addTo(satMap).bindPopup("📍 Your Current Field Location").openPopup();
+      },
+      (err) => {
+        console.warn("Satellite GPS locate failed:", err);
+      },
+      { timeout: 6000 }
+    );
+  }
+}
+
+function addSatellitePoint(latlng) {
+  satPolygonPoints.push(latlng);
+
+  const marker = L.circleMarker(latlng, {
+    radius: 6,
+    color: "#ffffff",
+    weight: 2,
+    fillColor: "#10b981",
+    fillOpacity: 1
+  });
+  satMarkersGroup.addLayer(marker);
+
+  updateSatellitePolygon();
+}
+
+function clearSatellitePolygon() {
+  satPolygonPoints = [];
+  if (satMarkersGroup) satMarkersGroup.clearLayers();
+  if (satPolygonLayer && satMap) {
+    satMap.removeLayer(satPolygonLayer);
+    satPolygonLayer = null;
+  }
+  updateSatelliteCalculations(0, 0);
+}
+
+function updateSatellitePolygon() {
+  if (!satMap) return;
+  if (satPolygonLayer) {
+    satMap.removeLayer(satPolygonLayer);
+    satPolygonLayer = null;
+  }
+
+  const badge = document.getElementById("satPointsBadge");
+  if (badge) badge.textContent = `Corners: ${satPolygonPoints.length} points`;
+
+  if (satPolygonPoints.length < 2) {
+    updateSatelliteCalculations(0, 0);
+    return;
+  }
+
+  if (satPolygonPoints.length === 2) {
+    satPolygonLayer = L.polyline(satPolygonPoints, { color: "#10b981", weight: 3, dashArray: "5, 5" }).addTo(satMap);
+    const p1 = satPolygonPoints[0];
+    const p2 = satPolygonPoints[1];
+    const distM = p1.distanceTo(p2);
+    updateSatelliteCalculations(0, distM);
+    return;
+  }
+
+  satPolygonLayer = L.polygon(satPolygonPoints, {
+    color: "#10b981",
+    weight: 3,
+    fillColor: "#10b981",
+    fillOpacity: 0.25
+  }).addTo(satMap);
+
+  const areaSqM = computePolygonAreaSqM(satPolygonPoints);
+  const perimM = computePolygonPerimeterM(satPolygonPoints);
+  updateSatelliteCalculations(areaSqM, perimM);
+}
+
+function computePolygonPerimeterM(points) {
+  let perim = 0;
+  for (let i = 0; i < points.length; i++) {
+    const nextIdx = (i + 1) % points.length;
+    perim += points[i].distanceTo(points[nextIdx]);
+  }
+  return perim;
+}
+
+function computePolygonAreaSqM(points) {
+  if (points.length < 3) return 0;
+  let area = 0;
+  const rad = Math.PI / 180;
+  for (let i = 0; i < points.length; i++) {
+    const p1 = points[i];
+    const p2 = points[(i + 1) % points.length];
+    area += (p2.lng * rad - p1.lng * rad) * (2 + Math.sin(p1.lat * rad) + Math.sin(p2.lat * rad));
+  }
+  area = Math.abs(area * 6378137 * 6378137 / 2.0);
+  return area;
+}
+
+function updateSatelliteCalculations(areaSqM, perimM) {
+  currentSatPerimM = perimM;
+  currentSatAcres = areaSqM / 4046.86;
+  const guntha = currentSatAcres * 40.0;
+  const bigha = currentSatAcres * 1.613;
+
+  const elAcres = document.getElementById("satAreaAcres");
+  const elGuntha = document.getElementById("satAreaGuntha");
+  const elBigha = document.getElementById("satAreaBigha");
+  const elPerim = document.getElementById("satPerimeterM");
+
+  if (elAcres) elAcres.textContent = currentSatAcres.toFixed(2);
+  if (elGuntha) elGuntha.textContent = guntha.toFixed(1);
+  if (elBigha) elBigha.textContent = bigha.toFixed(2);
+  if (elPerim) elPerim.textContent = `${Math.round(perimM)} m`;
+
+  updateSatelliteFencingCalc();
+}
+
+function updateSatelliteFencingCalc() {
+  const fenceType = document.getElementById("fenceTypeSelect")?.value || "barbed_4";
+  const spacingM = parseFloat(document.getElementById("fencePoleSpacing")?.value) || 3.0;
+  const poleType = document.getElementById("fencePoleType")?.value || "cement";
+
+  const perimM = currentSatPerimM || 0;
+  let strands = 4;
+  let isChainLink = false;
+  let isSolar = false;
+
+  if (fenceType === "barbed_3") strands = 3;
+  else if (fenceType === "barbed_4") strands = 4;
+  else if (fenceType === "solar_electric") { strands = 3; isSolar = true; }
+  else if (fenceType === "chain_link") { isChainLink = true; }
+
+  const totalWireM = isChainLink ? Math.round(perimM) : Math.round(perimM * strands);
+  const wireKg = isChainLink ? Math.round(perimM * 2.8) : Math.round(totalWireM / 10.0);
+  const polesCount = perimM > 0 ? Math.ceil(perimM / spacingM) + 4 : 0;
+
+  let poleRate = 280;
+  if (poleType === "iron") poleRate = 350;
+  else if (poleType === "wood") poleRate = 120;
+
+  const wireCost = isChainLink ? (perimM * 220) : (wireKg * 85.0);
+  const poleCost = polesCount * poleRate;
+  const laborAndAccessories = perimM * 25.0 + (isSolar ? 15000.0 : 0);
+  const totalCost = Math.round(wireCost + poleCost + laborAndAccessories);
+
+  const elWireM = document.getElementById("fenceWireMeters");
+  const elWireKg = document.getElementById("fenceWireKg");
+  const elPoles = document.getElementById("fencePolesCount");
+  const elCost = document.getElementById("fenceTotalCost");
+
+  if (elWireM) elWireM.textContent = `${totalWireM} m`;
+  if (elWireKg) elWireKg.textContent = `${wireKg} kg`;
+  if (elPoles) elPoles.textContent = `${polesCount} poles`;
+  if (elCost) elCost.textContent = `₹${totalCost.toLocaleString("en-IN")}`;
+}
+
+function applySatelliteAcres() {
+  if (currentSatAcres <= 0.01) {
+    showToast("Please plot at least 3 points on the satellite map first.", "warning");
+    return;
+  }
+  const acresVal = parseFloat(currentSatAcres.toFixed(2));
+  if (landSizeInput) {
+    landSizeInput.value = acresVal;
+    landSizeInput.dispatchEvent(new Event("change"));
+  }
+  const inputs = ["fertLandAcres", "irrigLandInput", "organicLandInput", "sprayLandAcres", "seedLandAcres", "solarLandAcres", "machineryFarmAcres", "microAcresInput"];
+  inputs.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = acresVal;
+  });
+
+  closeSatelliteMapModal();
+  showToast(`Applied ${acresVal} measured acres from satellite imagery!`, "success");
+}
+
+// ----------------------------------------------------------------------------
