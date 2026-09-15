@@ -1837,5 +1837,36 @@
   </div>
 
   
+<!-- DYNAMIC CROP CALENDAR MODAL (Milestones & ICS Export) -->
+  <div id="cropCalendarModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 modal-backdrop no-print">
+    <div class="bg-white w-full max-w-3xl rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+      <div class="bg-brand-800 text-white px-6 py-4 flex items-center justify-between">
+        <h3 class="font-bold text-base flex items-center gap-2">
+          <span>📅</span> <span id="calendarCropModalTitle">Dynamic Crop Growth Calendar & Reminders</span>
+        </h3>
+        <button id="closeCropCalendarBtn" type="button" class="text-emerald-200 hover:text-white text-xl font-bold">&times;</button>
+      </div>
+
+      <div class="p-6 overflow-y-auto space-y-5 text-xs">
+        <div class="flex flex-wrap items-center justify-between gap-3 bg-brand-50 p-3.5 rounded-xl border border-brand-200">
+          <div>
+            <span class="font-bold text-brand-950 text-sm" id="calSowingSummary">Sowing: -- | Harvest: --</span>
+            <div class="text-slate-600 text-[11px]" id="calDurationDays">Total Crop Lifecycle: 120 Days</div>
+          </div>
+          <button id="downloadIcsBtn" type="button" class="bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs px-4 py-2 rounded-xl shadow-sm transition flex items-center gap-2">
+            <span>📥</span> <span>Add to Phone Calendar (.ics)</span>
+          </button>
+        </div>
+
+        <!-- Timeline Events -->
+        <div id="cropCalendarTimelineContainer" class="space-y-3">
+          <!-- Injected by app.js -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  
 </body>
 </html>

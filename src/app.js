@@ -6474,3 +6474,239 @@ function applySatelliteAcres() {
 }
 
 // ----------------------------------------------------------------------------
+// 2. DYNAMIC CROP GROWTH CALENDAR & RFC 5545 .ICS EXPORT
+// ----------------------------------------------------------------------------
+
+let currentCalendarCropId = "wheat";
+let currentIcsData = "";
+
+async function openCropCalendarModal(cropId) {
+  if (!cropCalendarModal) return;
+  currentCalendarCropId = cropId || "wheat";
+  cropCalendarModal.classList.remove("hidden");
+  document.body.style.overflow = "hidden";
+
+  const timelineContainer = document.getElementById("cropCalendarTimelineContainer");
+  if (timelineContainer) {
+    timelineContainer.innerHTML = `<div class="p-8 text-center text-slate-500 font-bold animate-pulse">Loading agronomic growth calendar...</div>`;
+  }
+
+  const todayStr = new Date().toISOString().split("T")[0];
+  const acres = parseFloat(landSizeInput?.value) || 1.0;
+
+  try {
+    const res = await fetch(`${API_BASE}/crop-calendar/generate`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        crop_id: currentCalendarCropId,
+        sowing_date: todayStr,
+        land_size_acres: acres
+      })
+    });
+
+    if (res.ok) {
+      const data = await res.json();
+      renderCropCalendarData(data);
+    } else {
+      throw new Error("API offline");
+    }
+  } catch (err) {
+    console.warn("Using offline calendar generator:", err);
+    const fallback = generateOfflineCropCalendar(currentCalendarCropId, todayStr, acres);
+    renderCropCalendarData(fallback);
+  }
+}
+
+function closeCropCalendarModal() {
+  if (!cropCalendarModal) return;
+  cropCalendarModal.classList.add("hidden");
+  document.body.style.overflow = "";
+}
+
+function renderCropCalendarData(data) {
+  const modalTitle = document.getElementById("calendarCropModalTitle");
+  const summaryEl = document.getElementById("calSowingSummary");
+  const durationEl = document.getElementById("calDurationDays");
+  const timelineContainer = document.getElementById("cropCalendarTimelineContainer");
+
+  currentIcsData = data.ics_calendar_text || "";
+
+  if (modalTitle) modalTitle.textContent = `📅 ${data.crop_name} Dynamic Growth Calendar & Phone Reminders`;
+  if (summaryEl) summaryEl.textContent = `Sowing: ${data.sowing_date}  ➔  Expected Harvest: ${data.harvest_date}`;
+  if (durationEl) durationEl.textContent = `Total Lifecycle: ${data.total_duration_days} Days`;
+
+  if (!timelineContainer) return;
+
+  timelineContainer.innerHTML = (data.events || []).map((ev, i) => {
+    const icons = {
+      "Sowing": "🌱",
+      "Irrigation": "💧",
+      "Weeding": "🌿",
+      "Nutrient": "🧪",
+      "Pest Management": "🐛",
+      "Harvesting": "🌾"
+    };
+    const icon = icons[ev.activity_type] || "📌";
+
+    return `
+      <div class="relative pl-6 pb-4 border-l-2 border-emerald-300 last:border-l-0">
+        <div class="absolute -left-3 top-0 w-6 h-6 rounded-full bg-emerald-600 text-white flex items-center justify-center text-xs font-bold shadow">
+          ${i + 1}
+        </div>
+        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm space-y-2">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <div>
+              <span class="bg-emerald-100 text-emerald-900 font-extrabold text-[10px] px-2 py-0.5 rounded uppercase">
+                ${ev.activity_type} • Day ${ev.day_offset}
+              </span>
+              <h4 class="font-bold text-slate-900 text-sm mt-1 flex items-center gap-1.5">
+                <span>${icon}</span> <span>${ev.phase_name}</span>
+              </h4>
+            </div>
+            <span class="font-mono text-xs font-bold text-slate-700 bg-slate-100 px-2.5 py-1 rounded-lg">
+              📅 ${ev.target_date}
+            </span>
+          </div>
+
+          <p class="text-slate-700 leading-relaxed text-xs">
+            ${ev.action_required}
+          </p>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-2 border-t border-slate-100 text-[11px]">
+            <div class="bg-amber-50 p-2 rounded-lg text-amber-900 border border-amber-200">
+              <strong class="block">⚠️ Critical Alert:</strong>
+              ${ev.critical_alert}
+            </div>
+            <div class="bg-sky-50 p-2 rounded-lg text-sky-900 border border-sky-200">
+              <strong class="block">⛅ Weather Sensitivity:</strong>
+              ${ev.weather_sensitivity}
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join("");
+}
+
+function downloadCropCalendarIcs() {
+  if (!currentIcsData) {
+    showToast("No calendar data to export.", "warning");
+    return;
+  }
+  const blob = new Blob([currentIcsData], { type: "text/calendar;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `crop_calendar_${currentCalendarCropId}.ics`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  showToast("Calendar downloaded! Open the .ics file to sync with Google / Apple / Android calendar.", "success");
+}
+
+function generateOfflineCropCalendar(cropId, sowingDateStr, acres) {
+  const sDate = new Date(sowingDateStr || new Date());
+  const found = LOCAL_CROPS_DB.find(c => c.id === cropId);
+  const cropName = found ? found.name : cropId.toUpperCase();
+  let totalDays = 120;
+  if (found && found.duration_days) {
+    const num = parseInt(found.duration_days);
+    if (!isNaN(num)) totalDays = num;
+  }
+
+  const addDays = (d, n) => {
+    const res = new Date(d);
+    res.setDate(res.getDate() + n);
+    return res.toISOString().split("T")[0];
+  };
+
+  const events = [
+    {
+      day_offset: 0,
+      target_date: addDays(sDate, 0),
+      phase_name: "Sowing & Basal Nutrients",
+      activity_type: "Sowing",
+      action_required: "Treat seed with Trichoderma (5g/kg). Broadcast basal fertilizer (DAP + MOP + 1/3rd Urea). Sow at optimum seed depth.",
+      critical_alert: "Ensure adequate soil moisture before drilling seed.",
+      weather_sensitivity: "Avoid sowing right before torrential rain to prevent soil crusting."
+    },
+    {
+      day_offset: Math.min(21, Math.round(totalDays * 0.18)),
+      target_date: addDays(sDate, Math.min(21, Math.round(totalDays * 0.18))),
+      phase_name: "Crown Root & Early Vegetative Vigor",
+      activity_type: "Irrigation",
+      action_required: "Provide 1st critical irrigation. Apply 1st top dressing of Urea (1/3rd dose) along with light intercultural weeding.",
+      critical_alert: "Moisture stress at this stage permanently reduces tillering and yield.",
+      weather_sensitivity: "Postpone irrigation if rainfall > 15 mm is forecast."
+    },
+    {
+      day_offset: Math.min(35, Math.round(totalDays * 0.30)),
+      target_date: addDays(sDate, Math.min(35, Math.round(totalDays * 0.30))),
+      phase_name: "Active Tillering & Weed Management",
+      activity_type: "Weeding",
+      action_required: "Perform secondary manual weeding or apply selective post-emergence herbicide. Check leaf undersides for sucking pests.",
+      critical_alert: "Weed competition in first 40 days causes 30-40% yield drop.",
+      weather_sensitivity: "Spray herbicide only during calm wind (< 12 km/h)."
+    },
+    {
+      day_offset: Math.round(totalDays * 0.50),
+      target_date: addDays(sDate, Math.round(totalDays * 0.50)),
+      phase_name: "Stem Elongation & Panicle / Bud Initiation",
+      activity_type: "Nutrient",
+      action_required: "Broadcast remaining 1/3rd Urea. Apply foliar micronutrient booster (Zinc + Boron 0.1%) to enhance flowering.",
+      critical_alert: "Do not delay nitrogen application beyond this point to avoid vegetative lodging.",
+      weather_sensitivity: "Avoid over-irrigation during strong wind gusts to prevent lodging."
+    },
+    {
+      day_offset: Math.round(totalDays * 0.70),
+      target_date: addDays(sDate, Math.round(totalDays * 0.70)),
+      phase_name: "Flowering & Grain / Fruit Filling",
+      activity_type: "Pest Management",
+      action_required: "Maintain soil moisture at field capacity. Scout for caterpillars/borers. Install pheromone traps.",
+      critical_alert: "Never spray synthetic chemical insecticides during morning pollination.",
+      weather_sensitivity: "Extreme heat (> 38°C) desiccates pollen; light evening sprinkler helps."
+    },
+    {
+      day_offset: totalDays,
+      target_date: addDays(sDate, totalDays),
+      phase_name: "Physiological Maturity & Harvest",
+      activity_type: "Harvesting",
+      action_required: "Harvest when 80-85% grains or pods turn golden brown. Sun dry on clean tarpaulin to safe moisture limit.",
+      critical_alert: "Do not delay harvest to prevent grain shattering and unseasonal rain spoilage.",
+      weather_sensitivity: "Strict dry weather required for harvesting and threshing."
+    }
+  ];
+
+  const icsLines = [
+    "BEGIN:VCALENDAR",
+    "VERSION:2.0",
+    "PRODID:-//AgriAssist//Dynamic Crop Sowing Calendar//EN",
+    "CALSCALE:GREGORIAN",
+    "METHOD:PUBLISH"
+  ];
+  events.forEach(ev => {
+    const dClean = ev.target_date.replace(/-/g, "");
+    icsLines.push("BEGIN:VEVENT");
+    icsLines.push(`SUMMARY:AgriAssist: ${cropName} - ${ev.phase_name}`);
+    icsLines.push(`DESCRIPTION:${ev.action_required} | Alert: ${ev.critical_alert}`);
+    icsLines.push(`DTSTART;VALUE=DATE:${dClean}`);
+    icsLines.push(`DTEND;VALUE=DATE:${dClean}`);
+    icsLines.push("STATUS:CONFIRMED");
+    icsLines.push("END:VEVENT");
+  });
+  icsLines.push("END:VCALENDAR");
+
+  return {
+    crop_id: cropId,
+    crop_name: cropName,
+    sowing_date: sowingDateStr,
+    harvest_date: addDays(sDate, totalDays),
+    total_duration_days: totalDays,
+    events: events,
+    ics_calendar_text: icsLines.join("\r\n")
+  };
+}
+
+// ----------------------------------------------------------------------------
