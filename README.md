@@ -19,7 +19,7 @@ A clean, responsive, farmer-oriented web application for deciding what crops to 
   - Dedicated stoichiometric calculator for Urea, DAP, MOP, plus Agricultural Lime or Gypsum dosages.
 - **📱 PWA & 100% Offline Resilient**:
   - Service Worker (`sw.js`) and PWA `manifest.json`.
-  - Complete 28-crop local database and offline recommendation engine if the backend is not yet started.
+  - Complete 100-crop local database and offline recommendation engine if the backend is not yet started.
 
 ## How to Run
 
