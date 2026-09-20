@@ -7898,3 +7898,65 @@ function handleVoiceRecognitionResult(transcript) {
     }
   }
 }
+
+// ----------------------------------------------------------------------------
+// 10. POST-HARVEST GRAIN AERATION & MOISTURE LOSS CALCULATOR
+// ----------------------------------------------------------------------------
+function calculatePostHarvestAerationOffline(data) {
+  const qty = Math.max(0.1, parseFloat(data.quantity_quintals || 100));
+  const mInit = Math.max(5, Math.min(40, parseFloat(data.initial_moisture_pct || 19.5)));
+  const tempC = parseFloat(data.ambient_temp_c != null ? data.ambient_temp_c : 28);
+  const rhPct = Math.max(10, Math.min(99, parseFloat(data.ambient_rh_pct != null ? data.ambient_rh_pct : 65)));
+  
+  const mTarget = parseFloat(data.target_moisture_pct || 12.0);
+  const initKg = qty * 100;
+  const dmKg = initKg * (1 - mInit / 100);
+  const finalKg = dmKg / (1 - mTarget / 100);
+  const waterKg = Math.max(0, Math.round((initKg - finalKg) * 10) / 10);
+  const finalQ = Math.round((finalKg / 100) * 100) / 100;
+
+  const emc = Math.max(7, Math.min(22, Math.round(1.1 * Math.sqrt(Math.log(1 / (1 - Math.min(0.95, rhPct / 100)))) * (300 / (tempC + 273.15)) * 9.5 * 10) / 10));
+  const cfmRate = mInit > mTarget + 1 ? 2.5 : 0.8;
+  const totalCfm = Math.round(qty * cfmRate * 10) / 10;
+  const fanHp = Math.max(0.25, Math.round(((totalCfm * 1.8) / (6356 * 0.55)) * 100) / 100);
+  const sunHours = waterKg > 0 ? Math.round((waterKg / (qty * 1.8)) * 4 * 10) / 10 : 0;
+  const forcedAirHours = waterKg > 0 ? Math.round((waterKg / Math.max(10, totalCfm * 0.025)) * 10) / 10 : 0;
+
+  let safeDays = 180;
+  let riskLevel = "Safe";
+  let aflatoxinWarning = "OPTIMAL: Moisture content is within safe storage limits.";
+  if (mInit > 18) {
+    safeDays = Math.max(2, Math.round(15 - (mInit - 18) * 3 - Math.max(0, tempC - 25) * 0.3));
+    riskLevel = "Critical Hazard";
+    aflatoxinWarning = "CRITICAL: Moisture exceeds 18%. High risk of Aspergillus mold & aflatoxin heating within 48-72 hrs.";
+  } else if (mInit > mTarget + 1.5) {
+    safeDays = Math.max(10, Math.round(45 - (mInit - mTarget) * 8 - Math.max(0, tempC - 25)));
+    riskLevel = "Moderate Warning";
+    aflatoxinWarning = "WARNING: Grain is above safe storage limit. Weevil multiplication and mold possible in 2-4 weeks.";
+  }
+
+  return {
+    grain_type: data.grain_type || "Paddy (Rice)",
+    quantity_quintals: qty,
+    initial_moisture_pct: mInit,
+    target_moisture_pct: mTarget,
+    moisture_to_remove_kg: waterKg,
+    final_quantity_quintals: finalQ,
+    equilibrium_moisture_content_pct: emc,
+    aeration_fan_airflow_cfm: totalCfm,
+    fan_power_hp_estimate: fanHp,
+    estimated_drying_hours_sun: sunHours,
+    estimated_drying_hours_forced_air: forcedAirHours,
+    safe_storage_duration_days: safeDays,
+    storage_risk_level: riskLevel,
+    aflatoxin_mold_warning: aflatoxinWarning,
+    recommended_protocols: [
+      `Spread in thin layers (3-5 cm) on tarpaulin, raking every 2 hours.`,
+      `Run forced-air blowers when ambient RH is below ${Math.round(emc * 5.2)}% to prevent moisture re-absorption.`,
+      `Target storage moisture is ${mTarget}% (air EMC is ${emc}%).`
+    ]
+  };
+}
+
+window.calculatePostHarvestAerationOffline = calculatePostHarvestAerationOffline;
+
