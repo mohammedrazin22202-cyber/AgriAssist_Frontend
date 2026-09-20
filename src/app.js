@@ -8049,4 +8049,68 @@ function calculatePolyhouseClimateOffline(data) {
 
 window.calculatePolyhouseClimateOffline = calculatePolyhouseClimateOffline;
 
+// ----------------------------------------------------------------------------
+// 12. STUBBLE RESIDUE (PARALI) TO BIOCHAR & COMPOST BALANCER
+// ----------------------------------------------------------------------------
+function calculateBiocharStubbleOffline(data) {
+  const acres = Math.max(0.1, parseFloat(data.land_size_acres || 5.0));
+  const cropStr = (data.residue_crop || "Paddy Straw (Parali)").toLowerCase();
+
+  let biomassPerAcre = 25.0;
+  if (cropStr.includes("paddy") || cropStr.includes("rice") || cropStr.includes("parali")) biomassPerAcre = 28.0;
+  else if (cropStr.includes("wheat") || cropStr.includes("turi")) biomassPerAcre = 22.0;
+  else if (cropStr.includes("cotton")) biomassPerAcre = 18.0;
+  else if (cropStr.includes("mustard")) biomassPerAcre = 14.0;
+  else if (cropStr.includes("sugarcane")) biomassPerAcre = 35.0;
+  else if (cropStr.includes("maize")) biomassPerAcre = 24.0;
+
+  const totalBiomassQ = Math.round(acres * biomassPerAcre * 10) / 10;
+  const totalBiomassKg = totalBiomassQ * 100;
+  const biocharQ = Math.round(totalBiomassQ * 0.30 * 10) / 10;
+  const biocharKg = biocharQ * 100;
+  const economicVal = Math.round(biocharKg * 15.0);
+  const waterLiters = Math.round(biocharKg * 3.8);
+  const co2SeqKg = Math.round(biocharKg * 2.6 * 10) / 10;
+  const co2AvertedKg = Math.round(totalBiomassKg * 1.48 * 10) / 10;
+  const pm25AvertedKg = Math.round((totalBiomassKg / 1000.0) * 7.5 * 10) / 10;
+
+  let ngtFine = 5000.0;
+  if (acres < 2.0) ngtFine = 2500.0;
+  else if (acres > 5.0) ngtFine = 15000.0;
+
+  const cowDungKg = Math.round(totalBiomassKg * 0.20);
+  const decomposerCaps = Math.max(4, Math.round(acres * 4));
+  const jaggeryKg = Math.round(acres * 2.0 * 10) / 10;
+
+  return {
+    residue_crop: data.residue_crop || "Paddy Straw (Parali)",
+    land_size_acres: acres,
+    estimated_residue_biomass_quintals: totalBiomassQ,
+    biochar_yield_quintals: biocharQ,
+    economic_value_biochar_inr: economicVal,
+    soil_water_retention_gain_liters: waterLiters,
+    carbon_sequestration_co2e_kg: co2SeqKg,
+    co2_emissions_averted_kg: co2AvertedKg,
+    pm25_pollution_averted_kg: pm25AvertedKg,
+    composting_recipe: {
+      raw_straw_c_n_ratio: "80:1 (Very High, decay takes 120+ days)",
+      balanced_compost_c_n_ratio: "28:1 (Optimal Humus within 35-45 days)",
+      cow_dung_slurry_required_kg: cowDungKg,
+      pusa_decomposer_capsules: decomposerCaps,
+      fermentation_jaggery_kg: jaggeryKg,
+      water_moisture_target_pct: "55 - 60%",
+      pile_turning_schedule: "Turn on Day 7, Day 14, and Day 21"
+    },
+    ngt_fine_penalty_averted_inr: ngtFine,
+    actionable_farmer_guidelines: [
+      `Generate ${biocharQ} quintals of high-grade biochar via Kon-Tiki flame kiln (worth ₹${economicVal.toLocaleString("en-IN")}).`,
+      `Avert ${pm25AvertedKg} kg of toxic PM2.5 smog and avoid ₹${ngtFine.toLocaleString("en-IN")} NGT burning fine.`,
+      `Soil water holding capacity boosted by ${waterLiters.toLocaleString("en-IN")} liters.`
+    ]
+  };
+}
+
+window.calculateBiocharStubbleOffline = calculateBiocharStubbleOffline;
+
+
 
