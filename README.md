@@ -17,8 +17,12 @@ A clean, responsive, farmer-oriented web application for deciding what crops to 
   - Calculates annual net profit and Soil Health Index (nitrogen-fixing benefits and pest disruption).
 - **🧪 Fertilizer & Soil Doctor**:
   - Dedicated stoichiometric calculator for Urea, DAP, MOP, plus Agricultural Lime or Gypsum dosages.
+- **🌾 Advanced Agritech Calculators**:
+  - Grain moisture removal, silo aeration (CFM) & safe storage mold warnings.
+  - Protected cultivation polyhouse climate sizer, cooling pads, VPD & MIDH subsidy.
+  - Farm stubble (parali) residue-to-biochar pyrolysis yield & C:N rapid composting optimizer.
 - **📱 PWA & 100% Offline Resilient**:
-  - Service Worker (`sw.js`) and PWA `manifest.json`.
+  - Service Worker (`sw.js`) with v3 asset caching and PWA `manifest.json`.
   - Complete 100-crop local database and offline recommendation engine if the backend is not yet started.
 
 ## How to Run
