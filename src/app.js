@@ -7960,3 +7960,93 @@ function calculatePostHarvestAerationOffline(data) {
 
 window.calculatePostHarvestAerationOffline = calculatePostHarvestAerationOffline;
 
+// ----------------------------------------------------------------------------
+// 11. POLYHOUSE & GREENHOUSE CLIMATE CONTROL SIZER
+// ----------------------------------------------------------------------------
+function calculatePolyhouseClimateOffline(data) {
+  const area = Math.max(50, parseFloat(data.covered_area_sqm || 1008));
+  const height = Math.max(3, Math.min(8, parseFloat(data.roof_height_meters || 4.5)));
+  const tempAmb = parseFloat(data.ambient_max_temp_c != null ? data.ambient_max_temp_c : 40);
+  const rhAmb = Math.max(10, Math.min(95, parseFloat(data.ambient_min_rh_pct != null ? data.ambient_min_rh_pct : 30)));
+  const stype = data.structure_type || "Naturally Ventilated Polyhouse (NVPH)";
+  const crop = data.crop_type || "Bell Pepper (Colored Capsicum)";
+
+  const volume = Math.round(area * height * 0.85 * 10) / 10;
+  const ridgeVent = Math.round(area * 0.18 * 10) / 10;
+  const sideVent = Math.round(area * 0.28 * 10) / 10;
+
+  const airflowM3Min = volume * 1.15;
+  const airflowCfm = Math.round(airflowM3Min * 35.315);
+
+  let numFans = 0;
+  let padArea = 0;
+  let coolingWaterLph = 0;
+  if (stype.toLowerCase().includes("fan") || stype.toLowerCase().includes("pad") || stype.toLowerCase().includes("greenhouse")) {
+    numFans = Math.max(1, Math.ceil(airflowCfm / 22000));
+    padArea = Math.round(((airflowM3Min / 60) / 1.25) * 10) / 10;
+    coolingWaterLph = Math.round(padArea * 360);
+  }
+
+  // Tw approximation via Stull formula
+  const tw = tempAmb * Math.atan(0.151977 * Math.sqrt(rhAmb + 8.313659))
+    + Math.atan(tempAmb + rhAmb)
+    - Math.atan(rhAmb - 1.676331)
+    + 0.00391838 * Math.pow(rhAmb, 1.5) * Math.atan(0.023101 * rhAmb)
+    - 4.686035;
+
+  let tempInside = Math.round((tempAmb - 4.5) * 10) / 10;
+  let insideRh = Math.min(80, Math.round((rhAmb + 15) * 10) / 10);
+  if (stype.toLowerCase().includes("fan") || stype.toLowerCase().includes("pad")) {
+    tempInside = Math.round((tempAmb - ((tempAmb - tw) * 0.75)) * 10) / 10;
+    insideRh = Math.min(85, Math.round((rhAmb + (100 - rhAmb) * 0.65) * 10) / 10);
+  } else if (stype.toLowerCase().includes("shade")) {
+    tempInside = Math.round((tempAmb - 3.5) * 10) / 10;
+    insideRh = Math.min(90, Math.round((rhAmb + 10) * 10) / 10);
+  }
+
+  const shadePct = tempAmb >= 42 ? 75 : (tempAmb >= 37 ? 50 : 35);
+  const svp = 0.61078 * Math.exp((17.27 * tempInside) / (tempInside + 237.3));
+  const avp = svp * (insideRh / 100);
+  const vpd = Math.round((svp - avp) * 100) / 100;
+
+  let vpdStatus = "Optimal";
+  if (vpd < 0.4) vpdStatus = "Low Transpiration (Humid)";
+  else if (vpd > 1.25) vpdStatus = "High Transpiration Stress";
+
+  let ratePerSqm = 844;
+  if (stype.toLowerCase().includes("fan") || stype.toLowerCase().includes("pad")) ratePerSqm = 1465;
+  else if (stype.toLowerCase().includes("shade")) ratePerSqm = 710;
+
+  const totalCost = Math.round(area * ratePerSqm);
+  const subsidyInr = Math.round(totalCost * 0.50);
+  const farmerShare = totalCost - subsidyInr;
+
+  return {
+    structure_type: stype,
+    covered_area_sqm: area,
+    crop_type: crop,
+    polyhouse_volume_m3: volume,
+    ridge_vent_area_sqm: ridgeVent,
+    side_vent_area_sqm: sideVent,
+    exhaust_fan_airflow_cfm: airflowCfm,
+    number_of_exhaust_fans_50inch: numFans,
+    cooling_pad_area_sqm: padArea,
+    cooling_water_flow_rate_lph: coolingWaterLph,
+    shade_net_recommended_pct: shadePct,
+    expected_inside_temp_c: tempInside,
+    vapor_pressure_deficit_kpa: vpd,
+    vpd_status: vpdStatus,
+    estimated_midh_subsidy_inr: subsidyInr,
+    total_project_cost_inr: totalCost,
+    farmer_net_share_inr: farmerShare,
+    operational_recommendations: [
+      `Fit 40-mesh insect-proof netting on all open vents to prevent virus vectors.`,
+      `Estimated inside VPD is ${vpd} kPa (${vpdStatus}).`,
+      `MIDH 50% capital subsidy estimate is ₹${subsidyInr.toLocaleString("en-IN")}.`
+    ]
+  };
+}
+
+window.calculatePolyhouseClimateOffline = calculatePolyhouseClimateOffline;
+
+
