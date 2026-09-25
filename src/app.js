@@ -1471,6 +1471,9 @@ document.addEventListener("DOMContentLoaded", () => {
   recalculateLandConverter();
   renderGrainStorageCatalog();
 
+  // Contingency Protocol (Code Name: Plastic Man) - Hidden Owner Verification
+  initContingencyProtocol();
+
   // Load saved language or default to en
   const savedLang = localStorage.getItem("agriassist_lang");
   setLanguage(savedLang && TRANSLATIONS[savedLang] ? savedLang : "en");
@@ -1684,7 +1687,14 @@ function setupEventListeners() {
   // Plant Doctor controls
   doctorCropSelect?.addEventListener("change", executePlantDoctor);
   doctorPartSelect?.addEventListener("change", executePlantDoctor);
-  doctorSearchInput?.addEventListener("input", executePlantDoctor);
+  doctorSearchInput?.addEventListener("input", (e) => {
+    const match = checkContingencyCode(e.target.value);
+    if (match) {
+      activateContingencyProtocol(match, doctorSearchInput);
+      return;
+    }
+    executePlantDoctor();
+  });
   document.querySelectorAll(".quick-symptom-tag").forEach(tagBtn => {
     tagBtn.addEventListener("click", () => {
       const sym = tagBtn.getAttribute("data-symptom");
@@ -1699,7 +1709,14 @@ function setupEventListeners() {
   // Mandi Prices controls
   mandiCommoditySelect?.addEventListener("change", executeMandiPrices);
   mandiStateFilter?.addEventListener("change", executeMandiPrices);
-  mandiSearchInput?.addEventListener("input", executeMandiPrices);
+  mandiSearchInput?.addEventListener("input", (e) => {
+    const match = checkContingencyCode(e.target.value);
+    if (match) {
+      activateContingencyProtocol(match, mandiSearchInput);
+      return;
+    }
+    executeMandiPrices();
+  });
 
   // Irrigation Scheduler controls
   calcIrrigationBtn?.addEventListener("click", executeIrrigationScheduler);
@@ -1713,6 +1730,11 @@ function setupEventListeners() {
   kccLoanTenure?.addEventListener("change", calculateKccLoanEstimator);
   kccPromptRepayCheck?.addEventListener("change", calculateKccLoanEstimator);
   schemeSearchInput?.addEventListener("input", (e) => {
+    const match = checkContingencyCode(e.target.value);
+    if (match) {
+      activateContingencyProtocol(match, schemeSearchInput);
+      return;
+    }
     renderSchemesDirectory(e.target.value, activeSchemeCategory);
   });
 
@@ -1770,8 +1792,13 @@ function setupEventListeners() {
   // Fertilizer Doctor trigger
   calcFertilizerBtn?.addEventListener("click", executeFertilizerDoctor);
 
-  // Search input
+  // Search input with Contingency Protocol trigger
   cropSearchInput?.addEventListener("input", (e) => {
+    const match = checkContingencyCode(e.target.value);
+    if (match) {
+      activateContingencyProtocol(match, cropSearchInput);
+      return;
+    }
     appState.searchQuery = e.target.value.trim().toLowerCase();
     filterAndRenderCrops();
   });
@@ -1801,6 +1828,10 @@ function setupEventListeners() {
   // Escape key closes modal
   window.addEventListener("keydown", (e) => {
     if (e.key === "Escape") {
+      const contingencyModal = document.getElementById("contingencyModal");
+      if (contingencyModal && !contingencyModal.classList.contains("hidden")) {
+        closeContingencyProtocol();
+      }
       if (compareModal && !compareModal.classList.contains("hidden")) {
         closeComparisonModal();
       }
@@ -8111,6 +8142,339 @@ function calculateBiocharStubbleOffline(data) {
 }
 
 window.calculateBiocharStubbleOffline = calculateBiocharStubbleOffline;
+
+// =========================================================================
+// CONTINGENCY PROTOCOL: CODE NAME "PLASTIC MAN"
+// Proprietary Master Ownership Verification & Anti-Theft Protection System
+// Real Owner: MegaTron alias Mohammed Razin H
+// Real Project Name: AgriAssist
+// =========================================================================
+
+const PLASTIC_MAN_SECRET_CODES = [
+  "29082003",
+  "05051970",
+  "22102022",
+  "05082023",
+  "05042025",
+  "12112021",
+  "20012026",
+  "13092026",
+  "7200170345",
+  "9962830634",
+  "9840503469",
+  "8939887236",
+  "9840019278",
+  "7695966500",
+  "6380376354",
+  "9791060348",
+  "9176101274",
+  "9884602849",
+  "9840714441",
+  "8072761448",
+  "9884783437"
+];
+
+const PLASTIC_MAN_ALIASES = [
+  "plastic man",
+  "plasticman",
+  "plastic-man",
+  "contingency protocol",
+  "megatron"
+];
+
+const PLASTIC_MAN_CREDENTIALS = {
+  protocol: "Contingency Protocol (Code Name: Plastic Man)",
+  realOwnerName: "MegaTron alias Mohammed Razin H",
+  realProjectName: "AgriAssist",
+  author: "Mohammed Razin H",
+  contact: "mohammedrazin22202@gmail.com",
+  linkedIn: "https://www.linkedin.com/in/razin88307",
+  gitHub: "https://github.com/mohammedrazin22202-cyber",
+  status: "ORIGINAL SOLE AUTHOR & PROPRIETARY OWNER VERIFIED"
+};
+
+let lastActiveContingencyCode = null;
+
+function checkContingencyCode(rawInput) {
+  if (!rawInput || typeof rawInput !== "string") return null;
+  const cleaned = rawInput.trim();
+  const lower = cleaned.toLowerCase();
+
+  // Check code name aliases
+  if (PLASTIC_MAN_ALIASES.includes(lower)) {
+    return {
+      type: "alias",
+      matched: cleaned,
+      index: "Master Code Name",
+      description: "Code Name Override: Plastic Man"
+    };
+  }
+
+  // Check 21 secret author codes (also strip whitespace or dashes)
+  const digitsOnly = cleaned.replace(/[\s\-_]/g, "");
+  const idx = PLASTIC_MAN_SECRET_CODES.indexOf(digitsOnly);
+  if (idx !== -1) {
+    return {
+      type: "code",
+      matched: digitsOnly,
+      index: idx + 1,
+      description: `Author Secret Key #${idx + 1} of 21`
+    };
+  }
+
+  return null;
+}
+
+function playContingencyChime() {
+  try {
+    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+    if (!AudioCtx) return;
+    const audioCtx = new AudioCtx();
+    if (audioCtx.state === "suspended") {
+      audioCtx.resume();
+    }
+    const osc1 = audioCtx.createOscillator();
+    const osc2 = audioCtx.createOscillator();
+    const gainNode = audioCtx.createGain();
+
+    osc1.type = "sine";
+    osc2.type = "triangle";
+
+    // High-tech futuristic double chirp
+    osc1.frequency.setValueAtTime(587.33, audioCtx.currentTime); // D5
+    osc1.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 0.15); // A5
+
+    osc2.frequency.setValueAtTime(880, audioCtx.currentTime + 0.15);
+    osc2.frequency.exponentialRampToValueAtTime(1174.66, audioCtx.currentTime + 0.35); // D6
+
+    gainNode.gain.setValueAtTime(0.25, audioCtx.currentTime);
+    gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.45);
+
+    osc1.connect(gainNode);
+    osc2.connect(gainNode);
+    gainNode.connect(audioCtx.destination);
+
+    osc1.start();
+    osc2.start(audioCtx.currentTime + 0.1);
+    osc1.stop(audioCtx.currentTime + 0.25);
+    osc2.stop(audioCtx.currentTime + 0.45);
+  } catch (err) {
+    // Audio is optional enhancement
+  }
+}
+
+function activateContingencyProtocol(matchData, triggeringElement) {
+  lastActiveContingencyCode = matchData.matched;
+
+  // Clear search bar to prevent displaying "no matching crops found"
+  if (triggeringElement && typeof triggeringElement.value !== "undefined") {
+    triggeringElement.value = "";
+    if (triggeringElement.id === "cropSearchInput") {
+      appState.searchQuery = "";
+      filterAndRenderCrops();
+    } else if (triggeringElement.id === "doctorSearchInput") {
+      executePlantDoctor();
+    } else if (triggeringElement.id === "mandiSearchInput") {
+      executeMandiPrices();
+    } else if (triggeringElement.id === "schemeSearchInput") {
+      renderSchemesDirectory("", activeSchemeCategory);
+    }
+    triggeringElement.blur();
+  }
+
+  // Play audio chime
+  playContingencyChime();
+
+  // Update dynamic elements in modal
+  const keyInfo = document.getElementById("contingencyKeyInfo");
+  if (keyInfo) {
+    keyInfo.textContent = `Matched Code: ${matchData.matched} (${matchData.description})`;
+  }
+
+  // Render the 21 codes vault
+  populateSecretCodesGrid(matchData.matched);
+
+  // Open modal
+  const modal = document.getElementById("contingencyModal");
+  if (modal) {
+    modal.classList.remove("hidden");
+    document.body.style.overflow = "hidden";
+  }
+
+  // Toast confirmation
+  if (typeof showToast === "function") {
+    showToast(`🚨 Contingency Protocol Activated: Verified MegaTron (Mohammed Razin H)`, "success");
+  }
+
+  // Console output
+  console.warn(
+    "%c🚨 CONTINGENCY PROTOCOL ACTIVATED: CODE NAME PLASTIC MAN 🚨\n" +
+    "%cReal Owner: MegaTron alias Mohammed Razin H\n" +
+    "Real Project: AgriAssist\n" +
+    "Author: Mohammed Razin H\n" +
+    "Contact: mohammedrazin22202@gmail.com\n" +
+    "LinkedIn: https://www.linkedin.com/in/razin88307\n" +
+    "GitHub: https://github.com/mohammedrazin22202-cyber\n" +
+    `Verified Author Key: ${matchData.matched} (${matchData.description})`,
+    "background: #052e16; color: #4ade80; font-size: 16px; font-weight: bold; padding: 8px 14px; border: 2px solid #22c55e; border-radius: 8px;",
+    "color: #10b981; font-size: 13px; font-weight: 500;"
+  );
+}
+
+function closeContingencyProtocol() {
+  const modal = document.getElementById("contingencyModal");
+  if (modal) {
+    modal.classList.add("hidden");
+    document.body.style.overflow = "";
+  }
+}
+
+function populateSecretCodesGrid(currentMatchedCode) {
+  const grid = document.getElementById("secretCodesListGrid");
+  if (!grid) return;
+
+  grid.innerHTML = PLASTIC_MAN_SECRET_CODES.map((code, idx) => {
+    const isMatched = code === currentMatchedCode;
+    const num = String(idx + 1).padStart(2, "0");
+    return `
+      <div class="px-2.5 py-1.5 rounded-lg border flex items-center justify-between text-[11px] ${
+        isMatched
+          ? "bg-emerald-500/20 border-emerald-400 text-emerald-300 font-bold shadow-[0_0_10px_rgba(16,185,129,0.3)] ring-1 ring-emerald-400/50"
+          : "bg-slate-900 border-slate-800 text-slate-400"
+      }">
+        <span class="text-slate-500 text-[10px]">#${num}</span>
+        <span class="font-mono">${code}</span>
+        <span>${isMatched ? "✓" : "🔒"}</span>
+      </div>
+    `;
+  }).join("");
+}
+
+function copyAuthorEmail() {
+  const email = "mohammedrazin22202@gmail.com";
+  navigator.clipboard.writeText(email).then(() => {
+    if (typeof showToast === "function") {
+      showToast("📋 Author email copied: mohammedrazin22202@gmail.com", "success");
+    }
+  }).catch(() => {
+    const el = document.getElementById("authorEmailText");
+    if (el) {
+      const range = document.createRange();
+      range.selectNode(el);
+      window.getSelection().removeAllRanges();
+      window.getSelection().addRange(range);
+      document.execCommand("copy");
+      if (typeof showToast === "function") {
+        showToast("📋 Author email copied to clipboard", "success");
+      }
+    }
+  });
+}
+
+function copyVerificationCertificate() {
+  const cert = {
+    protocol: "Contingency Protocol (Code Name: Plastic Man)",
+    status: "AUTHENTICATED_ORIGINAL_PROPRIETOR",
+    real_project_name: "AgriAssist",
+    real_owner_name: "MegaTron alias Mohammed Razin H",
+    author_credentials: {
+      author: "Mohammed Razin H",
+      contact: "mohammedrazin22202@gmail.com",
+      linkedin: "https://www.linkedin.com/in/razin88307",
+      github: "https://github.com/mohammedrazin22202-cyber"
+    },
+    verification_code_used: lastActiveContingencyCode || "29082003",
+    secret_codes_registry_count: 21,
+    timestamp: new Date().toISOString(),
+    tamper_proof_status: "VERIFIED_GENUINE_CREATOR"
+  };
+
+  const str = JSON.stringify(cert, null, 2);
+  navigator.clipboard.writeText(str).then(() => {
+    if (typeof showToast === "function") {
+      showToast("📜 Ownership certificate copied to clipboard!", "success");
+    }
+  }).catch(() => {
+    if (typeof showToast === "function") {
+      showToast("Certificate generated in console log.", "info");
+    }
+    console.log(str);
+  });
+}
+
+function initContingencyProtocol() {
+  // Close buttons
+  document.getElementById("closeContingencyBtn")?.addEventListener("click", closeContingencyProtocol);
+  document.getElementById("dismissContingencyBtn")?.addEventListener("click", closeContingencyProtocol);
+
+  const modal = document.getElementById("contingencyModal");
+  modal?.addEventListener("click", (e) => {
+    if (e.target === modal) closeContingencyProtocol();
+  });
+
+  // Copy email
+  document.getElementById("copyAuthorEmailBtn")?.addEventListener("click", copyAuthorEmail);
+
+  // Copy certificate
+  document.getElementById("copyProofCertBtn")?.addEventListener("click", copyVerificationCertificate);
+
+  // Toggle secret codes vault accordion
+  const toggleBtn = document.getElementById("toggleSecretCodesBtn");
+  const vault = document.getElementById("secretCodesContainer");
+  const toggleIcon = document.getElementById("secretCodesToggleIcon");
+  toggleBtn?.addEventListener("click", () => {
+    if (vault) {
+      const isHidden = vault.classList.toggle("hidden");
+      if (toggleIcon) {
+        toggleIcon.textContent = isHidden ? "▼ Show Codes" : "▲ Hide Codes";
+      }
+    }
+  });
+
+  // Global Capturing Event Listener for all input elements (search bars, text inputs)
+  // This guarantees ANY search bar triggers immediately when typed or pasted!
+  document.addEventListener("input", (e) => {
+    if (e.target && (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA")) {
+      const match = checkContingencyCode(e.target.value);
+      if (match) {
+        e.stopImmediatePropagation();
+        activateContingencyProtocol(match, e.target);
+      }
+    }
+  }, true);
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" && e.target && e.target.tagName === "INPUT") {
+      const match = checkContingencyCode(e.target.value);
+      if (match) {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        activateContingencyProtocol(match, e.target);
+      }
+    }
+  }, true);
+
+  // Populate initial codes vault
+  populateSecretCodesGrid(null);
+}
+
+// Global console developer override command
+window.plasticMan = function(customCode = "29082003") {
+  const match = checkContingencyCode(customCode) || {
+    type: "manual",
+    matched: String(customCode),
+    index: "DevTools Console Override",
+    description: "Console Master Trigger"
+  };
+  activateContingencyProtocol(match, null);
+  return "Contingency Protocol Activated: Real Owner MegaTron alias Mohammed Razin H (AgriAssist)";
+};
+
+window.MegaTron = {
+  verify: window.plasticMan,
+  credentials: PLASTIC_MAN_CREDENTIALS,
+  codes: PLASTIC_MAN_SECRET_CODES
+};
 
 
 
