@@ -2,6 +2,14 @@
   "name": "AgriAssist - Smart Crop Sowing Decision System",
   "short_name": "AgriAssist",
   "description": "Agronomic decision support engine for climate-resilient, profitable crop sowing.",
+  "author": "Mohammed Razin H (MegaTron)",
+  "developer": {
+    "name": "Mohammed Razin H",
+    "alias": "MegaTron",
+    "email": "mohammedrazin22202@gmail.com",
+    "github": "https://github.com/mohammedrazin22202-cyber",
+    "linkedin": "https://www.linkedin.com/in/razin88307"
+  },
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#f8fafc",
