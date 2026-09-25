@@ -22,8 +22,14 @@ A clean, responsive, farmer-oriented web application for deciding what crops to 
   - Protected cultivation polyhouse climate sizer, cooling pads, VPD & MIDH subsidy.
   - Farm stubble (parali) residue-to-biochar pyrolysis yield & C:N rapid composting optimizer.
 - **📱 PWA & 100% Offline Resilient**:
-  - Service Worker (`sw.js`) with v3 asset caching and PWA `manifest.json`.
+  - Service Worker (`sw.js`) with v4 asset caching and PWA `manifest.json`.
   - Complete 100-crop local database and offline recommendation engine if the backend is not yet started.
+- **🛡️ Contingency Protocol (Code Name: Plastic Man)**:
+  - Hidden command system and anti-theft proof of original authorship.
+  - Intercepts 21 secret author codes entered into any search bar across the application.
+  - Displays verification modal proving original owner **MegaTron alias Mohammed Razin H** and authentic project name **AgriAssist**.
+  - Supports browser console overrides (`plasticMan()` and `MegaTron.verify()`).
+  - Native Web Audio API chime with signed ownership certificate export.
 
 ## How to Run
 
