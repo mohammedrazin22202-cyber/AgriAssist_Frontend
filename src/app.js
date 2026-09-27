@@ -9599,6 +9599,211 @@ function renderAerationResult(res) {
 }
 window.renderAerationResult = renderAerationResult;
 
+// ----------------------------------------------------------------------------
+// 19. KISAN CONVERSATIONAL AI ASSISTANT (Voice & Text)
+// ----------------------------------------------------------------------------
+
+function openKisanAIChatModal() {
+  kisanAIChatModal?.classList.remove("hidden");
+  kisanChatInput?.focus();
+  if (kisanChatFeed) {
+    kisanChatFeed.scrollTop = kisanChatFeed.scrollHeight;
+  }
+}
+window.openKisanAIChatModal = openKisanAIChatModal;
+
+function closeKisanAIChatModal() {
+  kisanAIChatModal?.classList.add("hidden");
+}
+window.closeKisanAIChatModal = closeKisanAIChatModal;
+
+function calculateKisanChatOffline(message, lang) {
+  const text = (message || "").toLowerCase().trim();
+  const isHi = (lang || "en") === "hi";
+
+  if (text.includes("sow") || text.includes("crop") || text.includes("plant") || text.includes("season") || text.includes("fasal") || text.includes("फसल") || text.includes("बोएं")) {
+    return {
+      reply: isHi
+        ? "आपकी मिट्टी और मौसम के आधार पर सबसे उपयुक्त फसल चुनने के लिए 'Crop Sowing Advisor' का उपयोग करें। यदि आपकी मिट्टी काली (Black Soil) है, तो सोयाबीन या कपास, और यदि दोमट (Loam) है तो गेहूं या सरसों सबसे अधिक मुनाफा देती हैं।"
+        : "Based on your soil and season, navigate to the 'Crop Sowing Advisor' tab. For Black Soil, Cotton and Soybean deliver top ROI; for Alluvial/Loam soils, Wheat, Mustard, and Maize perform exceptionally well.",
+      detected_intent: "crop_recommendation",
+      suggested_tab_action: "advisor",
+      suggested_tab_name: "Crop Sowing Advisor",
+      quick_replies: ["Top crops for Kharif", "Top crops for Rabi", "Low water crops", "Highest profit crop"]
+    };
+  }
+
+  if (text.includes("fertilizer") || text.includes("urea") || text.includes("dap") || text.includes("mop") || text.includes("khad") || text.includes("खाद") || text.includes("यूरिया") || text.includes("npk")) {
+    return {
+      reply: isHi
+        ? "सटीक खाद गणना के लिए 'Fertilizer Doctor' देखें। सामान्यतः प्रति एकड़ 1.5 - 2 बोरी DAP, 2 - 2.5 बोरी यूरिया (3 किस्तों में), और 1 बोरी MOP की आवश्यकता होती है। यदि मिट्टी अम्लीय (pH < 6.5) है, तो चूना (Lime) डालें।"
+        : "For stoichiometric fertilizer bags, check the 'Fertilizer Doctor' tab. A standard cereal crop requires ~1.5-2 bags DAP, 2-2.5 bags Urea (split top-dressing), and 1 bag MOP per acre. If soil pH is acidic (< 6.0), apply Agricultural Lime.",
+      detected_intent: "fertilizer_prescription",
+      suggested_tab_action: "fertilizer",
+      suggested_tab_name: "Fertilizer Doctor",
+      quick_replies: ["How many Urea bags per acre?", "Micronutrient dosage", "Drip Fertigation schedule", "Organic Jeevamrutha recipe"]
+    };
+  }
+
+  if (text.includes("disease") || text.includes("pest") || text.includes("yellow") || text.includes("insect") || text.includes("keeda") || text.includes("bimari") || text.includes("कीड़ा") || text.includes("बीमारी") || text.includes("पत्ते")) {
+    return {
+      reply: isHi
+        ? "कीट और रोग नियंत्रण के लिए 'Plant Doctor' खोलें। पत्तों के पीलेपन के लिए 0.5% जिंक सल्फेट या 19:19:19 का स्प्रे करें। इल्ली (Caterpillar) के लिए नीम तेल (10,000 PPM) या एमामेक्टिन बेंजोएट 5% SG (80 ग्राम/एकड़) का उपयोग करें।"
+        : "For IPM prescriptions, switch to the 'Plant Doctor' tab. Leaf yellowing is often Zinc deficiency or Nitrogen shortfall. For bollworms or caterpillars, spray Neem Oil 10,000 PPM (3 ml/L) or Emamectin Benzoate 5% SG (80 gm/acre).",
+      detected_intent: "plant_protection",
+      suggested_tab_action: "doctor",
+      suggested_tab_name: "Plant Doctor",
+      quick_replies: ["Yellow leaves remedy", "Stem borer control", "Leaf curl virus", "Neemastra recipe"]
+    };
+  }
+
+  if (text.includes("mandi") || text.includes("price") || text.includes("rate") || text.includes("bhav") || text.includes("msp") || text.includes("भाव") || text.includes("मंडी") || text.includes("दाम")) {
+    return {
+      reply: isHi
+        ? "ताजा मंडी भाव और 30-दिवसीय मूल्य रुझानों के लिए 'Mandi Prices & Trends' देखें। दूर की मंडी में बेहतर भाव मिलने पर हमारा 'Mandi Distance & Profit Arbitrage' कैलकुलेटर आपको डीजल खर्च काटकर शुद्ध मुनाफा बताता है।"
+        : "Check the 'Mandi Prices & Trends' tab for live APMC rates vs. MSP. Use our 'Mandi Arbitrage Calculator' to evaluate whether transporting produce to a terminal market covers diesel and delivers net surplus.",
+      detected_intent: "mandi_market",
+      suggested_tab_action: "mandi",
+      suggested_tab_name: "Mandi Prices & Trends",
+      quick_replies: ["Wheat MSP price", "Paddy mandi rate", "Mandi arbitrage profit", "Storage before selling"]
+    };
+  }
+
+  if (text.includes("drip") || text.includes("fertigation") || text.includes("venturi") || text.includes("ड्रिप") || text.includes("फर्टीगेशन")) {
+    return {
+      reply: isHi
+        ? "ड्रिप फर्टीगेशन के लिए 'Drip Fertigation & Venturi' टैब देखें। घुलनशील खाद (19:19:19, 0:52:34, 13:0:45) को वेंचुरी के माध्यम से 15-20 मिनट में इंजेक्ट करें, और ड्रिपर चोकिंग रोकने के लिए 40 दिनों में एक बार फॉस्फोरिक एसिड से फ्लश करें।"
+        : "For soluble fertigation schedules, open the 'Drip Fertigation' tab. Water-soluble grades (19:19:19, 0:52:34, Multi-K) deliver 90% nutrient uptake. Always follow the 1/4th rule: 25% clean water, 50% fertilizer injection, 25% post-rinse flush.",
+      detected_intent: "drip_fertigation",
+      suggested_tab_action: "fertigation",
+      suggested_tab_name: "Drip Fertigation",
+      quick_replies: ["Drip fertigation schedule", "Acid wash for dripper", "Venturi runtime", "Tomato soluble NPK"]
+    };
+  }
+
+  if (text.includes("carbon") || text.includes("credit") || text.includes("कार्बन")) {
+    return {
+      reply: isHi
+        ? "कार्बन क्रेडिट्स से प्रति एकड़ ₹1,500 - ₹3,000 अतिरिक्त कमाने के लिए 'Carbon Credits' टैब खोलें। शून्य जुताई (Zero Till), बायोचार और पराली न जलाने से आप वेरा (Verra) मानकों के तहत अंतरराष्ट्रीय बाजार में क्रेडिट बेच सकते हैं।"
+        : "Monetize sustainable farming via our 'Carbon Credits' tab. Implementing Zero-Tillage, Biochar, and Cover Cropping sequesters ~2.5-4.0 tCO2e/acre annually, generating $20/ton voluntary carbon market payouts directly to your bank account.",
+      detected_intent: "carbon_credits",
+      suggested_tab_action: "carbon",
+      suggested_tab_name: "Carbon Credits",
+      quick_replies: ["Carbon credit payout", "Verra VM0042 registry", "Biochar carbon sink", "Zero till benefits"]
+    };
+  }
+
+  return {
+    reply: isHi
+      ? "मैं आपकी सहायता के लिए तैयार हूँ। आप फसल सिफारिश, सटीक खाद, मंडी भाव, ड्रिप फर्टीगेशन, सरकारी योजना (KCC, PMKSY), पशुपालन या जैविक खेती के बारे में पूछ सकते हैं।"
+      : "I'm here to assist you across all agricultural modules! Ask me about crop suitability, stoichiometric fertilizer doses, APMC mandi arbitrage, drip fertigation schedules, government subsidies (KCC, PMKSY), or livestock healthcare.",
+    detected_intent: "general_inquiry",
+    suggested_tab_action: "advisor",
+    suggested_tab_name: "Crop Advisor",
+    quick_replies: ["Top crops for Kharif", "How many Urea bags per acre?", "Drip fertigation schedule", "Mandi arbitrage profit"]
+  };
+}
+window.calculateKisanChatOffline = calculateKisanChatOffline;
+
+async function sendKisanChatMessage(text) {
+  if (!text || !kisanChatFeed) return;
+
+  // Clear input
+  if (kisanChatInput) kisanChatInput.value = "";
+
+  // Append User Bubble
+  const userBubble = document.createElement("div");
+  userBubble.className = "flex items-start justify-end gap-2.5 animate-fadeIn";
+  userBubble.innerHTML = `
+    <div class="bg-purple-700 text-white rounded-2xl rounded-tr-none p-3.5 shadow-sm max-w-[85%] text-xs leading-relaxed font-medium">
+      ${text}
+    </div>
+    <div class="w-7 h-7 rounded-lg bg-slate-800 text-white flex items-center justify-center text-xs shrink-0 font-bold">
+      👨‍🌾
+    </div>
+  `;
+  kisanChatFeed.appendChild(userBubble);
+
+  // Typing indicator
+  const typingBubble = document.createElement("div");
+  typingBubble.id = "kisanTypingIndicator";
+  typingBubble.className = "flex items-start gap-2.5";
+  typingBubble.innerHTML = `
+    <div class="w-7 h-7 rounded-lg bg-purple-700 text-white flex items-center justify-center text-sm shrink-0">
+      🤖
+    </div>
+    <div class="bg-white border border-slate-200 rounded-2xl rounded-tl-none p-3 shadow-sm text-slate-500 italic text-xs animate-pulse">
+      Kisan AI is analyzing agronomic database...
+    </div>
+  `;
+  kisanChatFeed.appendChild(typingBubble);
+  kisanChatFeed.scrollTop = kisanChatFeed.scrollHeight;
+
+  let responseData = null;
+  try {
+    const res = await fetch(`${API_BASE}/assistant/chat`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        message: text,
+        language: appState.currentLang || "en"
+      })
+    });
+    if (!res.ok) throw new Error("API offline");
+    responseData = await res.json();
+  } catch (err) {
+    console.warn("Using offline Kisan AI Assistant:", err);
+    responseData = calculateKisanChatOffline(text, appState.currentLang || "en");
+  }
+
+  // Remove typing indicator
+  const typing = document.getElementById("kisanTypingIndicator");
+  if (typing && typing.parentNode) typing.parentNode.removeChild(typing);
+
+  // Render Assistant Bubble
+  const assistantBubble = document.createElement("div");
+  assistantBubble.className = "flex items-start gap-2.5 animate-fadeIn";
+
+  const actionBtnHtml = responseData.suggested_tab_action ? `
+    <div class="pt-2">
+      <button type="button" onclick="switchTab('${responseData.suggested_tab_action}'); closeKisanAIChatModal();" class="px-3 py-1.5 bg-purple-700 hover:bg-purple-800 text-white font-bold text-xs rounded-xl shadow-sm transition flex items-center gap-1.5">
+        <span>🚀 Open ${responseData.suggested_tab_name || responseData.suggested_tab_action}</span> <span>➔</span>
+      </button>
+    </div>
+  ` : "";
+
+  const quickChipsHtml = (responseData.quick_replies || []).map(q => `
+    <button type="button" onclick="sendKisanChatMessage('${q}')" class="px-2.5 py-1 bg-slate-100 hover:bg-purple-50 text-slate-700 hover:text-purple-800 rounded-full border border-slate-200 text-[11px] font-medium transition whitespace-nowrap">
+      ${q}
+    </button>
+  `).join("");
+
+  assistantBubble.innerHTML = `
+    <div class="w-7 h-7 rounded-lg bg-purple-700 text-white flex items-center justify-center text-sm shrink-0">
+      🤖
+    </div>
+    <div class="bg-white border border-slate-200 rounded-2xl rounded-tl-none p-3.5 shadow-sm max-w-[85%] space-y-2.5 text-slate-800 text-xs">
+      <div class="leading-relaxed whitespace-pre-line font-medium text-slate-900">
+        ${responseData.reply}
+      </div>
+      ${actionBtnHtml}
+      ${quickChipsHtml ? `
+        <div class="pt-2 border-t border-slate-100 flex flex-wrap gap-1.5 items-center">
+          <span class="text-[10px] text-slate-400 font-bold block w-full">Related inquiries:</span>
+          ${quickChipsHtml}
+        </div>
+      ` : ""}
+    </div>
+  `;
+  kisanChatFeed.appendChild(assistantBubble);
+  kisanChatFeed.scrollTop = kisanChatFeed.scrollHeight;
+
+  // Speak response if audio output is unmuted
+  if (!appState.chatMuted && typeof speakDiagnosis === "function") {
+    speakDiagnosis(responseData.reply, appState.currentLang || "en");
+  }
+}
+window.sendKisanChatMessage = sendKisanChatMessage;
 
 // =========================================================================
 // CONTINGENCY PROTOCOL: CODE NAME "PLASTIC MAN"
