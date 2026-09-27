@@ -40,6 +40,13 @@ const TRANSLATIONS = {
     tabYojana: "Kisan Yojana Hub",
     tabKhata: "Kisan Bahi-Khata",
     tabLivestock: "Dairy & Livestock",
+    tabFertigation: "Drip Fertigation",
+    tabCarbon: "Carbon Credits",
+    tabIFS: "Integrated Farming (IFS)",
+    tabPolyhouse: "Polyhouse Climate",
+    tabBiochar: "Stubble & Biochar",
+    tabAeration: "Silo Aeration",
+    kisanAIBtn: "Kisan AI • किसान AI",
     livestockHeroTitle: "🐄 Dairy & Livestock Husbandry Doctor (पशुपालन एवं दुग्ध सलाहकार)",
     livestockHeroDesc: "Smallholder dairy intelligence. Calculate scientific daily cattle feed rations (Green fodder, Bhusa, and Concentrate balanced against milk yield), track 21-day heat cycles and calving pregnancy calendars, and access validated Ethno-Veterinary Herbal Remedies (EVM) for mastitis, bloat, and wounds.",
     rationTitle: "Scientific Daily Feed & Ration Calculator (संतुलित पशु आहार)",
@@ -109,6 +116,13 @@ const TRANSLATIONS = {
     tabYojana: "किसान योजना हब",
     tabKhata: "किसान बही-खाता",
     tabLivestock: "पशुपालन एवं दुग्ध",
+    tabFertigation: "ड्रिप फर्टीगेशन",
+    tabCarbon: "कार्बन क्रेडिट्स",
+    tabIFS: "एकीकृत कृषि (IFS)",
+    tabPolyhouse: "पॉलीहाउस जलवायु",
+    tabBiochar: "पराली एवं बायोचार",
+    tabAeration: "साइलो वातन",
+    kisanAIBtn: "किसान AI • Kisan AI",
     livestockHeroTitle: "🐄 पशुपालन एवं दुग्ध सलाहकार (डेयरी डॉक्टर)",
     livestockHeroDesc: "वैज्ञानिक पशुपालन मार्गदर्शन। दुग्ध उत्पादन व शारीरिक वजन अनुसार संतुलित दैनिक आहार (हरा चारा, सूखा भूसा व दाना), 21-दिवसीय मद चक्र व प्रसव कैलेंडर और थनैला, अफारा व खुरपका रोगों के लिए प्रमाणित देसी हर्बल (EVM) उपचार।",
     rationTitle: "संतुलित दैनिक आहार कैलकुलेटर (पशु पोषण)",
@@ -363,6 +377,142 @@ const TRANSLATIONS = {
     hideAdvice: "સલાહ છુપાવો ▲",
     viewCompleteAdvice: "સંપૂર્ણ સલાહ જુઓ ▼",
     hideCompleteAdvice: "સલાહ છુપાવો ▲"
+  },
+  te: {
+    tagline: "వ్యవసాయ నిర్ణయ వ్యవస్థ",
+    subtitle: "రైతు పంట సలహాదారు • రైతు సాధికారత",
+    detectLocation: "వాతావరణం తనిఖీ",
+    landConverterBtn: "భూమి కన్వర్టర్",
+    fieldWalkBtn: "GPS వాక్-మీటర్",
+    tabAdvisor: "పంట విత్తన సలహాదారు",
+    tabSeed: "విత్తనం & దూరం",
+    tabDoctor: "ప్లాంట్ డాక్టర్ (తెగుళ్ళు)",
+    tabMandi: "మార్కెట్ ధరలు & పోకడలు",
+    tabSprayer: "స్ప్రేయర్ & రసాయనాలు",
+    tabIrrigation: "స్మార్ట్ సాగునీటి ప్రణాళిక",
+    tabSolar: "సోలార్ పంప్ (కుసుమ్)",
+    tabOrganic: "సేంద్రీయ వ్యవసాయం",
+    tabIntercrop: "అంతర పంటలు",
+    tabStorage: "ధాన్యం నిల్వ డాక్టర్",
+    tabRotation: "1-సంవత్సర పంట మార్పిడి",
+    tabFertilizer: "ఎరువుల డాక్టర్",
+    tabYojana: "రైతు పథకాల కేంద్రం",
+    tabKhata: "రైతు లెక్కల పుస్తకం",
+    tabLivestock: "పాడి & పశుపోషణ",
+    tabFertigation: "డ్రిప్ ఫెర్టిగేషన్",
+    tabCarbon: "కార్బన్ క్రెడిట్స్",
+    tabIFS: "సమీకృత వ్యవసాయం (IFS)",
+    tabPolyhouse: "పాలీహౌస్ క్లైమేట్",
+    tabBiochar: "మోడు వ్యర్థాలు & బయోచార్",
+    tabAeration: "సైలో గాలి ప్రసరణ",
+    kisanAIBtn: "కిసాన్ AI • Kisan AI",
+    heroTitle: "ఈ సీజన్ లో ఏ పంట వేయాలి?",
+    heroDesc: "శాస్త్రీయంగా పంటలను ఎంచుకోండి. మీ నేల, వాతావరణం మరియు నీటి ఆధారంగా అత్యధిక లాభదాయక పంటల సిఫార్సులు పొందండి.",
+    btnGetRecommendations: "పంట సిఫార్సులు పొందండి",
+    btnPrintAdvisory: "సలహా పత్రం ప్రింట్ చేయండి",
+    langSwitch: "🌐 భాషను ఎంచుకోండి"
+  },
+  ta: {
+    tagline: "விவசாய முடிவு வழிகாட்டி",
+    subtitle: "உழவர் பயிர் ஆலோசகர் • தமிழக வேளாண்மை",
+    detectLocation: "வானிலை அறிக்கை",
+    landConverterBtn: "நில அளவை மாற்றி",
+    fieldWalkBtn: "GPS நடை அளவை",
+    tabAdvisor: "பயிர் விதைப்பு ஆலோசகர்",
+    tabSeed: "விதை & இடைவெளி",
+    tabDoctor: "பயிர் மருத்துவர் (பூச்சிகள்)",
+    tabMandi: "மண்டி சந்தை விலைகள்",
+    tabSprayer: "தெளிப்பான் & மருந்து",
+    tabIrrigation: "நுண்ணீர்ப்பாசன திட்டம்",
+    tabSolar: "சூரிய பம்பு (குசும்)",
+    tabOrganic: "இயற்கை வேளாண்மை",
+    tabIntercrop: "ஊடுபயிர் முறை",
+    tabStorage: "தானிய சேமிப்பு மருத்துவர்",
+    tabRotation: "பயிர் சுழற்சி முறை",
+    tabFertilizer: "உர மருத்துவர்",
+    tabYojana: "அரசு மானிய திட்டங்கள்",
+    tabKhata: "விவசாய வரவு-செலவு",
+    tabLivestock: "கால்நடை & பால்பண்ணை",
+    tabFertigation: "சொட்டுநீர் உரப்பாசனம்",
+    tabCarbon: "கார்பன் கிரெடிட்ஸ்",
+    tabIFS: "ஒருங்கிணைந்த பண்ணை (IFS)",
+    tabPolyhouse: "பசுமைக்குடில் தட்பவெப்பம்",
+    tabBiochar: "பயிர் கழிவு & பயோசார்",
+    tabAeration: "தானிய களஞ்சிய காற்றோட்டம்",
+    kisanAIBtn: "கிசான் AI • Kisan AI",
+    heroTitle: "இந்த பருவத்தில் என்ன பயிரிடலாம்?",
+    heroDesc: "மண் மற்றும் பாசன வசதிக்கேற்ப அதிக லாபம் தரும் சிறந்த பயிர்களை தேர்வு செய்யுங்கள்.",
+    btnGetRecommendations: "பயிர் பரிந்துரை பெறுக",
+    btnPrintAdvisory: "அறிக்கையை பதிவிறக்கு",
+    langSwitch: "🌐 மொழியை தேர்ந்தெடுக்க"
+  },
+  bn: {
+    tagline: "কৃষি সিদ্ধান্ত ব্যবস্থা",
+    subtitle: "কৃষক ফসল উপদেষ্টা • ভারতীয় কৃষি ক্ষমতায়ন",
+    detectLocation: "আবহাওয়া দেখুন",
+    landConverterBtn: "জমি পরিমাপক",
+    fieldWalkBtn: "GPS জমি মাপক",
+    tabAdvisor: "ফসল বপন উপদেষ্টা",
+    tabSeed: "বীজের হার ও দূরত্ব",
+    tabDoctor: "প্ল্যান্ট ডাক্তার (রোগ-পোকা)",
+    tabMandi: "বাজার দর ও প্রবণতা",
+    tabSprayer: "স্প্রেয়ার ও ওষুধ মাত্রা",
+    tabIrrigation: "স্মার্ট সেচ পরিকল্পনা",
+    tabSolar: "সৌর পাম্প (কুসুম)",
+    tabOrganic: "জৈব ও প্রাকৃতিক চাষ",
+    tabIntercrop: "সাথী ফসল পদ্ধতি",
+    tabStorage: "শস্য সংরক্ষণ ডাক্তার",
+    tabRotation: "১-বছরের ফসল চক্র",
+    tabFertilizer: "সার ও মাটি ডাক্তার",
+    tabYojana: "কৃষক যোজনা হাব",
+    tabKhata: "কৃষক খাতা-খতিয়ান",
+    tabLivestock: "গবাদি পশু ও ডেয়ারি",
+    tabFertigation: "ড্রিপ ফার্টিগেশন",
+    tabCarbon: "কার্বন ক্রেডিট",
+    tabIFS: "সমন্বিত খামার (IFS)",
+    tabPolyhouse: "পলিহাউস জলবায়ু",
+    tabBiochar: "নাড়া পোড়ানো রোধ ও বায়োচার",
+    tabAeration: "সাইলো বায়ুচলাচল",
+    kisanAIBtn: "কিসান AI • Kisan AI",
+    heroTitle: "এই মরসুমে কোন ফসল বুনবেন?",
+    heroDesc: "বিজ্ঞানসম্মত ভাবে সঠিক ফসল নির্বাচন করুন এবং সারের সঠিক পরিমাণ ও লাভ জানুন।",
+    btnGetRecommendations: "ফসল সুপারিশ পান",
+    btnPrintAdvisory: "পরামর্শ কার্ড প্রিন্ট করুন",
+    langSwitch: "🌐 ভাষা নির্বাচন করুন"
+  },
+  kn: {
+    tagline: "ಕೃಷಿ ನಿರ್ಧಾರ ಬೆಂಬಲ",
+    subtitle: "ರೈತ ಬೆಳೆ ಸಲಹೆಗಾರ • ಸಮಗ್ರ ಕೃಷಿ",
+    detectLocation: "ಹವಾಮಾನ ವೀಕ್ಷಣೆ",
+    landConverterBtn: "ಭೂಮಿ ಪರಿವರ್ತಕ",
+    fieldWalkBtn: "GPS ವಾಕ್-ಮೀಟರ್",
+    tabAdvisor: "ಬೆಳೆ ಬಿತ್ತನೆ ಸಲಹೆಗಾರ",
+    tabSeed: "ಬೀಜ ಪ್ರಮಾಣ & ಅಂತರ",
+    tabDoctor: "ಪ್ಲಾಂಟ್ ಡಾಕ್ಟರ್ (ಕೀಟ-ರೋಗ)",
+    tabMandi: "ಮಾರುಕಟ್ಟೆ ದರಗಳು",
+    tabSprayer: "ಸ್ಪ್ರೇಯರ್ & ಔಷಧ",
+    tabIrrigation: "ಸ್ಮಾರ್ಟ್ ನೀರಾವರಿ",
+    tabSolar: "ಸೌರ ಪಂಪ್ (ಕುಸುಮ್)",
+    tabOrganic: "ಸಾವಯವ ಕೃಷಿ",
+    tabIntercrop: "ಮಿಶ್ರ ಬೆಳೆ ಪದ್ಧತಿ",
+    tabStorage: "ಧಾನ್ಯ ಸಂಗ್ರಹಣೆ ಡಾಕ್ಟರ್",
+    tabRotation: "ಬೆಳೆ ಪರಿವರ್ತನೆ ಯೋಜನೆ",
+    tabFertilizer: "ರಸಗೊಬ್ಬರ ಡಾಕ್ಟರ್",
+    tabYojana: "ಸರ್ಕಾರಿ ಯೋಜನೆಗಳ ಮಾಹಿತಿ",
+    tabKhata: "ರೈತ ಜಮಾ-ಖರ್ಚು",
+    tabLivestock: "ಹೈನುಗಾರಿಕೆ & ಪಶುಸಂಗೋಪನೆ",
+    tabFertigation: "ಹನಿ ನೀರಾವರಿ ಗೊಬ್ಬರ",
+    tabCarbon: "ಕಾರ್ಬನ್ ಕ್ರೆಡಿಟ್ಸ್",
+    tabIFS: "ಸಮಗ್ರ ಕೃಷಿ ಪದ್ಧತಿ (IFS)",
+    tabPolyhouse: "ಪಾಲಿಹೌಸ್ ವಾತಾವರಣ",
+    tabBiochar: "ಬೆಳೆ ತ್ಯಾಜ್ಯ & ಬಯೋಚಾರ್",
+    tabAeration: "ಸೈಲೋ ಗಾಳಿ ಸಂಚಾರ",
+    kisanAIBtn: "ಕಿಸಾನ್ AI • Kisan AI",
+    heroTitle: "ಈ ಹಂಗಾಮಿನಲ್ಲಿ ಯಾವ ಬೆಳೆ ಬೆಳೆಯಬೇಕು?",
+    heroDesc: "ನಿಮ್ಮ ಮಣ್ಣು ಮತ್ತು ನೀರಿನ ಲಭ್ಯತೆಗೆ ಸೂಕ್ತವಾದ ಹೆಚ್ಚು ಲಾಭದಾಯಕ ಬೆಳೆಗಳನ್ನು ಆಯ್ಕೆಮಾಡಿ.",
+    btnGetRecommendations: "ಬೆಳೆ ಶಿಫಾರಸು ಪಡೆಯಿರಿ",
+    btnPrintAdvisory: "ಸಲಹಾ ಪತ್ರ ಮುದ್ರಿಸಿ",
+    langSwitch: "🌐 ಭಾಷೆ ಆಯ್ಕೆಮಾಡಿ"
   }
 };
 
@@ -1149,8 +1299,35 @@ const intercropTabContent = document.getElementById("intercropTabContent");
 const storageTabContent = document.getElementById("storageTabContent");
 const livestockTabContent = document.getElementById("livestockTabContent");
 
+// 6 New Precision & Eco-Ag Tabs & Content
+const tabFertigationBtn = document.getElementById("tabFertigationBtn");
+const tabCarbonBtn = document.getElementById("tabCarbonBtn");
+const tabIFSBtn = document.getElementById("tabIFSBtn");
+const tabPolyhouseBtn = document.getElementById("tabPolyhouseBtn");
+const tabBiocharBtn = document.getElementById("tabBiocharBtn");
+const tabAerationBtn = document.getElementById("tabAerationBtn");
+
+const fertigationTabContent = document.getElementById("fertigationTabContent");
+const carbonTabContent = document.getElementById("carbonTabContent");
+const ifsTabContent = document.getElementById("ifsTabContent");
+const polyhouseTabContent = document.getElementById("polyhouseTabContent");
+const biocharTabContent = document.getElementById("biocharTabContent");
+const aerationTabContent = document.getElementById("aerationTabContent");
+
 // Quick Header Actions
 const voiceSearchBtn = document.getElementById("voiceSearchBtn");
+const openKisanAIBtn = document.getElementById("openKisanAIBtn");
+const floatingKisanAIBtn = document.getElementById("floatingKisanAIBtn");
+const kisanAIChatModal = document.getElementById("kisanAIChatModal");
+const closeKisanAIChatBtn = document.getElementById("closeKisanAIChatBtn");
+const kisanChatFeed = document.getElementById("kisanChatFeed");
+const kisanChatForm = document.getElementById("kisanChatForm");
+const kisanChatInput = document.getElementById("kisanChatInput");
+const sendKisanChatBtn = document.getElementById("sendKisanChatBtn");
+const chatVoiceInputBtn = document.getElementById("chatVoiceInputBtn");
+const toggleChatAudioBtn = document.getElementById("toggleChatAudioBtn");
+const chatAudioIcon = document.getElementById("chatAudioIcon");
+
 const openSatelliteMapBtn = document.getElementById("openSatelliteMapBtn");
 const closeSatelliteMapBtn = document.getElementById("closeSatelliteMapBtn");
 const satelliteMapModal = document.getElementById("satelliteMapModal");
@@ -1172,6 +1349,14 @@ const calcMicronutrientsBtn = document.getElementById("calcMicronutrientsBtn");
 const calcFarmPondBtn = document.getElementById("calcFarmPondBtn");
 const calcMachineryBtn = document.getElementById("calcMachineryBtn");
 const leafPhotoInput = document.getElementById("leafPhotoInput");
+
+// 6 New Action Buttons
+const calcFertigationBtn = document.getElementById("calcFertigationBtn");
+const calcCarbonBtn = document.getElementById("calcCarbonBtn");
+const calcIFSBtn = document.getElementById("calcIFSBtn");
+const calcPolyhouseBtn = document.getElementById("calcPolyhouseBtn");
+const calcBiocharBtn = document.getElementById("calcBiocharBtn");
+const calcAerationBtn = document.getElementById("calcAerationBtn");
 
 // Quick Header Actions
 const openLandConverterBtn = document.getElementById("openLandConverterBtn");
@@ -1513,6 +1698,50 @@ function setupEventListeners() {
   tabIntercropBtn?.addEventListener("click", () => switchTab("intercrop"));
   tabStorageBtn?.addEventListener("click", () => switchTab("storage"));
   tabLivestockBtn?.addEventListener("click", () => switchTab("livestock"));
+
+  // 6 New Module Tabs
+  tabFertigationBtn?.addEventListener("click", () => switchTab("fertigation"));
+  tabCarbonBtn?.addEventListener("click", () => switchTab("carbon"));
+  tabIFSBtn?.addEventListener("click", () => switchTab("ifs"));
+  tabPolyhouseBtn?.addEventListener("click", () => switchTab("polyhouse"));
+  tabBiocharBtn?.addEventListener("click", () => switchTab("biochar"));
+  tabAerationBtn?.addEventListener("click", () => switchTab("aeration"));
+
+  // Kisan AI Assistant Listeners
+  openKisanAIBtn?.addEventListener("click", openKisanAIChatModal);
+  floatingKisanAIBtn?.addEventListener("click", openKisanAIChatModal);
+  closeKisanAIChatBtn?.addEventListener("click", closeKisanAIChatModal);
+  kisanAIChatModal?.addEventListener("click", (e) => {
+    if (e.target === kisanAIChatModal) closeKisanAIChatModal();
+  });
+  kisanChatForm?.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const q = kisanChatInput?.value?.trim();
+    if (q) sendKisanChatMessage(q);
+  });
+  chatVoiceInputBtn?.addEventListener("click", () => {
+    startVoiceRecognition("chat");
+  });
+  toggleChatAudioBtn?.addEventListener("click", () => {
+    appState.chatMuted = !appState.chatMuted;
+    if (chatAudioIcon) chatAudioIcon.textContent = appState.chatMuted ? "🔇" : "🔊";
+    showToast(appState.chatMuted ? "Chat speech output muted" : "Chat speech output unmuted", "info");
+  });
+  document.querySelectorAll(".chat-quick-chip").forEach(chip => {
+    chip.addEventListener("click", () => {
+      const q = chip.textContent.trim();
+      if (kisanChatInput) kisanChatInput.value = q;
+      sendKisanChatMessage(q);
+    });
+  });
+
+  // Action Buttons for 6 New Tools
+  calcFertigationBtn?.addEventListener("click", executeFertigationSchedule);
+  calcCarbonBtn?.addEventListener("click", executeCarbonCredits);
+  calcIFSBtn?.addEventListener("click", executeIFSPlanner);
+  calcPolyhouseBtn?.addEventListener("click", executePolyhouseClimate);
+  calcBiocharBtn?.addEventListener("click", executeBiocharStubble);
+  calcAerationBtn?.addEventListener("click", executePostHarvestAeration);
 
   // Header Quick Actions: Land Converter Modal
   openLandConverterBtn?.addEventListener("click", openLandConverterModal);
@@ -1872,7 +2101,13 @@ function switchTab(tab) {
     { id: "solar", btn: tabSolarBtn, content: solarTabContent },
     { id: "intercrop", btn: tabIntercropBtn, content: intercropTabContent },
     { id: "storage", btn: tabStorageBtn, content: storageTabContent },
-    { id: "livestock", btn: tabLivestockBtn, content: livestockTabContent }
+    { id: "livestock", btn: tabLivestockBtn, content: livestockTabContent },
+    { id: "fertigation", btn: tabFertigationBtn, content: fertigationTabContent },
+    { id: "carbon", btn: tabCarbonBtn, content: carbonTabContent },
+    { id: "ifs", btn: tabIFSBtn, content: ifsTabContent },
+    { id: "polyhouse", btn: tabPolyhouseBtn, content: polyhouseTabContent },
+    { id: "biochar", btn: tabBiocharBtn, content: biocharTabContent },
+    { id: "aeration", btn: tabAerationBtn, content: aerationTabContent }
   ];
 
   allTabs.forEach(t => {
@@ -1926,6 +2161,18 @@ function switchTab(tab) {
     executeStorageRiskCheck();
   } else if (tab === "livestock") {
     initLivestockTab();
+  } else if (tab === "fertigation" && document.getElementById("fertigationResultContainer") && !document.getElementById("fertigationResultContainer").children.length) {
+    executeFertigationSchedule();
+  } else if (tab === "carbon" && document.getElementById("carbonResultContainer") && !document.getElementById("carbonResultContainer").children.length) {
+    executeCarbonCredits();
+  } else if (tab === "ifs" && document.getElementById("ifsResultContainer") && !document.getElementById("ifsResultContainer").children.length) {
+    executeIFSPlanner();
+  } else if (tab === "polyhouse" && document.getElementById("polyhouseResultContainer") && !document.getElementById("polyhouseResultContainer").children.length) {
+    executePolyhouseClimate();
+  } else if (tab === "biochar" && document.getElementById("biocharResultContainer") && !document.getElementById("biocharResultContainer").children.length) {
+    executeBiocharStubble();
+  } else if (tab === "aeration" && document.getElementById("aerationResultContainer") && !document.getElementById("aerationResultContainer").children.length) {
+    executePostHarvestAeration();
   }
 }
 
@@ -3327,6 +3574,10 @@ function speakDiagnosis(text, lang) {
     pa: "pa-IN",
     mr: "mr-IN",
     gu: "gu-IN",
+    te: "te-IN",
+    ta: "ta-IN",
+    bn: "bn-IN",
+    kn: "kn-IN",
     en: "en-IN"
   };
   utterance.lang = langMap[current] || "hi-IN";
@@ -5263,6 +5514,8 @@ function startVoiceRecognition(targetInputId) {
 
   if (targetInputId === "global") {
     activeTargetInputElement = null;
+  } else if (targetInputId === "chat") {
+    activeTargetInputElement = kisanChatInput;
   } else {
     activeTargetInputElement = document.getElementById(targetInputId);
   }
@@ -5272,6 +5525,10 @@ function startVoiceRecognition(targetInputId) {
     pa: "pa-IN",
     mr: "mr-IN",
     gu: "gu-IN",
+    te: "te-IN",
+    ta: "ta-IN",
+    bn: "bn-IN",
+    kn: "kn-IN",
     en: "en-IN"
   };
   const chosenLang = langCodeMap[appState.currentLang] || "hi-IN";
@@ -5315,7 +5572,12 @@ function startVoiceRecognition(targetInputId) {
 
   activeVoiceRecognition.onend = () => {
     const textToRoute = capturedTranscript || voiceTranscriptPreview?.textContent;
-    if (!activeTargetInputElement && textToRoute && textToRoute !== "..." && textToRoute !== "Listening...") {
+    if (activeTargetInputElement && activeTargetInputElement === kisanChatInput) {
+      const q = textToRoute && textToRoute !== "..." && textToRoute !== "Listening..." ? textToRoute.trim() : "";
+      if (q) {
+        sendKisanChatMessage(q);
+      }
+    } else if (!activeTargetInputElement && textToRoute && textToRoute !== "..." && textToRoute !== "Listening...") {
       handleVoiceRecognitionResult(textToRoute);
     }
     stopVoiceRecognition();
@@ -8142,6 +8404,1201 @@ function calculateBiocharStubbleOffline(data) {
 }
 
 window.calculateBiocharStubbleOffline = calculateBiocharStubbleOffline;
+
+// ----------------------------------------------------------------------------
+// 13. DRIP FERTIGATION & VENTURI SCHEDULE DESIGNER
+// ----------------------------------------------------------------------------
+
+function calculateDripFertigationOffline(data) {
+  const acres = Math.max(0.1, parseFloat(data.land_size_acres || 1.0));
+  const cropId = (data.crop_id || "tomato").toLowerCase();
+  const stage = data.growth_stage || "Flowering / Fruit Set (31-60 DAP)";
+  const lateralSp = Math.max(0.4, parseFloat(data.lateral_spacing_meters || 1.2));
+  const dripperSp = Math.max(0.2, parseFloat(data.dripper_spacing_meters || 0.4));
+  const dripperDis = Math.max(0.5, parseFloat(data.dripper_discharge_lph || 2.0));
+  const suctionLph = Math.max(10.0, parseFloat(data.venturi_suction_rate_lph || 60.0));
+
+  const areaSqm = acres * 4046.86;
+  const totalEmitters = Math.round(areaSqm / (lateralSp * dripperSp));
+  const systemFlowRate = Math.round(totalEmitters * dripperDis);
+
+  let waterM3PerAcre = 26.0;
+  let wsfList = [];
+  let targetEc = "1.5 - 1.8 mS/cm";
+  const stageLower = stage.toLowerCase();
+
+  if (stageLower.includes("veg") || stageLower.includes("0-30")) {
+    waterM3PerAcre = 20.0;
+    wsfList = [
+      {
+        fertilizer_name: "19:19:19 (All-Rounder NPK)",
+        grade: "19-19-19",
+        weekly_dosage_kg_per_acre: 6.0,
+        total_weekly_dosage_kg: Math.round(6.0 * acres * 10) / 10,
+        application_frequency_days: "Twice a week (Mon, Thu)",
+        target_benefit: "Promotes root architecture, vegetative branching and canopy frame."
+      },
+      {
+        fertilizer_name: "Technical Urea (46% N)",
+        grade: "46-0-0",
+        weekly_dosage_kg_per_acre: 4.5,
+        total_weekly_dosage_kg: Math.round(4.5 * acres * 10) / 10,
+        application_frequency_days: "Once a week (Tuesday)",
+        target_benefit: "Rapid chlorophyll synthesis and shoot extension."
+      },
+      {
+        fertilizer_name: "Monoammonium Phosphate (MAP)",
+        grade: "12-61-0",
+        weekly_dosage_kg_per_acre: 3.0,
+        total_weekly_dosage_kg: Math.round(3.0 * acres * 10) / 10,
+        application_frequency_days: "Once a week (Saturday)",
+        target_benefit: "High orthophosphate kickstarts white active root proliferation."
+      }
+    ];
+    targetEc = "1.2 - 1.5 mS/cm";
+  } else if (stageLower.includes("matur") || stageLower.includes("bulk") || stageLower.includes("61+")) {
+    waterM3PerAcre = 32.0;
+    wsfList = [
+      {
+        fertilizer_name: "Potassium Nitrate (Multi-K)",
+        grade: "13-0-45",
+        weekly_dosage_kg_per_acre: 7.0,
+        total_weekly_dosage_kg: Math.round(7.0 * acres * 10) / 10,
+        application_frequency_days: "Twice a week (Mon, Fri)",
+        target_benefit: "Accelerates fruit bulking, sugar (Brix) accumulation, and peel shine."
+      },
+      {
+        fertilizer_name: "Calcium Nitrate",
+        grade: "15.5-0-0 + 18.8% Ca",
+        weekly_dosage_kg_per_acre: 4.0,
+        total_weekly_dosage_kg: Math.round(4.0 * acres * 10) / 10,
+        application_frequency_days: "Inject alone (Wednesday)",
+        target_benefit: "Strengthens cell walls; prevents blossom-end rot, fruit cracking and tip burn."
+      },
+      {
+        fertilizer_name: "Sulfate of Potash (SOP)",
+        grade: "0-0-50 + 17% S",
+        weekly_dosage_kg_per_acre: 3.0,
+        total_weekly_dosage_kg: Math.round(3.0 * acres * 10) / 10,
+        application_frequency_days: "Once a week (Saturday)",
+        target_benefit: "Improves fruit firmness, post-harvest transport shelf life, and aroma."
+      }
+    ];
+    targetEc = "1.8 - 2.2 mS/cm";
+  } else {
+    // Flowering / Fruit Set (Default)
+    waterM3PerAcre = 26.0;
+    wsfList = [
+      {
+        fertilizer_name: "Monopotassium Phosphate (MKP)",
+        grade: "0-52-34",
+        weekly_dosage_kg_per_acre: 5.0,
+        total_weekly_dosage_kg: Math.round(5.0 * acres * 10) / 10,
+        application_frequency_days: "Twice a week (Mon, Thu)",
+        target_benefit: "Stimulates profuse flowering, prevents flower drop, and sets fruit."
+      },
+      {
+        fertilizer_name: "12:61:0 (Monoammonium Phosphate)",
+        grade: "12-61-0",
+        weekly_dosage_kg_per_acre: 4.0,
+        total_weekly_dosage_kg: Math.round(4.0 * acres * 10) / 10,
+        application_frequency_days: "Once a week (Tuesday)",
+        target_benefit: "Energy storage via ATP synthesis for pollination vitality."
+      },
+      {
+        fertilizer_name: "Chelated Micronutrient Combo (Fe, Zn, B, Mn)",
+        grade: "EDTA Complex",
+        weekly_dosage_kg_per_acre: 0.5,
+        total_weekly_dosage_kg: Math.round(0.5 * acres * 100) / 100,
+        application_frequency_days: "Once a week (Friday)",
+        target_benefit: "Boron aids pollen germination; Zinc prevents rosette and small-leaf deformity."
+      }
+    ];
+    targetEc = "1.5 - 1.8 mS/cm";
+  }
+
+  const weeklyWaterM3 = Math.round(waterM3PerAcre * acres * 10) / 10;
+  const totalWaterLiters = weeklyWaterM3 * 1000.0;
+  const irrigHours = Math.round((totalWaterLiters / Math.max(1.0, systemFlowRate)) * 10) / 10;
+  const totalWsfKg = wsfList.reduce((acc, cur) => acc + cur.total_weekly_dosage_kg, 0);
+  const stockTankLiters = Math.max(50.0, Math.round(totalWsfKg / 0.15));
+  const singleBatchLiters = stockTankLiters / 3.0;
+  const injectionMins = Math.round((singleBatchLiters / suctionLph) * 60.0 * 10) / 10;
+
+  const acidProtocol = "Inject Phosphoric Acid (85% commercial grade) or Nitric Acid at 1.5 Liters/acre every 30-45 days. Allow acid water (pH ~3.5-4.0) to dwell inside closed laterals for 12 hours overnight, then open sub-main flush valves to expel dissolved carbonate crust.";
+
+  return {
+    crop_id: cropId,
+    growth_stage: stage,
+    land_size_acres: acres,
+    total_emitters_count: totalEmitters,
+    system_flow_rate_lph: systemFlowRate,
+    weekly_water_requirement_m3: weeklyWaterM3,
+    irrigation_hours_per_week: irrigHours,
+    water_soluble_fertilizers: wsfList,
+    venturi_injection_minutes_per_cycle: injectionMins,
+    stock_tank_capacity_liters: stockTankLiters,
+    target_ec_ms_cm: targetEc,
+    target_ph_range: "5.8 - 6.5",
+    acid_wash_cleaning_protocol: acidProtocol,
+    farmer_operational_tips: [
+      "Follow the 'One-Fourth Rule': Run pure water for 25% of irrigation time to build pressure, inject fertilizer over 50% time, and flush with pure water for the final 25% to rinse drip laterals.",
+      "Never mix Calcium Nitrate with Phosphorus or Sulfate fertilizers in the same stock tank to avoid insoluble gypsum/phosphate precipitate.",
+      "Check emitter discharge uniformity weekly; clean disc/screen filters before and after every fertigation cycle."
+    ]
+  };
+}
+window.calculateDripFertigationOffline = calculateDripFertigationOffline;
+
+async function executeFertigationSchedule() {
+  const cropEl = document.getElementById("dripFertCropSelect") || document.getElementById("fertCropSelect");
+  const crop = cropEl?.value || "tomato";
+  const acres = parseFloat(document.getElementById("fertAcresInput")?.value) || 1.0;
+  const stage = document.getElementById("fertStageSelect")?.value || "Flowering / Fruit Set (31-60 DAP)";
+  const lateralSp = parseFloat(document.getElementById("fertLateralSpacing")?.value) || 1.2;
+  const dripperSp = parseFloat(document.getElementById("fertDripperSpacing")?.value) || 0.4;
+  const dripperDis = parseFloat(document.getElementById("fertDripperDischarge")?.value) || 2.0;
+  const venturiRate = parseFloat(document.getElementById("fertVenturiRate")?.value) || 60.0;
+
+  const container = document.getElementById("fertigationResultContainer");
+  if (!container) return;
+  container.classList.remove("hidden");
+  container.innerHTML = `<div class="p-6 text-center text-teal-700 font-bold animate-pulse">Calculating precision fertigation schedule & Venturi runtimes...</div>`;
+
+  const payload = {
+    crop_id: crop,
+    growth_stage: stage,
+    land_size_acres: acres,
+    lateral_spacing_meters: lateralSp,
+    dripper_spacing_meters: dripperSp,
+    dripper_discharge_lph: dripperDis,
+    venturi_suction_rate_lph: venturiRate
+  };
+
+  try {
+    const res = await fetch(`${API_BASE}/fertigation-schedule`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+    if (!res.ok) throw new Error("API offline");
+    const data = await res.json();
+    renderFertigationResult(data);
+  } catch (err) {
+    console.warn("Using offline Drip Fertigation calculation:", err);
+    const data = calculateDripFertigationOffline(payload);
+    renderFertigationResult(data);
+  }
+}
+window.executeFertigationSchedule = executeFertigationSchedule;
+
+function renderFertigationResult(res) {
+  const container = document.getElementById("fertigationResultContainer");
+  if (!container) return;
+  container.classList.remove("hidden");
+
+  const wsfRows = (res.water_soluble_fertilizers || []).map(f => `
+    <tr class="border-b border-slate-100 hover:bg-slate-50 transition">
+      <td class="p-3 font-bold text-slate-800">${f.fertilizer_name}</td>
+      <td class="p-3 font-mono font-semibold text-teal-700">${f.grade}</td>
+      <td class="p-3 text-slate-700 font-bold">${f.weekly_dosage_kg_per_acre} kg/ac</td>
+      <td class="p-3 text-emerald-800 font-extrabold">${f.total_weekly_dosage_kg} kg</td>
+      <td class="p-3 text-slate-600">${f.application_frequency_days}</td>
+      <td class="p-3 text-slate-500 text-[11px]">${f.target_benefit}</td>
+    </tr>
+  `).join("");
+
+  const tipsList = (res.farmer_operational_tips || []).map(t => `
+    <li class="flex items-start gap-2">
+      <span class="text-teal-600 mt-0.5">✔</span>
+      <span>${t}</span>
+    </li>
+  `).join("");
+
+  container.innerHTML = `
+    <div class="space-y-6 animate-fadeIn">
+      <div class="flex flex-wrap items-center justify-between gap-3 border-b border-teal-200 pb-3">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider text-teal-800">Precision Hydro-Nutrition Blueprint</span>
+          <h4 class="text-xl font-black text-slate-900 capitalize">${res.crop_id} • ${res.growth_stage}</h4>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="bg-teal-100 text-teal-900 px-3 py-1 rounded-full text-xs font-bold font-mono">
+            EC: ${res.target_ec_ms_cm} | pH: ${res.target_ph_range}
+          </span>
+        </div>
+      </div>
+
+      <!-- Key Engineering Metrics -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs">
+        <div class="bg-teal-50 border border-teal-200 p-4 rounded-xl text-center">
+          <span class="text-teal-700 font-bold block text-[11px]">Total Dripper Emitters</span>
+          <span class="text-xl font-black text-teal-950 font-mono">${(res.total_emitters_count || 0).toLocaleString("en-IN")}</span>
+          <span class="text-[10px] text-teal-600 block mt-0.5">Flow: ${Math.round(res.system_flow_rate_lph || 0).toLocaleString("en-IN")} LPH</span>
+        </div>
+
+        <div class="bg-sky-50 border border-sky-200 p-4 rounded-xl text-center">
+          <span class="text-sky-700 font-bold block text-[11px]">Weekly Water Volume</span>
+          <span class="text-xl font-black text-sky-950 font-mono">${res.weekly_water_requirement_m3} m³</span>
+          <span class="text-[10px] text-sky-600 block mt-0.5">${(res.weekly_water_requirement_m3 * 1000).toLocaleString("en-IN")} Liters</span>
+        </div>
+
+        <div class="bg-amber-50 border border-amber-200 p-4 rounded-xl text-center">
+          <span class="text-amber-800 font-bold block text-[11px]">Irrigation Pump Runtime</span>
+          <span class="text-xl font-black text-amber-950 font-mono">${res.irrigation_hours_per_week} hrs/wk</span>
+          <span class="text-[10px] text-amber-700 block mt-0.5">Split into 3-4 daily sets</span>
+        </div>
+
+        <div class="bg-emerald-50 border border-emerald-200 p-4 rounded-xl text-center">
+          <span class="text-emerald-800 font-bold block text-[11px]">Venturi Dosing Time</span>
+          <span class="text-xl font-black text-emerald-950 font-mono">${res.venturi_injection_minutes_per_cycle} mins</span>
+          <span class="text-[10px] text-emerald-700 block mt-0.5">Tank: ${res.stock_tank_capacity_liters} L</span>
+        </div>
+      </div>
+
+      <!-- Water Soluble Fertilizer Prescription Table -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden text-xs">
+        <div class="bg-slate-50 px-4 py-3 border-b border-slate-200 flex items-center justify-between">
+          <h5 class="font-bold text-slate-800 flex items-center gap-2">
+            <span>🧪</span> Weekly Water-Soluble Fertilizer (WSF) Recipe & Schedule
+          </h5>
+          <span class="text-[11px] text-slate-500">100% Soluble Grades</span>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left">
+            <thead class="bg-slate-100/70 text-slate-700 font-semibold border-b border-slate-200">
+              <tr>
+                <th class="p-3">Fertilizer Name</th>
+                <th class="p-3">Grade</th>
+                <th class="p-3">Rate/Acre</th>
+                <th class="p-3">Total Dose</th>
+                <th class="p-3">Frequency</th>
+                <th class="p-3">Physiological Benefit</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${wsfRows}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Acid Wash Cleaning Protocol -->
+      <div class="bg-rose-50 border border-rose-200 rounded-xl p-4 text-xs space-y-2 text-rose-950">
+        <h5 class="font-bold flex items-center gap-1.5 text-rose-900">
+          <span>🛡️</span> Dripper Anti-Clogging & Periodic Acid Wash Protocol:
+        </h5>
+        <p class="leading-relaxed text-slate-700">${res.acid_wash_cleaning_protocol}</p>
+      </div>
+
+      <!-- Farmer Operational Tips -->
+      <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 text-xs space-y-2">
+        <h5 class="font-bold text-slate-800 flex items-center gap-1.5">
+          <span>💡</span> Golden Rules of Drip Fertigation:
+        </h5>
+        <ul class="space-y-1.5 text-slate-700">
+          ${tipsList}
+        </ul>
+      </div>
+    </div>
+  `;
+}
+window.renderFertigationResult = renderFertigationResult;
+
+// ----------------------------------------------------------------------------
+// 14. CARBON CREDITS & REGENERATIVE AGRICULTURE CALCULATOR
+// ----------------------------------------------------------------------------
+
+const OFFLINE_CARBON_RATES = {
+  "Zero Tillage / No-Till": {
+    rate: 0.85,
+    benefit: "Prevents soil oxidation, protects microbial mycorrhizae, and cuts tractor diesel fuel consumption."
+  },
+  "Biochar Soil Application": {
+    rate: 2.20,
+    benefit: "Locks recalcitrant black carbon in soil for over 100+ years and increases CEC."
+  },
+  "Cover Cropping / Green Manure": {
+    rate: 0.90,
+    benefit: "Fixes atmospheric Nitrogen and pumps deep liquid carbon root exudates into subsoil."
+  },
+  "Drip Irrigation (Energy + Water Saving)": {
+    rate: 0.55,
+    benefit: "Cuts agricultural pumping power consumption by 45%, averting thermal grid emissions."
+  },
+  "Solar Agricultural Pump (PM-KUSUM)": {
+    rate: 1.75,
+    benefit: "Direct zero-emission displacement of diesel engines or coal-powered rural electricity feeders."
+  },
+  "Agroforestry / Trees on Bunds": {
+    rate: 1.50,
+    benefit: "High above-ground woody biomass carbon accumulation alongside shelterbelt windbreak protection."
+  }
+};
+
+function calculateCarbonCreditsOffline(data) {
+  const acres = Math.max(0.1, parseFloat(data.land_size_acres || 1.0));
+  const usdPrice = Math.max(5.0, parseFloat(data.voluntary_carbon_price_usd_per_ton || 20.0));
+  const exRate = Math.max(50.0, parseFloat(data.inr_per_usd || 85.0));
+  const practices = data.practices_adopted && data.practices_adopted.length > 0
+    ? data.practices_adopted
+    : ["Zero Tillage / No-Till", "Biochar Soil Application", "Cover Cropping / Green Manure"];
+
+  let totalTco2e = 0.0;
+  const breakdowns = [];
+
+  practices.forEach(p => {
+    let matched = null;
+    for (const [k, v] of Object.entries(OFFLINE_CARBON_RATES)) {
+      if (k.toLowerCase().includes(p.toLowerCase()) || p.toLowerCase().includes(k.toLowerCase())) {
+        matched = { name: k, ...v };
+        break;
+      }
+    }
+    if (!matched) matched = { name: p, rate: 0.70, benefit: "Enhances regenerative soil organic matter balance." };
+
+    const tco2e = Math.round(matched.rate * acres * 100) / 100;
+    totalTco2e += tco2e;
+    const grossInr = Math.round(tco2e * usdPrice * exRate);
+
+    breakdowns.push({
+      practice_name: matched.name,
+      annual_sequestration_rate_tco2e_per_acre: matched.rate,
+      total_annual_tco2e: tco2e,
+      gross_credits_generated: tco2e,
+      gross_value_inr: grossInr
+    });
+  });
+
+  const totalCredits = Math.round(totalTco2e * 100) / 100;
+  const grossUsd = Math.round(totalCredits * usdPrice * 100) / 100;
+  const grossInr = Math.round(grossUsd * exRate);
+  const aggregatorFee = Math.round(grossInr * 0.18);
+  const netPayout = grossInr - aggregatorFee;
+  const perAcre = Math.round(netPayout / acres);
+
+  return {
+    land_size_acres: acres,
+    practices_count: practices.length,
+    annual_total_tco2e_sequestered: totalCredits,
+    gross_carbon_credits_generated: totalCredits,
+    gross_revenue_usd: grossUsd,
+    gross_revenue_inr: grossInr,
+    aggregator_and_verification_fee_inr: aggregatorFee,
+    net_farmer_carbon_payout_inr: netPayout,
+    net_payout_per_acre_inr: perAcre,
+    practice_breakdowns: breakdowns,
+    soil_and_climate_co_benefits: [
+      "Increases Soil Organic Carbon (SOC) by approximately 0.25 - 0.40% over a 3-year baseline.",
+      "Improves field rainwater infiltration by 25-40%, mitigating drought vulnerability.",
+      "Reduces annual chemical input costs by up to ₹3,500/acre through biological soil nutrient activation."
+    ],
+    accredited_registries_and_next_steps: [
+      "Verra VCS (Verified Carbon Standard) VM0042 / VM0044 Methodology for Improved Agricultural Land Management.",
+      "Gold Standard for the Global Goals (GS4GG) Soil Carbon Quantification.",
+      "Indian National Voluntary Carbon Market & Aggregator Platforms (e.g., Boomitra, nurture.farm, Varaha ClimateAg).",
+      "Step 1: Geo-fence farm plot -> Step 2: Extract 0-30 cm baseline soil cores -> Step 3: Annual satellite remote sensing (NDVI/SOC) verification -> Step 4: Direct DBT payout."
+    ]
+  };
+}
+window.calculateCarbonCreditsOffline = calculateCarbonCreditsOffline;
+
+async function executeCarbonCredits() {
+  const acres = parseFloat(document.getElementById("carbonAcresInput")?.value) || 5.0;
+  const usdPrice = parseFloat(document.getElementById("carbonPriceUsd")?.value) || 20.0;
+  const checkboxes = document.querySelectorAll(".carbon-practice-chk:checked");
+  const practices = Array.from(checkboxes).map(c => c.value);
+
+  const container = document.getElementById("carbonResultContainer");
+  if (!container) return;
+  container.classList.remove("hidden");
+  container.innerHTML = `<div class="p-6 text-center text-emerald-700 font-bold animate-pulse">Calculating verifiable carbon credits & registry payouts...</div>`;
+
+  const payload = {
+    land_size_acres: acres,
+    practices_adopted: practices,
+    voluntary_carbon_price_usd_per_ton: usdPrice,
+    inr_per_usd: 85.0
+  };
+
+  try {
+    const res = await fetch(`${API_BASE}/carbon-credits`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+    if (!res.ok) throw new Error("API offline");
+    const data = await res.json();
+    renderCarbonResult(data);
+  } catch (err) {
+    console.warn("Using offline Carbon Credits calculation:", err);
+    const data = calculateCarbonCreditsOffline(payload);
+    renderCarbonResult(data);
+  }
+}
+window.executeCarbonCredits = executeCarbonCredits;
+
+function renderCarbonResult(res) {
+  const container = document.getElementById("carbonResultContainer");
+  if (!container) return;
+  container.classList.remove("hidden");
+
+  const cardsHtml = (res.practice_breakdowns || []).map(p => `
+    <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm space-y-2">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-2">
+        <strong class="text-slate-900 text-sm">${p.practice_name}</strong>
+        <span class="font-mono text-xs font-extrabold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded">
+          +${p.annual_sequestration_rate_tco2e_per_acre} tCO₂e/ac
+        </span>
+      </div>
+      <div class="flex items-center justify-between text-xs text-slate-600">
+        <span>Credits Generated: <strong>${p.total_annual_tco2e} tCO₂e</strong></span>
+        <span class="text-emerald-700 font-black">₹${Math.round(p.gross_value_inr).toLocaleString("en-IN")}</span>
+      </div>
+    </div>
+  `).join("");
+
+  const benefitsHtml = (res.soil_and_climate_co_benefits || []).map(b => `
+    <li class="flex items-start gap-2">
+      <span class="text-emerald-600 mt-0.5">🌱</span>
+      <span>${b}</span>
+    </li>
+  `).join("");
+
+  const stepsHtml = (res.accredited_registries_and_next_steps || []).map(s => `
+    <li class="flex items-start gap-2">
+      <span class="text-indigo-600 mt-0.5">➔</span>
+      <span>${s}</span>
+    </li>
+  `).join("");
+
+  container.innerHTML = `
+    <div class="space-y-6 animate-fadeIn">
+      <div class="flex flex-wrap items-center justify-between gap-3 border-b border-emerald-200 pb-3">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider text-emerald-800">Verra VCS VM0042 Voluntary Carbon Portfolio</span>
+          <h4 class="text-xl font-black text-slate-900">Carbon Revenue & Sequestration Certificate</h4>
+        </div>
+        <span class="bg-emerald-100 text-emerald-900 px-3 py-1 rounded-full text-xs font-bold">
+          ${res.practices_count} Regenerative Practices Enrolled
+        </span>
+      </div>
+
+      <!-- Financial Metrics Grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
+        <div class="bg-emerald-50 border border-emerald-200 p-4 rounded-xl text-center">
+          <span class="text-emerald-800 font-bold block text-[11px]">Total Carbon Sequestered</span>
+          <span class="text-2xl font-black text-emerald-950 font-mono">${res.annual_total_tco2e_sequestered} tCO₂e</span>
+          <span class="text-[10px] text-emerald-700 block mt-0.5">Metric tons CO₂ equivalent/year</span>
+        </div>
+
+        <div class="bg-sky-50 border border-sky-200 p-4 rounded-xl text-center">
+          <span class="text-sky-800 font-bold block text-[11px]">Gross Carbon Value</span>
+          <span class="text-2xl font-black text-sky-950 font-mono">$${(res.gross_revenue_usd || 0).toLocaleString("en-US")}</span>
+          <span class="text-[10px] text-sky-700 block mt-0.5">₹${Math.round(res.gross_revenue_inr || 0).toLocaleString("en-IN")} Gross</span>
+        </div>
+
+        <div class="bg-amber-50 border border-amber-200 p-4 rounded-xl text-center">
+          <span class="text-amber-800 font-bold block text-[11px]">Net Direct Farmer Payout</span>
+          <span class="text-2xl font-black text-amber-950 font-mono">₹${Math.round(res.net_farmer_carbon_payout_inr || 0).toLocaleString("en-IN")}</span>
+          <span class="text-[10px] text-amber-700 block mt-0.5">After 18% MRV & verification fees</span>
+        </div>
+
+        <div class="bg-purple-50 border border-purple-200 p-4 rounded-xl text-center">
+          <span class="text-purple-800 font-bold block text-[11px]">Annual Carbon Income / Acre</span>
+          <span class="text-2xl font-black text-purple-950 font-mono">₹${Math.round(res.net_payout_per_acre_inr || 0).toLocaleString("en-IN")}/ac</span>
+          <span class="text-[10px] text-purple-700 block mt-0.5">Over and above regular harvest profits</span>
+        </div>
+      </div>
+
+      <!-- Practice Breakdowns -->
+      <div class="space-y-3">
+        <h5 class="text-sm font-bold text-slate-900 flex items-center gap-1.5">
+          <span>📊</span> Carbon Abatement Breakdown by Practice:
+        </h5>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+          ${cardsHtml}
+        </div>
+      </div>
+
+      <!-- Soil & Climate Co-Benefits -->
+      <div class="bg-emerald-50/70 border border-emerald-200 rounded-xl p-4 text-xs space-y-2 text-slate-800">
+        <h5 class="font-bold text-emerald-950 flex items-center gap-1.5">
+          <span>🌍</span> On-Farm Agro-Ecological Dividends:
+        </h5>
+        <ul class="space-y-1.5">
+          ${benefitsHtml}
+        </ul>
+      </div>
+
+      <!-- Registry Onboarding Roadmap -->
+      <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 text-xs space-y-2">
+        <h5 class="font-bold text-slate-900 flex items-center gap-1.5">
+          <span>🏛️</span> Accredited Registry Verification & Payout Roadmap:
+        </h5>
+        <ul class="space-y-1.5 text-slate-700">
+          ${stepsHtml}
+        </ul>
+      </div>
+    </div>
+  `;
+}
+window.renderCarbonResult = renderCarbonResult;
+
+// ----------------------------------------------------------------------------
+// 15. INTEGRATED FARMING SYSTEM (IFS) & SILAGE PIT PLANNER
+// ----------------------------------------------------------------------------
+
+function calculateIFSOffline(data) {
+  const acres = Math.max(0.5, parseFloat(data.total_land_acres || 3.0));
+  const cattle = Math.max(0, parseInt(data.cattle_count != null ? data.cattle_count : 2));
+  const poultry = Math.max(0, parseInt(data.poultry_birds != null ? data.poultry_birds : 50));
+  const pondSqm = Math.max(0.0, parseFloat(data.pond_area_sqm != null ? data.pond_area_sqm : 500.0));
+  const enterprises = data.enterprises || ["Field Crops & Vegetables", "Dairy Cattle", "Poultry (Backyard/Desi)", "Farm Pond Aquaculture", "Vermicomposting & Biogas"];
+
+  const cropGross = acres * 48000.0;
+  const cropCost = acres * 22000.0;
+  const dairyGross = cattle * 65000.0;
+  const dairyCost = cattle * 32000.0;
+  const poultryGross = poultry > 0 ? (poultry / 50.0) * 35000.0 : 0.0;
+  const poultryCost = poultry > 0 ? (poultry / 50.0) * 16000.0 : 0.0;
+  const pondGross = pondSqm > 0 ? (pondSqm / 500.0) * 85000.0 : 0.0;
+  const pondCost = pondSqm > 0 ? (pondSqm / 500.0) * 30000.0 : 0.0;
+
+  const grossTotal = Math.round(cropGross + dairyGross + poultryGross + pondGross);
+  const costTotal = Math.round(cropCost + dairyCost + poultryCost + pondCost);
+
+  const loops = [];
+  let totalSavings = 0.0;
+
+  if (cattle > 0) {
+    const biogasSaving = cattle * 11000.0;
+    loops.push({
+      source_enterprise: "Dairy Cattle",
+      byproduct: `${(cattle * 7.3).toFixed(1)} tons fresh cow dung & urine annually`,
+      target_enterprise: "Domestic Biogas Unit",
+      recycled_use: "Generates 290 m3 clean methane gas, replacing commercial LPG cylinders.",
+      annual_cost_savings_inr: biogasSaving
+    });
+    totalSavings += biogasSaving;
+
+    const vermiSaving = cattle * 9000.0;
+    loops.push({
+      source_enterprise: "Biogas Slurry",
+      byproduct: "Digested enriched nitrogen slurry",
+      target_enterprise: "Vermicompost & Crop Fields",
+      recycled_use: "Converted into 3.5 tons premium organic vermicompost, replacing synthetic DAP/Urea.",
+      annual_cost_savings_inr: vermiSaving
+    });
+    totalSavings += vermiSaving;
+  }
+
+  if (cattle > 0 && pondSqm > 0) {
+    const pondSaving = 7500.0;
+    loops.push({
+      source_enterprise: "Dairy & Biogas Slurry",
+      byproduct: "Treated fermented bio-slurry",
+      target_enterprise: "Farm Fish Pond",
+      recycled_use: "Fertilizes aquatic phytoplankton and zooplankton, cutting commercial floating fish feed by 35%.",
+      annual_cost_savings_inr: pondSaving
+    });
+    totalSavings += pondSaving;
+  }
+
+  if (poultry > 0) {
+    const poultrySaving = 4500.0;
+    loops.push({
+      source_enterprise: "Backyard Poultry",
+      byproduct: "High-Phosphorus poultry litter",
+      target_enterprise: "Vegetable Beds & Horti Plots",
+      recycled_use: "Direct fast-release organic N & P top dressing for high-value vegetables.",
+      annual_cost_savings_inr: poultrySaving
+    });
+    totalSavings += poultrySaving;
+  }
+
+  const strawSaving = acres * 3500.0;
+  loops.push({
+    source_enterprise: "Field Crops (Paddy / Maize / Pulses)",
+    byproduct: "Crop residues, straw, and husk",
+    target_enterprise: "Dairy Cattle Feeding",
+    recycled_use: "Chaffed and fed as dry maintenance roughage (bhusa/kadbi), avoiding straw burning.",
+    annual_cost_savings_inr: strawSaving
+  });
+  totalSavings += strawSaving;
+
+  const netProfit = Math.round((grossTotal - costTotal) + totalSavings);
+  const silageTons = Math.round(((cattle * 90 * 15.0) / 1000.0) * 10) / 10;
+  const silageVol = Math.round(((silageTons * 1000.0) / 650.0) * 10) / 10;
+  const pitDepth = 1.5;
+  const pitWidth = 2.0;
+  const pitLength = Math.max(2.5, Math.round((silageVol / (pitDepth * pitWidth)) * 10) / 10);
+  const molassesKg = Math.round(silageTons * 1000.0 * 0.02 * 10) / 10;
+  const empDays = Math.round(180 + (cattle * 45) + (acres * 30));
+  const score = Math.min(98, 70 + (enterprises.length * 5));
+
+  return {
+    total_land_acres: acres,
+    enterprises_selected: enterprises,
+    annual_gross_income_inr: grossTotal,
+    annual_operational_cost_inr: costTotal,
+    annual_net_profit_inr: netProfit,
+    internal_resource_recycling_loops: loops,
+    total_internal_savings_inr: Math.round(totalSavings),
+    silage_dry_period_buffer_tons: silageTons,
+    silage_pit_length_m: pitLength,
+    silage_pit_width_m: pitWidth,
+    silage_pit_depth_m: pitDepth,
+    molasses_and_salt_preservation_kg: `${molassesKg.toFixed(1)} kg Jaggery/Molasses + ${(silageTons * 5).toFixed(1)} kg Common Salt`,
+    annual_on_farm_employment_days: empDays,
+    sustainability_index_score: score,
+    synergistic_recommendations: [
+      `Recycling farm byproducts saves ₹${Math.round(totalSavings).toLocaleString("en-IN")} annually in external fertilizer, feed, and fuel costs.`,
+      `Build a ${pitLength}m x ${pitWidth}m x ${pitDepth}m brick-lined silage trench to pack ${silageTons} tons of green maize/sorghum fodder with ${molassesKg} kg jaggery/molasses.`,
+      "Divert overflow water from dairy washing shed through a gravel sand filter straight into the fish pond to foster natural algae blooms.",
+      `This integrated diversified enterprise guarantees ${empDays} man-days of year-round steady cashflow, eliminating seasonal rural debt.`
+    ]
+  };
+}
+window.calculateIFSOffline = calculateIFSOffline;
+
+async function executeIFSPlanner() {
+  const acres = parseFloat(document.getElementById("ifsTotalAcres")?.value) || 3.0;
+  const cattle = parseInt(document.getElementById("ifsCattleCount")?.value) || 2;
+  const poultry = parseInt(document.getElementById("ifsPoultryCount")?.value) || 50;
+  const pondSqm = parseFloat(document.getElementById("ifsPondSqm")?.value) || 500.0;
+
+  const container = document.getElementById("ifsResultContainer");
+  if (!container) return;
+  container.classList.remove("hidden");
+  container.innerHTML = `<div class="p-6 text-center text-indigo-700 font-bold animate-pulse">Modeling ICAR-IFS circular flow and sizing silage pit...</div>`;
+
+  const payload = {
+    total_land_acres: acres,
+    cattle_count: cattle,
+    poultry_birds: poultry,
+    pond_area_sqm: pondSqm
+  };
+
+  try {
+    const res = await fetch(`${API_BASE}/integrated-farming/plan`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+    if (!res.ok) throw new Error("API offline");
+    const data = await res.json();
+    renderIFSResult(data);
+  } catch (err) {
+    console.warn("Using offline IFS calculation:", err);
+    const data = calculateIFSOffline(payload);
+    renderIFSResult(data);
+  }
+}
+window.executeIFSPlanner = executeIFSPlanner;
+
+function renderIFSResult(res) {
+  const container = document.getElementById("ifsResultContainer");
+  if (!container) return;
+  container.classList.remove("hidden");
+
+  const loopsHtml = (res.internal_resource_recycling_loops || []).map(l => `
+    <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm space-y-2">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-2">
+        <span class="font-bold text-indigo-950 text-xs">${l.source_enterprise} ➔ ${l.target_enterprise}</span>
+        <span class="font-mono text-xs font-black text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded">
+          Saves ₹${Math.round(l.annual_cost_savings_inr).toLocaleString("en-IN")}/yr
+        </span>
+      </div>
+      <div class="text-xs text-slate-600">
+        <div><strong>Recycled Waste:</strong> ${l.byproduct}</div>
+        <div class="text-slate-500 mt-1">${l.recycled_use}</div>
+      </div>
+    </div>
+  `).join("");
+
+  const recsHtml = (res.synergistic_recommendations || []).map(r => `
+    <li class="flex items-start gap-2">
+      <span class="text-indigo-600 mt-0.5">✔</span>
+      <span>${r}</span>
+    </li>
+  `).join("");
+
+  container.innerHTML = `
+    <div class="space-y-6 animate-fadeIn">
+      <div class="flex flex-wrap items-center justify-between gap-3 border-b border-indigo-200 pb-3">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider text-indigo-800">ICAR Integrated Bio-Economy Model</span>
+          <h4 class="text-xl font-black text-slate-900">${res.total_land_acres} Acre Multi-Enterprise Ecosystem</h4>
+        </div>
+        <span class="bg-indigo-100 text-indigo-900 px-3 py-1 rounded-full text-xs font-bold font-mono">
+          Sustainability Score: ${res.sustainability_index_score}/100 🌟
+        </span>
+      </div>
+
+      <!-- Financial Metrics Grid -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs">
+        <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl text-center">
+          <span class="text-slate-500 font-bold block text-[11px]">Gross Revenue</span>
+          <span class="text-xl font-black text-slate-900 font-mono">₹${Math.round(res.annual_gross_income_inr || 0).toLocaleString("en-IN")}</span>
+          <span class="text-[10px] text-slate-400 block mt-0.5">Crops, Milk, Eggs, Fish</span>
+        </div>
+
+        <div class="bg-emerald-50 border border-emerald-200 p-4 rounded-xl text-center">
+          <span class="text-emerald-800 font-bold block text-[11px]">Internal Recycled Savings</span>
+          <span class="text-xl font-black text-emerald-950 font-mono">+₹${Math.round(res.total_internal_savings_inr || 0).toLocaleString("en-IN")}</span>
+          <span class="text-[10px] text-emerald-700 block mt-0.5">Biogas, Dung, Fish feed savings</span>
+        </div>
+
+        <div class="bg-indigo-50 border border-indigo-200 p-4 rounded-xl text-center">
+          <span class="text-indigo-800 font-bold block text-[11px]">Net Annual Farmer Profit</span>
+          <span class="text-xl font-black text-indigo-950 font-mono">₹${Math.round(res.annual_net_profit_inr || 0).toLocaleString("en-IN")}</span>
+          <span class="text-[10px] text-indigo-700 block mt-0.5">High financial security</span>
+        </div>
+
+        <div class="bg-amber-50 border border-amber-200 p-4 rounded-xl text-center">
+          <span class="text-amber-800 font-bold block text-[11px]">On-Farm Employment</span>
+          <span class="text-xl font-black text-amber-950 font-mono">${res.annual_on_farm_employment_days} Days</span>
+          <span class="text-[10px] text-amber-700 block mt-0.5">Full year-round family labor</span>
+        </div>
+      </div>
+
+      <!-- Silage Bunker Engineering Sizer -->
+      <div class="bg-purple-50 border border-purple-200 rounded-2xl p-5 space-y-3 text-xs text-purple-950">
+        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-purple-200 pb-2">
+          <h5 class="font-bold text-sm flex items-center gap-1.5 text-purple-950">
+            <span>🌿</span> 90-Day Summer Green Fodder Silage Trench Bunker
+          </h5>
+          <span class="bg-purple-200 text-purple-900 font-bold px-2.5 py-0.5 rounded text-[11px]">
+            Target Buffer: ${res.silage_dry_period_buffer_tons} Tons Green Fodder
+          </span>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1">
+          <div class="bg-white p-3 rounded-xl border border-purple-200 text-center">
+            <span class="text-slate-500 block text-[11px]">Recommended Length:</span>
+            <strong class="text-slate-900 text-base">${res.silage_pit_length_m} meters</strong>
+          </div>
+          <div class="bg-white p-3 rounded-xl border border-purple-200 text-center">
+            <span class="text-slate-500 block text-[11px]">Trench Width:</span>
+            <strong class="text-slate-900 text-base">${res.silage_pit_width_m} meters</strong>
+          </div>
+          <div class="bg-white p-3 rounded-xl border border-purple-200 text-center">
+            <span class="text-slate-500 block text-[11px]">Trench Depth:</span>
+            <strong class="text-slate-900 text-base">${res.silage_pit_depth_m} meters</strong>
+          </div>
+        </div>
+        <div class="bg-white/80 p-3 rounded-xl border border-purple-100 text-slate-700">
+          <strong>Anaerobic Inoculation Recipe:</strong> ${res.molasses_and_salt_preservation_kg}. Pack chaffed fodder tightly with tractor roll to expel all oxygen, seal with UV black plastic tarpaulin and earth cover for 45 days.
+        </div>
+      </div>
+
+      <!-- Circular Flow Recycled Loops -->
+      <div class="space-y-3">
+        <h5 class="text-sm font-bold text-slate-900 flex items-center gap-1.5">
+          <span>🔄</span> Closed-Loop Nutrient Recycling Links:
+        </h5>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          ${loopsHtml}
+        </div>
+      </div>
+
+      <!-- Strategic Recommendations -->
+      <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 text-xs space-y-2">
+        <h5 class="font-bold text-slate-900 flex items-center gap-1.5">
+          <span>💡</span> ICAR IFS Operational Advisory:
+        </h5>
+        <ul class="space-y-1.5 text-slate-700">
+          ${recsHtml}
+        </ul>
+      </div>
+    </div>
+  `;
+}
+window.renderIFSResult = renderIFSResult;
+
+// ----------------------------------------------------------------------------
+// 16. POLYHOUSE & GREENHOUSE CLIMATE SIZER
+// ----------------------------------------------------------------------------
+
+async function executePolyhouseClimate() {
+  const stype = document.getElementById("polyStructureType")?.value || "Naturally Ventilated Polyhouse (NVPH)";
+  const area = parseFloat(document.getElementById("polyAreaSqm")?.value) || 1008.0;
+  const crop = document.getElementById("polyCropType")?.value || "Bell Pepper (Colored Capsicum)";
+  const maxTemp = parseFloat(document.getElementById("polyMaxTemp")?.value) || 40.0;
+  const minRh = parseFloat(document.getElementById("polyMinRh")?.value) || 30.0;
+  const height = parseFloat(document.getElementById("polyHeight")?.value) || 4.5;
+
+  const container = document.getElementById("polyhouseResultContainer");
+  if (!container) return;
+  container.classList.remove("hidden");
+  container.innerHTML = `<div class="p-6 text-center text-teal-700 font-bold animate-pulse">Sizing polyhouse climate, exhaust fans, and MIDH subsidy...</div>`;
+
+  const payload = {
+    structure_type: stype,
+    covered_area_sqm: area,
+    crop_type: crop,
+    ambient_max_temp_c: maxTemp,
+    ambient_min_rh_pct: minRh,
+    roof_height_meters: height
+  };
+
+  try {
+    const res = await fetch(`${API_BASE}/polyhouse-climate`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+    if (!res.ok) throw new Error("API offline");
+    const data = await res.json();
+    renderPolyhouseResult(data);
+  } catch (err) {
+    console.warn("Using offline Polyhouse Climate calculation:", err);
+    const data = calculatePolyhouseClimateOffline(payload);
+    renderPolyhouseResult(data);
+  }
+}
+window.executePolyhouseClimate = executePolyhouseClimate;
+
+function renderPolyhouseResult(res) {
+  const container = document.getElementById("polyhouseResultContainer");
+  if (!container) return;
+  container.classList.remove("hidden");
+
+  const recsHtml = (res.operational_recommendations || []).map(r => `
+    <li class="flex items-start gap-2">
+      <span class="text-teal-600 mt-0.5">🏡</span>
+      <span>${r}</span>
+    </li>
+  `).join("");
+
+  container.innerHTML = `
+    <div class="space-y-6 animate-fadeIn">
+      <div class="flex flex-wrap items-center justify-between gap-3 border-b border-teal-200 pb-3">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider text-teal-800">Protected Horticulture Specification</span>
+          <h4 class="text-xl font-black text-slate-900">${res.structure_type} (${res.covered_area_sqm} m²)</h4>
+        </div>
+        <span class="bg-teal-100 text-teal-900 px-3 py-1 rounded-full text-xs font-bold font-mono">
+          VPD: ${res.vapor_pressure_deficit_kpa} kPa (${res.vpd_status})
+        </span>
+      </div>
+
+      <!-- Microclimate & Equipment Grid -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs">
+        <div class="bg-teal-50 border border-teal-200 p-4 rounded-xl text-center">
+          <span class="text-teal-700 font-bold block text-[11px]">Polyhouse Volume</span>
+          <span class="text-xl font-black text-teal-950 font-mono">${Math.round(res.polyhouse_volume_m3).toLocaleString("en-IN")} m³</span>
+          <span class="text-[10px] text-teal-600 block mt-0.5">Ridge: ${res.ridge_vent_area_sqm} m² • Side: ${res.side_vent_area_sqm} m²</span>
+        </div>
+
+        <div class="bg-sky-50 border border-sky-200 p-4 rounded-xl text-center">
+          <span class="text-sky-700 font-bold block text-[11px]">Exhaust Fans (50-inch)</span>
+          <span class="text-xl font-black text-sky-950 font-mono">${res.number_of_exhaust_fans_50inch || 0} Units</span>
+          <span class="text-[10px] text-sky-600 block mt-0.5">Airflow: ${Math.round(res.exhaust_fan_airflow_cfm).toLocaleString("en-IN")} CFM</span>
+        </div>
+
+        <div class="bg-amber-50 border border-amber-200 p-4 rounded-xl text-center">
+          <span class="text-amber-800 font-bold block text-[11px]">Cooling Pad & Water</span>
+          <span class="text-xl font-black text-amber-950 font-mono">${res.cooling_pad_area_sqm || 0} m²</span>
+          <span class="text-[10px] text-amber-700 block mt-0.5">Water: ${res.cooling_water_flow_rate_lph || 0} LPH</span>
+        </div>
+
+        <div class="bg-emerald-50 border border-emerald-200 p-4 rounded-xl text-center">
+          <span class="text-emerald-800 font-bold block text-[11px]">Inside Temp & Shade</span>
+          <span class="text-xl font-black text-emerald-950 font-mono">${res.expected_inside_temp_c}°C</span>
+          <span class="text-[10px] text-emerald-700 block mt-0.5">Thermal Net: ${res.shade_net_recommended_pct}% shade</span>
+        </div>
+      </div>
+
+      <!-- MIDH Government Subsidy Economics -->
+      <div class="bg-slate-50 border border-slate-200 rounded-2xl p-5 space-y-3 text-xs">
+        <div class="flex items-center justify-between border-b border-slate-200 pb-2">
+          <h5 class="font-bold text-sm text-slate-900 flex items-center gap-1.5">
+            <span>🏛️</span> MIDH Capital Cost & 50% Subsidy Share
+          </h5>
+          <span class="bg-emerald-100 text-emerald-900 font-bold px-2.5 py-0.5 rounded text-[11px]">
+            50% Direct Benefit Transfer (DBT)
+          </span>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1">
+          <div class="bg-white p-3 rounded-xl border border-slate-200">
+            <span class="text-slate-500 block text-[11px]">Benchmark Capital Cost:</span>
+            <strong class="text-slate-800 text-base">₹${Math.round(res.total_project_cost_inr).toLocaleString("en-IN")}</strong>
+          </div>
+          <div class="bg-emerald-50 p-3 rounded-xl border border-emerald-200">
+            <span class="text-emerald-700 block text-[11px] font-bold">Govt MIDH Subsidy (50%):</span>
+            <strong class="text-emerald-900 text-base font-black">₹${Math.round(res.estimated_midh_subsidy_inr).toLocaleString("en-IN")}</strong>
+          </div>
+          <div class="bg-white p-3 rounded-xl border border-slate-200">
+            <span class="text-slate-500 block text-[11px]">Farmer Net Contribution:</span>
+            <strong class="text-slate-900 text-base">₹${Math.round(res.farmer_net_share_inr).toLocaleString("en-IN")}</strong>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recommendations -->
+      <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 text-xs space-y-2">
+        <h5 class="font-bold text-slate-900 flex items-center gap-1.5">
+          <span>💡</span> High-Tech Operational Protocols:
+        </h5>
+        <ul class="space-y-1.5 text-slate-700">
+          ${recsHtml}
+        </ul>
+      </div>
+    </div>
+  `;
+}
+window.renderPolyhouseResult = renderPolyhouseResult;
+
+// ----------------------------------------------------------------------------
+// 17. STUBBLE RESIDUE TO BIOCHAR & COMPOST BALANCER
+// ----------------------------------------------------------------------------
+
+async function executeBiocharStubble() {
+  const crop = document.getElementById("biocharCropSelect")?.value || "Paddy Straw (Parali)";
+  const acres = parseFloat(document.getElementById("biocharAcres")?.value) || 5.0;
+  const tech = document.getElementById("biocharTechSelect")?.value || "Kon-Tiki Pyrolysis Kiln (Biochar)";
+
+  const container = document.getElementById("biocharResultContainer");
+  if (!container) return;
+  container.classList.remove("hidden");
+  container.innerHTML = `<div class="p-6 text-center text-amber-800 font-bold animate-pulse">Calculating biochar yield, avoided smog, and C:N recipe...</div>`;
+
+  const payload = {
+    residue_crop: crop,
+    land_size_acres: acres,
+    target_technology: tech
+  };
+
+  try {
+    const res = await fetch(`${API_BASE}/stubble-biochar`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+    if (!res.ok) throw new Error("API offline");
+    const data = await res.json();
+    renderBiocharResult(data);
+  } catch (err) {
+    console.warn("Using offline Biochar Stubble calculation:", err);
+    const data = calculateBiocharStubbleOffline(payload);
+    renderBiocharResult(data);
+  }
+}
+window.executeBiocharStubble = executeBiocharStubble;
+
+function renderBiocharResult(res) {
+  const container = document.getElementById("biocharResultContainer");
+  if (!container) return;
+  container.classList.remove("hidden");
+
+  const recipe = res.composting_recipe || {};
+  const recsHtml = (res.actionable_farmer_guidelines || []).map(r => `
+    <li class="flex items-start gap-2">
+      <span class="text-amber-700 mt-0.5">🔥</span>
+      <span>${r}</span>
+    </li>
+  `).join("");
+
+  container.innerHTML = `
+    <div class="space-y-6 animate-fadeIn">
+      <div class="flex flex-wrap items-center justify-between gap-3 border-b border-amber-200 pb-3">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider text-amber-900">Zero-Smoke Biomass Valorization</span>
+          <h4 class="text-xl font-black text-slate-900">${res.residue_crop} (${res.land_size_acres} Acres)</h4>
+        </div>
+        <span class="bg-amber-100 text-amber-900 px-3 py-1 rounded-full text-xs font-bold font-mono">
+          Avoided NGT Fine: ₹${(res.ngt_fine_penalty_averted_inr || 0).toLocaleString("en-IN")}
+        </span>
+      </div>
+
+      <!-- High-Impact Value Cards -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs">
+        <div class="bg-amber-50 border border-amber-200 p-4 rounded-xl text-center">
+          <span class="text-amber-800 font-bold block text-[11px]">Harvested Biomass</span>
+          <span class="text-xl font-black text-amber-950 font-mono">${res.estimated_residue_biomass_quintals} Qtl</span>
+          <span class="text-[10px] text-amber-700 block mt-0.5">${res.estimated_residue_biomass_quintals * 100} kg raw straw</span>
+        </div>
+
+        <div class="bg-stone-100 border border-stone-300 p-4 rounded-xl text-center">
+          <span class="text-stone-800 font-bold block text-[11px]">Biochar Yield</span>
+          <span class="text-xl font-black text-stone-950 font-mono">${res.biochar_yield_quintals} Qtl</span>
+          <span class="text-[10px] text-stone-600 block mt-0.5">Value: ₹${(res.economic_value_biochar_inr || 0).toLocaleString("en-IN")}</span>
+        </div>
+
+        <div class="bg-sky-50 border border-sky-200 p-4 rounded-xl text-center">
+          <span class="text-sky-800 font-bold block text-[11px]">Soil Water Holding</span>
+          <span class="text-xl font-black text-sky-950 font-mono">+${(res.soil_water_retention_gain_liters || 0).toLocaleString("en-IN")} L</span>
+          <span class="text-[10px] text-sky-700 block mt-0.5">Sponge effect in topsoil</span>
+        </div>
+
+        <div class="bg-emerald-50 border border-emerald-200 p-4 rounded-xl text-center">
+          <span class="text-emerald-800 font-bold block text-[11px]">Smog & PM2.5 Averted</span>
+          <span class="text-xl font-black text-emerald-950 font-mono">${res.pm25_pollution_averted_kg} kg</span>
+          <span class="text-[10px] text-emerald-700 block mt-0.5">${res.co2_emissions_averted_kg} kg CO₂ saved</span>
+        </div>
+      </div>
+
+      <!-- Rapid Aerobic Composting Recipe (Pusa Decomposer) -->
+      <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm space-y-3 text-xs">
+        <h5 class="font-bold text-slate-900 flex items-center justify-between border-b border-slate-100 pb-2">
+          <span class="flex items-center gap-1.5"><span>🧪</span> Rapid Humus Composting Recipe (C:N Balancing)</span>
+          <span class="text-amber-800 font-bold">${recipe.balanced_compost_c_n_ratio || "28:1 C:N"}</span>
+        </h5>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <div class="bg-slate-50 p-3 rounded-xl">
+            <span class="text-slate-500 block text-[11px]">Pusa Decomposer Capsules:</span>
+            <strong class="text-slate-900 text-sm">${recipe.pusa_decomposer_capsules || 4} Capsules</strong>
+          </div>
+          <div class="bg-slate-50 p-3 rounded-xl">
+            <span class="text-slate-500 block text-[11px]">Cow Dung Slurry Required:</span>
+            <strong class="text-slate-900 text-sm">${(recipe.cow_dung_slurry_required_kg || 0).toLocaleString("en-IN")} kg</strong>
+          </div>
+          <div class="bg-slate-50 p-3 rounded-xl">
+            <span class="text-slate-500 block text-[11px]">Jaggery for Inoculum:</span>
+            <strong class="text-slate-900 text-sm">${recipe.fermentation_jaggery_kg || 2} kg</strong>
+          </div>
+        </div>
+        <div class="text-slate-600 text-[11px] pt-1 flex justify-between">
+          <span>Target Moisture: <strong>${recipe.water_moisture_target_pct || "55-60%"}</strong></span>
+          <span>Aeration: <strong>${recipe.pile_turning_schedule || "Turn Days 7, 14, 21"}</strong></span>
+        </div>
+      </div>
+
+      <!-- Recommendations -->
+      <div class="bg-amber-50/70 border border-amber-200 rounded-xl p-4 text-xs space-y-2">
+        <h5 class="font-bold text-amber-950 flex items-center gap-1.5">
+          <span>💡</span> Zero-Burn Stubble Strategy:
+        </h5>
+        <ul class="space-y-1.5 text-slate-700">
+          ${recsHtml}
+        </ul>
+      </div>
+    </div>
+  `;
+}
+window.renderBiocharResult = renderBiocharResult;
+
+// ----------------------------------------------------------------------------
+// 18. POST-HARVEST SILO AERATION & MOISTURE LOSS CALCULATOR
+// ----------------------------------------------------------------------------
+
+async function executePostHarvestAeration() {
+  const grain = document.getElementById("aeroGrainType")?.value || "Paddy (Rice)";
+  const qty = parseFloat(document.getElementById("aeroQuantity")?.value) || 100.0;
+  const initM = parseFloat(document.getElementById("aeroInitMoist")?.value) || 19.5;
+  const targetM = parseFloat(document.getElementById("aeroTargetMoist")?.value) || 12.0;
+  const temp = parseFloat(document.getElementById("aeroTemp")?.value) || 28.0;
+  const rh = parseFloat(document.getElementById("aeroRh")?.value) || 65.0;
+  const method = document.getElementById("aeroStorageMethod")?.value || "Bagged in Warehouse";
+
+  const container = document.getElementById("aerationResultContainer");
+  if (!container) return;
+  container.classList.remove("hidden");
+  container.innerHTML = `<div class="p-6 text-center text-sky-800 font-bold animate-pulse">Calculating moisture dry-down, fan airflow, and safe shelf life...</div>`;
+
+  const payload = {
+    grain_type: grain,
+    quantity_quintals: qty,
+    initial_moisture_pct: initM,
+    target_moisture_pct: targetM,
+    ambient_temp_c: temp,
+    ambient_rh_pct: rh,
+    storage_system: method
+  };
+
+  try {
+    const res = await fetch(`${API_BASE}/post-harvest-aeration`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+    if (!res.ok) throw new Error("API offline");
+    const data = await res.json();
+    renderAerationResult(data);
+  } catch (err) {
+    console.warn("Using offline Aeration calculation:", err);
+    const data = calculatePostHarvestAerationOffline(payload);
+    renderAerationResult(data);
+  }
+}
+window.executePostHarvestAeration = executePostHarvestAeration;
+
+function renderAerationResult(res) {
+  const container = document.getElementById("aerationResultContainer");
+  if (!container) return;
+  container.classList.remove("hidden");
+
+  const isCritical = res.storage_risk_level?.toLowerCase().includes("critical");
+  const isWarning = res.storage_risk_level?.toLowerCase().includes("warning");
+  const riskClass = isCritical ? "bg-rose-100 text-rose-950 border-rose-300" : (isWarning ? "bg-amber-100 text-amber-950 border-amber-300" : "bg-emerald-100 text-emerald-950 border-emerald-300");
+
+  const recsHtml = (res.recommended_protocols || []).map(r => `
+    <li class="flex items-start gap-2">
+      <span class="text-sky-600 mt-0.5">💨</span>
+      <span>${r}</span>
+    </li>
+  `).join("");
+
+  container.innerHTML = `
+    <div class="space-y-6 animate-fadeIn">
+      <div class="flex flex-wrap items-center justify-between gap-3 border-b border-sky-200 pb-3">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider text-sky-900">ASABE Post-Harvest Aeration Design</span>
+          <h4 class="text-xl font-black text-slate-900">${res.grain_type} Lot (${res.quantity_quintals} Quintals)</h4>
+        </div>
+        <span class="${riskClass} px-3 py-1 rounded-full text-xs font-black border">
+          Risk: ${res.storage_risk_level} (${res.safe_storage_duration_days} Days Safe)
+        </span>
+      </div>
+
+      <!-- Core Physics Metrics -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs">
+        <div class="bg-rose-50 border border-rose-200 p-4 rounded-xl text-center">
+          <span class="text-rose-800 font-bold block text-[11px]">Water to Remove</span>
+          <span class="text-xl font-black text-rose-950 font-mono">${res.moisture_to_remove_kg} kg</span>
+          <span class="text-[10px] text-rose-700 block mt-0.5">Final Lot: ${res.final_quantity_quintals} Qtl</span>
+        </div>
+
+        <div class="bg-sky-50 border border-sky-200 p-4 rounded-xl text-center">
+          <span class="text-sky-800 font-bold block text-[11px]">Aeration Fan Airflow</span>
+          <span class="text-xl font-black text-sky-950 font-mono">${res.aeration_fan_airflow_cfm} CFM</span>
+          <span class="text-[10px] text-sky-700 block mt-0.5">Motor: ${res.fan_power_hp_estimate} HP</span>
+        </div>
+
+        <div class="bg-amber-50 border border-amber-200 p-4 rounded-xl text-center">
+          <span class="text-amber-800 font-bold block text-[11px]">Sun Drying Hours</span>
+          <span class="text-xl font-black text-amber-950 font-mono">${res.estimated_drying_hours_sun} hrs</span>
+          <span class="text-[10px] text-amber-700 block mt-0.5">Spread 3-5 cm on tarpaulin</span>
+        </div>
+
+        <div class="bg-emerald-50 border border-emerald-200 p-4 rounded-xl text-center">
+          <span class="text-emerald-800 font-bold block text-[11px]">Equilibrium Moisture</span>
+          <span class="text-xl font-black text-emerald-950 font-mono">${res.equilibrium_moisture_content_pct}%</span>
+          <span class="text-[10px] text-emerald-700 block mt-0.5">Forced Air: ${res.estimated_drying_hours_forced_air} hrs</span>
+        </div>
+      </div>
+
+      <!-- Mold & Aflatoxin Hazard Alert -->
+      <div class="p-4 rounded-xl border ${riskClass} text-xs space-y-1">
+        <strong class="block font-bold">⚠️ Grain Health & Mold Advisory:</strong>
+        <p class="leading-relaxed">${res.aflatoxin_mold_warning}</p>
+      </div>
+
+      <!-- Drying & Aeration Protocols -->
+      <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 text-xs space-y-2">
+        <h5 class="font-bold text-slate-900 flex items-center gap-1.5">
+          <span>💡</span> Recommended Grain Storage Protocols:
+        </h5>
+        <ul class="space-y-1.5 text-slate-700">
+          ${recsHtml}
+        </ul>
+      </div>
+    </div>
+  `;
+}
+window.renderAerationResult = renderAerationResult;
+
 
 // =========================================================================
 // CONTINGENCY PROTOCOL: CODE NAME "PLASTIC MAN"
