@@ -1314,6 +1314,19 @@ const polyhouseTabContent = document.getElementById("polyhouseTabContent");
 const biocharTabContent = document.getElementById("biocharTabContent");
 const aerationTabContent = document.getElementById("aerationTabContent");
 
+// Mandi Fair Settlement Auditor
+const fairCropSelect = document.getElementById("fairCropSelect");
+const fairGrossWeight = document.getElementById("fairGrossWeight");
+const fairBidRate = document.getElementById("fairBidRate");
+const fairMoisturePct = document.getElementById("fairMoisturePct");
+const fairMoistureVal = document.getElementById("fairMoistureVal");
+const fairForeignMatter = document.getElementById("fairForeignMatter");
+const fairForeignMatterVal = document.getElementById("fairForeignMatterVal");
+const fairTraderCutKg = document.getElementById("fairTraderCutKg");
+const auditMandiPayoutBtn = document.getElementById("auditMandiPayoutBtn");
+const mandiFairResultContainer = document.getElementById("mandiFairResultContainer");
+
+
 // Quick Header Actions
 const voiceSearchBtn = document.getElementById("voiceSearchBtn");
 const openKisanAIBtn = document.getElementById("openKisanAIBtn");
@@ -1653,6 +1666,15 @@ document.addEventListener("DOMContentLoaded", () => {
   populateSeedCropOptions();
   populateMicronutrientCropOptions();
   initLandConverter();
+  
+  auditMandiPayoutBtn?.addEventListener("click", executeMandiFairAudit);
+  fairMoisturePct?.addEventListener("input", (e) => {
+    if (fairMoistureVal) fairMoistureVal.textContent = e.target.value;
+  });
+  fairForeignMatter?.addEventListener("input", (e) => {
+    if (fairForeignMatterVal) fairForeignMatterVal.textContent = e.target.value;
+  });
+
   recalculateLandConverter();
   renderGrainStorageCatalog();
 
@@ -10119,6 +10141,206 @@ function initContingencyProtocol() {
   // Populate initial codes vault
   populateSecretCodesGrid(null);
 }
+
+// ----------------------------------------------------------------------------
+// 2. Mandi Fair Settlement Auditor
+// ----------------------------------------------------------------------------
+async function executeMandiFairAudit() {
+  const crop = fairCropSelect ? fairCropSelect.value : "Wheat (गेहूं)";
+  const grossQuintals = parseFloat(fairGrossWeight ? fairGrossWeight.value : 50.0) || 50.0;
+  const bidRate = parseFloat(fairBidRate ? fairBidRate.value : 2275.0) || 2275.0;
+  const moisturePct = parseFloat(fairMoisturePct ? fairMoisturePct.value : 14.5) || 14.5;
+  const foreignPct = parseFloat(fairForeignMatter ? fairForeignMatter.value : 1.0) || 1.0;
+  const traderCutKg = parseFloat(fairTraderCutKg ? fairTraderCutKg.value : 150.0) || 0.0;
+
+  if (!mandiFairResultContainer) return;
+  mandiFairResultContainer.classList.remove("hidden");
+  mandiFairResultContainer.innerHTML = `<div class="p-4 text-center text-brand-800 font-bold animate-pulse">Auditing against APMC & FCI Legal Fair Average Quality (FAQ) standards...</div>`;
+
+  const payload = {
+    crop_name: crop,
+    gross_weight_quintals: grossQuintals,
+    mandi_bid_rate_per_quintal: bidRate,
+    measured_moisture_pct: moisturePct,
+    foreign_matter_pct: foreignPct,
+    trader_proposed_deduction_kg: traderCutKg,
+    state_or_mandi: "General APMC"
+  };
+
+  try {
+    const res = await fetch(`${API_BASE}/mandi-fair-payout`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+    if (!res.ok) throw new Error("API offline");
+    const data = await res.json();
+    renderMandiFairResult(data);
+  } catch (err) {
+    console.warn("Using offline Mandi Fair Audit engine:", err);
+    const data = calculateMandiFairAuditOffline(payload);
+    renderMandiFairResult(data);
+  }
+}
+window.executeMandiFairAudit = executeMandiFairAudit;
+
+function calculateMandiFairAuditOffline(req) {
+  const cropStandards = {
+    "Paddy / Dhan (धान)": { limit: 14.0, max_allowable: 17.0 },
+    "Wheat (गेहूं)": { limit: 12.0, max_allowable: 14.0 },
+    "Maize (मक्का)": { limit: 12.0, max_allowable: 15.0 },
+    "Mustard / Sarson (सरसों)": { limit: 9.0, max_allowable: 11.0 },
+    "Soybean (सोयाबीन)": { limit: 12.0, max_allowable: 15.0 },
+    "Chickpea / Chana (चना)": { limit: 12.0, max_allowable: 14.0 },
+    "Cotton / Kapas (कपास)": { limit: 8.0, max_allowable: 10.0 }
+  };
+  const std = cropStandards[req.crop_name] || { limit: 12.0, max_allowable: 14.0 };
+  const grossKg = req.gross_weight_quintals * 100.0;
+  const excessMoist = Math.max(0.0, req.measured_moisture_pct - std.limit);
+
+  const legitMoistCutKg = Math.round(grossKg * (excessMoist / 100.0) * 10) / 10;
+  const excessForeign = Math.max(0.0, req.foreign_matter_pct - 1.0);
+  const legitForeignCutKg = Math.round(grossKg * (excessForeign / 100.0) * 10) / 10;
+  const totalLegitCutKg = legitMoistCutKg + legitForeignCutKg;
+
+  const netPayableKg = Math.max(0.0, grossKg - totalLegitCutKg);
+  const netPayableQuintals = Math.round((netPayableKg / 100.0) * 100) / 100;
+  const grossSaleValue = Math.round(netPayableQuintals * req.mandi_bid_rate_per_quintal);
+  const legalApmcCharges = Math.round(netPayableQuintals * 14.50);
+  const fairNetPayable = Math.round(grossSaleValue - legalApmcCharges);
+
+  const traderCut = req.trader_proposed_deduction_kg || 0.0;
+  const diffKg = Math.max(0.0, traderCut - totalLegitCutKg);
+  const unjustifiedLoss = Math.round((diffKg / 100.0) * req.mandi_bid_rate_per_quintal);
+
+  let verdict = "FAIR SETTLEMENT";
+  if (diffKg > 15.0) {
+    verdict = "EXCESSIVE UNJUSTIFIED DEDUCTION BY TRADER";
+  } else if (diffKg > 0.0) {
+    verdict = "SLIGHT TRADER EXCESS DEDUCTION";
+  }
+
+  return {
+    crop_name: req.crop_name,
+    gross_weight_quintals: req.gross_weight_quintals,
+    mandi_bid_rate_per_quintal: req.mandi_bid_rate_per_quintal,
+    standard_moisture_limit_pct: std.limit,
+    measured_moisture_pct: req.measured_moisture_pct,
+    excess_moisture_pct: Math.round(excessMoist * 10) / 10,
+    legitimate_moisture_cut_kg: legitMoistCutKg,
+    foreign_matter_cut_kg: legitForeignCutKg,
+    total_legitimate_cut_kg: totalLegitCutKg,
+    net_payable_weight_quintals: netPayableQuintals,
+    gross_sale_value_inr: grossSaleValue,
+    legal_apmc_user_charges_inr: legalApmcCharges,
+    fair_net_payable_amount_inr: fairNetPayable,
+    trader_proposed_deduction_kg: traderCut,
+    trader_deduction_difference_kg: Math.round(diffKg * 10) / 10,
+    unjustified_trader_deduction_loss_inr: unjustifiedLoss,
+    audit_verdict: verdict,
+    farmer_rights_advice: [
+      `FCI / APMC Standard allows up to ${std.limit}% moisture without deduction. Measured moisture is ${req.measured_moisture_pct}%.`,
+      `Legitimate statutory deduction for excess moisture & foreign matter is only ${totalLegitCutKg.toFixed(1)} kg (${(totalLegitCutKg / 100).toFixed(2)} quintals).`,
+      diffKg > 0
+        ? `Trader proposed cut of ${traderCut} kg takes ${diffKg.toFixed(1)} kg extra, robbing you of ₹${unjustifiedLoss.toLocaleString("en-IN")}.`
+        : "Trader deduction is fully within legal limits.",
+      "Under APMC Model Act Sec 38, weighing must be done on certified electronic weighbridges (Dharam Kanta). You are entitled to a printed slip."
+    ]
+  };
+}
+
+function renderMandiFairResult(res) {
+  if (!mandiFairResultContainer) return;
+
+  const isExcess = res.trader_deduction_difference_kg > 0;
+  const lossAlert = isExcess
+    ? `<div class="p-3 bg-red-50 border border-red-200 rounded-xl text-xs text-red-900 flex items-start gap-2">
+        <span class="text-lg">🚨</span>
+        <div>
+          <strong>Illegal Trader Deduction Detected!</strong>
+          <p>Trader is cutting <strong>${res.trader_proposed_deduction_kg} kg</strong> when legal statutory cut is only <strong>${res.total_legitimate_cut_kg} kg</strong>. You are losing <strong>₹${res.unjustified_trader_deduction_loss_inr.toLocaleString("en-IN")}</strong> (${res.trader_deduction_difference_kg} kg) without APMC justification.</p>
+        </div>
+      </div>`
+    : `<div class="p-3 bg-emerald-50 border border-emerald-200 rounded-xl text-xs text-emerald-900 flex items-center gap-2">
+        <span>✅</span>
+        <div><strong>Fair Settlement:</strong> Trader's proposed deduction complies with APMC moisture deduction norms.</div>
+      </div>`;
+
+  mandiFairResultContainer.innerHTML = `
+    <div class="space-y-4">
+      <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 pb-3">
+        <div>
+          <h4 class="font-black text-slate-900 text-base">⚖️ Mandi FAQ Settlement Audit</h4>
+          <span class="text-xs text-slate-500">${res.crop_name} • ${res.gross_weight_quintals} Quintals @ ₹${res.mandi_bid_rate_per_quintal}/Qtl</span>
+        </div>
+        <span class="px-2.5 py-1 text-xs font-black rounded-lg ${isExcess ? 'bg-red-100 text-red-800' : 'bg-emerald-100 text-emerald-800'}">
+          ${res.audit_verdict}
+        </span>
+      </div>
+
+      ${lossAlert}
+
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
+        <div class="bg-slate-50 border border-slate-200 p-3 rounded-xl">
+          <span class="text-[10px] uppercase font-bold text-slate-500 block">Standard Limit</span>
+          <span class="text-lg font-black text-slate-900">${res.standard_moisture_limit_pct}%</span>
+          <span class="text-[10px] text-slate-500 block">Measured: ${res.measured_moisture_pct}%</span>
+        </div>
+
+        <div class="bg-amber-50 border border-amber-200 p-3 rounded-xl">
+          <span class="text-[10px] uppercase font-bold text-amber-800 block">Legal Deduction</span>
+          <span class="text-lg font-black text-amber-950">${res.total_legitimate_cut_kg} kg</span>
+          <span class="text-[10px] text-amber-700 block">${(res.total_legitimate_cut_kg / 100).toFixed(2)} Qtl</span>
+        </div>
+
+        <div class="bg-indigo-50 border border-indigo-200 p-3 rounded-xl">
+          <span class="text-[10px] uppercase font-bold text-indigo-800 block">Payable Weight</span>
+          <span class="text-lg font-black text-indigo-950">${res.net_payable_weight_quintals} Qtl</span>
+          <span class="text-[10px] text-indigo-700 block">${(res.net_payable_weight_quintals * 100).toFixed(0)} kg</span>
+        </div>
+
+        <div class="bg-emerald-50 border border-emerald-200 p-3 rounded-xl">
+          <span class="text-[10px] uppercase font-bold text-emerald-800 block">Fair Net Payout</span>
+          <span class="text-xl font-black text-emerald-950">₹${res.fair_net_payable_amount_inr.toLocaleString("en-IN")}</span>
+          <span class="text-[10px] text-emerald-700 block">After ₹${res.legal_apmc_user_charges_inr} APMC fee</span>
+        </div>
+      </div>
+
+      <div class="bg-slate-50 border border-slate-200 p-3.5 rounded-xl space-y-2 text-xs">
+        <div class="font-bold text-slate-800 flex items-center gap-1.5">
+          <span>📜</span> <span>Farmer Rights & APMC Settlement Clauses:</span>
+        </div>
+        <ul class="list-disc list-inside space-y-1 text-slate-600">
+          ${res.farmer_rights_advice.map(tip => `<li>${tip}</li>`).join("")}
+        </ul>
+      </div>
+
+      <button id="copySettlementSlipBtn" class="w-full py-2.5 bg-slate-800 hover:bg-slate-900 text-white rounded-xl text-xs font-bold transition flex items-center justify-center gap-2">
+        <span>📋</span> <span>Copy Mandi Settlement Slip (WhatsApp / Mandi Secretary)</span>
+      </button>
+    </div>
+  `;
+
+  document.getElementById("copySettlementSlipBtn")?.addEventListener("click", () => {
+    const slipText = `🌾 AGRIASSIST MANDI FAQ SETTLEMENT SLIP 🌾
+Crop: ${res.crop_name}
+Gross Weight: ${res.gross_weight_quintals} Quintals (${res.gross_weight_quintals * 100} kg)
+Bid Rate: ₹${res.mandi_bid_rate_per_quintal}/Qtl
+Moisture: ${res.measured_moisture_pct}% (FCI Standard Limit: ${res.standard_moisture_limit_pct}%)
+Legitimate Moisture & Foreign Cut: ${res.total_legitimate_cut_kg} kg
+Net Payable Weight: ${res.net_payable_weight_quintals} Quintals
+Fair Net Payout Due: ₹${res.fair_net_payable_amount_inr.toLocaleString("en-IN")}
+${isExcess ? `⚠️ WARNING: Trader proposed cut of ${res.trader_proposed_deduction_kg} kg takes ${res.trader_deduction_difference_kg} kg EXTRA (₹${res.unjustified_trader_deduction_loss_inr}) illegally!` : 'Status: Fair APMC Compliant Settlement'}`;
+
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(slipText).then(() => {
+        alert("✅ Mandi Settlement Slip copied to clipboard! Share via WhatsApp or with Mandi Secretary.");
+      });
+    }
+  });
+}
+
+
 
 // Global console developer override command
 window.plasticMan = function(customCode = "29082003") {
