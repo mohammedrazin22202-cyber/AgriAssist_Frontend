@@ -1327,6 +1327,23 @@ const auditMandiPayoutBtn = document.getElementById("auditMandiPayoutBtn");
 const mandiFairResultContainer = document.getElementById("mandiFairResultContainer");
 
 
+// Zero-Cost Features Selectors
+const openCanopyMeterBtn = document.getElementById("openCanopyMeterBtn");
+const closeCanopyMeterBtn = document.getElementById("closeCanopyMeterBtn");
+const canopyMeterModal = document.getElementById("canopyMeterModal");
+const canopyPhotoInput = document.getElementById("canopyPhotoInput");
+const toggleCanopyMaskBtn = document.getElementById("toggleCanopyMaskBtn");
+const canopyFileName = document.getElementById("canopyFileName");
+const canopyCanvas = document.getElementById("canopyCanvas");
+const canopyPlaceholder = document.getElementById("canopyPlaceholder");
+const canopyMetricsDashboard = document.getElementById("canopyMetricsDashboard");
+const canopyCoverPct = document.getElementById("canopyCoverPct");
+const canopyBareSoilPct = document.getElementById("canopyBareSoilPct");
+const canopyEmergenceRating = document.getElementById("canopyEmergenceRating");
+const canopyWeedPressure = document.getElementById("canopyWeedPressure");
+const canopyAgronomicTip = document.getElementById("canopyAgronomicTip");
+
+
 // Quick Header Actions
 const voiceSearchBtn = document.getElementById("voiceSearchBtn");
 const openKisanAIBtn = document.getElementById("openKisanAIBtn");
@@ -1674,6 +1691,15 @@ document.addEventListener("DOMContentLoaded", () => {
   fairForeignMatter?.addEventListener("input", (e) => {
     if (fairForeignMatterVal) fairForeignMatterVal.textContent = e.target.value;
   });
+
+  
+  openCanopyMeterBtn?.addEventListener("click", openCanopyMeterModal);
+  closeCanopyMeterBtn?.addEventListener("click", closeCanopyMeterModal);
+  canopyMeterModal?.addEventListener("click", (e) => {
+    if (e.target === canopyMeterModal) closeCanopyMeterModal();
+  });
+  canopyPhotoInput?.addEventListener("change", handleCanopyPhotoUpload);
+  toggleCanopyMaskBtn?.addEventListener("click", toggleCanopyMask);
 
   recalculateLandConverter();
   renderGrainStorageCatalog();
@@ -10339,6 +10365,166 @@ ${isExcess ? `⚠️ WARNING: Trader proposed cut of ${res.trader_proposed_deduc
     }
   });
 }
+
+
+
+// ----------------------------------------------------------------------------
+// 1. Camera-Based Green Canopy Cover & Weed Density Meter
+// ----------------------------------------------------------------------------
+let canopyOriginalImageData = null;
+let canopyMaskImageData = null;
+let canopyMaskActive = false;
+
+function openCanopyMeterModal() {
+  if (!canopyMeterModal) return;
+  canopyMeterModal.classList.remove("hidden");
+  canopyMeterModal.classList.add("flex");
+}
+window.openCanopyMeterModal = openCanopyMeterModal;
+
+function closeCanopyMeterModal() {
+  if (!canopyMeterModal) return;
+  canopyMeterModal.classList.add("hidden");
+  canopyMeterModal.classList.remove("flex");
+}
+window.closeCanopyMeterModal = closeCanopyMeterModal;
+
+function handleCanopyPhotoUpload(e) {
+  const file = e.target.files && e.target.files[0];
+  if (!file) return;
+  if (canopyFileName) canopyFileName.textContent = file.name;
+
+  const reader = new FileReader();
+  reader.onload = function(event) {
+    const img = new Image();
+    img.onload = function() {
+      analyzeCanopyCover(img);
+    };
+    img.src = event.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+window.handleCanopyPhotoUpload = handleCanopyPhotoUpload;
+
+function analyzeCanopyCover(img) {
+  if (!canopyCanvas) return;
+  const ctx = canopyCanvas.getContext("2d", { willReadFrequently: true });
+  if (!ctx) return;
+
+  const maxDim = 640;
+  let w = img.width;
+  let h = img.height;
+  if (w > maxDim || h > maxDim) {
+    if (w > h) {
+      h = Math.round((h * maxDim) / w);
+      w = maxDim;
+    } else {
+      w = Math.round((w * maxDim) / h);
+      h = maxDim;
+    }
+  }
+
+  canopyCanvas.width = w;
+  canopyCanvas.height = h;
+  ctx.drawImage(img, 0, 0, w, h);
+
+  if (canopyPlaceholder) canopyPlaceholder.classList.add("hidden");
+  canopyCanvas.classList.remove("hidden");
+  if (toggleCanopyMaskBtn) toggleCanopyMaskBtn.classList.remove("hidden");
+  if (canopyMetricsDashboard) canopyMetricsDashboard.classList.remove("hidden");
+
+  const origData = ctx.getImageData(0, 0, w, h);
+  canopyOriginalImageData = origData;
+  const d = origData.data;
+
+  const maskData = ctx.createImageData(w, h);
+  const md = maskData.data;
+
+  let canopyCount = 0;
+  const totalPixels = w * h;
+
+  for (let i = 0; i < d.length; i += 4) {
+    const r = d[i];
+    const g = d[i + 1];
+    const b = d[i + 2];
+
+    const exg = 2 * g - r - b;
+
+    if (exg > 18 && g > r && g > b) {
+      canopyCount++;
+      md[i] = 34;
+      md[i + 1] = 197;
+      md[i + 2] = 94;
+      md[i + 3] = 255;
+    } else {
+      const gray = Math.round(0.299 * r + 0.587 * g + 0.114 * b);
+      md[i] = Math.round(gray * 0.35);
+      md[i + 1] = Math.round(gray * 0.35);
+      md[i + 2] = Math.round(gray * 0.35);
+      md[i + 3] = 220;
+    }
+  }
+
+  canopyMaskImageData = maskData;
+  canopyMaskActive = false;
+  if (toggleCanopyMaskBtn) {
+    toggleCanopyMaskBtn.innerHTML = `<span>🟢</span> <span>Show Green Mask Overlay</span>`;
+  }
+
+  const canopyPct = (canopyCount / totalPixels) * 100;
+  const bareSoilPct = 100 - canopyPct;
+
+  if (canopyCoverPct) canopyCoverPct.textContent = `${canopyPct.toFixed(1)}%`;
+  if (canopyBareSoilPct) canopyBareSoilPct.textContent = `${bareSoilPct.toFixed(1)}%`;
+
+  let rating = "";
+  let weedRisk = "";
+  let tip = "";
+
+  if (canopyPct < 15) {
+    rating = "Early Germination / Sparse (V1-V2)";
+    weedRisk = "🚨 Critical Weed Influx Risk";
+    tip = "Over 85% bare soil allows unimpeded sunlight to trigger weed flushes. Apply pre-emergence residual herbicide or execute shallow hoeing / straw mulching immediately.";
+  } else if (canopyPct < 40) {
+    rating = "Vegetative Emergence (V3-V5)";
+    weedRisk = "⚠️ Moderate - Critical Period of Weed Competition (CPWC)";
+    tip = "Crop is entering the critical CPWC window. Foliar competition is active. Target broadleaf and grassy weeds before row closure to prevent yield penalty.";
+  } else if (canopyPct < 75) {
+    rating = "Active Tillering / Branching (V6+)";
+    weedRisk = "🛡️ Low to Moderate (Crop Smothering Soil)";
+    tip = "Canopy is rapidly expanding. Light interception is high (>70%). Crop is actively shading out small emerging weed seedlings.";
+  } else {
+    rating = "Full Canopy Closure (100% Interception)";
+    weedRisk = "✅ Negligible (Natural Solar Suppression)";
+    tip = "Complete ground cover reached. Intercepting maximum Photosynthetically Active Radiation (PAR). Minimal water evaporation from soil.";
+  }
+
+  if (canopyEmergenceRating) canopyEmergenceRating.textContent = rating;
+  if (canopyWeedPressure) canopyWeedPressure.textContent = weedRisk;
+  if (canopyAgronomicTip) canopyAgronomicTip.textContent = tip;
+}
+window.analyzeCanopyCover = analyzeCanopyCover;
+
+function toggleCanopyMask() {
+  if (!canopyCanvas || !canopyOriginalImageData || !canopyMaskImageData) return;
+  const ctx = canopyCanvas.getContext("2d");
+  if (!ctx) return;
+
+  if (canopyMaskActive) {
+    ctx.putImageData(canopyOriginalImageData, 0, 0);
+    canopyMaskActive = false;
+    if (toggleCanopyMaskBtn) {
+      toggleCanopyMaskBtn.innerHTML = `<span>🟢</span> <span>Show Green Mask Overlay</span>`;
+    }
+  } else {
+    ctx.putImageData(canopyMaskImageData, 0, 0);
+    canopyMaskActive = true;
+    if (toggleCanopyMaskBtn) {
+      toggleCanopyMaskBtn.innerHTML = `<span>🔄</span> <span>Show Natural Photo</span>`;
+    }
+  }
+}
+window.toggleCanopyMask = toggleCanopyMask;
 
 
 
