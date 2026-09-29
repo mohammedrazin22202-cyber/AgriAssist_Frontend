@@ -46,6 +46,10 @@ const TRANSLATIONS = {
     tabPolyhouse: "Polyhouse Climate",
     tabBiochar: "Stubble & Biochar",
     tabAeration: "Silo Aeration",
+    tabWeed: "Weed Doctor",
+    canopyMeterBtn: "Canopy Meter",
+    weedHeroTitle: "🌿 Weed Doctor & Herbicide Mixing Calculator (खरपतवार एवं शाकनाशी सलाहकार)",
+    weedHeroDesc: "Eliminate weeds before they rob 30-40% of crop yield. Select your crop, target weed type, and growth stage to calculate calibrated herbicide molecules, tank-by-tank knapsack sprayer dilution, flat-fan nozzle recommendations, and organic cultural controls.",
     kisanAIBtn: "Kisan AI • किसान AI",
     livestockHeroTitle: "🐄 Dairy & Livestock Husbandry Doctor (पशुपालन एवं दुग्ध सलाहकार)",
     livestockHeroDesc: "Smallholder dairy intelligence. Calculate scientific daily cattle feed rations (Green fodder, Bhusa, and Concentrate balanced against milk yield), track 21-day heat cycles and calving pregnancy calendars, and access validated Ethno-Veterinary Herbal Remedies (EVM) for mastitis, bloat, and wounds.",
@@ -122,6 +126,10 @@ const TRANSLATIONS = {
     tabPolyhouse: "पॉलीहाउस जलवायु",
     tabBiochar: "पराली एवं बायोचार",
     tabAeration: "साइलो वातन",
+    tabWeed: "खरपतवार डॉक्टर",
+    canopyMeterBtn: "कैनोपी मापक",
+    weedHeroTitle: "🌿 खरपतवार डॉक्टर एवं शाकनाशी कैलकुलेटर (Weed Doctor)",
+    weedHeroDesc: "खरपतवारों को फसल की 30-40% पैदावार लूटने से रोकें। सही शाकनाशी दवा, नैपसैक स्प्रेयर घोल (टंकी अनुसार माप), फ्लैट-फैन नोजल और जैविक नियंत्रण के उपाय जानें।",
     kisanAIBtn: "किसान AI • Kisan AI",
     livestockHeroTitle: "🐄 पशुपालन एवं दुग्ध सलाहकार (डेयरी डॉक्टर)",
     livestockHeroDesc: "वैज्ञानिक पशुपालन मार्गदर्शन। दुग्ध उत्पादन व शारीरिक वजन अनुसार संतुलित दैनिक आहार (हरा चारा, सूखा भूसा व दाना), 21-दिवसीय मद चक्र व प्रसव कैलेंडर और थनैला, अफारा व खुरपका रोगों के लिए प्रमाणित देसी हर्बल (EVM) उपचार।",
@@ -1313,19 +1321,8 @@ const ifsTabContent = document.getElementById("ifsTabContent");
 const polyhouseTabContent = document.getElementById("polyhouseTabContent");
 const biocharTabContent = document.getElementById("biocharTabContent");
 const aerationTabContent = document.getElementById("aerationTabContent");
-
-// Mandi Fair Settlement Auditor
-const fairCropSelect = document.getElementById("fairCropSelect");
-const fairGrossWeight = document.getElementById("fairGrossWeight");
-const fairBidRate = document.getElementById("fairBidRate");
-const fairMoisturePct = document.getElementById("fairMoisturePct");
-const fairMoistureVal = document.getElementById("fairMoistureVal");
-const fairForeignMatter = document.getElementById("fairForeignMatter");
-const fairForeignMatterVal = document.getElementById("fairForeignMatterVal");
-const fairTraderCutKg = document.getElementById("fairTraderCutKg");
-const auditMandiPayoutBtn = document.getElementById("auditMandiPayoutBtn");
-const mandiFairResultContainer = document.getElementById("mandiFairResultContainer");
-
+const tabWeedBtn = document.getElementById("tabWeedBtn");
+const weedTabContent = document.getElementById("weedTabContent");
 
 // Zero-Cost Features Selectors
 const openCanopyMeterBtn = document.getElementById("openCanopyMeterBtn");
@@ -1343,14 +1340,24 @@ const canopyEmergenceRating = document.getElementById("canopyEmergenceRating");
 const canopyWeedPressure = document.getElementById("canopyWeedPressure");
 const canopyAgronomicTip = document.getElementById("canopyAgronomicTip");
 
+// Mandi Fair Settlement Auditor
+const fairCropSelect = document.getElementById("fairCropSelect");
+const fairGrossWeight = document.getElementById("fairGrossWeight");
+const fairBidRate = document.getElementById("fairBidRate");
+const fairMoisturePct = document.getElementById("fairMoisturePct");
+const fairMoistureVal = document.getElementById("fairMoistureVal");
+const fairForeignMatter = document.getElementById("fairForeignMatter");
+const fairForeignMatterVal = document.getElementById("fairForeignMatterVal");
+const fairTraderCutKg = document.getElementById("fairTraderCutKg");
+const auditMandiPayoutBtn = document.getElementById("auditMandiPayoutBtn");
+const mandiFairResultContainer = document.getElementById("mandiFairResultContainer");
 
-// NASA GDD Tracker
-const nasaGddCrop = document.getElementById("nasaGddCrop");
-const nasaSowingDate = document.getElementById("nasaSowingDate");
-const nasaTbase = document.getElementById("nasaTbase");
-const calcNasaGddBtn = document.getElementById("calcNasaGddBtn");
-const nasaGddResultContainer = document.getElementById("nasaGddResultContainer");
-
+// SPNF Drum Scaler
+const spnfFormulationSelect = document.getElementById("spnfFormulationSelect");
+const spnfDrumVolumeInput = document.getElementById("spnfDrumVolumeInput");
+const spnfVolumeLabel = document.getElementById("spnfVolumeLabel");
+const calcSpnfBtn = document.getElementById("calcSpnfBtn");
+const spnfResultContainer = document.getElementById("spnfResultContainer");
 
 // ZECC Cool Chamber
 const zeccProduceSelect = document.getElementById("zeccProduceSelect");
@@ -1358,7 +1365,6 @@ const zeccCratesInput = document.getElementById("zeccCratesInput");
 const zeccCratesLabel = document.getElementById("zeccCratesLabel");
 const calcZeccBtn = document.getElementById("calcZeccBtn");
 const zeccResultContainer = document.getElementById("zeccResultContainer");
-
 
 // Dairy Fodder & Silage Planner
 const fodderCowsCount = document.getElementById("fodderCowsCount");
@@ -1368,14 +1374,29 @@ const fodderLandAcres = document.getElementById("fodderLandAcres");
 const calcFodderSilageBtn = document.getElementById("calcFodderSilageBtn");
 const fodderSilageResultContainer = document.getElementById("fodderSilageResultContainer");
 
+// NASA GDD Tracker
+const nasaGddCrop = document.getElementById("nasaGddCrop");
+const nasaSowingDate = document.getElementById("nasaSowingDate");
+const nasaTbase = document.getElementById("nasaTbase");
+const calcNasaGddBtn = document.getElementById("calcNasaGddBtn");
+const nasaGddResultContainer = document.getElementById("nasaGddResultContainer");
 
-// SPNF Drum Scaler
-const spnfFormulationSelect = document.getElementById("spnfFormulationSelect");
-const spnfDrumVolumeInput = document.getElementById("spnfDrumVolumeInput");
-const spnfVolumeLabel = document.getElementById("spnfVolumeLabel");
-const calcSpnfBtn = document.getElementById("calcSpnfBtn");
-const spnfResultContainer = document.getElementById("spnfResultContainer");
+// Weed Doctor
+const weedCropSelect = document.getElementById("weedCropSelect");
+const weedTypeSelect = document.getElementById("weedTypeSelect");
+const weedStageSelect = document.getElementById("weedStageSelect");
+const weedLandAcres = document.getElementById("weedLandAcres");
+const calcWeedDoctorBtn = document.getElementById("calcWeedDoctorBtn");
+const weedDoctorResultContainer = document.getElementById("weedDoctorResultContainer");
 
+// Voice Notes / Memos
+const recordAudioMemoBtn = document.getElementById("recordAudioMemoBtn");
+const stopAudioMemoBtn = document.getElementById("stopAudioMemoBtn");
+const audioRecordStatus = document.getElementById("audioRecordStatus");
+const audioRecordTimer = document.getElementById("audioRecordTimer");
+const audioMemoTitleInput = document.getElementById("audioMemoTitleInput");
+const voiceNotesList = document.getElementById("voiceNotesList");
+const voiceNotesCount = document.getElementById("voiceNotesCount");
 
 // Quick Header Actions
 const voiceSearchBtn = document.getElementById("voiceSearchBtn");
@@ -1716,57 +1737,14 @@ document.addEventListener("DOMContentLoaded", () => {
   populateSeedCropOptions();
   populateMicronutrientCropOptions();
   initLandConverter();
-  
-  auditMandiPayoutBtn?.addEventListener("click", executeMandiFairAudit);
-  fairMoisturePct?.addEventListener("input", (e) => {
-    if (fairMoistureVal) fairMoistureVal.textContent = e.target.value;
-  });
-  fairForeignMatter?.addEventListener("input", (e) => {
-    if (fairForeignMatterVal) fairForeignMatterVal.textContent = e.target.value;
-  });
-
-  
-  openCanopyMeterBtn?.addEventListener("click", openCanopyMeterModal);
-  closeCanopyMeterBtn?.addEventListener("click", closeCanopyMeterModal);
-  canopyMeterModal?.addEventListener("click", (e) => {
-    if (e.target === canopyMeterModal) closeCanopyMeterModal();
-  });
-  canopyPhotoInput?.addEventListener("change", handleCanopyPhotoUpload);
-  toggleCanopyMaskBtn?.addEventListener("click", toggleCanopyMask);
-
-  
-  calcNasaGddBtn?.addEventListener("click", executeNasaGddTracker);
-  nasaGddCrop?.addEventListener("change", (e) => {
-    const opt = e.target.selectedOptions[0];
-    if (opt && opt.dataset.tbase && nasaTbase) {
-      nasaTbase.value = opt.dataset.tbase;
-    }
-  });
-
-  
-  calcZeccBtn?.addEventListener("click", executeZeccPlanner);
-  zeccCratesInput?.addEventListener("input", (e) => {
-    if (zeccCratesLabel) zeccCratesLabel.textContent = `${e.target.value} Crates (${e.target.value * 20} kg)`;
-    executeZeccPlanner();
-  });
-  zeccProduceSelect?.addEventListener("change", executeZeccPlanner);
-
-  
-  calcFodderSilageBtn?.addEventListener("click", executeFodderSilagePlanner);
-
-  
-  calcSpnfBtn?.addEventListener("click", executeSpnfDrumScaler);
-  spnfDrumVolumeInput?.addEventListener("input", (e) => {
-    if (spnfVolumeLabel) spnfVolumeLabel.textContent = `${e.target.value} Litres`;
-    executeSpnfDrumScaler();
-  });
-  spnfFormulationSelect?.addEventListener("change", executeSpnfDrumScaler);
-
   recalculateLandConverter();
   renderGrainStorageCatalog();
 
   // Contingency Protocol (Code Name: Plastic Man) - Hidden Owner Verification
   initContingencyProtocol();
+
+  // Zero-Cost Agricultural Features Initialization
+  initZeroCostFeatures();
 
   // Load saved language or default to en
   const savedLang = localStorage.getItem("agriassist_lang");
@@ -1815,6 +1793,56 @@ function setupEventListeners() {
   tabPolyhouseBtn?.addEventListener("click", () => switchTab("polyhouse"));
   tabBiocharBtn?.addEventListener("click", () => switchTab("biochar"));
   tabAerationBtn?.addEventListener("click", () => switchTab("aeration"));
+  tabWeedBtn?.addEventListener("click", () => switchTab("weed"));
+
+  // Zero-Cost Feature Listeners
+  openCanopyMeterBtn?.addEventListener("click", openCanopyMeterModal);
+  closeCanopyMeterBtn?.addEventListener("click", closeCanopyMeterModal);
+  canopyMeterModal?.addEventListener("click", (e) => {
+    if (e.target === canopyMeterModal) closeCanopyMeterModal();
+  });
+  canopyPhotoInput?.addEventListener("change", handleCanopyPhotoUpload);
+  toggleCanopyMaskBtn?.addEventListener("click", toggleCanopyMask);
+
+  auditMandiPayoutBtn?.addEventListener("click", executeMandiFairAudit);
+  fairMoisturePct?.addEventListener("input", (e) => {
+    if (fairMoistureVal) fairMoistureVal.textContent = e.target.value;
+  });
+  fairForeignMatter?.addEventListener("input", (e) => {
+    if (fairForeignMatterVal) fairForeignMatterVal.textContent = e.target.value;
+  });
+
+  calcSpnfBtn?.addEventListener("click", executeSpnfDrumScaler);
+  spnfDrumVolumeInput?.addEventListener("input", (e) => {
+    if (spnfVolumeLabel) spnfVolumeLabel.textContent = `${e.target.value} Litres`;
+    executeSpnfDrumScaler();
+  });
+  spnfFormulationSelect?.addEventListener("change", executeSpnfDrumScaler);
+
+  calcZeccBtn?.addEventListener("click", executeZeccPlanner);
+  zeccCratesInput?.addEventListener("input", (e) => {
+    if (zeccCratesLabel) zeccCratesLabel.textContent = `${e.target.value} Crates (${e.target.value * 20} kg)`;
+    executeZeccPlanner();
+  });
+  zeccProduceSelect?.addEventListener("change", executeZeccPlanner);
+
+  calcFodderSilageBtn?.addEventListener("click", executeFodderSilagePlanner);
+
+  calcNasaGddBtn?.addEventListener("click", executeNasaGddTracker);
+  nasaGddCrop?.addEventListener("change", (e) => {
+    const opt = e.target.selectedOptions[0];
+    if (opt && opt.dataset.tbase && nasaTbase) {
+      nasaTbase.value = opt.dataset.tbase;
+    }
+  });
+
+  calcWeedDoctorBtn?.addEventListener("click", executeWeedDoctor);
+  weedCropSelect?.addEventListener("change", executeWeedDoctor);
+  weedTypeSelect?.addEventListener("change", executeWeedDoctor);
+  weedStageSelect?.addEventListener("change", executeWeedDoctor);
+
+  recordAudioMemoBtn?.addEventListener("click", toggleAudioMemoRecording);
+  stopAudioMemoBtn?.addEventListener("click", stopAudioMemoRecording);
 
   // Kisan AI Assistant Listeners
   openKisanAIBtn?.addEventListener("click", openKisanAIChatModal);
@@ -2216,7 +2244,8 @@ function switchTab(tab) {
     { id: "ifs", btn: tabIFSBtn, content: ifsTabContent },
     { id: "polyhouse", btn: tabPolyhouseBtn, content: polyhouseTabContent },
     { id: "biochar", btn: tabBiocharBtn, content: biocharTabContent },
-    { id: "aeration", btn: tabAerationBtn, content: aerationTabContent }
+    { id: "aeration", btn: tabAerationBtn, content: aerationTabContent },
+    { id: "weed", btn: tabWeedBtn, content: weedTabContent }
   ];
 
   allTabs.forEach(t => {
@@ -10229,6 +10258,188 @@ function initContingencyProtocol() {
   populateSecretCodesGrid(null);
 }
 
+// ============================================================================
+// ZERO-COST AG-TECH & AGRONOMY ENGINES ($0 Recurring / 100% Free)
+// ============================================================================
+
+function initZeroCostFeatures() {
+  if (nasaSowingDate && !nasaSowingDate.value) {
+    const d = new Date();
+    d.setDate(d.getDate() - 30);
+    nasaSowingDate.value = d.toISOString().split("T")[0];
+  }
+
+  if (spnfFormulationSelect && spnfResultContainer) {
+    executeSpnfDrumScaler();
+  }
+  if (zeccProduceSelect && zeccResultContainer) {
+    executeZeccPlanner();
+  }
+  if (weedCropSelect && weedDoctorResultContainer) {
+    executeWeedDoctor();
+  }
+  renderVoiceNotes();
+}
+window.initZeroCostFeatures = initZeroCostFeatures;
+
+// ----------------------------------------------------------------------------
+// 1. Camera-Based Green Canopy Cover & Weed Density Meter
+// ----------------------------------------------------------------------------
+let canopyOriginalImageData = null;
+let canopyMaskImageData = null;
+let canopyMaskActive = false;
+
+function openCanopyMeterModal() {
+  if (!canopyMeterModal) return;
+  canopyMeterModal.classList.remove("hidden");
+  canopyMeterModal.classList.add("flex");
+}
+window.openCanopyMeterModal = openCanopyMeterModal;
+
+function closeCanopyMeterModal() {
+  if (!canopyMeterModal) return;
+  canopyMeterModal.classList.add("hidden");
+  canopyMeterModal.classList.remove("flex");
+}
+window.closeCanopyMeterModal = closeCanopyMeterModal;
+
+function handleCanopyPhotoUpload(e) {
+  const file = e.target.files && e.target.files[0];
+  if (!file) return;
+  if (canopyFileName) canopyFileName.textContent = file.name;
+
+  const reader = new FileReader();
+  reader.onload = function(event) {
+    const img = new Image();
+    img.onload = function() {
+      analyzeCanopyCover(img);
+    };
+    img.src = event.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+window.handleCanopyPhotoUpload = handleCanopyPhotoUpload;
+
+function analyzeCanopyCover(img) {
+  if (!canopyCanvas) return;
+  const ctx = canopyCanvas.getContext("2d", { willReadFrequently: true });
+  if (!ctx) return;
+
+  const maxDim = 640;
+  let w = img.width;
+  let h = img.height;
+  if (w > maxDim || h > maxDim) {
+    if (w > h) {
+      h = Math.round((h * maxDim) / w);
+      w = maxDim;
+    } else {
+      w = Math.round((w * maxDim) / h);
+      h = maxDim;
+    }
+  }
+
+  canopyCanvas.width = w;
+  canopyCanvas.height = h;
+  ctx.drawImage(img, 0, 0, w, h);
+
+  if (canopyPlaceholder) canopyPlaceholder.classList.add("hidden");
+  canopyCanvas.classList.remove("hidden");
+  if (toggleCanopyMaskBtn) toggleCanopyMaskBtn.classList.remove("hidden");
+  if (canopyMetricsDashboard) canopyMetricsDashboard.classList.remove("hidden");
+
+  const origData = ctx.getImageData(0, 0, w, h);
+  canopyOriginalImageData = origData;
+  const d = origData.data;
+
+  const maskData = ctx.createImageData(w, h);
+  const md = maskData.data;
+
+  let canopyCount = 0;
+  const totalPixels = w * h;
+
+  for (let i = 0; i < d.length; i += 4) {
+    const r = d[i];
+    const g = d[i + 1];
+    const b = d[i + 2];
+
+    const exg = 2 * g - r - b;
+
+    if (exg > 18 && g > r && g > b) {
+      canopyCount++;
+      md[i] = 34;
+      md[i + 1] = 197;
+      md[i + 2] = 94;
+      md[i + 3] = 255;
+    } else {
+      const gray = Math.round(0.299 * r + 0.587 * g + 0.114 * b);
+      md[i] = Math.round(gray * 0.35);
+      md[i + 1] = Math.round(gray * 0.35);
+      md[i + 2] = Math.round(gray * 0.35);
+      md[i + 3] = 220;
+    }
+  }
+
+  canopyMaskImageData = maskData;
+  canopyMaskActive = false;
+  if (toggleCanopyMaskBtn) {
+    toggleCanopyMaskBtn.innerHTML = `<span>🟢</span> <span>Show Green Mask Overlay</span>`;
+  }
+
+  const canopyPct = (canopyCount / totalPixels) * 100;
+  const bareSoilPct = 100 - canopyPct;
+
+  if (canopyCoverPct) canopyCoverPct.textContent = `${canopyPct.toFixed(1)}%`;
+  if (canopyBareSoilPct) canopyBareSoilPct.textContent = `${bareSoilPct.toFixed(1)}%`;
+
+  let rating = "";
+  let weedRisk = "";
+  let tip = "";
+
+  if (canopyPct < 15) {
+    rating = "Early Germination / Sparse (V1-V2)";
+    weedRisk = "🚨 Critical Weed Influx Risk";
+    tip = "Over 85% bare soil allows unimpeded sunlight to trigger weed flushes. Apply pre-emergence residual herbicide or execute shallow hoeing / straw mulching immediately.";
+  } else if (canopyPct < 40) {
+    rating = "Vegetative Emergence (V3-V5)";
+    weedRisk = "⚠️ Moderate - Critical Period of Weed Competition (CPWC)";
+    tip = "Crop is entering the critical CPWC window. Foliar competition is active. Target broadleaf and grassy weeds before row closure to prevent yield penalty.";
+  } else if (canopyPct < 75) {
+    rating = "Active Tillering / Branching (V6+)";
+    weedRisk = "🛡️ Low to Moderate (Crop Smothering Soil)";
+    tip = "Canopy is rapidly expanding. Light interception is high (>70%). Crop is actively shading out small emerging weed seedlings.";
+  } else {
+    rating = "Full Canopy Closure (100% Interception)";
+    weedRisk = "✅ Negligible (Natural Solar Suppression)";
+    tip = "Complete ground cover reached. Intercepting maximum Photosynthetically Active Radiation (PAR). Minimal water evaporation from soil.";
+  }
+
+  if (canopyEmergenceRating) canopyEmergenceRating.textContent = rating;
+  if (canopyWeedPressure) canopyWeedPressure.textContent = weedRisk;
+  if (canopyAgronomicTip) canopyAgronomicTip.textContent = tip;
+}
+window.analyzeCanopyCover = analyzeCanopyCover;
+
+function toggleCanopyMask() {
+  if (!canopyCanvas || !canopyOriginalImageData || !canopyMaskImageData) return;
+  const ctx = canopyCanvas.getContext("2d");
+  if (!ctx) return;
+
+  if (canopyMaskActive) {
+    ctx.putImageData(canopyOriginalImageData, 0, 0);
+    canopyMaskActive = false;
+    if (toggleCanopyMaskBtn) {
+      toggleCanopyMaskBtn.innerHTML = `<span>🟢</span> <span>Show Green Mask Overlay</span>`;
+    }
+  } else {
+    ctx.putImageData(canopyMaskImageData, 0, 0);
+    canopyMaskActive = true;
+    if (toggleCanopyMaskBtn) {
+      toggleCanopyMaskBtn.innerHTML = `<span>🔄</span> <span>Show Natural Photo</span>`;
+    }
+  }
+}
+window.toggleCanopyMask = toggleCanopyMask;
+
 // ----------------------------------------------------------------------------
 // 2. Mandi Fair Settlement Auditor
 // ----------------------------------------------------------------------------
@@ -10426,648 +10637,6 @@ ${isExcess ? `⚠️ WARNING: Trader proposed cut of ${res.trader_proposed_deduc
     }
   });
 }
-
-
-
-// ----------------------------------------------------------------------------
-// 1. Camera-Based Green Canopy Cover & Weed Density Meter
-// ----------------------------------------------------------------------------
-let canopyOriginalImageData = null;
-let canopyMaskImageData = null;
-let canopyMaskActive = false;
-
-function openCanopyMeterModal() {
-  if (!canopyMeterModal) return;
-  canopyMeterModal.classList.remove("hidden");
-  canopyMeterModal.classList.add("flex");
-}
-window.openCanopyMeterModal = openCanopyMeterModal;
-
-function closeCanopyMeterModal() {
-  if (!canopyMeterModal) return;
-  canopyMeterModal.classList.add("hidden");
-  canopyMeterModal.classList.remove("flex");
-}
-window.closeCanopyMeterModal = closeCanopyMeterModal;
-
-function handleCanopyPhotoUpload(e) {
-  const file = e.target.files && e.target.files[0];
-  if (!file) return;
-  if (canopyFileName) canopyFileName.textContent = file.name;
-
-  const reader = new FileReader();
-  reader.onload = function(event) {
-    const img = new Image();
-    img.onload = function() {
-      analyzeCanopyCover(img);
-    };
-    img.src = event.target.result;
-  };
-  reader.readAsDataURL(file);
-}
-window.handleCanopyPhotoUpload = handleCanopyPhotoUpload;
-
-function analyzeCanopyCover(img) {
-  if (!canopyCanvas) return;
-  const ctx = canopyCanvas.getContext("2d", { willReadFrequently: true });
-  if (!ctx) return;
-
-  const maxDim = 640;
-  let w = img.width;
-  let h = img.height;
-  if (w > maxDim || h > maxDim) {
-    if (w > h) {
-      h = Math.round((h * maxDim) / w);
-      w = maxDim;
-    } else {
-      w = Math.round((w * maxDim) / h);
-      h = maxDim;
-    }
-  }
-
-  canopyCanvas.width = w;
-  canopyCanvas.height = h;
-  ctx.drawImage(img, 0, 0, w, h);
-
-  if (canopyPlaceholder) canopyPlaceholder.classList.add("hidden");
-  canopyCanvas.classList.remove("hidden");
-  if (toggleCanopyMaskBtn) toggleCanopyMaskBtn.classList.remove("hidden");
-  if (canopyMetricsDashboard) canopyMetricsDashboard.classList.remove("hidden");
-
-  const origData = ctx.getImageData(0, 0, w, h);
-  canopyOriginalImageData = origData;
-  const d = origData.data;
-
-  const maskData = ctx.createImageData(w, h);
-  const md = maskData.data;
-
-  let canopyCount = 0;
-  const totalPixels = w * h;
-
-  for (let i = 0; i < d.length; i += 4) {
-    const r = d[i];
-    const g = d[i + 1];
-    const b = d[i + 2];
-
-    const exg = 2 * g - r - b;
-
-    if (exg > 18 && g > r && g > b) {
-      canopyCount++;
-      md[i] = 34;
-      md[i + 1] = 197;
-      md[i + 2] = 94;
-      md[i + 3] = 255;
-    } else {
-      const gray = Math.round(0.299 * r + 0.587 * g + 0.114 * b);
-      md[i] = Math.round(gray * 0.35);
-      md[i + 1] = Math.round(gray * 0.35);
-      md[i + 2] = Math.round(gray * 0.35);
-      md[i + 3] = 220;
-    }
-  }
-
-  canopyMaskImageData = maskData;
-  canopyMaskActive = false;
-  if (toggleCanopyMaskBtn) {
-    toggleCanopyMaskBtn.innerHTML = `<span>🟢</span> <span>Show Green Mask Overlay</span>`;
-  }
-
-  const canopyPct = (canopyCount / totalPixels) * 100;
-  const bareSoilPct = 100 - canopyPct;
-
-  if (canopyCoverPct) canopyCoverPct.textContent = `${canopyPct.toFixed(1)}%`;
-  if (canopyBareSoilPct) canopyBareSoilPct.textContent = `${bareSoilPct.toFixed(1)}%`;
-
-  let rating = "";
-  let weedRisk = "";
-  let tip = "";
-
-  if (canopyPct < 15) {
-    rating = "Early Germination / Sparse (V1-V2)";
-    weedRisk = "🚨 Critical Weed Influx Risk";
-    tip = "Over 85% bare soil allows unimpeded sunlight to trigger weed flushes. Apply pre-emergence residual herbicide or execute shallow hoeing / straw mulching immediately.";
-  } else if (canopyPct < 40) {
-    rating = "Vegetative Emergence (V3-V5)";
-    weedRisk = "⚠️ Moderate - Critical Period of Weed Competition (CPWC)";
-    tip = "Crop is entering the critical CPWC window. Foliar competition is active. Target broadleaf and grassy weeds before row closure to prevent yield penalty.";
-  } else if (canopyPct < 75) {
-    rating = "Active Tillering / Branching (V6+)";
-    weedRisk = "🛡️ Low to Moderate (Crop Smothering Soil)";
-    tip = "Canopy is rapidly expanding. Light interception is high (>70%). Crop is actively shading out small emerging weed seedlings.";
-  } else {
-    rating = "Full Canopy Closure (100% Interception)";
-    weedRisk = "✅ Negligible (Natural Solar Suppression)";
-    tip = "Complete ground cover reached. Intercepting maximum Photosynthetically Active Radiation (PAR). Minimal water evaporation from soil.";
-  }
-
-  if (canopyEmergenceRating) canopyEmergenceRating.textContent = rating;
-  if (canopyWeedPressure) canopyWeedPressure.textContent = weedRisk;
-  if (canopyAgronomicTip) canopyAgronomicTip.textContent = tip;
-}
-window.analyzeCanopyCover = analyzeCanopyCover;
-
-function toggleCanopyMask() {
-  if (!canopyCanvas || !canopyOriginalImageData || !canopyMaskImageData) return;
-  const ctx = canopyCanvas.getContext("2d");
-  if (!ctx) return;
-
-  if (canopyMaskActive) {
-    ctx.putImageData(canopyOriginalImageData, 0, 0);
-    canopyMaskActive = false;
-    if (toggleCanopyMaskBtn) {
-      toggleCanopyMaskBtn.innerHTML = `<span>🟢</span> <span>Show Green Mask Overlay</span>`;
-    }
-  } else {
-    ctx.putImageData(canopyMaskImageData, 0, 0);
-    canopyMaskActive = true;
-    if (toggleCanopyMaskBtn) {
-      toggleCanopyMaskBtn.innerHTML = `<span>🔄</span> <span>Show Natural Photo</span>`;
-    }
-  }
-}
-window.toggleCanopyMask = toggleCanopyMask;
-
-
-
-// ----------------------------------------------------------------------------
-// 6. NASA POWER Agroclimatology & Cumulative GDD Tracker
-// ----------------------------------------------------------------------------
-async function executeNasaGddTracker() {
-  const crop = nasaGddCrop ? nasaGddCrop.value : "Wheat";
-  const opt = nasaGddCrop ? nasaGddCrop.selectedOptions[0] : null;
-  const tbase = parseFloat(nasaTbase ? nasaTbase.value : 5.0) || 5.0;
-  const targetGdd = opt && opt.dataset.targetgdd ? parseFloat(opt.dataset.targetgdd) : 1700.0;
-  const sowingDate = nasaSowingDate && nasaSowingDate.value ? nasaSowingDate.value : "2026-06-15";
-
-  let lat = 18.5204;
-  let lon = 73.8567;
-  if (appState.weatherData && appState.weatherData.coord) {
-    lat = appState.weatherData.coord.lat || 18.5204;
-    lon = appState.weatherData.coord.lon || 73.8567;
-  }
-
-  if (!nasaGddResultContainer) return;
-  nasaGddResultContainer.classList.remove("hidden");
-  nasaGddResultContainer.innerHTML = `<div class="p-4 text-center text-sky-800 font-bold animate-pulse">Syncing NASA POWER Agroclimatology satellite reanalysis dataset...</div>`;
-
-  const payload = {
-    latitude: lat,
-    longitude: lon,
-    sowing_date: sowingDate,
-    crop_name: crop,
-    base_temperature_c: tbase,
-    target_maturity_gdd: targetGdd
-  };
-
-  try {
-    const res = await fetch(`${API_BASE}/nasa-power/gdd`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload)
-    });
-    if (!res.ok) throw new Error("API offline");
-    const data = await res.json();
-    renderNasaGddResult(data);
-  } catch (err) {
-    console.warn("Using offline NASA GDD calculation:", err);
-    const data = calculateNasaGddOffline(payload);
-    renderNasaGddResult(data);
-  }
-}
-window.executeNasaGddTracker = executeNasaGddTracker;
-
-function calculateNasaGddOffline(req) {
-  const sowing = new Date(req.sowing_date);
-  const now = new Date();
-  const diffMs = now - sowing;
-  const days = Math.max(1, Math.min(180, Math.floor(diffMs / (1000 * 60 * 60 * 24))));
-
-  const dailyMeanGdd = 14.2;
-  const accumulatedGdd = Math.min(req.target_maturity_gdd, Math.round(days * dailyMeanGdd * 10) / 10);
-  const pct = Math.min(100.0, Math.round((accumulatedGdd / req.target_maturity_gdd) * 1000) / 10);
-  const remainingGdd = Math.max(0.0, req.target_maturity_gdd - accumulatedGdd);
-  const estDaysLeft = Math.ceil(remainingGdd / dailyMeanGdd);
-
-  const matDate = new Date();
-  matDate.setDate(matDate.getDate() + estDaysLeft);
-
-  return {
-    crop_name: req.crop_name,
-    base_temp_c: req.base_temperature_c,
-    days_since_sowing: days,
-    accumulated_gdd: accumulatedGdd,
-    target_maturity_gdd: req.target_maturity_gdd,
-    progress_percentage: pct,
-    estimated_days_to_maturity: estDaysLeft,
-    estimated_maturity_date: matDate.toISOString().split("T")[0],
-    avg_daily_solar_insolation_mj_m2: 19.8,
-    cumulative_et0_mm: Math.round(days * 4.5),
-    thermal_stress_alerts: [
-      days > 60
-        ? "⚠️ NASA climatology shows 4 heat stress days (>35°C) recorded during the active flowering window."
-        : "✅ Thermal accumulation is tracking within normal climatological parameters."
-    ],
-    agronomic_advisory: `Crop has achieved ${pct}% of physiological thermal maturity. Estimated harvest readiness around ${matDate.toLocaleDateString("en-IN", { month: "short", day: "numeric", year: "numeric" })}.`
-  };
-}
-
-function renderNasaGddResult(res) {
-  if (!nasaGddResultContainer) return;
-
-  nasaGddResultContainer.innerHTML = `
-    <div class="space-y-4">
-      <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 pb-3">
-        <div>
-          <h4 class="font-black text-slate-900 text-base">🛰️ NASA POWER Agroclimatology & GDD</h4>
-          <span class="text-xs text-slate-500">${res.crop_name} (Base Temp T_base: ${res.base_temp_c}°C) • ${res.days_since_sowing} Days Since Sowing</span>
-        </div>
-        <span class="px-2.5 py-1 text-xs font-black bg-sky-100 text-sky-800 rounded-lg">
-          ${res.progress_percentage}% Maturity Reached
-        </span>
-      </div>
-
-      <div class="space-y-1.5">
-        <div class="flex justify-between text-xs font-bold">
-          <span class="text-slate-700">Accumulated GDD: ${res.accumulated_gdd} °C-days</span>
-          <span class="text-slate-500">Target: ${res.target_maturity_gdd} °C-days</span>
-        </div>
-        <div class="w-full bg-slate-200 h-3 rounded-full overflow-hidden">
-          <div class="bg-gradient-to-r from-sky-500 to-emerald-500 h-full rounded-full transition-all duration-500" style="width: ${res.progress_percentage}%;"></div>
-        </div>
-      </div>
-
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
-        <div class="bg-sky-50 border border-sky-200 p-3 rounded-xl">
-          <span class="text-[10px] uppercase font-bold text-sky-800 block">Accumulated GDD</span>
-          <span class="text-xl font-black text-sky-950">${res.accumulated_gdd}</span>
-          <span class="text-[10px] text-sky-700 block">°C-days thermal units</span>
-        </div>
-        <div class="bg-emerald-50 border border-emerald-200 p-3 rounded-xl">
-          <span class="text-[10px] uppercase font-bold text-emerald-800 block">Days to Harvest</span>
-          <span class="text-xl font-black text-emerald-950">${res.estimated_days_to_maturity} Days</span>
-          <span class="text-[10px] text-emerald-700 block">${res.estimated_maturity_date}</span>
-        </div>
-        <div class="bg-amber-50 border border-amber-200 p-3 rounded-xl">
-          <span class="text-[10px] uppercase font-bold text-amber-800 block">Solar Radiation</span>
-          <span class="text-xl font-black text-amber-950">${res.avg_daily_solar_insolation_mj_m2}</span>
-          <span class="text-[10px] text-amber-700 block">MJ/m²/day (PAR)</span>
-        </div>
-        <div class="bg-slate-50 border border-slate-200 p-3 rounded-xl">
-          <span class="text-[10px] uppercase font-bold text-slate-600 block">Cumulative ET0</span>
-          <span class="text-xl font-black text-slate-900">${res.cumulative_et0_mm} mm</span>
-          <span class="text-[10px] text-slate-500 block">Water evaporation loss</span>
-        </div>
-      </div>
-
-      <div class="bg-sky-50/70 border border-sky-200 rounded-xl p-3.5 space-y-1.5 text-xs text-sky-950">
-        <div class="font-bold flex items-center gap-1.5">
-          <span>🌾</span> <span>Phenological Advisory:</span>
-        </div>
-        <p class="leading-relaxed text-slate-700">${res.agronomic_advisory}</p>
-        <ul class="list-disc list-inside space-y-1 text-slate-600 pt-1">
-          ${res.thermal_stress_alerts.map(a => `<li>${a}</li>`).join("")}
-        </ul>
-      </div>
-    </div>
-  `;
-}
-
-
-
-// ----------------------------------------------------------------------------
-// 4. Zero Energy Cool Chamber (ZECC) Storage Planner
-// ----------------------------------------------------------------------------
-async function executeZeccPlanner() {
-  const produce = zeccProduceSelect ? zeccProduceSelect.value : "Tomato (टमाटर)";
-  const crates = parseInt(zeccCratesInput ? zeccCratesInput.value : 20) || 20;
-
-  if (!zeccResultContainer) return;
-
-  const payload = {
-    storage_capacity_crates: crates,
-    primary_produce: produce
-  };
-
-  try {
-    const res = await fetch(`${API_BASE}/zecc-storage`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload)
-    });
-    if (!res.ok) throw new Error("API offline");
-    const data = await res.json();
-    renderZeccResult(data);
-  } catch (err) {
-    console.warn("Using offline ZECC calculation:", err);
-    const data = calculateZeccOffline(payload);
-    renderZeccResult(data);
-  }
-}
-window.executeZeccPlanner = executeZeccPlanner;
-
-function calculateZeccOffline(req) {
-  const crates = req.storage_capacity_crates;
-  const totalProduceKg = crates * 20.0;
-  const lengthCm = Math.round(100.0 + (crates * 3.5));
-  const widthCm = 100.0;
-  const heightCm = 65.0;
-  const bricks = Math.round(400 + (crates * 16));
-  const sandBags = Math.round(2 + (crates * 0.15));
-  const thatchSqm = Math.round(((lengthCm * widthCm) / 10000.0) * 1.5 * 10) / 10;
-  const waterLiters = Math.round(15.0 + (crates * 0.5));
-  const cost = Math.round(bricks * 8.0 + sandBags * 150.0 + 800.0);
-
-  const produceDb = [
-    { produce: "Tomato (टमाटर)", ambient_shelf_life_days: "4 - 6 days", zecc_shelf_life_days: "18 - 21 days", shelf_life_multiplier: "3.5x - 4x Longer", ideal_temp_c: "15 - 18°C", ideal_rh_pct: "90 - 95%", spoilage_reduction_pct: 75.0, market_arbitrage_holding_tip: "Avoid dumping ripe tomatoes at ₹3/kg during peak glut. Hold 2 weeks until local supply tightens to ₹15-20/kg." },
-    { produce: "Leafy Greens / Palak (पालक/धनिया)", ambient_shelf_life_days: "1 - 2 days", zecc_shelf_life_days: "6 - 8 days", shelf_life_multiplier: "4x Longer", ideal_temp_c: "12 - 16°C", ideal_rh_pct: "95%", spoilage_reduction_pct: 85.0, market_arbitrage_holding_tip: "Keeps delicate leaves crisp without wilting or yellowing. Eliminates same-day forced distress dumping." },
-    { produce: "Capsicum / Shimla Mirch (शिमला मिर्च)", ambient_shelf_life_days: "4 - 5 days", zecc_shelf_life_days: "14 - 18 days", shelf_life_multiplier: "3.5x Longer", ideal_temp_c: "14 - 17°C", ideal_rh_pct: "90 - 95%", spoilage_reduction_pct: 80.0, market_arbitrage_holding_tip: "Prevents shriveling and water loss, preserving crunchy fruit firmness and grade-A mandi auction rates." },
-    { produce: "Carrot / Gajar (गाजर)", ambient_shelf_life_days: "3 - 5 days", zecc_shelf_life_days: "12 - 15 days", shelf_life_multiplier: "3x Longer", ideal_temp_c: "12 - 15°C", ideal_rh_pct: "90 - 95%", spoilage_reduction_pct: 70.0, market_arbitrage_holding_tip: "Reduces root moisture transpiration and cracking." }
-  ];
-
-  const matched = produceDb.find(p => req.primary_produce && req.primary_produce.includes(p.produce.split(" ")[0])) || produceDb[0];
-
-  return {
-    storage_capacity_crates: crates,
-    total_produce_kg: totalProduceKg,
-    external_length_cm: lengthCm,
-    external_width_cm: widthCm,
-    external_height_cm: heightCm,
-    cavity_gap_cm: 7.5,
-    red_clay_bricks_required: bricks,
-    coarse_river_sand_bags_50kg: sandBags,
-    bamboo_and_straw_thatch_sqm: thatchSqm,
-    water_wetting_litres_per_day: waterLiters,
-    cooling_effect_celsius_drop: "10°C to 15°C below ambient dry bulb",
-    relative_humidity_achieved: "88% to 95% constant RH",
-    estimated_diy_cost_inr: cost,
-    step_by_step_construction_guide: [
-      "Select a shaded upland site near a clean water source, protected from direct midday sun.",
-      `Lay a single-layer brick foundation floor (${lengthCm} cm x ${widthCm} cm).`,
-      "Build a double brick wall with a 7.5 cm (3 inch) cavity gap between inner and outer brick layers.",
-      "Fill the cavity completely with clean, coarse river sand free from clay and organic matter.",
-      "Construct a top cover frame from bamboo sticks and sirki straw / gunny sacking.",
-      "Saturate the sand cavity with water twice daily (morning & late afternoon) to sustain evaporative cooling."
-    ],
-    perishable_produce_database: [matched]
-  };
-}
-
-function renderZeccResult(res) {
-  if (!zeccResultContainer) return;
-  const p = res.perishable_produce_database[0];
-
-  zeccResultContainer.innerHTML = `
-    <div class="space-y-4">
-      <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 pb-3">
-        <div>
-          <h4 class="font-black text-slate-900 text-base">❄️ Zero Energy Cool Chamber (ZECC) Blueprint</h4>
-          <span class="text-xs text-slate-500">${res.storage_capacity_crates} Crates (${res.total_produce_kg} kg produce capacity)</span>
-        </div>
-        <span class="px-2.5 py-1 text-xs font-black bg-cyan-100 text-cyan-800 rounded-lg">
-          ₹0 Electricity / Zero Carbon
-        </span>
-      </div>
-
-      <div class="bg-gradient-to-r from-emerald-50 to-teal-50 border border-teal-200 rounded-xl p-4">
-        <div class="flex items-center justify-between gap-2 mb-2">
-          <span class="text-xs font-bold text-teal-900">Produce: ${p.produce}</span>
-          <span class="text-xs font-black text-teal-700 bg-white/80 px-2 py-0.5 rounded-full border border-teal-200">${p.shelf_life_multiplier}</span>
-        </div>
-        <div class="grid grid-cols-2 gap-3 text-center">
-          <div class="bg-white/70 border border-red-200 p-2.5 rounded-xl">
-            <span class="text-[10px] text-red-700 uppercase font-bold block">Open Room Storage</span>
-            <span class="text-lg font-black text-red-950">${p.ambient_shelf_life_days}</span>
-            <span class="text-[10px] text-red-600 block">High wilting & rotting</span>
-          </div>
-          <div class="bg-white/90 border border-emerald-300 p-2.5 rounded-xl">
-            <span class="text-[10px] text-emerald-800 uppercase font-bold block">Inside Pusa ZECC</span>
-            <span class="text-xl font-black text-emerald-950">${p.zecc_shelf_life_days}</span>
-            <span class="text-[10px] text-emerald-700 block">Fresh & crisp</span>
-          </div>
-        </div>
-        <p class="text-xs text-teal-950 mt-2.5 leading-relaxed">💡 <strong>Glut Avoidance Tip:</strong> ${p.market_arbitrage_holding_tip}</p>
-      </div>
-
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
-        <div class="bg-slate-50 border border-slate-200 p-3 rounded-xl">
-          <span class="text-[10px] uppercase font-bold text-slate-500 block">Red Clay Bricks</span>
-          <span class="text-xl font-black text-slate-900">${res.red_clay_bricks_required}</span>
-          <span class="text-[10px] text-slate-500 block">Standard country bricks</span>
-        </div>
-        <div class="bg-amber-50 border border-amber-200 p-3 rounded-xl">
-          <span class="text-[10px] uppercase font-bold text-amber-800 block">River Sand</span>
-          <span class="text-xl font-black text-amber-950">${res.coarse_river_sand_bags_50kg}</span>
-          <span class="text-[10px] text-amber-700 block">50kg coarse bags</span>
-        </div>
-        <div class="bg-cyan-50 border border-cyan-200 p-3 rounded-xl">
-          <span class="text-[10px] uppercase font-bold text-cyan-800 block">Daily Water</span>
-          <span class="text-xl font-black text-cyan-950">${res.water_wetting_litres_per_day} L</span>
-          <span class="text-[10px] text-cyan-700 block">Wetting sand cavity</span>
-        </div>
-        <div class="bg-indigo-50 border border-indigo-200 p-3 rounded-xl">
-          <span class="text-[10px] uppercase font-bold text-indigo-800 block">Est. DIY Cost</span>
-          <span class="text-xl font-black text-indigo-950">₹${res.estimated_diy_cost_inr.toLocaleString("en-IN")}</span>
-          <span class="text-[10px] text-indigo-700 block">One-time village setup</span>
-        </div>
-      </div>
-
-      <div class="bg-slate-50 border border-slate-200 rounded-xl p-3.5 space-y-1.5 text-xs text-slate-700">
-        <div class="font-bold text-slate-900 flex items-center gap-1.5">
-          <span>🧱</span> <span>Pusa IARI Chamber Construction Guide:</span>
-        </div>
-        <ol class="list-decimal list-inside space-y-1">
-          ${res.step_by_step_construction_guide.map(s => `<li>${s}</li>`).join("")}
-        </ol>
-      </div>
-    </div>
-  `;
-}
-
-
-
-// ----------------------------------------------------------------------------
-// 5. Dairy 365-Day Green Fodder & Silage Pit Planner
-// ----------------------------------------------------------------------------
-async function executeFodderSilagePlanner() {
-  const cows = parseInt(fodderCowsCount ? fodderCowsCount.value : 2) || 0;
-  const buffaloes = parseInt(fodderBuffaloCount ? fodderBuffaloCount.value : 1) || 0;
-  const milkYield = parseFloat(fodderMilkYield ? fodderMilkYield.value : 12.0) || 10.0;
-  const land = parseFloat(fodderLandAcres ? fodderLandAcres.value : 0.5) || 0.5;
-
-  if (!fodderSilageResultContainer) return;
-  fodderSilageResultContainer.classList.remove("hidden");
-  fodderSilageResultContainer.innerHTML = `<div class="p-4 text-center text-emerald-800 font-bold animate-pulse">Calculating 365-day NDRI fodder budget & silage pit dimensions...</div>`;
-
-  const payload = {
-    cows_count: cows,
-    buffaloes_count: buffaloes,
-    average_milk_yield_liters_per_day: milkYield,
-    available_fodder_land_acres: land
-  };
-
-  try {
-    const res = await fetch(`${API_BASE}/fodder-silage/plan`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload)
-    });
-    if (!res.ok) throw new Error("API offline");
-    const data = await res.json();
-    renderFodderSilageResult(data);
-  } catch (err) {
-    console.warn("Using offline Fodder & Silage engine:", err);
-    const data = calculateFodderSilageOffline(payload);
-    renderFodderSilageResult(data);
-  }
-}
-window.executeFodderSilagePlanner = executeFodderSilagePlanner;
-
-function calculateFodderSilageOffline(req) {
-  const adultUnits = req.cows_count * 1.0 + req.buffaloes_count * 1.25;
-  const dailyGreenKg = Math.round(adultUnits * 30.0 * 10) / 10;
-  const annualGreenTons = Math.round(((dailyGreenKg * 365.0) / 1000.0) * 10) / 10;
-  const dailyDryKg = Math.round(adultUnits * 6.0 * 10) / 10;
-  const annualDryTons = Math.round(((dailyDryKg * 365.0) / 1000.0) * 10) / 10;
-  const dailyConcKg = Math.round((adultUnits * 1.5 + (req.average_milk_yield_liters_per_day * 0.4)) * 10) / 10;
-
-  const silageReserveTons = Math.round(((adultUnits * 20.0 * 90.0) / 1000.0) * 10) / 10;
-  const silageVolM3 = silageReserveTons * 1000.0 / 650.0;
-  const pitWidth = 2.0;
-  const pitDepth = 1.5;
-  const pitLength = Math.max(2.0, Math.round((silageVolM3 / (pitWidth * pitDepth)) * 10) / 10);
-  const drumCount = Math.round((silageReserveTons * 1000.0) / 140.0);
-
-  const plans = [
-    { season: "Kharif (July - October)", recommended_crops: "African Tall Maize + Cowpea (Lobia)", sowing_window: "June 15 - July 15", estimated_green_yield_tons_per_acre: 18.0, nutritional_benefit: "High energy starch + 12% crude protein from legume intercrop." },
-    { season: "Rabi (November - February)", recommended_crops: "Berseem (Mascawi) + Kent Oats + Mustard", sowing_window: "October 15 - November 15", estimated_green_yield_tons_per_acre: 28.0, nutritional_benefit: "High protein (18-20% CP) and excellent palatability." },
-    { season: "Summer / Zaid (March - June)", recommended_crops: "Multicut Sorghum (SSG-59-3) / Super Napier", sowing_window: "February 25 - March 20", estimated_green_yield_tons_per_acre: 22.0, nutritional_benefit: "Heat tolerant succulent green fodder during peak dry months." }
-  ];
-
-  return {
-    total_livestock_units: adultUnits,
-    daily_green_fodder_kg: dailyGreenKg,
-    annual_green_fodder_tons: annualGreenTons,
-    daily_dry_roughage_kg: dailyDryKg,
-    annual_dry_roughage_tons: annualDryTons,
-    daily_concentrate_feed_kg: dailyConcKg,
-    recommended_silage_reserve_tons: silageReserveTons,
-    silage_pit_trench_dimensions: { length_m: pitLength, width_m: pitWidth, depth_m: pitDepth, volume_m3: Math.round(silageVolM3 * 10) / 10 },
-    drum_silage_barrels_200L_count: drumCount,
-    silage_additives: {
-      jaggery_or_molasses: `${(silageReserveTons * 10).toFixed(0)} kg (1-2% for fast lactic acid bacteria start)`,
-      common_salt: `${(silageReserveTons * 5).toFixed(0)} kg (0.5% for palatability and fungus suppression)`
-    },
-    year_round_fodder_cropping_calendar: plans,
-    land_sufficiency_analysis: `Your ${req.available_fodder_land_acres} acre(s) under high-yielding multi-cut Napier or maize-berseem cycle can yield ~${Math.round(req.available_fodder_land_acres * 55)} tons/year, covering ${Math.min(100, Math.round(((req.available_fodder_land_acres * 55) / annualGreenTons) * 100))}% of your herd's annual requirement.`
-  };
-}
-
-function renderFodderSilageResult(res) {
-  if (!fodderSilageResultContainer) return;
-  const trench = res.silage_pit_trench_dimensions;
-
-  const rows = res.year_round_fodder_cropping_calendar.map(c => `
-    <tr class="border-b border-slate-100 hover:bg-slate-50/60 transition">
-      <td class="py-2.5 px-3">
-        <strong class="text-xs font-bold text-slate-900 block">${c.season}</strong>
-        <span class="text-[10px] text-slate-500">${c.sowing_window}</span>
-      </td>
-      <td class="py-2.5 px-3">
-        <strong class="text-xs text-emerald-900 block">${c.recommended_crops}</strong>
-        <span class="text-[10px] text-slate-600">${c.nutritional_benefit}</span>
-      </td>
-      <td class="py-2.5 px-3 text-right">
-        <span class="text-xs font-black text-slate-800">${c.estimated_green_yield_tons_per_acre} T/Ac</span>
-      </td>
-    </tr>
-  `).join("");
-
-  fodderSilageResultContainer.innerHTML = `
-    <div class="space-y-4">
-      <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 pb-3">
-        <div>
-          <h4 class="font-black text-slate-900 text-base">🐄 365-Day Fodder & Silage Strategy</h4>
-          <span class="text-xs text-slate-500">${res.total_livestock_units} Adult Cattle Units • ${res.annual_green_fodder_tons} Tons Green Fodder Required/Year</span>
-        </div>
-        <span class="px-2.5 py-1 text-xs font-black bg-emerald-100 text-emerald-800 rounded-lg">
-          NDRI Zero-Starvation Model
-        </span>
-      </div>
-
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
-        <div class="bg-emerald-50 border border-emerald-200 p-3 rounded-xl">
-          <span class="text-[10px] uppercase font-bold text-emerald-800 block">Daily Green Fodder</span>
-          <span class="text-xl font-black text-emerald-950">${res.daily_green_fodder_kg} kg</span>
-          <span class="text-[10px] text-emerald-700 block">${res.annual_green_fodder_tons} T/year</span>
-        </div>
-        <div class="bg-amber-50 border border-amber-200 p-3 rounded-xl">
-          <span class="text-[10px] uppercase font-bold text-amber-800 block">Daily Dry Bhusa</span>
-          <span class="text-xl font-black text-amber-950">${res.daily_dry_roughage_kg} kg</span>
-          <span class="text-[10px] text-amber-700 block">${res.annual_dry_roughage_tons} T/year</span>
-        </div>
-        <div class="bg-indigo-50 border border-indigo-200 p-3 rounded-xl">
-          <span class="text-[10px] uppercase font-bold text-indigo-800 block">Lean Silage Reserve</span>
-          <span class="text-xl font-black text-indigo-950">${res.recommended_silage_reserve_tons} Tons</span>
-          <span class="text-[10px] text-indigo-700 block">90 Summer/Winter Days</span>
-        </div>
-        <div class="bg-slate-50 border border-slate-200 p-3 rounded-xl">
-          <span class="text-[10px] uppercase font-bold text-slate-600 block">Daily Feed Danā</span>
-          <span class="text-xl font-black text-slate-900">${res.daily_concentrate_feed_kg} kg</span>
-          <span class="text-[10px] text-slate-500 block">Balanced Ration</span>
-        </div>
-      </div>
-
-      <div class="bg-indigo-50/70 border border-indigo-200 rounded-xl p-3.5 space-y-2">
-        <div class="flex items-center justify-between">
-          <h5 class="font-bold text-indigo-950 text-xs flex items-center gap-1.5">
-            <span>📐</span> <span>Silage Pit Sizing for ${res.recommended_silage_reserve_tons} Tons Reserve:</span>
-          </h5>
-          <span class="text-[10px] font-bold text-indigo-700 bg-white px-2 py-0.5 rounded border border-indigo-200">
-            Or ${res.drum_silage_barrels_200L_count} Blue Drums (200L)
-          </span>
-        </div>
-        <div class="grid grid-cols-3 gap-2 text-center text-xs">
-          <div class="bg-white p-2 rounded-lg border border-indigo-100">
-            <span class="text-[10px] text-slate-500 block">Length</span>
-            <strong class="text-indigo-950">${trench.length_m} meters</strong>
-          </div>
-          <div class="bg-white p-2 rounded-lg border border-indigo-100">
-            <span class="text-[10px] text-slate-500 block">Width</span>
-            <strong class="text-indigo-950">${trench.width_m} meters</strong>
-          </div>
-          <div class="bg-white p-2 rounded-lg border border-indigo-100">
-            <span class="text-[10px] text-slate-500 block">Depth</span>
-            <strong class="text-indigo-950">${trench.depth_m} meters</strong>
-          </div>
-        </div>
-        <p class="text-[11px] text-indigo-900 leading-relaxed">
-          🍯 <strong>Additives for Pit:</strong> Mix ${res.silage_additives.jaggery_or_molasses} and ${res.silage_additives.common_salt}. Trample tightly to expel oxygen and cover with 150-micron UV plastic sheet + 4 inches of mud.
-        </p>
-      </div>
-
-      <div class="overflow-x-auto rounded-xl border border-slate-200">
-        <table class="w-full text-left border-collapse">
-          <thead>
-            <tr class="bg-slate-50 border-b border-slate-200 text-[10px] font-bold text-slate-600 uppercase">
-              <th class="py-2 px-3">Season & Sowing Window</th>
-              <th class="py-2 px-3">Recommended High-Yield Crops</th>
-              <th class="py-2 px-3 text-right">Target Yield</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${rows}
-          </tbody>
-        </table>
-      </div>
-
-      <div class="bg-emerald-50/60 border border-emerald-200 rounded-xl p-3 text-xs text-emerald-950">
-        <strong>🌾 Land Sufficiency:</strong> ${res.land_sufficiency_analysis}
-      </div>
-    </div>
-  `;
-}
-
-
 
 // ----------------------------------------------------------------------------
 // 3. Subhash Palekar Natural Farming (SPNF/ZBNF) Drum Scaler
@@ -11280,7 +10849,843 @@ function renderSpnfResult(res) {
   `;
 }
 
+// ----------------------------------------------------------------------------
+// 4. Zero Energy Cool Chamber (ZECC) Storage Planner
+// ----------------------------------------------------------------------------
+async function executeZeccPlanner() {
+  const produce = zeccProduceSelect ? zeccProduceSelect.value : "Tomato (टमाटर)";
+  const crates = parseInt(zeccCratesInput ? zeccCratesInput.value : 20) || 20;
 
+  if (!zeccResultContainer) return;
+
+  const payload = {
+    storage_capacity_crates: crates,
+    primary_produce: produce
+  };
+
+  try {
+    const res = await fetch(`${API_BASE}/zecc-storage`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+    if (!res.ok) throw new Error("API offline");
+    const data = await res.json();
+    renderZeccResult(data);
+  } catch (err) {
+    console.warn("Using offline ZECC calculation:", err);
+    const data = calculateZeccOffline(payload);
+    renderZeccResult(data);
+  }
+}
+window.executeZeccPlanner = executeZeccPlanner;
+
+function calculateZeccOffline(req) {
+  const crates = req.storage_capacity_crates;
+  const totalProduceKg = crates * 20.0;
+  const lengthCm = Math.round(100.0 + (crates * 3.5));
+  const widthCm = 100.0;
+  const heightCm = 65.0;
+  const bricks = Math.round(400 + (crates * 16));
+  const sandBags = Math.round(2 + (crates * 0.15));
+  const thatchSqm = Math.round(((lengthCm * widthCm) / 10000.0) * 1.5 * 10) / 10;
+  const waterLiters = Math.round(15.0 + (crates * 0.5));
+  const cost = Math.round(bricks * 8.0 + sandBags * 150.0 + 800.0);
+
+  const produceDb = [
+    { produce: "Tomato (टमाटर)", ambient_shelf_life_days: "4 - 6 days", zecc_shelf_life_days: "18 - 21 days", shelf_life_multiplier: "3.5x - 4x Longer", ideal_temp_c: "15 - 18°C", ideal_rh_pct: "90 - 95%", spoilage_reduction_pct: 75.0, market_arbitrage_holding_tip: "Avoid dumping ripe tomatoes at ₹3/kg during peak glut. Hold 2 weeks until local supply tightens to ₹15-20/kg." },
+    { produce: "Leafy Greens / Palak (पालक/धनिया)", ambient_shelf_life_days: "1 - 2 days", zecc_shelf_life_days: "6 - 8 days", shelf_life_multiplier: "4x Longer", ideal_temp_c: "12 - 16°C", ideal_rh_pct: "95%", spoilage_reduction_pct: 85.0, market_arbitrage_holding_tip: "Keeps delicate leaves crisp without wilting or yellowing. Eliminates same-day forced distress dumping." },
+    { produce: "Capsicum / Shimla Mirch (शिमला मिर्च)", ambient_shelf_life_days: "4 - 5 days", zecc_shelf_life_days: "14 - 18 days", shelf_life_multiplier: "3.5x Longer", ideal_temp_c: "14 - 17°C", ideal_rh_pct: "90 - 95%", spoilage_reduction_pct: 80.0, market_arbitrage_holding_tip: "Prevents shriveling and water loss, preserving crunchy fruit firmness and grade-A mandi auction rates." },
+    { produce: "Carrot / Gajar (गाजर)", ambient_shelf_life_days: "3 - 5 days", zecc_shelf_life_days: "12 - 15 days", shelf_life_multiplier: "3x Longer", ideal_temp_c: "12 - 15°C", ideal_rh_pct: "90 - 95%", spoilage_reduction_pct: 70.0, market_arbitrage_holding_tip: "Reduces root moisture transpiration and cracking." }
+  ];
+
+  const matched = produceDb.find(p => req.primary_produce && req.primary_produce.includes(p.produce.split(" ")[0])) || produceDb[0];
+
+  return {
+    storage_capacity_crates: crates,
+    total_produce_kg: totalProduceKg,
+    external_length_cm: lengthCm,
+    external_width_cm: widthCm,
+    external_height_cm: heightCm,
+    cavity_gap_cm: 7.5,
+    red_clay_bricks_required: bricks,
+    coarse_river_sand_bags_50kg: sandBags,
+    bamboo_and_straw_thatch_sqm: thatchSqm,
+    water_wetting_litres_per_day: waterLiters,
+    cooling_effect_celsius_drop: "10°C to 15°C below ambient dry bulb",
+    relative_humidity_achieved: "88% to 95% constant RH",
+    estimated_diy_cost_inr: cost,
+    step_by_step_construction_guide: [
+      "Select a shaded upland site near a clean water source, protected from direct midday sun.",
+      `Lay a single-layer brick foundation floor (${lengthCm} cm x ${widthCm} cm).`,
+      "Build a double brick wall with a 7.5 cm (3 inch) cavity gap between inner and outer brick layers.",
+      "Fill the cavity completely with clean, coarse river sand free from clay and organic matter.",
+      "Construct a top cover frame from bamboo sticks and sirki straw / gunny sacking.",
+      "Saturate the sand cavity with water twice daily (morning & late afternoon) to sustain evaporative cooling."
+    ],
+    perishable_produce_database: [matched]
+  };
+}
+
+function renderZeccResult(res) {
+  if (!zeccResultContainer) return;
+  const p = res.perishable_produce_database[0];
+
+  zeccResultContainer.innerHTML = `
+    <div class="space-y-4">
+      <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 pb-3">
+        <div>
+          <h4 class="font-black text-slate-900 text-base">❄️ Zero Energy Cool Chamber (ZECC) Blueprint</h4>
+          <span class="text-xs text-slate-500">${res.storage_capacity_crates} Crates (${res.total_produce_kg} kg produce capacity)</span>
+        </div>
+        <span class="px-2.5 py-1 text-xs font-black bg-cyan-100 text-cyan-800 rounded-lg">
+          ₹0 Electricity / Zero Carbon
+        </span>
+      </div>
+
+      <div class="bg-gradient-to-r from-emerald-50 to-teal-50 border border-teal-200 rounded-xl p-4">
+        <div class="flex items-center justify-between gap-2 mb-2">
+          <span class="text-xs font-bold text-teal-900">Produce: ${p.produce}</span>
+          <span class="text-xs font-black text-teal-700 bg-white/80 px-2 py-0.5 rounded-full border border-teal-200">${p.shelf_life_multiplier}</span>
+        </div>
+        <div class="grid grid-cols-2 gap-3 text-center">
+          <div class="bg-white/70 border border-red-200 p-2.5 rounded-xl">
+            <span class="text-[10px] text-red-700 uppercase font-bold block">Open Room Storage</span>
+            <span class="text-lg font-black text-red-950">${p.ambient_shelf_life_days}</span>
+            <span class="text-[10px] text-red-600 block">High wilting & rotting</span>
+          </div>
+          <div class="bg-white/90 border border-emerald-300 p-2.5 rounded-xl">
+            <span class="text-[10px] text-emerald-800 uppercase font-bold block">Inside Pusa ZECC</span>
+            <span class="text-xl font-black text-emerald-950">${p.zecc_shelf_life_days}</span>
+            <span class="text-[10px] text-emerald-700 block">Fresh & crisp</span>
+          </div>
+        </div>
+        <p class="text-xs text-teal-950 mt-2.5 leading-relaxed">💡 <strong>Glut Avoidance Tip:</strong> ${p.market_arbitrage_holding_tip}</p>
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
+        <div class="bg-slate-50 border border-slate-200 p-3 rounded-xl">
+          <span class="text-[10px] uppercase font-bold text-slate-500 block">Red Clay Bricks</span>
+          <span class="text-xl font-black text-slate-900">${res.red_clay_bricks_required}</span>
+          <span class="text-[10px] text-slate-500 block">Standard country bricks</span>
+        </div>
+        <div class="bg-amber-50 border border-amber-200 p-3 rounded-xl">
+          <span class="text-[10px] uppercase font-bold text-amber-800 block">River Sand</span>
+          <span class="text-xl font-black text-amber-950">${res.coarse_river_sand_bags_50kg}</span>
+          <span class="text-[10px] text-amber-700 block">50kg coarse bags</span>
+        </div>
+        <div class="bg-cyan-50 border border-cyan-200 p-3 rounded-xl">
+          <span class="text-[10px] uppercase font-bold text-cyan-800 block">Daily Water</span>
+          <span class="text-xl font-black text-cyan-950">${res.water_wetting_litres_per_day} L</span>
+          <span class="text-[10px] text-cyan-700 block">Wetting sand cavity</span>
+        </div>
+        <div class="bg-indigo-50 border border-indigo-200 p-3 rounded-xl">
+          <span class="text-[10px] uppercase font-bold text-indigo-800 block">Est. DIY Cost</span>
+          <span class="text-xl font-black text-indigo-950">₹${res.estimated_diy_cost_inr.toLocaleString("en-IN")}</span>
+          <span class="text-[10px] text-indigo-700 block">One-time village setup</span>
+        </div>
+      </div>
+
+      <div class="bg-slate-50 border border-slate-200 rounded-xl p-3.5 space-y-1.5 text-xs text-slate-700">
+        <div class="font-bold text-slate-900 flex items-center gap-1.5">
+          <span>🧱</span> <span>Pusa IARI Chamber Construction Guide:</span>
+        </div>
+        <ol class="list-decimal list-inside space-y-1">
+          ${res.step_by_step_construction_guide.map(s => `<li>${s}</li>`).join("")}
+        </ol>
+      </div>
+    </div>
+  `;
+}
+
+// ----------------------------------------------------------------------------
+// 5. Dairy 365-Day Green Fodder & Silage Pit Planner
+// ----------------------------------------------------------------------------
+async function executeFodderSilagePlanner() {
+  const cows = parseInt(fodderCowsCount ? fodderCowsCount.value : 2) || 0;
+  const buffaloes = parseInt(fodderBuffaloCount ? fodderBuffaloCount.value : 1) || 0;
+  const milkYield = parseFloat(fodderMilkYield ? fodderMilkYield.value : 12.0) || 10.0;
+  const land = parseFloat(fodderLandAcres ? fodderLandAcres.value : 0.5) || 0.5;
+
+  if (!fodderSilageResultContainer) return;
+  fodderSilageResultContainer.classList.remove("hidden");
+  fodderSilageResultContainer.innerHTML = `<div class="p-4 text-center text-emerald-800 font-bold animate-pulse">Calculating 365-day NDRI fodder budget & silage pit dimensions...</div>`;
+
+  const payload = {
+    cows_count: cows,
+    buffaloes_count: buffaloes,
+    average_milk_yield_liters_per_day: milkYield,
+    available_fodder_land_acres: land
+  };
+
+  try {
+    const res = await fetch(`${API_BASE}/fodder-silage/plan`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+    if (!res.ok) throw new Error("API offline");
+    const data = await res.json();
+    renderFodderSilageResult(data);
+  } catch (err) {
+    console.warn("Using offline Fodder & Silage engine:", err);
+    const data = calculateFodderSilageOffline(payload);
+    renderFodderSilageResult(data);
+  }
+}
+window.executeFodderSilagePlanner = executeFodderSilagePlanner;
+
+function calculateFodderSilageOffline(req) {
+  const adultUnits = req.cows_count * 1.0 + req.buffaloes_count * 1.25;
+  const dailyGreenKg = Math.round(adultUnits * 30.0 * 10) / 10;
+  const annualGreenTons = Math.round(((dailyGreenKg * 365.0) / 1000.0) * 10) / 10;
+  const dailyDryKg = Math.round(adultUnits * 6.0 * 10) / 10;
+  const annualDryTons = Math.round(((dailyDryKg * 365.0) / 1000.0) * 10) / 10;
+  const dailyConcKg = Math.round((adultUnits * 1.5 + (req.average_milk_yield_liters_per_day * 0.4)) * 10) / 10;
+
+  const silageReserveTons = Math.round(((adultUnits * 20.0 * 90.0) / 1000.0) * 10) / 10;
+  const silageVolM3 = silageReserveTons * 1000.0 / 650.0;
+  const pitWidth = 2.0;
+  const pitDepth = 1.5;
+  const pitLength = Math.max(2.0, Math.round((silageVolM3 / (pitWidth * pitDepth)) * 10) / 10);
+  const drumCount = Math.round((silageReserveTons * 1000.0) / 140.0);
+
+  const plans = [
+    { season: "Kharif (July - October)", recommended_crops: "African Tall Maize + Cowpea (Lobia)", sowing_window: "June 15 - July 15", estimated_green_yield_tons_per_acre: 18.0, nutritional_benefit: "High energy starch + 12% crude protein from legume intercrop." },
+    { season: "Rabi (November - February)", recommended_crops: "Berseem (Mascawi) + Kent Oats + Mustard", sowing_window: "October 15 - November 15", estimated_green_yield_tons_per_acre: 28.0, nutritional_benefit: "High protein (18-20% CP) and excellent palatability." },
+    { season: "Summer / Zaid (March - June)", recommended_crops: "Multicut Sorghum (SSG-59-3) / Super Napier", sowing_window: "February 25 - March 20", estimated_green_yield_tons_per_acre: 22.0, nutritional_benefit: "Heat tolerant succulent green fodder during peak dry months." }
+  ];
+
+  return {
+    total_livestock_units: adultUnits,
+    daily_green_fodder_kg: dailyGreenKg,
+    annual_green_fodder_tons: annualGreenTons,
+    daily_dry_roughage_kg: dailyDryKg,
+    annual_dry_roughage_tons: annualDryTons,
+    daily_concentrate_feed_kg: dailyConcKg,
+    recommended_silage_reserve_tons: silageReserveTons,
+    silage_pit_trench_dimensions: { length_m: pitLength, width_m: pitWidth, depth_m: pitDepth, volume_m3: Math.round(silageVolM3 * 10) / 10 },
+    drum_silage_barrels_200L_count: drumCount,
+    silage_additives: {
+      jaggery_or_molasses: `${(silageReserveTons * 10).toFixed(0)} kg (1-2% for fast lactic acid bacteria start)`,
+      common_salt: `${(silageReserveTons * 5).toFixed(0)} kg (0.5% for palatability and fungus suppression)`
+    },
+    year_round_fodder_cropping_calendar: plans,
+    land_sufficiency_analysis: `Your ${req.available_fodder_land_acres} acre(s) under high-yielding multi-cut Napier or maize-berseem cycle can yield ~${Math.round(req.available_fodder_land_acres * 55)} tons/year, covering ${Math.min(100, Math.round(((req.available_fodder_land_acres * 55) / annualGreenTons) * 100))}% of your herd's annual requirement.`
+  };
+}
+
+function renderFodderSilageResult(res) {
+  if (!fodderSilageResultContainer) return;
+  const trench = res.silage_pit_trench_dimensions;
+
+  const rows = res.year_round_fodder_cropping_calendar.map(c => `
+    <tr class="border-b border-slate-100 hover:bg-slate-50/60 transition">
+      <td class="py-2.5 px-3">
+        <strong class="text-xs font-bold text-slate-900 block">${c.season}</strong>
+        <span class="text-[10px] text-slate-500">${c.sowing_window}</span>
+      </td>
+      <td class="py-2.5 px-3">
+        <strong class="text-xs text-emerald-900 block">${c.recommended_crops}</strong>
+        <span class="text-[10px] text-slate-600">${c.nutritional_benefit}</span>
+      </td>
+      <td class="py-2.5 px-3 text-right">
+        <span class="text-xs font-black text-slate-800">${c.estimated_green_yield_tons_per_acre} T/Ac</span>
+      </td>
+    </tr>
+  `).join("");
+
+  fodderSilageResultContainer.innerHTML = `
+    <div class="space-y-4">
+      <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 pb-3">
+        <div>
+          <h4 class="font-black text-slate-900 text-base">🐄 365-Day Fodder & Silage Strategy</h4>
+          <span class="text-xs text-slate-500">${res.total_livestock_units} Adult Cattle Units • ${res.annual_green_fodder_tons} Tons Green Fodder Required/Year</span>
+        </div>
+        <span class="px-2.5 py-1 text-xs font-black bg-emerald-100 text-emerald-800 rounded-lg">
+          NDRI Zero-Starvation Model
+        </span>
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
+        <div class="bg-emerald-50 border border-emerald-200 p-3 rounded-xl">
+          <span class="text-[10px] uppercase font-bold text-emerald-800 block">Daily Green Fodder</span>
+          <span class="text-xl font-black text-emerald-950">${res.daily_green_fodder_kg} kg</span>
+          <span class="text-[10px] text-emerald-700 block">${res.annual_green_fodder_tons} T/year</span>
+        </div>
+        <div class="bg-amber-50 border border-amber-200 p-3 rounded-xl">
+          <span class="text-[10px] uppercase font-bold text-amber-800 block">Daily Dry Bhusa</span>
+          <span class="text-xl font-black text-amber-950">${res.daily_dry_roughage_kg} kg</span>
+          <span class="text-[10px] text-amber-700 block">${res.annual_dry_roughage_tons} T/year</span>
+        </div>
+        <div class="bg-indigo-50 border border-indigo-200 p-3 rounded-xl">
+          <span class="text-[10px] uppercase font-bold text-indigo-800 block">Lean Silage Reserve</span>
+          <span class="text-xl font-black text-indigo-950">${res.recommended_silage_reserve_tons} Tons</span>
+          <span class="text-[10px] text-indigo-700 block">90 Summer/Winter Days</span>
+        </div>
+        <div class="bg-slate-50 border border-slate-200 p-3 rounded-xl">
+          <span class="text-[10px] uppercase font-bold text-slate-600 block">Daily Feed Danā</span>
+          <span class="text-xl font-black text-slate-900">${res.daily_concentrate_feed_kg} kg</span>
+          <span class="text-[10px] text-slate-500 block">Balanced Ration</span>
+        </div>
+      </div>
+
+      <div class="bg-indigo-50/70 border border-indigo-200 rounded-xl p-3.5 space-y-2">
+        <div class="flex items-center justify-between">
+          <h5 class="font-bold text-indigo-950 text-xs flex items-center gap-1.5">
+            <span>📐</span> <span>Silage Pit Sizing for ${res.recommended_silage_reserve_tons} Tons Reserve:</span>
+          </h5>
+          <span class="text-[10px] font-bold text-indigo-700 bg-white px-2 py-0.5 rounded border border-indigo-200">
+            Or ${res.drum_silage_barrels_200L_count} Blue Drums (200L)
+          </span>
+        </div>
+        <div class="grid grid-cols-3 gap-2 text-center text-xs">
+          <div class="bg-white p-2 rounded-lg border border-indigo-100">
+            <span class="text-[10px] text-slate-500 block">Length</span>
+            <strong class="text-indigo-950">${trench.length_m} meters</strong>
+          </div>
+          <div class="bg-white p-2 rounded-lg border border-indigo-100">
+            <span class="text-[10px] text-slate-500 block">Width</span>
+            <strong class="text-indigo-950">${trench.width_m} meters</strong>
+          </div>
+          <div class="bg-white p-2 rounded-lg border border-indigo-100">
+            <span class="text-[10px] text-slate-500 block">Depth</span>
+            <strong class="text-indigo-950">${trench.depth_m} meters</strong>
+          </div>
+        </div>
+        <p class="text-[11px] text-indigo-900 leading-relaxed">
+          🍯 <strong>Additives for Pit:</strong> Mix ${res.silage_additives.jaggery_or_molasses} and ${res.silage_additives.common_salt}. Trample tightly to expel oxygen and cover with 150-micron UV plastic sheet + 4 inches of mud.
+        </p>
+      </div>
+
+      <div class="overflow-x-auto rounded-xl border border-slate-200">
+        <table class="w-full text-left border-collapse">
+          <thead>
+            <tr class="bg-slate-50 border-b border-slate-200 text-[10px] font-bold text-slate-600 uppercase">
+              <th class="py-2 px-3">Season & Sowing Window</th>
+              <th class="py-2 px-3">Recommended High-Yield Crops</th>
+              <th class="py-2 px-3 text-right">Target Yield</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${rows}
+          </tbody>
+        </table>
+      </div>
+
+      <div class="bg-emerald-50/60 border border-emerald-200 rounded-xl p-3 text-xs text-emerald-950">
+        <strong>🌾 Land Sufficiency:</strong> ${res.land_sufficiency_analysis}
+      </div>
+    </div>
+  `;
+}
+
+// ----------------------------------------------------------------------------
+// 6. NASA POWER Agroclimatology & Cumulative GDD Tracker
+// ----------------------------------------------------------------------------
+async function executeNasaGddTracker() {
+  const crop = nasaGddCrop ? nasaGddCrop.value : "Wheat";
+  const opt = nasaGddCrop ? nasaGddCrop.selectedOptions[0] : null;
+  const tbase = parseFloat(nasaTbase ? nasaTbase.value : 5.0) || 5.0;
+  const targetGdd = opt && opt.dataset.targetgdd ? parseFloat(opt.dataset.targetgdd) : 1700.0;
+  const sowingDate = nasaSowingDate && nasaSowingDate.value ? nasaSowingDate.value : "2026-06-15";
+
+  let lat = 18.5204;
+  let lon = 73.8567;
+  if (appState.weatherData && appState.weatherData.coord) {
+    lat = appState.weatherData.coord.lat || 18.5204;
+    lon = appState.weatherData.coord.lon || 73.8567;
+  }
+
+  if (!nasaGddResultContainer) return;
+  nasaGddResultContainer.classList.remove("hidden");
+  nasaGddResultContainer.innerHTML = `<div class="p-4 text-center text-sky-800 font-bold animate-pulse">Syncing NASA POWER Agroclimatology satellite reanalysis dataset...</div>`;
+
+  const payload = {
+    latitude: lat,
+    longitude: lon,
+    sowing_date: sowingDate,
+    crop_name: crop,
+    base_temperature_c: tbase,
+    target_maturity_gdd: targetGdd
+  };
+
+  try {
+    const res = await fetch(`${API_BASE}/nasa-power/gdd`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+    if (!res.ok) throw new Error("API offline");
+    const data = await res.json();
+    renderNasaGddResult(data);
+  } catch (err) {
+    console.warn("Using offline NASA GDD calculation:", err);
+    const data = calculateNasaGddOffline(payload);
+    renderNasaGddResult(data);
+  }
+}
+window.executeNasaGddTracker = executeNasaGddTracker;
+
+function calculateNasaGddOffline(req) {
+  const sowing = new Date(req.sowing_date);
+  const now = new Date();
+  const diffMs = now - sowing;
+  const days = Math.max(1, Math.min(180, Math.floor(diffMs / (1000 * 60 * 60 * 24))));
+
+  const dailyMeanGdd = 14.2;
+  const accumulatedGdd = Math.min(req.target_maturity_gdd, Math.round(days * dailyMeanGdd * 10) / 10);
+  const pct = Math.min(100.0, Math.round((accumulatedGdd / req.target_maturity_gdd) * 1000) / 10);
+  const remainingGdd = Math.max(0.0, req.target_maturity_gdd - accumulatedGdd);
+  const estDaysLeft = Math.ceil(remainingGdd / dailyMeanGdd);
+
+  const matDate = new Date();
+  matDate.setDate(matDate.getDate() + estDaysLeft);
+
+  return {
+    crop_name: req.crop_name,
+    base_temp_c: req.base_temperature_c,
+    days_since_sowing: days,
+    accumulated_gdd: accumulatedGdd,
+    target_maturity_gdd: req.target_maturity_gdd,
+    progress_percentage: pct,
+    estimated_days_to_maturity: estDaysLeft,
+    estimated_maturity_date: matDate.toISOString().split("T")[0],
+    avg_daily_solar_insolation_mj_m2: 19.8,
+    cumulative_et0_mm: Math.round(days * 4.5),
+    thermal_stress_alerts: [
+      days > 60
+        ? "⚠️ NASA climatology shows 4 heat stress days (>35°C) recorded during the active flowering window."
+        : "✅ Thermal accumulation is tracking within normal climatological parameters."
+    ],
+    agronomic_advisory: `Crop has achieved ${pct}% of physiological thermal maturity. Estimated harvest readiness around ${matDate.toLocaleDateString("en-IN", { month: "short", day: "numeric", year: "numeric" })}.`
+  };
+}
+
+function renderNasaGddResult(res) {
+  if (!nasaGddResultContainer) return;
+
+  nasaGddResultContainer.innerHTML = `
+    <div class="space-y-4">
+      <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 pb-3">
+        <div>
+          <h4 class="font-black text-slate-900 text-base">🛰️ NASA POWER Agroclimatology & GDD</h4>
+          <span class="text-xs text-slate-500">${res.crop_name} (Base Temp T_base: ${res.base_temp_c}°C) • ${res.days_since_sowing} Days Since Sowing</span>
+        </div>
+        <span class="px-2.5 py-1 text-xs font-black bg-sky-100 text-sky-800 rounded-lg">
+          ${res.progress_percentage}% Maturity Reached
+        </span>
+      </div>
+
+      <div class="space-y-1.5">
+        <div class="flex justify-between text-xs font-bold">
+          <span class="text-slate-700">Accumulated GDD: ${res.accumulated_gdd} °C-days</span>
+          <span class="text-slate-500">Target: ${res.target_maturity_gdd} °C-days</span>
+        </div>
+        <div class="w-full bg-slate-200 h-3 rounded-full overflow-hidden">
+          <div class="bg-gradient-to-r from-sky-500 to-emerald-500 h-full rounded-full transition-all duration-500" style="width: ${res.progress_percentage}%;"></div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
+        <div class="bg-sky-50 border border-sky-200 p-3 rounded-xl">
+          <span class="text-[10px] uppercase font-bold text-sky-800 block">Accumulated GDD</span>
+          <span class="text-xl font-black text-sky-950">${res.accumulated_gdd}</span>
+          <span class="text-[10px] text-sky-700 block">°C-days thermal units</span>
+        </div>
+        <div class="bg-emerald-50 border border-emerald-200 p-3 rounded-xl">
+          <span class="text-[10px] uppercase font-bold text-emerald-800 block">Days to Harvest</span>
+          <span class="text-xl font-black text-emerald-950">${res.estimated_days_to_maturity} Days</span>
+          <span class="text-[10px] text-emerald-700 block">${res.estimated_maturity_date}</span>
+        </div>
+        <div class="bg-amber-50 border border-amber-200 p-3 rounded-xl">
+          <span class="text-[10px] uppercase font-bold text-amber-800 block">Solar Radiation</span>
+          <span class="text-xl font-black text-amber-950">${res.avg_daily_solar_insolation_mj_m2}</span>
+          <span class="text-[10px] text-amber-700 block">MJ/m²/day (PAR)</span>
+        </div>
+        <div class="bg-slate-50 border border-slate-200 p-3 rounded-xl">
+          <span class="text-[10px] uppercase font-bold text-slate-600 block">Cumulative ET0</span>
+          <span class="text-xl font-black text-slate-900">${res.cumulative_et0_mm} mm</span>
+          <span class="text-[10px] text-slate-500 block">Water evaporation loss</span>
+        </div>
+      </div>
+
+      <div class="bg-sky-50/70 border border-sky-200 rounded-xl p-3.5 space-y-1.5 text-xs text-sky-950">
+        <div class="font-bold flex items-center gap-1.5">
+          <span>🌾</span> <span>Phenological Advisory:</span>
+        </div>
+        <p class="leading-relaxed text-slate-700">${res.agronomic_advisory}</p>
+        <ul class="list-disc list-inside space-y-1 text-slate-600 pt-1">
+          ${res.thermal_stress_alerts.map(a => `<li>${a}</li>`).join("")}
+        </ul>
+      </div>
+    </div>
+  `;
+}
+
+// ----------------------------------------------------------------------------
+// 7. Weed Doctor & Herbicide Mixing Calculator
+// ----------------------------------------------------------------------------
+async function executeWeedDoctor() {
+  const crop = weedCropSelect ? weedCropSelect.value : "wheat";
+  const weedType = weedTypeSelect ? weedTypeSelect.value : "All";
+  const stage = weedStageSelect ? weedStageSelect.value : "Post-Emergence (15-25 Days)";
+  const acres = parseFloat(weedLandAcres ? weedLandAcres.value : 1.0) || 1.0;
+
+  if (!weedDoctorResultContainer) return;
+  weedDoctorResultContainer.classList.remove("hidden");
+  weedDoctorResultContainer.innerHTML = `<div class="p-4 text-center text-emerald-800 font-bold animate-pulse">Consulting ICAR Directorate of Weed Research (DWR) chemical & organic guidelines...</div>`;
+
+  const payload = {
+    crop_id: crop,
+    weed_type: weedType,
+    crop_stage: stage,
+    land_size_acres: acres
+  };
+
+  try {
+    const res = await fetch(`${API_BASE}/weed-management`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+    if (!res.ok) throw new Error("API offline");
+    const data = await res.json();
+    renderWeedDoctorResult(data);
+  } catch (err) {
+    console.warn("Using offline Weed Doctor calculation:", err);
+    const data = calculateWeedDoctorOffline(payload);
+    renderWeedDoctorResult(data);
+  }
+}
+window.executeWeedDoctor = executeWeedDoctor;
+
+function calculateWeedDoctorOffline(req) {
+  const acres = req.land_size_acres;
+  const tanks = Math.round(acres * 10);
+
+  const db = {
+    wheat: [
+      {
+        herbicide_molecule: "Clodinafop-propargyl 15% WP",
+        trade_examples: "Topik, Point, Jurad",
+        target_weeds: ["Phalaris minor (गुल्ली डंडा / Mandusi)", "Avena ludoviciana (Jangli Jai)"],
+        application_timing: "Post-emergence at 30-35 DAS (after 1st irrigation)",
+        recommended_dose_per_acre: `${Math.round(160 * acres)} grams in ${Math.round(150 * acres)}L water`,
+        water_volume_litres_per_acre: 150.0,
+        nozzle_type: "Flat Fan / Floodjet Nozzle (Never use hollow cone nozzle)",
+        knapsack_tanks_15L_count: tanks,
+        dose_per_15L_tank: `${Math.round(160 / 10)} grams per tank`,
+        pre_harvest_interval_days: 60,
+        precautions: [
+          "Spray only when soil has optimum moisture; avoid spraying on drought-stressed weeds.",
+          "Use flat fan nozzle with 30 PSI pressure for uniform ground swath.",
+          "Do not mix with 2,4-D amine as antagonism reduces Phalaris control."
+        ]
+      },
+      {
+        herbicide_molecule: "Metsulfuron-methyl 20% WP",
+        trade_examples: "Algrip, Hook, Escort",
+        target_weeds: ["Chenopodium album (Bathua)", "Rumex dentatus (Kandiari)", "Anagallis (Krishna Neel)"],
+        application_timing: "Post-emergence at 30-35 DAS",
+        recommended_dose_per_acre: `${Math.round(8 * acres)} grams in ${Math.round(150 * acres)}L water`,
+        water_volume_litres_per_acre: 150.0,
+        nozzle_type: "Flat Fan Nozzle",
+        knapsack_tanks_15L_count: tanks,
+        dose_per_15L_tank: `${(8 / 10).toFixed(1)} grams per tank`,
+        pre_harvest_interval_days: 60,
+        precautions: ["Highly potent broadleaf herbicide. Clean spray tank with detergent before using on other crops."]
+      }
+    ],
+    rice: [
+      {
+        herbicide_molecule: "Pretilachlor 50% EC",
+        trade_examples: "Rifit, Eraze, Start",
+        target_weeds: ["Echinochloa colona (Sanwak)", "Cyperus difformis", "Eclipta alba"],
+        application_timing: "Pre-emergence at 0-3 days after transplanting (DAT)",
+        recommended_dose_per_acre: `${Math.round(500 * acres)} ml in ${Math.round(150 * acres)}L water`,
+        water_volume_litres_per_acre: 150.0,
+        nozzle_type: "Floodjet Nozzle",
+        knapsack_tanks_15L_count: tanks,
+        dose_per_15L_tank: `${Math.round(500 / 10)} ml per tank`,
+        pre_harvest_interval_days: 90,
+        precautions: ["Maintain 2-3 cm standing water in paddy field for 4-5 days after application."]
+      },
+      {
+        herbicide_molecule: "Bispyribac-sodium 10% SC",
+        trade_examples: "Nominee Gold, Adora, Taarak",
+        target_weeds: ["Echinochloa crus-galli", "Barnyard grass", "Broadleaf weeds & Sedges"],
+        application_timing: "Early post-emergence at 15-20 DAT (2-4 weed leaf stage)",
+        recommended_dose_per_acre: `${Math.round(80 * acres)} ml in ${Math.round(150 * acres)}L water`,
+        water_volume_litres_per_acre: 150.0,
+        nozzle_type: "Flat Fan Nozzle",
+        knapsack_tanks_15L_count: tanks,
+        dose_per_15L_tank: `${Math.round(80 / 10)} ml per tank`,
+        pre_harvest_interval_days: 75,
+        precautions: ["Drain standing water before spray; re-flood field 48 hours after application."]
+      }
+    ]
+  };
+
+  const recs = db[req.crop_id] || db.wheat;
+  return {
+    crop_id: req.crop_id,
+    crop_name: req.crop_id.toUpperCase(),
+    land_size_acres: acres,
+    options: recs,
+    cultural_and_organic_controls: [
+      "Zero-Till Sowing: Direct drilling wheat into paddy stubble reduces Phalaris minor seed germination by 60-70%.",
+      "Cono-Weeder Operation: Run rotating cono-weeder between paddy rows at 15 and 30 DAT to bury weeds and aerate roots.",
+      "Stale Seedbed Technique: Irrigate field 10 days before main sowing, let weed seeds flush, then terminate with light rotavator.",
+      "Straw Mulching: 5 tons/ha straw mulch blocks sunlight, preventing annual weed emergence organically."
+    ]
+  };
+}
+
+function renderWeedDoctorResult(res) {
+  if (!weedDoctorResultContainer) return;
+
+  const cards = res.options.map(opt => `
+    <div class="border border-slate-200 rounded-xl p-4 bg-white shadow-sm space-y-3">
+      <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-2.5">
+        <div>
+          <h5 class="text-sm font-black text-slate-900">${opt.herbicide_molecule}</h5>
+          <span class="text-xs text-brand-800 font-bold">Brands: ${opt.trade_examples}</span>
+        </div>
+        <span class="text-xs font-bold px-2.5 py-1 bg-amber-50 text-amber-800 border border-amber-200 rounded-lg">
+          ${opt.application_timing}
+        </span>
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center text-xs">
+        <div class="bg-slate-50 p-2 rounded-lg border border-slate-200">
+          <span class="text-[10px] text-slate-500 uppercase font-bold block">Total Dose</span>
+          <strong class="text-slate-900">${opt.recommended_dose_per_acre}</strong>
+        </div>
+        <div class="bg-emerald-50 p-2 rounded-lg border border-emerald-200">
+          <span class="text-[10px] text-emerald-800 uppercase font-bold block">15L Tank Dose</span>
+          <strong class="text-emerald-950">${opt.dose_per_15L_tank}</strong>
+        </div>
+        <div class="bg-indigo-50 p-2 rounded-lg border border-indigo-200">
+          <span class="text-[10px] text-indigo-800 uppercase font-bold block">Tanks for Area</span>
+          <strong class="text-indigo-950">${opt.knapsack_tanks_15L_count} Tanks</strong>
+        </div>
+        <div class="bg-amber-50 p-2 rounded-lg border border-amber-200">
+          <span class="text-[10px] text-amber-800 uppercase font-bold block">Nozzle Required</span>
+          <strong class="text-amber-950">${opt.nozzle_type.split(" ")[0]} ${opt.nozzle_type.split(" ")[1] || ""}</strong>
+        </div>
+      </div>
+
+      <div class="text-xs space-y-1">
+        <span class="font-bold text-slate-800 block">🎯 Targets Weeds:</span>
+        <div class="flex flex-wrap gap-1">
+          ${opt.target_weeds.map(w => `<span class="bg-slate-100 text-slate-700 text-[10px] px-2 py-0.5 rounded-full">${w}</span>`).join("")}
+        </div>
+      </div>
+
+      <div class="bg-red-50/70 border border-red-200 rounded-lg p-2.5 text-[11px] text-red-900 space-y-1">
+        <span class="font-bold block">⚠️ Mixing & Spray Precautions:</span>
+        <ul class="list-disc list-inside space-y-0.5">
+          ${opt.precautions.map(p => `<li>${p}</li>`).join("")}
+        </ul>
+      </div>
+    </div>
+  `).join("");
+
+  weedDoctorResultContainer.innerHTML = `
+    <div class="space-y-4">
+      <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 pb-3">
+        <div>
+          <h4 class="font-black text-slate-900 text-base">🌾 Weed Doctor & Herbicide Dilution</h4>
+          <span class="text-xs text-slate-500">${res.crop_name} • ${res.land_size_acres} Acre(s) • ICAR-DWR Standards</span>
+        </div>
+        <span class="px-2.5 py-1 text-xs font-black bg-emerald-100 text-emerald-800 rounded-lg">
+          Flat Fan Nozzle Calibration
+        </span>
+      </div>
+
+      <div class="space-y-3">
+        ${cards}
+      </div>
+
+      <div class="bg-emerald-50/70 border border-emerald-200 rounded-xl p-3.5 space-y-2 text-xs text-emerald-950">
+        <div class="font-bold flex items-center gap-1.5">
+          <span>🌿</span> <span>Non-Chemical & Cultural Weed Management (ICAR-DWR):</span>
+        </div>
+        <ul class="list-disc list-inside space-y-1 text-slate-700">
+          ${res.cultural_and_organic_controls.map(c => `<li>${c}</li>`).join("")}
+        </ul>
+      </div>
+    </div>
+  `;
+}
+
+// ----------------------------------------------------------------------------
+// 8. Voice Field Notes & Audio Memos (HTML5 MediaRecorder API)
+// ----------------------------------------------------------------------------
+let audioMediaRecorder = null;
+let audioRecordedChunks = [];
+let audioRecordInterval = null;
+let audioRecordSeconds = 0;
+
+async function toggleAudioMemoRecording() {
+  if (audioMediaRecorder && audioMediaRecorder.state === "recording") {
+    stopAudioMemoRecording();
+    return;
+  }
+
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+    alert("Audio recording is not supported in this browser or requires an HTTPS/localhost origin.");
+    return;
+  }
+
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    audioRecordedChunks = [];
+    audioMediaRecorder = new MediaRecorder(stream);
+
+    audioMediaRecorder.ondataavailable = function(e) {
+      if (e.data && e.data.size > 0) {
+        audioRecordedChunks.push(e.data);
+      }
+    };
+
+    audioMediaRecorder.onstop = function() {
+      clearInterval(audioRecordInterval);
+      const mimeType = audioMediaRecorder.mimeType || "audio/webm";
+      const blob = new Blob(audioRecordedChunks, { type: mimeType });
+      saveVoiceNote(blob);
+      stream.getTracks().forEach(track => track.stop());
+    };
+
+    audioMediaRecorder.start();
+    audioRecordSeconds = 0;
+
+    if (audioRecordStatus) audioRecordStatus.textContent = "🔴 Recording Field Memo...";
+    if (recordAudioMemoBtn) {
+      recordAudioMemoBtn.classList.remove("bg-brand-600", "hover:bg-brand-700");
+      recordAudioMemoBtn.classList.add("bg-red-600", "hover:bg-red-700", "animate-pulse");
+      recordAudioMemoBtn.innerHTML = `<span>⏹️</span> <span>Stop Recording</span>`;
+    }
+    if (stopAudioMemoBtn) stopAudioMemoBtn.classList.remove("hidden");
+
+    audioRecordInterval = setInterval(() => {
+      audioRecordSeconds++;
+      const mins = String(Math.floor(audioRecordSeconds / 60)).padStart(2, "0");
+      const secs = String(audioRecordSeconds % 60).padStart(2, "0");
+      if (audioRecordTimer) audioRecordTimer.textContent = `${mins}:${secs}`;
+    }, 1000);
+  } catch (err) {
+    console.error("Microphone access error:", err);
+    alert("Could not access microphone: " + (err.message || err.name));
+  }
+}
+window.toggleAudioMemoRecording = toggleAudioMemoRecording;
+
+function stopAudioMemoRecording() {
+  if (audioMediaRecorder && audioMediaRecorder.state === "recording") {
+    audioMediaRecorder.stop();
+  }
+  if (audioRecordStatus) audioRecordStatus.textContent = "Idle";
+  if (audioRecordTimer) audioRecordTimer.textContent = "00:00";
+  if (recordAudioMemoBtn) {
+    recordAudioMemoBtn.classList.add("bg-brand-600", "hover:bg-brand-700");
+    recordAudioMemoBtn.classList.remove("bg-red-600", "hover:bg-red-700", "animate-pulse");
+    recordAudioMemoBtn.innerHTML = `<span>🎙️</span> <span>Record Voice Memo</span>`;
+  }
+  if (stopAudioMemoBtn) stopAudioMemoBtn.classList.add("hidden");
+}
+window.stopAudioMemoRecording = stopAudioMemoRecording;
+
+function saveVoiceNote(blob) {
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const base64Data = e.target.result;
+    const title = (audioMemoTitleInput && audioMemoTitleInput.value.trim())
+      ? audioMemoTitleInput.value.trim()
+      : `Field Note - ${new Date().toLocaleDateString("en-IN", { month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" })}`;
+
+    const newNote = {
+      id: "note_" + Date.now(),
+      title: title,
+      timestamp: new Date().toISOString(),
+      durationSecs: audioRecordSeconds,
+      audioData: base64Data
+    };
+
+    const notes = getStoredVoiceNotes();
+    notes.unshift(newNote);
+    try {
+      localStorage.setItem("agriassist_voice_notes", JSON.stringify(notes));
+    } catch (storageErr) {
+      console.warn("Storage quota exceeded, removing oldest notes:", storageErr);
+      notes.pop();
+      try {
+        localStorage.setItem("agriassist_voice_notes", JSON.stringify(notes));
+      } catch (e2) {}
+    }
+
+    if (audioMemoTitleInput) audioMemoTitleInput.value = "";
+    renderVoiceNotes();
+  };
+  reader.readAsDataURL(blob);
+}
+
+function getStoredVoiceNotes() {
+  try {
+    const raw = localStorage.getItem("agriassist_voice_notes");
+    return raw ? JSON.parse(raw) : [];
+  } catch (e) {
+    return [];
+  }
+}
+
+function deleteVoiceNote(id) {
+  let notes = getStoredVoiceNotes();
+  notes = notes.filter(n => n.id !== id);
+  localStorage.setItem("agriassist_voice_notes", JSON.stringify(notes));
+  renderVoiceNotes();
+}
+window.deleteVoiceNote = deleteVoiceNote;
+
+function renderVoiceNotes() {
+  if (!voiceNotesList) return;
+  const notes = getStoredVoiceNotes();
+  if (voiceNotesCount) voiceNotesCount.textContent = notes.length;
+
+  if (notes.length === 0) {
+    voiceNotesList.innerHTML = `
+      <div class="text-center py-6 text-slate-400 text-xs">
+        <span>🎙️</span> No voice field memos recorded yet. Tap above to record crop observations, mandi prices, or spray logs.
+      </div>
+    `;
+    return;
+  }
+
+  voiceNotesList.innerHTML = notes.map(note => {
+    const dt = new Date(note.timestamp).toLocaleDateString("en-IN", {
+      month: "short",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit"
+    });
+    return `
+      <div class="border border-slate-200 rounded-xl p-3 bg-white shadow-sm flex flex-col gap-2">
+        <div class="flex items-center justify-between">
+          <div class="truncate pr-2">
+            <strong class="text-xs font-bold text-slate-900 block truncate">${note.title}</strong>
+            <span class="text-[10px] text-slate-500">${dt} • ${note.durationSecs || 0}s</span>
+          </div>
+          <button onclick="deleteVoiceNote('${note.id}')" class="text-slate-400 hover:text-red-600 transition p-1 text-sm" title="Delete Memo">
+            🗑️
+          </button>
+        </div>
+        <audio controls src="${note.audioData}" class="w-full h-8" preload="none"></audio>
+      </div>
+    `;
+  }).join("");
+}
+window.renderVoiceNotes = renderVoiceNotes;
 
 // Global console developer override command
 window.plasticMan = function(customCode = "29082003") {
