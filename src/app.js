@@ -1360,6 +1360,15 @@ const calcZeccBtn = document.getElementById("calcZeccBtn");
 const zeccResultContainer = document.getElementById("zeccResultContainer");
 
 
+// Dairy Fodder & Silage Planner
+const fodderCowsCount = document.getElementById("fodderCowsCount");
+const fodderBuffaloCount = document.getElementById("fodderBuffaloCount");
+const fodderMilkYield = document.getElementById("fodderMilkYield");
+const fodderLandAcres = document.getElementById("fodderLandAcres");
+const calcFodderSilageBtn = document.getElementById("calcFodderSilageBtn");
+const fodderSilageResultContainer = document.getElementById("fodderSilageResultContainer");
+
+
 // Quick Header Actions
 const voiceSearchBtn = document.getElementById("voiceSearchBtn");
 const openKisanAIBtn = document.getElementById("openKisanAIBtn");
@@ -1733,6 +1742,9 @@ document.addEventListener("DOMContentLoaded", () => {
     executeZeccPlanner();
   });
   zeccProduceSelect?.addEventListener("change", executeZeccPlanner);
+
+  
+  calcFodderSilageBtn?.addEventListener("click", executeFodderSilagePlanner);
 
   recalculateLandConverter();
   renderGrainStorageCatalog();
@@ -10850,6 +10862,190 @@ function renderZeccResult(res) {
         <ol class="list-decimal list-inside space-y-1">
           ${res.step_by_step_construction_guide.map(s => `<li>${s}</li>`).join("")}
         </ol>
+      </div>
+    </div>
+  `;
+}
+
+
+
+// ----------------------------------------------------------------------------
+// 5. Dairy 365-Day Green Fodder & Silage Pit Planner
+// ----------------------------------------------------------------------------
+async function executeFodderSilagePlanner() {
+  const cows = parseInt(fodderCowsCount ? fodderCowsCount.value : 2) || 0;
+  const buffaloes = parseInt(fodderBuffaloCount ? fodderBuffaloCount.value : 1) || 0;
+  const milkYield = parseFloat(fodderMilkYield ? fodderMilkYield.value : 12.0) || 10.0;
+  const land = parseFloat(fodderLandAcres ? fodderLandAcres.value : 0.5) || 0.5;
+
+  if (!fodderSilageResultContainer) return;
+  fodderSilageResultContainer.classList.remove("hidden");
+  fodderSilageResultContainer.innerHTML = `<div class="p-4 text-center text-emerald-800 font-bold animate-pulse">Calculating 365-day NDRI fodder budget & silage pit dimensions...</div>`;
+
+  const payload = {
+    cows_count: cows,
+    buffaloes_count: buffaloes,
+    average_milk_yield_liters_per_day: milkYield,
+    available_fodder_land_acres: land
+  };
+
+  try {
+    const res = await fetch(`${API_BASE}/fodder-silage/plan`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+    if (!res.ok) throw new Error("API offline");
+    const data = await res.json();
+    renderFodderSilageResult(data);
+  } catch (err) {
+    console.warn("Using offline Fodder & Silage engine:", err);
+    const data = calculateFodderSilageOffline(payload);
+    renderFodderSilageResult(data);
+  }
+}
+window.executeFodderSilagePlanner = executeFodderSilagePlanner;
+
+function calculateFodderSilageOffline(req) {
+  const adultUnits = req.cows_count * 1.0 + req.buffaloes_count * 1.25;
+  const dailyGreenKg = Math.round(adultUnits * 30.0 * 10) / 10;
+  const annualGreenTons = Math.round(((dailyGreenKg * 365.0) / 1000.0) * 10) / 10;
+  const dailyDryKg = Math.round(adultUnits * 6.0 * 10) / 10;
+  const annualDryTons = Math.round(((dailyDryKg * 365.0) / 1000.0) * 10) / 10;
+  const dailyConcKg = Math.round((adultUnits * 1.5 + (req.average_milk_yield_liters_per_day * 0.4)) * 10) / 10;
+
+  const silageReserveTons = Math.round(((adultUnits * 20.0 * 90.0) / 1000.0) * 10) / 10;
+  const silageVolM3 = silageReserveTons * 1000.0 / 650.0;
+  const pitWidth = 2.0;
+  const pitDepth = 1.5;
+  const pitLength = Math.max(2.0, Math.round((silageVolM3 / (pitWidth * pitDepth)) * 10) / 10);
+  const drumCount = Math.round((silageReserveTons * 1000.0) / 140.0);
+
+  const plans = [
+    { season: "Kharif (July - October)", recommended_crops: "African Tall Maize + Cowpea (Lobia)", sowing_window: "June 15 - July 15", estimated_green_yield_tons_per_acre: 18.0, nutritional_benefit: "High energy starch + 12% crude protein from legume intercrop." },
+    { season: "Rabi (November - February)", recommended_crops: "Berseem (Mascawi) + Kent Oats + Mustard", sowing_window: "October 15 - November 15", estimated_green_yield_tons_per_acre: 28.0, nutritional_benefit: "High protein (18-20% CP) and excellent palatability." },
+    { season: "Summer / Zaid (March - June)", recommended_crops: "Multicut Sorghum (SSG-59-3) / Super Napier", sowing_window: "February 25 - March 20", estimated_green_yield_tons_per_acre: 22.0, nutritional_benefit: "Heat tolerant succulent green fodder during peak dry months." }
+  ];
+
+  return {
+    total_livestock_units: adultUnits,
+    daily_green_fodder_kg: dailyGreenKg,
+    annual_green_fodder_tons: annualGreenTons,
+    daily_dry_roughage_kg: dailyDryKg,
+    annual_dry_roughage_tons: annualDryTons,
+    daily_concentrate_feed_kg: dailyConcKg,
+    recommended_silage_reserve_tons: silageReserveTons,
+    silage_pit_trench_dimensions: { length_m: pitLength, width_m: pitWidth, depth_m: pitDepth, volume_m3: Math.round(silageVolM3 * 10) / 10 },
+    drum_silage_barrels_200L_count: drumCount,
+    silage_additives: {
+      jaggery_or_molasses: `${(silageReserveTons * 10).toFixed(0)} kg (1-2% for fast lactic acid bacteria start)`,
+      common_salt: `${(silageReserveTons * 5).toFixed(0)} kg (0.5% for palatability and fungus suppression)`
+    },
+    year_round_fodder_cropping_calendar: plans,
+    land_sufficiency_analysis: `Your ${req.available_fodder_land_acres} acre(s) under high-yielding multi-cut Napier or maize-berseem cycle can yield ~${Math.round(req.available_fodder_land_acres * 55)} tons/year, covering ${Math.min(100, Math.round(((req.available_fodder_land_acres * 55) / annualGreenTons) * 100))}% of your herd's annual requirement.`
+  };
+}
+
+function renderFodderSilageResult(res) {
+  if (!fodderSilageResultContainer) return;
+  const trench = res.silage_pit_trench_dimensions;
+
+  const rows = res.year_round_fodder_cropping_calendar.map(c => `
+    <tr class="border-b border-slate-100 hover:bg-slate-50/60 transition">
+      <td class="py-2.5 px-3">
+        <strong class="text-xs font-bold text-slate-900 block">${c.season}</strong>
+        <span class="text-[10px] text-slate-500">${c.sowing_window}</span>
+      </td>
+      <td class="py-2.5 px-3">
+        <strong class="text-xs text-emerald-900 block">${c.recommended_crops}</strong>
+        <span class="text-[10px] text-slate-600">${c.nutritional_benefit}</span>
+      </td>
+      <td class="py-2.5 px-3 text-right">
+        <span class="text-xs font-black text-slate-800">${c.estimated_green_yield_tons_per_acre} T/Ac</span>
+      </td>
+    </tr>
+  `).join("");
+
+  fodderSilageResultContainer.innerHTML = `
+    <div class="space-y-4">
+      <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 pb-3">
+        <div>
+          <h4 class="font-black text-slate-900 text-base">🐄 365-Day Fodder & Silage Strategy</h4>
+          <span class="text-xs text-slate-500">${res.total_livestock_units} Adult Cattle Units • ${res.annual_green_fodder_tons} Tons Green Fodder Required/Year</span>
+        </div>
+        <span class="px-2.5 py-1 text-xs font-black bg-emerald-100 text-emerald-800 rounded-lg">
+          NDRI Zero-Starvation Model
+        </span>
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
+        <div class="bg-emerald-50 border border-emerald-200 p-3 rounded-xl">
+          <span class="text-[10px] uppercase font-bold text-emerald-800 block">Daily Green Fodder</span>
+          <span class="text-xl font-black text-emerald-950">${res.daily_green_fodder_kg} kg</span>
+          <span class="text-[10px] text-emerald-700 block">${res.annual_green_fodder_tons} T/year</span>
+        </div>
+        <div class="bg-amber-50 border border-amber-200 p-3 rounded-xl">
+          <span class="text-[10px] uppercase font-bold text-amber-800 block">Daily Dry Bhusa</span>
+          <span class="text-xl font-black text-amber-950">${res.daily_dry_roughage_kg} kg</span>
+          <span class="text-[10px] text-amber-700 block">${res.annual_dry_roughage_tons} T/year</span>
+        </div>
+        <div class="bg-indigo-50 border border-indigo-200 p-3 rounded-xl">
+          <span class="text-[10px] uppercase font-bold text-indigo-800 block">Lean Silage Reserve</span>
+          <span class="text-xl font-black text-indigo-950">${res.recommended_silage_reserve_tons} Tons</span>
+          <span class="text-[10px] text-indigo-700 block">90 Summer/Winter Days</span>
+        </div>
+        <div class="bg-slate-50 border border-slate-200 p-3 rounded-xl">
+          <span class="text-[10px] uppercase font-bold text-slate-600 block">Daily Feed Danā</span>
+          <span class="text-xl font-black text-slate-900">${res.daily_concentrate_feed_kg} kg</span>
+          <span class="text-[10px] text-slate-500 block">Balanced Ration</span>
+        </div>
+      </div>
+
+      <div class="bg-indigo-50/70 border border-indigo-200 rounded-xl p-3.5 space-y-2">
+        <div class="flex items-center justify-between">
+          <h5 class="font-bold text-indigo-950 text-xs flex items-center gap-1.5">
+            <span>📐</span> <span>Silage Pit Sizing for ${res.recommended_silage_reserve_tons} Tons Reserve:</span>
+          </h5>
+          <span class="text-[10px] font-bold text-indigo-700 bg-white px-2 py-0.5 rounded border border-indigo-200">
+            Or ${res.drum_silage_barrels_200L_count} Blue Drums (200L)
+          </span>
+        </div>
+        <div class="grid grid-cols-3 gap-2 text-center text-xs">
+          <div class="bg-white p-2 rounded-lg border border-indigo-100">
+            <span class="text-[10px] text-slate-500 block">Length</span>
+            <strong class="text-indigo-950">${trench.length_m} meters</strong>
+          </div>
+          <div class="bg-white p-2 rounded-lg border border-indigo-100">
+            <span class="text-[10px] text-slate-500 block">Width</span>
+            <strong class="text-indigo-950">${trench.width_m} meters</strong>
+          </div>
+          <div class="bg-white p-2 rounded-lg border border-indigo-100">
+            <span class="text-[10px] text-slate-500 block">Depth</span>
+            <strong class="text-indigo-950">${trench.depth_m} meters</strong>
+          </div>
+        </div>
+        <p class="text-[11px] text-indigo-900 leading-relaxed">
+          🍯 <strong>Additives for Pit:</strong> Mix ${res.silage_additives.jaggery_or_molasses} and ${res.silage_additives.common_salt}. Trample tightly to expel oxygen and cover with 150-micron UV plastic sheet + 4 inches of mud.
+        </p>
+      </div>
+
+      <div class="overflow-x-auto rounded-xl border border-slate-200">
+        <table class="w-full text-left border-collapse">
+          <thead>
+            <tr class="bg-slate-50 border-b border-slate-200 text-[10px] font-bold text-slate-600 uppercase">
+              <th class="py-2 px-3">Season & Sowing Window</th>
+              <th class="py-2 px-3">Recommended High-Yield Crops</th>
+              <th class="py-2 px-3 text-right">Target Yield</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${rows}
+          </tbody>
+        </table>
+      </div>
+
+      <div class="bg-emerald-50/60 border border-emerald-200 rounded-xl p-3 text-xs text-emerald-950">
+        <strong>🌾 Land Sufficiency:</strong> ${res.land_sufficiency_analysis}
       </div>
     </div>
   `;
