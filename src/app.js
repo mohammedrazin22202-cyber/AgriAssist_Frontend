@@ -1369,6 +1369,14 @@ const calcFodderSilageBtn = document.getElementById("calcFodderSilageBtn");
 const fodderSilageResultContainer = document.getElementById("fodderSilageResultContainer");
 
 
+// SPNF Drum Scaler
+const spnfFormulationSelect = document.getElementById("spnfFormulationSelect");
+const spnfDrumVolumeInput = document.getElementById("spnfDrumVolumeInput");
+const spnfVolumeLabel = document.getElementById("spnfVolumeLabel");
+const calcSpnfBtn = document.getElementById("calcSpnfBtn");
+const spnfResultContainer = document.getElementById("spnfResultContainer");
+
+
 // Quick Header Actions
 const voiceSearchBtn = document.getElementById("voiceSearchBtn");
 const openKisanAIBtn = document.getElementById("openKisanAIBtn");
@@ -1745,6 +1753,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
   
   calcFodderSilageBtn?.addEventListener("click", executeFodderSilagePlanner);
+
+  
+  calcSpnfBtn?.addEventListener("click", executeSpnfDrumScaler);
+  spnfDrumVolumeInput?.addEventListener("input", (e) => {
+    if (spnfVolumeLabel) spnfVolumeLabel.textContent = `${e.target.value} Litres`;
+    executeSpnfDrumScaler();
+  });
+  spnfFormulationSelect?.addEventListener("change", executeSpnfDrumScaler);
 
   recalculateLandConverter();
   renderGrainStorageCatalog();
@@ -11046,6 +11062,219 @@ function renderFodderSilageResult(res) {
 
       <div class="bg-emerald-50/60 border border-emerald-200 rounded-xl p-3 text-xs text-emerald-950">
         <strong>🌾 Land Sufficiency:</strong> ${res.land_sufficiency_analysis}
+      </div>
+    </div>
+  `;
+}
+
+
+
+// ----------------------------------------------------------------------------
+// 3. Subhash Palekar Natural Farming (SPNF/ZBNF) Drum Scaler
+// ----------------------------------------------------------------------------
+async function executeSpnfDrumScaler() {
+  const formulation = spnfFormulationSelect ? spnfFormulationSelect.value : "jeevamrut";
+  const volume = parseFloat(spnfDrumVolumeInput ? spnfDrumVolumeInput.value : 200.0) || 200.0;
+
+  if (!spnfResultContainer) return;
+
+  const payload = {
+    formulation_id: formulation,
+    volume_liters: volume
+  };
+
+  try {
+    const res = await fetch(`${API_BASE}/natural-farming/formulation`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+    if (!res.ok) throw new Error("API offline");
+    const data = await res.json();
+    renderSpnfResult(data);
+  } catch (err) {
+    console.warn("Using offline SPNF recipe engine:", err);
+    const data = calculateSpnfOffline(payload);
+    renderSpnfResult(data);
+  }
+}
+window.executeSpnfDrumScaler = executeSpnfDrumScaler;
+
+function calculateSpnfOffline(req) {
+  const factor = req.volume_liters / 200.0;
+  const db = {
+    jeevamrut: {
+      title: "Jeevamrut (जीवामृत) - Soil Microbial Culture",
+      hindi_title: "जीवामृत (भूमि अमृत)",
+      target_use: "Microbial bio-inoculant to activate soil biology and earthworms.",
+      target_crops_or_pests: "All crops (Wheat, Paddy, Sugarcane, Vegetables, Fruit orchards).",
+      fermentation_duration_days: "48 to 72 hours (Summer: 48h, Winter: 96h)",
+      stirring_protocol: "Stir clockwise for 5 minutes twice daily (morning & evening) with a wooden stick.",
+      shelf_life_days: 7,
+      dilution_ratio: "Apply 200 L per acre with flood irrigation or 1:10 (10%) foliar spray.",
+      ingredients: [
+        { name: "Desi Cow Dung (गोबर)", hindi_name: "देशी गाय का ताजा गोबर", amount: Math.round(10.0 * factor * 10) / 10, unit: "kg", notes: "Rich in beneficial aerobic & anaerobic bacilli." },
+        { name: "Desi Cow Urine (गोमूत्र)", hindi_name: "देशी गाय का गोमूत्र", amount: Math.round(10.0 * factor * 10) / 10, unit: "L", notes: "Natural urea, minerals, and antifungal purines." },
+        { name: "Jaggery / Gur (गुड़)", hindi_name: "काला / पुराना गुड़", amount: Math.round(2.0 * factor * 10) / 10, unit: "kg", notes: "Provides instant carbon & sugars for bacteria multiplication." },
+        { name: "Besan / Gram Flour (बेसन)", hindi_name: "चने या दाल का बेसन", amount: Math.round(2.0 * factor * 10) / 10, unit: "kg", notes: "High protein nitrogen source for microbes." },
+        { name: "Virgin Forest/Bund Soil (मेढ़ की मिट्टी)", hindi_name: "अछूती उपजाऊ मिट्टी", amount: Math.round(0.1 * factor * 100) / 100, unit: "kg", notes: "Inoculum containing millions of endemic soil bacteria." },
+        { name: "Clean Water (पानी)", hindi_name: "स्वच्छ पानी", amount: Math.round(200.0 * factor), unit: "L", notes: "Chlorine-free well, borewell, or rainwater." }
+      ],
+      application_instructions: [
+        "Keep the drum under dense tree shade; cover with a breathable jute gunny bag.",
+        "Stir clockwise for 2 minutes morning and evening to aerate microbial culture.",
+        "On Day 3, pleasant fermented fruity fragrance indicates complete colonization.",
+        "Apply via drip venturi or irrigation canal water to reach roots directly."
+      ]
+    },
+    beejamrut: {
+      title: "Beejamrut (बीजामृत) - Seed & Seedling Inoculant",
+      hindi_title: "बीजामृत (बीज संस्कार)",
+      target_use: "Seed coating & seedling root dip against seed-borne and soil fungal pathogens.",
+      target_crops_or_pests: "Paddy nurseries, Wheat, Cotton, Chana, Vegetables.",
+      fermentation_duration_days: "12 to 24 hours",
+      stirring_protocol: "Stir thoroughly once and let sit overnight.",
+      shelf_life_days: 2,
+      dilution_ratio: "Undiluted slurry for seed treatment; 20% solution for root dipping.",
+      ingredients: [
+        { name: "Desi Cow Dung (गोबर)", hindi_name: "देशी गाय का गोबर", amount: Math.round(5.0 * factor * 10) / 10, unit: "kg", notes: "Tied in cloth and immersed in water overnight." },
+        { name: "Desi Cow Urine (गोमूत्र)", hindi_name: "गोमूत्र", amount: Math.round(5.0 * factor * 10) / 10, unit: "L", notes: "Antimicrobial protection." },
+        { name: "Cow Milk (कच्चा दूध)", hindi_name: "कच्चा देशी गाय का दूध", amount: Math.round(0.05 * factor * 1000) / 1000, unit: "L", notes: "Lactic acid bacteria and film coating." },
+        { name: "Slaked Lime / Chuna (खाने का चूना)", hindi_name: "बुझा चूना", amount: Math.round(0.05 * factor * 1000) / 1000, unit: "kg", notes: "pH buffer and calcium supplier." },
+        { name: "Clean Water (पानी)", hindi_name: "पानी", amount: Math.round(20.0 * factor * 10) / 10, unit: "L", notes: "Chlorine-free water." }
+      ],
+      application_instructions: [
+        "Mix all ingredients in a bucket and leave overnight.",
+        "Squeeze the dung bundle thoroughly in water to release all microbes.",
+        "Spread seeds on a clean sheet, sprinkle Beejamrut, gently mix with bare hands.",
+        "Dry in shade for 30-45 minutes before sowing."
+      ]
+    },
+    agniastra: {
+      title: "Agniastra (अग्निअस्त्र) - Strong Biological Insecticide",
+      hindi_title: "अग्निअस्त्र (कीटनाशक)",
+      target_use: "Eradication of stem borers, bollworms, fruit borers, and heavy insect infestations.",
+      target_crops_or_pests: "Cotton bollworm, Paddy stem borer, Chilli thrips, Tomato fruit borer.",
+      fermentation_duration_days: "Boil for 2 hours, then steep for 48 hours",
+      stirring_protocol: "Boil on low fire in an earthen or stainless pot until halved.",
+      shelf_life_days: 90,
+      dilution_ratio: "6 to 8 Litres Agniastra mixed with 200 Litres water per acre.",
+      ingredients: [
+        { name: "Desi Cow Urine (गोमूत्र)", hindi_name: "गोमूत्र", amount: Math.round(20.0 * factor * 10) / 10, unit: "L", notes: "Liquid alkaline base." },
+        { name: "Neem Leaf Paste (नीम पत्ती)", hindi_name: "कड़वे नीम की पत्तियों की चटनी", amount: Math.round(5.0 * factor * 10) / 10, unit: "kg", notes: "Azadirachtin anti-feedant compound." },
+        { name: "Tobacco Powder / Leaves (तम्बाकू)", hindi_name: "देशी तम्बाकू का चूर्ण", amount: Math.round(1.0 * factor * 10) / 10, unit: "kg", notes: "Nicotine nervous blocker." },
+        { name: "Pungent Green Chillies (तीखी हरी मिर्च)", hindi_name: "तीखी देशी हरी मिर्च चटनी", amount: Math.round(1.0 * factor * 10) / 10, unit: "kg", notes: "Capsaicin repellent." },
+        { name: "Garlic Paste (लहसुन चटनी)", hindi_name: "देशी लहसुन की चटनी", amount: Math.round(0.5 * factor * 10) / 10, unit: "kg", notes: "Allicin pungent sulfur odor." }
+      ],
+      application_instructions: [
+        "Crush leaves, chillies, garlic into fine paste and add to cow urine.",
+        "Boil slowly until 50% volume evaporates; cool and filter with muslin cloth.",
+        "Spray in the late afternoon (4 PM onwards) targeting undersides of foliage."
+      ]
+    },
+    neemastra: {
+      title: "Neemastra (नीमास्त्र) - Sucking Pest Repellent",
+      hindi_title: "नीमास्त्र",
+      target_use: "Control of aphids, jassids, whiteflies, and small chewing caterpillars.",
+      target_crops_or_pests: "Vegetables, Pulses, Mustard, Cotton.",
+      fermentation_duration_days: "24 to 48 hours",
+      stirring_protocol: "Stir twice daily with a wooden stick.",
+      shelf_life_days: 30,
+      dilution_ratio: "Use undiluted directly or 1:1 with water for delicate vegetable nurseries.",
+      ingredients: [
+        { name: "Desi Cow Urine (गोमूत्र)", hindi_name: "गोमूत्र", amount: Math.round(10.0 * factor * 10) / 10, unit: "L", notes: "Nutrient and repellent carrier." },
+        { name: "Desi Cow Dung (गोबर)", hindi_name: "गाय का ताजा गोबर", amount: Math.round(5.0 * factor * 10) / 10, unit: "kg", notes: "Bio-carrier." },
+        { name: "Neem Leaves / Twigs (नीम के पत्ते)", hindi_name: "कड़वे नीम की पत्तियां", amount: Math.round(10.0 * factor * 10) / 10, unit: "kg", notes: "Azadirachtin natural insect repellent." },
+        { name: "Clean Water (पानी)", hindi_name: "पानी", amount: Math.round(200.0 * factor), unit: "L", notes: "Water volume." }
+      ],
+      application_instructions: [
+        "Crush neem leaves and mix with dung, urine, and water.",
+        "Ferment for 24-48 hours under shade; stir clockwise twice daily.",
+        "Filter and spray at 15-day intervals as a preventive shield."
+      ]
+    }
+  };
+
+  const formulation = db[req.formulation_id] || db.jeevamrut;
+  return {
+    formulation_id: req.formulation_id,
+    title: formulation.title,
+    hindi_title: formulation.hindi_title,
+    target_use: formulation.target_use,
+    target_crops_or_pests: formulation.target_crops_or_pests,
+    volume_liters: req.volume_liters,
+    ingredients: formulation.ingredients,
+    fermentation_duration_days: formulation.fermentation_duration_days,
+    stirring_protocol: formulation.stirring_protocol,
+    shelf_life_days: formulation.shelf_life_days,
+    dilution_ratio: formulation.dilution_ratio,
+    application_instructions: formulation.application_instructions
+  };
+}
+
+function renderSpnfResult(res) {
+  if (!spnfResultContainer) return;
+
+  const rows = res.ingredients.map(ing => `
+    <tr class="border-b border-slate-100 hover:bg-slate-50/60 transition">
+      <td class="py-2.5 px-3">
+        <strong class="text-slate-900 block text-xs">${ing.name}</strong>
+        <span class="text-[10px] text-slate-500">${ing.notes}</span>
+      </td>
+      <td class="py-2.5 px-3 text-right">
+        <span class="text-xs font-black text-emerald-800">${ing.amount} ${ing.unit}</span>
+      </td>
+    </tr>
+  `).join("");
+
+  spnfResultContainer.innerHTML = `
+    <div class="space-y-4">
+      <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 pb-3">
+        <div>
+          <h4 class="font-black text-slate-900 text-base">${res.title}</h4>
+          <span class="text-xs text-slate-500">${res.target_use}</span>
+        </div>
+        <span class="px-2.5 py-1 text-xs font-black bg-emerald-100 text-emerald-800 rounded-lg">
+          ${res.volume_liters}L Scaled Batch
+        </span>
+      </div>
+
+      <div class="overflow-x-auto rounded-xl border border-slate-200">
+        <table class="w-full text-left border-collapse">
+          <thead>
+            <tr class="bg-slate-50 border-b border-slate-200 text-[10px] font-bold text-slate-600 uppercase">
+              <th class="py-2 px-3">Raw Natural Ingredient</th>
+              <th class="py-2 px-3 text-right">Scaled Quantity</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${rows}
+          </tbody>
+        </table>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-center">
+        <div class="bg-slate-50 border border-slate-200 p-2.5 rounded-xl">
+          <span class="text-[10px] uppercase font-bold text-slate-500 block">Fermentation</span>
+          <span class="text-xs font-bold text-slate-900">${res.fermentation_duration_days}</span>
+        </div>
+        <div class="bg-amber-50 border border-amber-200 p-2.5 rounded-xl">
+          <span class="text-[10px] uppercase font-bold text-amber-800 block">Shelf Life</span>
+          <span class="text-xs font-bold text-amber-950">${res.shelf_life_days} Days Safe</span>
+        </div>
+        <div class="bg-emerald-50 border border-emerald-200 p-2.5 rounded-xl">
+          <span class="text-[10px] uppercase font-bold text-emerald-800 block">Dilution</span>
+          <span class="text-xs font-bold text-emerald-950">${res.dilution_ratio}</span>
+        </div>
+      </div>
+
+      <div class="bg-emerald-50/70 border border-emerald-200 rounded-xl p-3.5 space-y-1.5 text-xs text-emerald-950">
+        <div class="font-bold flex items-center gap-1.5">
+          <span>🌿</span> <span>Subhash Palekar Fermentation & Application Rules:</span>
+        </div>
+        <ul class="list-disc list-inside space-y-1 text-slate-700">
+          ${res.application_instructions.map(inst => `<li>${inst}</li>`).join("")}
+        </ul>
       </div>
     </div>
   `;

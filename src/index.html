@@ -7538,4 +7538,2230 @@
 </body>
 </html>
       
+      <!-- Subhash Palekar Natural Farming (SPNF/ZBNF) Drum Scaler -->
+      <section class="bg-white rounded-2xl border border-emerald-200 shadow-sm p-6 sm:p-8 space-y-6">
+        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-emerald-100 pb-4">
+          <div>
+            <h3 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+              <span>🛢️</span> Subhash Palekar Natural Farming (SPNF) Drum Scaler (प्राकृतिक खेती ड्रम कैलकुलेटर)
+            </h3>
+            <p class="text-xs text-slate-500">Auto-scale authentic cow dung, urine, besan, jaggery, and botanical leaf proportions to fit any bucket or drum size.</p>
+          </div>
+          <span class="bg-emerald-100 text-emerald-900 text-xs font-bold px-3 py-1 rounded-full border border-emerald-300">SPNF / ZBNF Formulas</span>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="spnfFormulationSelect">Natural Farming Formulation (नुस्खा)</label>
+            <select id="spnfFormulationSelect" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-sm font-semibold">
+              <option value="jeevamrut">Jeevamrut (जीवामृत - तरल जैव खाद)</option>
+              <option value="ghanjeevamrut">Ghanjeevamrut (घनजीवामृत - ठोस सूखा खाद)</option>
+              <option value="beejamrut">Beejamrut (बीजामृत - बीज शोधन)</option>
+              <option value="agniastra">Agniastra (अग्निअस्त्र - इल्ली / सुंडी नियंत्रक)</option>
+              <option value="brahmastra">Brahmastra (ब्रह्मास्त्र - 5 पत्ती रस कीट नाशक)</option>
+              <option value="neemastra">Neemastra (नीमास्त्र - रस चूसक कीट स्प्रे)</option>
+              <option value="khatta_chhach">Khatta Chhach / Buttermilk (खट्टी छाछ - तांबा फफूंदनाशक)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="spnfDrumVolumeInput">Drum / Barrel Volume: <span id="spnfVolumeLabel" class="text-emerald-700 font-extrabold text-sm">200 Litres</span></label>
+            <input id="spnfDrumVolumeInput" type="range" min="10" max="500" step="10" value="200" class="w-full accent-emerald-600 mt-2">
+            <div class="flex justify-between text-[10px] text-slate-400 mt-1">
+              <span>10L Bucket</span>
+              <span>50L Can</span>
+              <span>100L</span>
+              <span class="font-bold text-emerald-700">200L Drum</span>
+              <span>500L Tank</span>
+            </div>
+          </div>
+          <div class="flex items-end">
+            <button id="calcSpnfBtn" type="button" class="w-full px-4 py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-sm rounded-xl shadow-sm transition flex items-center justify-center gap-2">
+              <span>⚖️</span> Scale Recipe Ingredients
+            </button>
+          </div>
+        </div>
+
+        <!-- SPNF Scaled Recipe Output Card -->
+        <div id="spnfResultContainer" class="hidden pt-6 border-t border-slate-200">
+          <!-- Injected by app.js -->
+        </div>
+      </section>
+    </div>
+
+    <!-- ==================== TAB 8: KISAN YOJANA HUB (GOVERNMENT SCHEMES) ==================== -->
+    <div id="yojanaTabContent" class="hidden space-y-8">
+      <div class="bg-gradient-to-r from-amber-800 via-yellow-950 to-slate-900 text-white rounded-2xl p-6 sm:p-8 shadow-lg relative overflow-hidden">
+        <div class="relative z-10 max-w-3xl">
+          <h2 class="text-2xl sm:text-3xl font-extrabold mb-2" data-i18n="yojanaHeroTitle">🏛️ Kisan Yojana Hub (Government Schemes & Subsidies)</h2>
+          <p class="text-amber-100 text-sm sm:text-base leading-relaxed" data-i18n="yojanaHeroDesc">
+            Maximize your government entitlements. Calculate PM Fasal Bima crop insurance premiums, check subsidized Kisan Credit Card (KCC) loan limits, PM-KISAN cash support, and PMKSY drip irrigation subsidies.
+          </p>
+        </div>
+      </div>
+
+      <section class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 sm:p-8 space-y-6">
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="yojanaCropSelect">Primary Crop</label>
+            <select id="yojanaCropSelect" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-sm">
+              <option value="wheat">Wheat (गेहूं - Rabi)</option>
+              <option value="rice">Rice / Paddy (धान - Kharif)</option>
+              <option value="cotton">Cotton (कपास - Commercial)</option>
+              <option value="mustard">Mustard (सरसों)</option>
+              <option value="chickpea">Chickpea (चना)</option>
+              <option value="soybean">Soybean (सोयाबीन)</option>
+              <option value="potato">Potato (आलू - Commercial)</option>
+              <option value="sugarcane">Sugarcane (गन्ना)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="yojanaLandInput">Total Land Holding (Acres)</label>
+            <input id="yojanaLandInput" type="number" step="0.5" min="0.25" max="500" value="2.0" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-sm font-bold">
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="yojanaCategorySelect">Farmer Category</label>
+            <select id="yojanaCategorySelect" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-sm">
+              <option value="Small / Marginal (< 2 Ha)">Small / Marginal (&lt; 5 Acres / 2 Ha) - 55% Drip Subsidy</option>
+              <option value="General (> 2 Ha)">General (&gt; 5 Acres / 2 Ha) - 45% Drip Subsidy</option>
+            </select>
+          </div>
+        </div>
+
+        <button id="calcYojanaBtn" type="button" class="px-7 py-3 bg-amber-700 hover:bg-amber-800 text-white font-bold text-sm rounded-xl shadow-md transition flex items-center gap-2">
+          <span>🏛️</span> <span>Compute Eligible Subsidies & Benefits</span>
+        </button>
+
+        <!-- Yojana Results Container -->
+        <div id="yojanaResultContainer" class="hidden pt-6 border-t border-slate-200 space-y-6">
+          <!-- Populated by app.js -->
+        </div>
+      </section>
+
+      <!-- KCC CROP LOAN INTEREST & REPAYMENT ESTIMATOR -->
+      <section class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 sm:p-8 space-y-6">
+        <div class="border-b border-slate-100 pb-4 flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <h3 class="text-base sm:text-lg font-bold text-slate-900 flex items-center gap-2">
+              <span>💳</span> <span>KCC Crop Loan Interest & Repayment Estimator</span>
+            </h3>
+            <p class="text-xs text-slate-500">Calculate net interest payable with Government 3% Prompt Repayment Incentive (PRI)</p>
+          </div>
+          <span class="bg-emerald-100 text-emerald-800 text-xs font-black px-3 py-1 rounded-full border border-emerald-300">
+            Effective 4% p.a.
+          </span>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 text-xs">
+          <!-- Loan Amount -->
+          <div>
+            <div class="flex justify-between items-center mb-1 font-semibold text-slate-700">
+              <label for="kccLoanAmount">Crop Loan Amount (₹)</label>
+              <span id="kccLoanAmountDisplay" class="font-mono font-bold text-indigo-700">₹1,00,000</span>
+            </div>
+            <input id="kccLoanAmount" type="range" min="10000" max="300000" step="5000" value="100000" class="w-full accent-indigo-600">
+            <div class="flex justify-between text-[10px] text-slate-400 mt-1">
+              <span>₹10,000</span>
+              <span>₹1,50,000</span>
+              <span>₹3,00,000 (Max KCC Subvention)</span>
+            </div>
+          </div>
+
+          <!-- Loan Tenure -->
+          <div>
+            <label class="block font-semibold text-slate-700 mb-1" for="kccLoanTenure">Repayment Duration</label>
+            <select id="kccLoanTenure" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-sm font-semibold text-slate-800">
+              <option value="6">6 Months (Kharif / Rabi Single Crop)</option>
+              <option value="12" selected>12 Months (Full Annual Harvest Cycle)</option>
+            </select>
+          </div>
+
+          <!-- Prompt Repayment Toggle -->
+          <div class="flex flex-col justify-center">
+            <label for="kccPromptRepayCheck" class="inline-flex items-center gap-2 cursor-pointer bg-slate-50 p-3 rounded-xl border border-slate-200">
+              <input id="kccPromptRepayCheck" type="checkbox" checked class="w-4 h-4 text-emerald-600 rounded accent-emerald-600">
+              <span class="text-xs font-semibold text-slate-800">Prompt Repayment within Due Date (Claim 3% Subvention)</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Dynamic KCC Results Grid -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs">
+          <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl">
+            <span class="text-slate-500 block">Baseline Interest (7%)</span>
+            <strong id="kccGrossInterest" class="text-base font-bold font-mono text-slate-800">₹7,000</strong>
+          </div>
+          <div class="bg-emerald-50 border border-emerald-200 p-4 rounded-xl">
+            <span class="text-emerald-700 font-semibold block">Govt Subvention (3%)</span>
+            <strong id="kccSubventionSavings" class="text-base font-bold font-mono text-emerald-700">-₹3,000</strong>
+          </div>
+          <div class="bg-indigo-50 border border-indigo-200 p-4 rounded-xl">
+            <span class="text-indigo-700 font-semibold block">Net Farmer Interest (4%)</span>
+            <strong id="kccNetInterest" class="text-base font-black font-mono text-indigo-800">₹4,000</strong>
+          </div>
+          <div class="bg-amber-50 border border-amber-200 p-4 rounded-xl">
+            <span class="text-amber-800 font-semibold block">Total Due at Harvest</span>
+            <strong id="kccTotalPayable" class="text-base font-black font-mono text-amber-900">₹1,04,000</strong>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCHEMES DIRECTORY SEARCH & FILTER -->
+      <section class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 sm:p-8 space-y-6">
+        <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-100 pb-4">
+          <div>
+            <h3 class="text-base sm:text-lg font-bold text-slate-900 flex items-center gap-2">
+              <span>📚</span> <span>Central & State Agricultural Schemes Directory</span>
+            </h3>
+            <p class="text-xs text-slate-500">Explore financial assistance, mechanization subsidies, and irrigation incentives</p>
+          </div>
+
+          <div class="w-full sm:w-72">
+            <input id="schemeSearchInput" type="text" placeholder="Search schemes (e.g. drip, solar, KCC, mechanization)..." aria-label="Search government agriculture schemes" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2 text-xs focus:ring-2 focus:ring-amber-500 outline-none">
+          </div>
+        </div>
+
+        <!-- Filter Category Tabs -->
+        <div class="flex flex-wrap gap-2 text-xs" id="schemeFilterButtons">
+          <button type="button" class="scheme-filter-btn active bg-amber-800 text-white px-3 py-1.5 rounded-lg font-semibold" data-category="All">All Schemes</button>
+          <button type="button" class="scheme-filter-btn bg-slate-100 text-slate-700 hover:bg-slate-200 px-3 py-1.5 rounded-lg font-semibold" data-category="Direct Benefit">Direct Benefit</button>
+          <button type="button" class="scheme-filter-btn bg-slate-100 text-slate-700 hover:bg-slate-200 px-3 py-1.5 rounded-lg font-semibold" data-category="Crop Insurance">Crop Insurance</button>
+          <button type="button" class="scheme-filter-btn bg-slate-100 text-slate-700 hover:bg-slate-200 px-3 py-1.5 rounded-lg font-semibold" data-category="Subsidized Credit">Credit & Loans</button>
+          <button type="button" class="scheme-filter-btn bg-slate-100 text-slate-700 hover:bg-slate-200 px-3 py-1.5 rounded-lg font-semibold" data-category="Irrigation Infrastructure">Irrigation</button>
+          <button type="button" class="scheme-filter-btn bg-slate-100 text-slate-700 hover:bg-slate-200 px-3 py-1.5 rounded-lg font-semibold" data-category="Farm Machinery">Mechanization</button>
+        </div>
+
+        <!-- Schemes Grid -->
+        <div id="schemesDirectoryGrid" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <!-- Populated by app.js -->
+        </div>
+      </section>
+    </div>
+
+    <!-- ==================== TAB 9: KISAN BAHI-KHATA (FARM EXPENSE DIARY) ==================== -->
+    <div id="khataTabContent" class="hidden space-y-8">
+      <div class="bg-gradient-to-r from-slate-800 via-indigo-950 to-slate-900 text-white rounded-2xl p-6 sm:p-8 shadow-lg relative overflow-hidden">
+        <div class="relative z-10 max-w-3xl">
+          <h2 class="text-2xl sm:text-3xl font-extrabold mb-2" data-i18n="khataHeroTitle">📒 Kisan Bahi-Khata (Farm Diary & Expense Tracker)</h2>
+          <p class="text-slate-200 text-sm sm:text-base leading-relaxed" data-i18n="khataHeroDesc">
+            Your private, 100% offline farm account book. Record seed costs, labor, fertilizers, and crop sale receipts directly on your phone or computer. Calculate real net profit season-over-season.
+          </p>
+        </div>
+      </div>
+
+      <!-- Financial Balance Card -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs font-semibold">
+        <div class="bg-rose-50 border border-rose-200 p-4 rounded-xl">
+          <div class="text-rose-600 text-xs">Total Expenses (कुल खर्च)</div>
+          <div class="text-2xl font-black text-rose-800 mt-1" id="khataTotalExpense">₹0</div>
+        </div>
+        <div class="bg-emerald-50 border border-emerald-200 p-4 rounded-xl">
+          <div class="text-emerald-600 text-xs">Total Revenue (कुल आमदनी)</div>
+          <div class="text-2xl font-black text-emerald-800 mt-1" id="khataTotalRevenue">₹0</div>
+        </div>
+        <div class="bg-indigo-50 border border-indigo-200 p-4 rounded-xl">
+          <div class="text-indigo-600 text-xs">Net Farm Balance (शुद्ध बचत / लाभ)</div>
+          <div class="text-2xl font-black text-indigo-800 mt-1" id="khataNetBalance">₹0</div>
+        </div>
+      </div>
+
+      <!-- Transaction Entry Form -->
+      <section class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 space-y-4">
+        <h4 class="font-bold text-slate-800 text-sm flex items-center gap-2">
+          <span>✍️</span> <span>Add Farm Transaction (नया लेन-देन दर्ज करें)</span>
+        </h4>
+
+        <form id="khataForm" class="grid grid-cols-1 sm:grid-cols-4 gap-4 text-xs">
+          <div>
+            <label class="block font-semibold text-slate-700 mb-1" for="khataType">Type</label>
+            <select id="khataType" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-sm font-semibold">
+              <option value="Expense">🔴 Expense (खर्च)</option>
+              <option value="Income">🟢 Income / Sale (आमदनी)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-semibold text-slate-700 mb-1" for="khataCategory">Category</label>
+            <select id="khataCategory" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-sm">
+              <option value="Seeds">Certified Seeds (बीज)</option>
+              <option value="Fertilizer">Fertilizers / DAP / Urea (खाद)</option>
+              <option value="Pesticides">Pesticides / Fungicides (कीटनाशक)</option>
+              <option value="Labor">Farm Labor / Weeding (मजदूरी)</option>
+              <option value="Tillage">Tractor / Plowing (जुताई / बुवाई)</option>
+              <option value="Irrigation">Diesel / Electricity / Tube-well (सिंचाई)</option>
+              <option value="Crop Sale">Crop Mandi Sale (फसल बिक्री)</option>
+              <option value="Subsidy">Govt Subsidy / PM-KISAN (सब्सिडी)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-semibold text-slate-700 mb-1" for="khataAmount">Amount (₹)</label>
+            <input id="khataAmount" type="number" step="50" min="1" required placeholder="e.g. 2400" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-sm font-bold">
+          </div>
+          <div>
+            <label class="block font-semibold text-slate-700 mb-1" for="khataNotes">Description / Note</label>
+            <input id="khataNotes" type="text" placeholder="e.g. 2 bags Urea, Mandi sale 10 qtl..." class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-sm">
+          </div>
+          <div class="sm:col-span-4 flex items-center gap-3 pt-2">
+            <button type="submit" class="px-6 py-2.5 bg-brand-700 hover:bg-brand-800 text-white font-bold text-xs sm:text-sm rounded-xl shadow-sm transition">
+              + Save Entry to Farm Ledger
+            </button>
+            <button id="clearKhataBtn" type="button" class="text-xs text-rose-600 hover:underline">
+              Clear All Ledger Data
+            </button>
+          </div>
+        </form>
+      </section>
+
+      <!-- Ledger Table -->
+      <section class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 overflow-hidden">
+        <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+          <div>
+            <h4 class="font-bold text-slate-800 text-sm flex items-center gap-2">
+              <span>📜</span> <span>Ledger Records (लेन-देन इतिहास)</span>
+            </h4>
+            <span class="text-xs text-slate-500 font-mono" id="khataEntryCount">0 records</span>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-2">
+            <!-- Filter by category -->
+            <select id="khataFilterCategory" class="bg-slate-50 border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs text-slate-700 font-medium">
+              <option value="All">All Categories (सभी)</option>
+              <option value="Seeds">Seeds (बीज)</option>
+              <option value="Fertilizer">Fertilizer (खाद)</option>
+              <option value="Pesticides">Pesticides (कीटनाशक)</option>
+              <option value="Labor">Labor (मजदूरी)</option>
+              <option value="Tillage">Tillage (जुताई)</option>
+              <option value="Irrigation">Irrigation (सिंचाई)</option>
+              <option value="Crop Sale">Crop Sale (बिक्री)</option>
+              <option value="Subsidy">Subsidy (सब्सिडी)</option>
+            </select>
+
+            <!-- Export to CSV -->
+            <button id="exportKhataCsvBtn" type="button" class="flex items-center gap-1 text-xs bg-emerald-700 hover:bg-emerald-800 text-white font-semibold px-3 py-1.5 rounded-lg shadow-sm transition" title="Download Excel-compatible CSV">
+              <span>📥</span> <span>Export CSV</span>
+            </button>
+
+            <!-- Backup JSON -->
+            <button id="backupKhataJsonBtn" type="button" class="flex items-center gap-1 text-xs bg-slate-700 hover:bg-slate-800 text-white font-semibold px-3 py-1.5 rounded-lg shadow-sm transition" title="Save offline JSON backup">
+              <span>💾</span> <span>Backup JSON</span>
+            </button>
+
+            <!-- Restore JSON -->
+            <button id="restoreKhataBtn" type="button" class="flex items-center gap-1 text-xs bg-indigo-700 hover:bg-indigo-800 text-white font-semibold px-3 py-1.5 rounded-lg shadow-sm transition" title="Restore ledger from JSON backup">
+              <span>📤</span> <span>Restore</span>
+            </button>
+            <input type="file" id="restoreKhataInput" accept=".json" aria-label="Upload farm ledger JSON backup file" class="hidden">
+          </div>
+        </div>
+
+        <!-- Category Spending Analytics Bar -->
+        <div id="khataCategoryBreakdown" class="mb-4 p-3 bg-slate-50/80 rounded-xl border border-slate-200 flex flex-wrap gap-2 text-[11px]">
+          <!-- Dynamically populated in app.js -->
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-xs text-left">
+            <thead class="bg-slate-50 text-slate-700 border-b border-slate-200">
+              <tr>
+                <th class="p-3">Date</th>
+                <th class="p-3">Type</th>
+                <th class="p-3">Category</th>
+                <th class="p-3">Note</th>
+                <th class="p-3 text-right">Amount (₹)</th>
+                <th class="p-3 text-center">Action</th>
+              </tr>
+            </thead>
+            <tbody id="khataTableBody" class="divide-y divide-slate-100">
+              <!-- Rendered by app.js -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- TRACTOR & MACHINERY RENT VS BUY CALCULATOR -->
+      <section class="bg-white rounded-2xl border border-indigo-300 shadow-sm p-6 sm:p-8 space-y-6">
+        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-indigo-100 pb-4">
+          <div>
+            <h3 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+              <span>🚜</span> <span data-i18n="machineryRentVsBuyTitle">Farm Machinery: Rent vs. Buy Calculator (कृषि यंत्र किराया बनाम खरीद)</span>
+            </h3>
+            <p class="text-xs text-slate-500">Calculate annual capital depreciation, diesel burn, custom hiring break-even acreage, and commercial rental profits to neighbors.</p>
+          </div>
+          <span class="bg-indigo-100 text-indigo-800 text-xs font-bold px-3 py-1 rounded-full">Ag-Engineering Economics</span>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="machineryTypeSelect">Machine / Implement</label>
+            <select id="machineryTypeSelect" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-sm">
+              <option value="Tractor 45-50 HP">Tractor 45-50 HP (4.0 L/hr diesel, 10-yr life)</option>
+              <option value="Rotavator (6 ft)">Rotavator (6 ft) (₹900/acre hire rate)</option>
+              <option value="Seed Cum Fert Drill">Seed Cum Fertilizer Drill (₹700/acre hire)</option>
+              <option value="Laser Land Leveller">Laser Land Leveller (₹1,100/hr hire)</option>
+              <option value="Combine Harvester">Combine Harvester (₹2,200/acre hire)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="machineryFarmAcres">Your Farm Area (Acres)</label>
+            <input id="machineryFarmAcres" type="number" step="0.5" min="0.5" value="8.0" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-sm font-bold">
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="machineryCustomAcres">Rental Acres to Neighbors (किराया)</label>
+            <input id="machineryCustomAcres" type="number" step="1.0" min="0" value="20.0" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-sm font-bold">
+            <span class="text-[10px] text-slate-400">Additional acres operated for custom hire</span>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="machineryCustomRate">Custom Hire Rate (₹/Acre or Hr)</label>
+            <input id="machineryCustomRate" type="number" step="50" min="100" placeholder="Auto-filled default" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-sm font-bold">
+            <span class="text-[10px] text-slate-400">Leave blank for regional standard</span>
+          </div>
+        </div>
+
+        <div class="flex justify-end pt-2 border-t border-slate-100">
+          <button id="calcMachineryBtn" type="button" class="px-6 py-2.5 bg-indigo-800 hover:bg-indigo-900 text-white font-bold text-sm rounded-xl shadow-sm transition flex items-center gap-2">
+            <span>⚙️</span> Analyze Rent vs. Buy Economics
+          </button>
+        </div>
+
+        <!-- Machinery Output Card -->
+        <div id="machineryResultContainer" class="hidden pt-6 border-t border-slate-200">
+          <!-- Injected by app.js -->
+        </div>
+      </section>
+
+      <!-- VOICE FIELD NOTES & AUDIO MEMOS -->
+      <section class="bg-white rounded-2xl border border-rose-200 shadow-sm p-6 sm:p-8 space-y-6">
+        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-rose-100 pb-4">
+          <div>
+            <h3 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+              <span>🎙️</span> Voice Field Notes & Audio Memos (बोलकर ऑडियो नोट रिकॉर्ड करें)
+            </h3>
+            <p class="text-xs text-slate-500">Record quick voice reminders directly in the field without typing with muddy hands. Stored 100% offline on your device.</p>
+          </div>
+          <span class="bg-rose-100 text-rose-800 text-xs font-bold px-3 py-1 rounded-full border border-rose-200">100% Offline Audio</span>
+        </div>
+
+        <div class="flex flex-wrap items-center justify-between gap-4 p-4 bg-rose-50/60 rounded-xl border border-rose-200">
+          <div class="flex items-center gap-3">
+            <button id="recordAudioMemoBtn" type="button" class="w-12 h-12 rounded-full bg-rose-600 hover:bg-rose-700 text-white font-bold flex items-center justify-center shadow-md transition text-xl cursor-pointer">
+              🎙️
+            </button>
+            <div>
+              <div id="audioRecordStatus" class="font-bold text-slate-800 text-sm">Tap mic to record audio memo</div>
+              <div id="audioRecordTimer" class="text-xs font-mono text-slate-500">00:00 / Max 2 mins</div>
+            </div>
+          </div>
+          <div class="flex items-center gap-2">
+            <input id="audioMemoTitleInput" type="text" placeholder="Note tag (e.g. Weed patch in North field)" class="bg-white border border-slate-300 rounded-xl px-3 py-2 text-xs w-64">
+            <button id="stopAudioMemoBtn" type="button" disabled class="px-4 py-2 bg-slate-800 text-white rounded-xl text-xs font-bold disabled:opacity-40 transition">
+              Stop & Save
+            </button>
+          </div>
+        </div>
+
+        <!-- Audio Memos List -->
+        <div>
+          <h4 class="font-bold text-xs text-slate-700 mb-2">Saved Voice Notes (<span id="voiceNotesCount">0</span>)</h4>
+          <div id="voiceNotesList" class="space-y-2 text-xs">
+            <p class="text-slate-400 italic text-xs py-2">No voice notes recorded yet. Tap the red microphone above to record your first field note.</p>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ==================== TAB 10: SEED RATE & PLANT GEOMETRY ==================== -->
+    <div id="seedTabContent" class="hidden space-y-8">
+      <div class="bg-gradient-to-r from-amber-800 via-yellow-900 to-stone-900 text-white rounded-2xl p-6 sm:p-8 shadow-lg relative overflow-hidden">
+        <div class="relative z-10 max-w-3xl">
+          <h2 class="text-2xl sm:text-3xl font-extrabold mb-2" data-i18n="seedHeroTitle">🌱 Seed Rate & Plant Geometry Calculator</h2>
+          <p class="text-amber-100 text-sm sm:text-base leading-relaxed" data-i18n="seedHeroDesc">
+            Precision planting density and seed requirements. Calculate exact seed weight in kg, optimal row-to-row and plant-to-plant spacing, germination compensation, and bio-seed treatment recipes.
+          </p>
+        </div>
+      </div>
+
+      <section class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 sm:p-8 space-y-6">
+        <form id="seedForm" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="seedCropSelect">Target Crop (फसल)</label>
+            <select id="seedCropSelect" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-sm outline-none focus:ring-2 focus:ring-amber-500">
+              <!-- Dynamically populated from LOCAL_CROPS_DB -->
+            </select>
+          </div>
+          <div>
+            <div class="flex items-center justify-between mb-1">
+              <label class="block font-bold text-slate-700" for="seedLandAcres">Land Area (Acres)</label>
+              <button type="button" class="text-amber-700 hover:underline font-normal text-[11px] open-land-converter-trigger">📐 Convert Unit</button>
+            </div>
+            <input id="seedLandAcres" type="number" step="0.25" min="0.1" value="2.0" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-sm font-bold">
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="seedGerminationPct">Germination Rate (%) (अंकुरण %)</label>
+            <input id="seedGerminationPct" type="number" step="5" min="50" max="100" value="85" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-sm font-bold">
+            <span class="text-[10px] text-slate-400">Standard certified seed is 85%</span>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="seedSowingMethod">Sowing Method (बुवाई विधि)</label>
+            <select id="seedSowingMethod" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-sm">
+              <option value="Line Sowing using Seed Drill">Line Sowing (सीड-ड्रिल / कतार बुवाई)</option>
+              <option value="Broadcasting">Broadcasting (छिटकवां विधि)</option>
+              <option value="Dibbling">Dibbling (थापा विधि)</option>
+              <option value="Transplanting">Transplanting (रोपाई)</option>
+              <option value="Ridge and Furrow">Ridge & Furrow (मेंड़ विधि)</option>
+            </select>
+          </div>
+        </form>
+
+        <div class="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-slate-100">
+          <div class="flex items-center gap-4 text-xs">
+            <label for="seedCustomSpacingCheck" class="inline-flex items-center gap-1.5 cursor-pointer font-semibold text-slate-700">
+              <input type="checkbox" id="seedCustomSpacingCheck" class="rounded text-amber-600 focus:ring-amber-500">
+              <span>Customize Spacing (कस्टम कतार-पौधा दूरी)</span>
+            </label>
+          </div>
+          <button id="calcSeedBtn" type="button" class="px-6 py-2.5 bg-amber-700 hover:bg-amber-800 text-white font-bold text-sm rounded-xl shadow-sm transition flex items-center gap-2">
+            <span>🌱</span> Calculate Seed & Spacing
+          </button>
+        </div>
+
+        <div id="seedCustomSpacingBox" class="hidden p-4 bg-amber-50/60 rounded-xl border border-amber-200 grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+          <div>
+            <label class="block font-semibold text-slate-700 mb-1" for="seedRowSpacingCm">Row-to-Row Spacing (cm)</label>
+            <input id="seedRowSpacingCm" type="number" step="2.5" min="5" placeholder="e.g. 22.5" class="w-full bg-white border border-slate-300 rounded-xl p-2 text-sm">
+          </div>
+          <div>
+            <label class="block font-semibold text-slate-700 mb-1" for="seedPlantSpacingCm">Plant-to-Plant Spacing (cm)</label>
+            <input id="seedPlantSpacingCm" type="number" step="1" min="2" placeholder="e.g. 5.0" class="w-full bg-white border border-slate-300 rounded-xl p-2 text-sm">
+          </div>
+        </div>
+
+        <!-- Seed Results Card -->
+        <div id="seedResultContainer" class="hidden pt-6 border-t border-slate-200">
+          <!-- Populated by app.js -->
+        </div>
+      </section>
+    </div>
+
+    <!-- ==================== TAB 11: KNAPSACK SPRAYER & DILUTION ==================== -->
+    <div id="sprayerTabContent" class="hidden space-y-8">
+      <div class="bg-gradient-to-r from-teal-900 via-emerald-950 to-slate-900 text-white rounded-2xl p-6 sm:p-8 shadow-lg relative overflow-hidden">
+        <div class="relative z-10 max-w-3xl">
+          <h2 class="text-2xl sm:text-3xl font-extrabold mb-2" data-i18n="sprayerHeroTitle">🚜 Knapsack Sprayer & Chemical Dilution Calculator</h2>
+          <p class="text-teal-100 text-sm sm:text-base leading-relaxed" data-i18n="sprayerHeroDesc">
+            Eliminate crop leaf burn and chemical wastage. Calculate exact milliliters or grams to pour into each 15L or 16L spray pump, total tanks needed for your acreage, and essential protective safety guidelines.
+          </p>
+        </div>
+      </div>
+
+      <section class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 sm:p-8 space-y-6">
+        <form id="sprayerForm" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 text-xs">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="sprayTankCap">Spray Tank Capacity (पंप क्षमता)</label>
+            <select id="sprayTankCap" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-sm font-semibold">
+              <option value="16">16 Liters (Standard Backpack Knapsack)</option>
+              <option value="15">15 Liters (Compact Knapsack)</option>
+              <option value="20">20 Liters (Heavy Duty / Battery Sprayer)</option>
+              <option value="10">10 Liters (Hand Pump)</option>
+              <option value="200">200 Liters (Tractor Mounted Barrel)</option>
+            </select>
+          </div>
+          <div>
+            <div class="flex items-center justify-between mb-1">
+              <label class="block font-bold text-slate-700" for="sprayLandAcres">Land Area to Spray (Acres)</label>
+              <button type="button" class="text-teal-700 hover:underline font-normal text-[11px] open-land-converter-trigger">📐 Convert Unit</button>
+            </div>
+            <input id="sprayLandAcres" type="number" step="0.25" min="0.1" value="2.0" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-sm font-bold">
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="sprayDosageMode">Dosage Instruction Mode (खुराक आधार)</label>
+            <select id="sprayDosageMode" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-sm">
+              <option value="per_liter">Dose per Liter of Water (e.g. 2 ml/L)</option>
+              <option value="per_acre">Total Dose per Acre (e.g. 250 ml/acre)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="sprayChemForm">Chemical Formulation (दवा का रूप)</label>
+            <select id="sprayChemForm" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-sm">
+              <option value="Liquid (ml)">Liquid (EC, SC, SL, ME) - ml</option>
+              <option value="Powder (g)">Powder / Granules (WP, WDG, SP) - grams</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="sprayDoseAmount">Recommended Dose Value</label>
+            <input id="sprayDoseAmount" type="number" step="0.5" min="0.1" value="2.0" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-sm font-bold">
+            <span class="text-[10px] text-slate-400" id="sprayDoseHint">e.g. 2 ml per liter water</span>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="sprayWaterRate">Water Rate per Acre (Liters)</label>
+            <input id="sprayWaterRate" type="number" step="10" min="50" max="500" value="150" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-sm font-bold">
+            <span class="text-[10px] text-slate-400">Standard knapsack is 150-200 L/acre</span>
+          </div>
+        </form>
+
+        <div class="flex justify-end pt-2 border-t border-slate-100">
+          <button id="calcSprayerBtn" type="button" class="px-6 py-2.5 bg-teal-700 hover:bg-teal-800 text-white font-bold text-sm rounded-xl shadow-sm transition flex items-center gap-2">
+            <span>🚜</span> Calculate Spray Dilution & Tanks
+          </button>
+        </div>
+
+        <!-- Sprayer Results Card -->
+        <div id="sprayerResultContainer" class="hidden pt-6 border-t border-slate-200">
+          <!-- Injected by app.js -->
+        </div>
+      </section>
+    </div>
+
+    <!-- ==================== TAB 12: SOLAR PUMP & PM-KUSUM ==================== -->
+    <div id="solarTabContent" class="hidden space-y-8">
+      <div class="bg-gradient-to-r from-amber-700 via-orange-900 to-slate-900 text-white rounded-2xl p-6 sm:p-8 shadow-lg relative overflow-hidden">
+        <div class="relative z-10 max-w-3xl">
+          <h2 class="text-2xl sm:text-3xl font-extrabold mb-2" data-i18n="solarHeroTitle">☀️ Solar Ag-Pump Sizing & PM-KUSUM Subsidy Estimator</h2>
+          <p class="text-amber-100 text-sm sm:text-base leading-relaxed" data-i18n="solarHeroDesc">
+            Free yourself from erratic electricity and rising diesel costs. Size the right 2 HP to 7.5 HP solar water pump for your borewell or canal and calculate up to 70% PM-KUSUM Component-B government subsidies.
+          </p>
+        </div>
+      </div>
+
+      <section class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 sm:p-8 space-y-6">
+        <form id="solarForm" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 text-xs">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="solarWaterSource">Water Source (जल स्रोत)</label>
+            <select id="solarWaterSource" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-sm font-semibold">
+              <option value="Borewell">Borewell / Tube-well (बोरवेल)</option>
+              <option value="Open Well">Open Well / Bawdi (खुला कुआं)</option>
+              <option value="Canal / Surface">Canal / River / Farm Pond (नहर / तालाब)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="solarDepthFeet">Water Table Depth (Feet / फीट)</label>
+            <input id="solarDepthFeet" type="number" step="10" min="10" max="600" value="150" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-sm font-bold">
+            <span class="text-[10px] text-slate-400">Total lift head from dynamic water level</span>
+          </div>
+          <div>
+            <div class="flex items-center justify-between mb-1">
+              <label class="block font-bold text-slate-700" for="solarLandAcres">Irrigated Land (Acres)</label>
+              <button type="button" class="text-amber-700 hover:underline font-normal text-[11px] open-land-converter-trigger">📐 Convert Unit</button>
+            </div>
+            <input id="solarLandAcres" type="number" step="0.5" min="0.5" value="2.0" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-sm font-bold">
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="solarIrrigType">Irrigation System Type</label>
+            <select id="solarIrrigType" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-sm">
+              <option value="Drip / Sprinkler">Drip / Micro-Sprinkler (सूक्ष्म सिंचाई - 50% less water)</option>
+              <option value="Flood">Flood / Surface Irrigation (खुला पानी)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="solarFarmerCategory">Farmer Category (आरक्षण / श्रेणी)</label>
+            <select id="solarFarmerCategory" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-sm">
+              <option value="Small / Marginal (< 2 Ha)">Small / Marginal (लघु-सीमांत किसान - Higher Subsidy)</option>
+              <option value="General / Large (> 2 Ha)">General / Large (> 2 Hectares)</option>
+            </select>
+          </div>
+        </form>
+
+        <div class="flex justify-end pt-2 border-t border-slate-100">
+          <button id="calcSolarBtn" type="button" class="px-6 py-2.5 bg-amber-700 hover:bg-amber-800 text-white font-bold text-sm rounded-xl shadow-sm transition flex items-center gap-2">
+            <span>☀️</span> Calculate Solar Pump & PM-KUSUM Subsidy
+          </button>
+        </div>
+
+        <!-- Solar Results Card -->
+        <div id="solarResultContainer" class="hidden pt-6 border-t border-slate-200">
+          <!-- Injected by app.js -->
+        </div>
+      </section>
+    </div>
+
+    <!-- ==================== TAB 13: INTERCROPPING MATRIX ==================== -->
+    <div id="intercropTabContent" class="hidden space-y-8">
+      <div class="bg-gradient-to-r from-emerald-900 via-green-950 to-slate-900 text-white rounded-2xl p-6 sm:p-8 shadow-lg relative overflow-hidden">
+        <div class="relative z-10 max-w-3xl">
+          <h2 class="text-2xl sm:text-3xl font-extrabold mb-2" data-i18n="intercropHeroTitle">🌿 Intercropping & Companion Crop Matrix</h2>
+          <p class="text-emerald-100 text-sm sm:text-base leading-relaxed" data-i18n="intercropHeroDesc">
+            Multiply farm yield and reduce climate risk with biological companion planting. Discover scientifically validated Indian crop combinations with 20% to 40% Land Equivalent Ratio (LER) boosts, natural nitrogen fixation, and biological pest trap crops.
+          </p>
+        </div>
+      </div>
+
+      <section class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 space-y-5">
+        <div class="flex flex-wrap items-center justify-between gap-4">
+          <div class="flex flex-wrap items-center gap-2 text-xs">
+            <span class="font-bold text-slate-700">Filter by Main Crop:</span>
+            <select id="intercropFilterSelect" class="bg-slate-50 border border-slate-300 rounded-xl px-3 py-1.5 text-sm font-semibold outline-none focus:ring-2 focus:ring-emerald-500">
+              <option value="all">All Combinations (सभी जोड़ियां)</option>
+              <option value="sugarcane">Sugarcane (गन्ना)</option>
+              <option value="cotton">Cotton (कपास)</option>
+              <option value="maize">Maize (मक्का)</option>
+              <option value="wheat">Wheat (गेहूं)</option>
+              <option value="tomato">Tomato (टमाटर)</option>
+            </select>
+          </div>
+          <div class="text-xs text-slate-500 font-mono" id="intercropCount">Showing all combinations</div>
+        </div>
+
+        <div id="intercropGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pt-2">
+          <!-- Injected by app.js -->
+        </div>
+      </section>
+    </div>
+
+    <!-- ==================== TAB 14: POST-HARVEST GRAIN STORAGE DOCTOR ==================== -->
+    <div id="storageTabContent" class="hidden space-y-8">
+      <div class="bg-gradient-to-r from-amber-900 via-stone-900 to-slate-900 text-white rounded-2xl p-6 sm:p-8 shadow-lg relative overflow-hidden">
+        <div class="relative z-10 max-w-3xl">
+          <h2 class="text-2xl sm:text-3xl font-extrabold mb-2" data-i18n="storageHeroTitle">📦 Post-Harvest Grain Storage & Moisture Doctor</h2>
+          <p class="text-amber-100 text-sm sm:text-base leading-relaxed" data-i18n="storageHeroDesc">
+            Stop losing 15-20% of your harvest to fungal rot and grain weevils. Check safe moisture limits, get zero-cost organic preservation recipes, and learn how to get bank pledge loans against e-NWR warehouse receipts.
+          </p>
+        </div>
+      </div>
+
+      <section class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 sm:p-8 space-y-6">
+        <div class="border-b border-slate-100 pb-4">
+          <h3 class="text-base font-bold text-slate-900 flex items-center gap-2">
+            <span>🔬</span> Interactive Moisture & Spoilage Risk Checker
+          </h3>
+          <p class="text-xs text-slate-500">Test if your harvested grain is dry enough to bag safely without mold or rotting</p>
+        </div>
+
+        <form id="storageRiskForm" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="storageCropSelect">Harvested Crop (फसल)</label>
+            <select id="storageCropSelect" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-sm font-semibold">
+              <option value="wheat">Wheat (गेहूं)</option>
+              <option value="rice">Paddy / Rice (धान)</option>
+              <option value="maize">Maize (मक्का)</option>
+              <option value="pearl_millet">Bajra (बाजरा)</option>
+              <option value="chickpea">Chickpea / Chana (चना)</option>
+              <option value="pigeon_pea">Arhar / Tur (तुअर)</option>
+              <option value="mustard">Mustard (सरसों)</option>
+              <option value="soybean">Soybean (सोयाबीन)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="storageMoistureInput">Measured Grain Moisture (%) (नमी %)</label>
+            <input id="storageMoistureInput" type="number" step="0.5" min="5" max="30" value="12.0" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-sm font-bold">
+            <span class="text-[10px] text-slate-400">Tested by moisture meter or salt test</span>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="storageMethodSelect">Storage Container (भंडारण साधन)</label>
+            <select id="storageMethodSelect" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-sm">
+              <option value="Jute Gunny Bags">Jute Gunny Bags (बोरी / टाट)</option>
+              <option value="HDPE Hermetic Bags">Hermetic SuperGrain Bags (एयरटाइट बैग)</option>
+              <option value="Metal Bins">Galvanized Metal Bins (लोहे की कोठी / टंकी)</option>
+              <option value="Mud Kothi">Traditional Mud Kothi / Silo (मिट्टी की कोठी)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="storageDurationInput">Planned Storage (Months / माह)</label>
+            <input id="storageDurationInput" type="number" min="1" max="24" value="6" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-sm font-bold">
+          </div>
+        </form>
+
+        <div class="flex justify-end pt-2 border-t border-slate-100">
+          <button id="checkStorageRiskBtn" type="button" class="px-6 py-2.5 bg-amber-800 hover:bg-amber-900 text-white font-bold text-sm rounded-xl shadow-sm transition flex items-center gap-2">
+            <span>🔍</span> Check Spoilage Risk & Prescriptions
+          </button>
+        </div>
+
+        <!-- Storage Risk Results Card -->
+        <div id="storageRiskResultContainer" class="hidden pt-6 border-t border-slate-200">
+          <!-- Injected by app.js -->
+        </div>
+
+        <!-- Safe Moisture Reference Table -->
+        <div class="pt-6 border-t border-slate-200">
+          <h4 class="text-xs font-bold text-slate-700 mb-3 uppercase tracking-wider">ICAR Standard Safe Moisture Thresholds for Grain Storage:</h4>
+          <div class="overflow-x-auto">
+            <table class="w-full text-xs text-left">
+              <thead class="bg-slate-50 text-slate-700 border-b border-slate-200">
+                <tr>
+                  <th class="p-2.5">Crop</th>
+                  <th class="p-2.5 text-center">Safe Moisture Limit</th>
+                  <th class="p-2.5 text-center">Max Shelf Life</th>
+                  <th class="p-2.5">Key Storage Pests</th>
+                  <th class="p-2.5">Natural Protectant</th>
+                </tr>
+              </thead>
+              <tbody id="storageCatalogTableBody" class="divide-y divide-slate-100">
+                <!-- Injected by app.js -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Zero Energy Cool Chamber (ZECC) & Perishable Produce Storage -->
+      <section class="bg-white rounded-2xl border border-teal-200 shadow-sm p-6 sm:p-8 space-y-6">
+        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-teal-100 pb-4">
+          <div>
+            <h3 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+              <span>🧊</span> IARI Pusa Zero Energy Cool Chamber (ZECC) & Vegetable Shelf-Life Planner (पूसा शीत कक्ष)
+            </h3>
+            <p class="text-xs text-slate-500">Zero-electricity evaporative cooler built with local red clay bricks and sand. Extends tomato, chilli, and vegetable shelf-life by 3x-4x during mandi glut.</p>
+          </div>
+          <span class="bg-teal-100 text-teal-900 text-xs font-bold px-3 py-1 rounded-full border border-teal-300">IARI Pusa Technology</span>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="zeccProduceSelect">Primary Perishable Produce</label>
+            <select id="zeccProduceSelect" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-sm font-semibold">
+              <option value="Tomato (टमाटर)">Tomato (टमाटर - 3.5x Shelf Life)</option>
+              <option value="Green Chilli (हरी मिर्च)">Green Chilli (हरी मिर्च - 3.5x Shelf Life)</option>
+              <option value="Coriander & Spinach (धनिया एवं पालक)">Coriander & Spinach (धनिया/पालक - 4x Shelf Life)</option>
+              <option value="Capsicum / Bell Pepper (शिमला मिर्च)">Capsicum / Bell Pepper (शिमला मिर्च - 4x Shelf Life)</option>
+              <option value="Brinjal / Eggplant (बैंगन)">Brinjal / Eggplant (बैंगन - 3x Shelf Life)</option>
+              <option value="Potato (आलू)">Potato (आलू - 2x Shelf Life)</option>
+              <option value="Onion (प्याज)">Onion (प्याज - 1.8x Shelf Life)</option>
+              <option value="Guava & Mango (अमरूद एवं आम)">Guava & Mango (अमरूद एवं आम - 3x Shelf Life)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="zeccCratesInput">Storage Capacity: <span id="zeccCratesLabel" class="text-teal-700 font-extrabold text-sm">20 Crates (400 kg)</span></label>
+            <input id="zeccCratesInput" type="range" min="4" max="80" step="2" value="20" class="w-full accent-teal-600 mt-2">
+            <div class="flex justify-between text-[10px] text-slate-400 mt-1">
+              <span>4 Crates (80kg)</span>
+              <span>20 Crates (400kg)</span>
+              <span>50 Crates (1 Ton)</span>
+              <span>80 Crates (1.6 Ton)</span>
+            </div>
+          </div>
+          <div class="flex items-end">
+            <button id="calcZeccBtn" type="button" class="w-full px-4 py-2.5 bg-teal-800 hover:bg-teal-900 text-white font-bold text-sm rounded-xl shadow-sm transition flex items-center justify-center gap-2">
+              <span>🧊</span> Calculate Chamber Bill & Shelf Life
+            </button>
+          </div>
+        </div>
+
+        <!-- ZECC Output Card -->
+        <div id="zeccResultContainer" class="hidden pt-6 border-t border-slate-200">
+          <!-- Injected by app.js -->
+        </div>
+      </section>
+    </div>
+
+    <!-- ==================== TAB 15: DAIRY & LIVESTOCK HUSBANDRY DOCTOR ==================== -->
+    <div id="livestockTabContent" class="hidden space-y-8">
+      <div class="bg-gradient-to-r from-amber-900 via-stone-900 to-emerald-950 text-white rounded-2xl p-6 sm:p-8 shadow-lg relative overflow-hidden">
+        <div class="relative z-10 max-w-3xl">
+          <h2 class="text-2xl sm:text-3xl font-extrabold mb-2" data-i18n="livestockHeroTitle">🐄 Dairy & Livestock Husbandry Doctor (पशुपालन एवं दुग्ध सलाहकार)</h2>
+          <p class="text-amber-100 text-sm sm:text-base leading-relaxed" data-i18n="livestockHeroDesc">
+            Smallholder dairy intelligence. Calculate scientific daily cattle feed rations (Green fodder, Bhusa, and Concentrate balanced against milk yield), track 21-day heat cycles and calving pregnancy calendars, and access validated Ethno-Veterinary Herbal Remedies (EVM) for mastitis, bloat, and wounds.
+          </p>
+        </div>
+      </div>
+
+      <!-- SECTION 1: CATTLE RATION & FEED CALCULATOR -->
+      <section class="bg-white rounded-2xl border border-amber-200 shadow-sm p-6 sm:p-8 space-y-6">
+        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-amber-100 pb-4">
+          <div>
+            <h3 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+              <span>🥣</span> <span data-i18n="rationTitle">Scientific Daily Feed & Ration Calculator (संतुलित पशु आहार)</span>
+            </h3>
+            <p class="text-xs text-slate-500">ICAR dairy nutrition standards. Computes exact daily Dry Matter (DM), green fodder, dry straw, concentrate, and mineral mixture.</p>
+          </div>
+          <span class="bg-amber-100 text-amber-900 text-xs font-bold px-3 py-1 rounded-full">ICAR / NDRI Standards</span>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 text-xs">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="animTypeSelect">Animal Species / Breed</label>
+            <select id="animTypeSelect" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-sm">
+              <option value="Cow (Crossbred HF/Jersey)">Crossbred Cow (HF / Jersey - 3% DM)</option>
+              <option value="Cow (Indigenous/Desi)">Indigenous Desi Cow (Gir/Sahiwal - 2.6% DM)</option>
+              <option value="Buffalo (Murrah)">Buffalo (Murrah / Mehsana - High Fat)</option>
+              <option value="Goat">Goat (बकरी - 3.8% DM)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="animWeightInput">Body Weight (kg / वजन)</label>
+            <input id="animWeightInput" type="number" step="10" min="20" max="900" value="420" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-sm font-bold">
+            <span class="text-[10px] text-slate-400">Adult cow ~350-450kg, Buffalo ~500kg</span>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="animMilkInput">Daily Milk Yield (Liters / दूध)</label>
+            <input id="animMilkInput" type="number" step="0.5" min="0" max="60" value="10.0" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-sm font-bold">
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="animFatInput">Milk Fat % (फैट)</label>
+            <input id="animFatInput" type="number" step="0.1" min="3.0" max="10.0" value="4.0" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-sm font-bold">
+            <span class="text-[10px] text-slate-400">Cow ~3.5-4.5%, Buffalo ~6.5-8.0%</span>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="animPregSelect">Pregnancy Stage (गर्भ)</label>
+            <select id="animPregSelect" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-sm">
+              <option value="None">Non-Pregnant / Open</option>
+              <option value="Early/Mid">Early / Mid Pregnancy (1-6 Months)</option>
+              <option value="Last Trimester (Advance Pregnant)">Last Trimester (Advance / Steaming Up)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="flex justify-end pt-2 border-t border-slate-100">
+          <button id="calcLivestockRationBtn" type="button" class="px-6 py-2.5 bg-amber-800 hover:bg-amber-900 text-white font-bold text-sm rounded-xl shadow-sm transition flex items-center gap-2">
+            <span>🥣</span> Calculate Balanced Daily Ration
+          </button>
+        </div>
+
+        <!-- Ration Results Container -->
+        <div id="livestockRationResultContainer" class="hidden pt-6 border-t border-slate-200">
+          <!-- Injected by app.js -->
+        </div>
+      </section>
+
+      <!-- SECTION 2: GESTATION & REPRODUCTION CALENDAR -->
+      <section class="bg-white rounded-2xl border border-stone-200 shadow-sm p-6 sm:p-8 space-y-6">
+        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-stone-100 pb-4">
+          <div>
+            <h3 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+              <span>📅</span> <span data-i18n="gestationTitle">Heat Cycle & Gestation Pregnancy Tracker (गर्भावधि एवं प्रसव कैलेंडर)</span>
+            </h3>
+            <p class="text-xs text-slate-500">Track 21-day repeat estrus checks, veterinary sonography diagnosis, drying-off dates, and expected calving delivery date.</p>
+          </div>
+          <span class="bg-stone-100 text-stone-800 text-xs font-bold px-3 py-1 rounded-full">Veterinary Milestones</span>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="gestationAnimalTypeSelect">Animal Type</label>
+            <select id="gestationAnimalTypeSelect" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-sm">
+              <option value="Cow">Cow (गाय - 280 Days Gestation)</option>
+              <option value="Buffalo">Buffalo (भैंस - 310 Days Gestation)</option>
+              <option value="Goat">Goat (बकरी - 150 Days Gestation)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="inseminationDateInput">Artificial Insemination (AI) / Mating Date</label>
+            <input id="inseminationDateInput" type="date" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-sm font-bold">
+          </div>
+          <div class="flex items-end">
+            <button id="calcGestationBtn" type="button" class="w-full px-6 py-2.5 bg-stone-800 hover:bg-stone-900 text-white font-bold text-sm rounded-xl shadow-sm transition flex items-center justify-center gap-2">
+              <span>📅</span> Track Gestation Schedule
+            </button>
+          </div>
+        </div>
+
+        <!-- Gestation Results Container -->
+        <div id="gestationResultContainer" class="hidden pt-6 border-t border-slate-200">
+          <!-- Injected by app.js -->
+        </div>
+      </section>
+
+      <!-- SECTION 3: ETHNO-VETERINARY HERBAL MEDICINES (EVM) -->
+      <section class="bg-white rounded-2xl border border-emerald-200 shadow-sm p-6 sm:p-8 space-y-6">
+        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-emerald-100 pb-4">
+          <div>
+            <h3 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+              <span>🌿</span> <span data-i18n="evmTitle">Ethno-Veterinary Herbal Remedies (EVM / देसी प्राकृतिक पशु चिकित्सा)</span>
+            </h3>
+            <p class="text-xs text-slate-500">Validated non-antibiotic home recipes approved by NDDB & TANUVAS. Low-cost first aid for mastitis, bloat, FMD sores, and deworming.</p>
+          </div>
+          <span class="bg-emerald-100 text-emerald-800 text-xs font-bold px-3 py-1 rounded-full">NDDB Validated</span>
+        </div>
+
+        <div id="livestockRemediesGrid" class="grid grid-cols-1 md:grid-cols-2 gap-5 text-xs">
+          <!-- Populated by app.js -->
+        </div>
+      </section>
+
+      <!-- SECTION 4: 365-DAY GREEN FODDER & SILAGE PIT PLANNER -->
+      <section class="bg-white rounded-2xl border border-emerald-200 shadow-sm p-6 sm:p-8 space-y-6">
+        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-emerald-100 pb-4">
+          <div>
+            <h3 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+              <span>🌾</span> 365-Day Green Fodder & Silage Pit Planner (हरा चारा एवं साइलेज कैलकुलेटर)
+            </h3>
+            <p class="text-xs text-slate-500">Calculate annual green & dry roughage balance, size lean-season summer silage pits (trench / 200L drum), and get season-wise fodder crop cycles.</p>
+          </div>
+          <span class="bg-emerald-100 text-emerald-900 text-xs font-bold px-3 py-1 rounded-full border border-emerald-300">NDRI Karnal Norms</span>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="fodderCowsCount">Dairy Cows (गाय)</label>
+            <input id="fodderCowsCount" type="number" step="1" min="0" value="2" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-sm font-bold">
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="fodderBuffaloCount">Buffaloes (भैंस)</label>
+            <input id="fodderBuffaloCount" type="number" step="1" min="0" value="1" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-sm font-bold">
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="fodderMilkYield">Avg Milk Yield (Liters/Day/Animal)</label>
+            <input id="fodderMilkYield" type="number" step="1" min="1" value="10" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-sm font-bold">
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="fodderLandAcres">Fodder Land Available (Acres)</label>
+            <input id="fodderLandAcres" type="number" step="0.25" min="0.1" value="0.5" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-sm font-bold">
+          </div>
+        </div>
+
+        <div class="flex justify-end pt-2 border-t border-slate-100">
+          <button id="calcFodderSilageBtn" type="button" class="px-6 py-2.5 bg-emerald-800 hover:bg-emerald-900 text-white font-bold text-sm rounded-xl shadow-sm transition flex items-center gap-2">
+            <span>🌾</span> Calculate Fodder Budget & Silage Pit
+          </button>
+        </div>
+
+        <!-- Fodder & Silage Results Container -->
+        <div id="fodderSilageResultContainer" class="hidden pt-6 border-t border-slate-200">
+          <!-- Injected by app.js -->
+        </div>
+      </section>
+    </div>
+
+    <!-- ==================== TAB 16: PRECISION DRIP FERTIGATION & VENTURI SCHEDULE ==================== -->
+    <div id="fertigationTabContent" class="hidden space-y-8">
+      <div class="bg-gradient-to-r from-teal-900 via-cyan-900 to-emerald-950 text-white rounded-2xl p-6 sm:p-8 shadow-lg relative overflow-hidden">
+        <div class="relative z-10 max-w-3xl">
+          <h2 class="text-2xl sm:text-3xl font-extrabold mb-2" data-i18n="fertigationHeroTitle">💧 Precision Drip Fertigation & Venturi Injector (ड्रिप फर्टीगेशन सलाहकार)</h2>
+          <p class="text-cyan-100 text-sm sm:text-base leading-relaxed" data-i18n="fertigationHeroDesc">
+            Target root-zone nutrition. Transform chemical fertilizer bags into weekly Water-Soluble Fertilizers (19:19:19, MKP 0:52:34, Calcium Nitrate, Potassium Nitrate 13:0:45) with precise Venturi injector suction minutes, emitter flow rates, and acid-wash emitter descaling.
+          </p>
+        </div>
+      </div>
+
+      <section class="bg-white rounded-2xl border border-teal-200 shadow-sm p-6 sm:p-8 space-y-6">
+        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-teal-100 pb-4">
+          <div>
+            <h3 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+              <span>🚰</span> Drip Lateral Geometry & Crop Parameters
+            </h3>
+            <p class="text-xs text-slate-500">Calculate weekly soluble nutrient doses and stock solution tank runtime.</p>
+          </div>
+          <span class="bg-teal-100 text-teal-800 text-xs font-bold px-3 py-1 rounded-full">ICAR-CIAE Standards</span>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="dripFertCropSelect">Select Crop</label>
+            <select id="dripFertCropSelect" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-sm font-semibold">
+              <option value="tomato">Tomato (टमाटर)</option>
+              <option value="chilli">Chilli (मिर्च)</option>
+              <option value="cotton">Cotton (कपास)</option>
+              <option value="sugarcane">Sugarcane (गन्ना)</option>
+              <option value="banana">Banana (केला)</option>
+              <option value="capsicum">Capsicum / Bell Pepper (शिमला मिर्च)</option>
+              <option value="onion">Onion (प्याज)</option>
+              <option value="pomegranate">Pomegranate (अनार)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="fertAcresInput">Drip Command Area (Acres)</label>
+            <input id="fertAcresInput" type="number" step="0.5" min="0.1" value="1.0" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-sm font-bold">
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="fertStageSelect">Crop Growth Phase</label>
+            <select id="fertStageSelect" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-sm font-semibold">
+              <option value="Vegetative (0-30 DAP)">Vegetative Phase (0-30 Days)</option>
+              <option value="Flowering / Fruit Set (31-60 DAP)" selected>Flowering & Fruit Set (31-60 Days)</option>
+              <option value="Fruit Development / Maturity (61+ DAP)">Fruit Bulking & Maturity (61+ Days)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="fertLateralSpacing">Lateral Spacing (Meters)</label>
+            <input id="fertLateralSpacing" type="number" step="0.1" min="0.5" value="1.2" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-sm font-bold">
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="fertDripperSpacing">Dripper Spacing (Meters)</label>
+            <input id="fertDripperSpacing" type="number" step="0.05" min="0.2" value="0.4" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-sm font-bold">
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="fertDripperDischarge">Dripper Discharge (LPH)</label>
+            <input id="fertDripperDischarge" type="number" step="0.5" min="1.0" value="2.0" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-sm font-bold">
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="fertVenturiRate">Venturi Suction Rate (LPH)</label>
+            <input id="fertVenturiRate" type="number" step="5" min="20" value="60.0" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-sm font-bold">
+          </div>
+          <div class="flex items-end">
+            <button id="calcFertigationBtn" type="button" class="w-full px-4 py-2.5 bg-teal-800 hover:bg-teal-900 text-white font-bold text-sm rounded-xl shadow-sm transition flex items-center justify-center gap-2">
+              <span>💧</span> Calculate Fertigation Recipe
+            </button>
+          </div>
+        </div>
+
+        <div id="fertigationResultContainer" class="hidden pt-6 border-t border-slate-200">
+          <!-- Populated by app.js -->
+        </div>
+      </section>
+    </div>
+
+    <!-- ==================== TAB 17: CARBON CREDITS & REGENERATIVE AGRICULTURE ==================== -->
+    <div id="carbonTabContent" class="hidden space-y-8">
+      <div class="bg-gradient-to-r from-emerald-900 via-teal-950 to-green-950 text-white rounded-2xl p-6 sm:p-8 shadow-lg relative overflow-hidden">
+        <div class="relative z-10 max-w-3xl">
+          <h2 class="text-2xl sm:text-3xl font-extrabold mb-2" data-i18n="carbonHeroTitle">🌱 Carbon Credits & Regenerative Agriculture (कार्बन क्रेडिट्स एवं टिकाऊ खेती)</h2>
+          <p class="text-emerald-100 text-sm sm:text-base leading-relaxed" data-i18n="carbonHeroDesc">
+            Monetize sustainable farming practices. Earn voluntary carbon credits (₹/acre/year) by adopting zero-tillage, biochar soil carbon sink, green cover crops, solar pumps, and farm bund agroforestry under Verra VCS / Gold Standard verification standards.
+          </p>
+        </div>
+      </div>
+
+      <section class="bg-white rounded-2xl border border-emerald-200 shadow-sm p-6 sm:p-8 space-y-6">
+        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-emerald-100 pb-4">
+          <div>
+            <h3 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+              <span>🌍</span> Farm Carbon Sequestration Estimator
+            </h3>
+            <p class="text-xs text-slate-500">Estimate metric tons of CO2e avoided and direct farmer carbon revenue payout.</p>
+          </div>
+          <span class="bg-emerald-100 text-emerald-800 text-xs font-bold px-3 py-1 rounded-full">Verra VM0042 Aligned</span>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="carbonAcresInput">Farm Area Enrolled (Acres)</label>
+            <input id="carbonAcresInput" type="number" step="0.5" min="0.5" value="5.0" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-sm font-bold">
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="carbonPriceUsd">Voluntary Carbon Credit Price ($/tCO2e)</label>
+            <input id="carbonPriceUsd" type="number" step="1" min="5" value="20.0" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-sm font-bold">
+          </div>
+          <div class="flex items-end">
+            <button id="calcCarbonBtn" type="button" class="w-full px-4 py-2.5 bg-emerald-800 hover:bg-emerald-900 text-white font-bold text-sm rounded-xl shadow-sm transition flex items-center justify-center gap-2">
+              <span>🌱</span> Calculate Carbon Payout
+            </button>
+          </div>
+        </div>
+
+        <div>
+          <label class="block font-bold text-slate-700 mb-2">Sustainable Practices Implemented on Your Farm:</label>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 text-xs">
+            <label class="flex items-start gap-2 p-3 bg-slate-50 rounded-xl border border-slate-200 cursor-pointer hover:bg-emerald-50/50">
+              <input type="checkbox" class="carbon-practice-chk mt-0.5 rounded text-emerald-700 focus:ring-emerald-500" value="Zero Tillage / No-Till" checked>
+              <div>
+                <span class="font-bold text-slate-900 block">Zero Tillage / No-Till</span>
+                <span class="text-slate-500 text-[11px]">Cuts diesel, preserves soil mycorrhizae (0.85 tCO2e/ac)</span>
+              </div>
+            </label>
+            <label class="flex items-start gap-2 p-3 bg-slate-50 rounded-xl border border-slate-200 cursor-pointer hover:bg-emerald-50/50">
+              <input type="checkbox" class="carbon-practice-chk mt-0.5 rounded text-emerald-700 focus:ring-emerald-500" value="Biochar Soil Application" checked>
+              <div>
+                <span class="font-bold text-slate-900 block">Biochar Soil Application</span>
+                <span class="text-slate-500 text-[11px]">100-year recalcitrant soil carbon sink (2.20 tCO2e/ac)</span>
+              </div>
+            </label>
+            <label class="flex items-start gap-2 p-3 bg-slate-50 rounded-xl border border-slate-200 cursor-pointer hover:bg-emerald-50/50">
+              <input type="checkbox" class="carbon-practice-chk mt-0.5 rounded text-emerald-700 focus:ring-emerald-500" value="Cover Cropping / Green Manure" checked>
+              <div>
+                <span class="font-bold text-slate-900 block">Cover Cropping / Green Manure</span>
+                <span class="text-slate-500 text-[11px]">Dhaincha/Sunhemp biomass carbon pump (0.90 tCO2e/ac)</span>
+              </div>
+            </label>
+            <label class="flex items-start gap-2 p-3 bg-slate-50 rounded-xl border border-slate-200 cursor-pointer hover:bg-emerald-50/50">
+              <input type="checkbox" class="carbon-practice-chk mt-0.5 rounded text-emerald-700 focus:ring-emerald-500" value="Drip Irrigation (Energy + Water Saving)">
+              <div>
+                <span class="font-bold text-slate-900 block">Drip Irrigation Energy Saving</span>
+                <span class="text-slate-500 text-[11px]">Cuts 45% pumping power consumption (0.55 tCO2e/ac)</span>
+              </div>
+            </label>
+            <label class="flex items-start gap-2 p-3 bg-slate-50 rounded-xl border border-slate-200 cursor-pointer hover:bg-emerald-50/50">
+              <input type="checkbox" class="carbon-practice-chk mt-0.5 rounded text-emerald-700 focus:ring-emerald-500" value="Solar Agricultural Pump (PM-KUSUM)">
+              <div>
+                <span class="font-bold text-slate-900 block">Solar Agricultural Pump</span>
+                <span class="text-slate-500 text-[11px]">Zero-emission grid & diesel displacement (1.75 tCO2e/ac)</span>
+              </div>
+            </label>
+            <label class="flex items-start gap-2 p-3 bg-slate-50 rounded-xl border border-slate-200 cursor-pointer hover:bg-emerald-50/50">
+              <input type="checkbox" class="carbon-practice-chk mt-0.5 rounded text-emerald-700 focus:ring-emerald-500" value="Agroforestry / Trees on Bunds">
+              <div>
+                <span class="font-bold text-slate-900 block">Agroforestry / Trees on Bunds</span>
+                <span class="text-slate-500 text-[11px]">Woody biomass carbon accumulation (1.50 tCO2e/ac)</span>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <div id="carbonResultContainer" class="hidden pt-6 border-t border-slate-200">
+          <!-- Populated by app.js -->
+        </div>
+      </section>
+    </div>
+
+    <!-- ==================== TAB 18: INTEGRATED FARMING SYSTEM (IFS) PLANNER ==================== -->
+    <div id="ifsTabContent" class="hidden space-y-8">
+      <div class="bg-gradient-to-r from-indigo-900 via-purple-950 to-slate-900 text-white rounded-2xl p-6 sm:p-8 shadow-lg relative overflow-hidden">
+        <div class="relative z-10 max-w-3xl">
+          <h2 class="text-2xl sm:text-3xl font-extrabold mb-2" data-i18n="ifsHeroTitle">🔄 Integrated Farming System & Silage Bunker (एकीकृत कृषि प्रणाली)</h2>
+          <p class="text-indigo-100 text-sm sm:text-base leading-relaxed" data-i18n="ifsHeroDesc">
+            Eliminate rural financial risk through multi-enterprise synergy. Link field crops, dairy cattle, poultry, farm pond fishery, and biogas into circular nutrient loops, and size silage pits for 90-day summer green fodder security.
+          </p>
+        </div>
+      </div>
+
+      <section class="bg-white rounded-2xl border border-indigo-200 shadow-sm p-6 sm:p-8 space-y-6">
+        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-indigo-100 pb-4">
+          <div>
+            <h3 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+              <span>🌾</span> Multi-Enterprise Configuration & Silage Sizer
+            </h3>
+            <p class="text-xs text-slate-500">ICAR-IFS circular flow model. Computes cost savings from internal recycling.</p>
+          </div>
+          <span class="bg-indigo-100 text-indigo-800 text-xs font-bold px-3 py-1 rounded-full">ICAR IFS Model</span>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="ifsTotalAcres">Total Farm Land (Acres)</label>
+            <input id="ifsTotalAcres" type="number" step="0.5" min="0.5" value="3.0" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-sm font-bold">
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="ifsCattleCount">Dairy Cattle Count</label>
+            <input id="ifsCattleCount" type="number" step="1" min="0" value="2" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-sm font-bold">
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="ifsPoultryCount">Backyard Poultry Birds</label>
+            <input id="ifsPoultryCount" type="number" step="10" min="0" value="50" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-sm font-bold">
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="ifsPondSqm">Fish Pond Area (Sq. Meters)</label>
+            <input id="ifsPondSqm" type="number" step="100" min="0" value="500" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-sm font-bold">
+          </div>
+        </div>
+
+        <div class="pt-2">
+          <button id="calcIFSBtn" type="button" class="px-6 py-2.5 bg-indigo-800 hover:bg-indigo-900 text-white font-bold text-sm rounded-xl shadow-sm transition flex items-center gap-2">
+            <span>🔄</span> Generate Integrated Synergy Plan & Silage Dimensions
+          </button>
+        </div>
+
+        <div id="ifsResultContainer" class="hidden pt-6 border-t border-slate-200">
+          <!-- Populated by app.js -->
+        </div>
+      </section>
+    </div>
+
+    <!-- ==================== TAB 19: POLYHOUSE & GREENHOUSE CLIMATE SIZER ==================== -->
+    <div id="polyhouseTabContent" class="hidden space-y-8">
+      <div class="bg-gradient-to-r from-emerald-800 via-teal-900 to-slate-900 text-white rounded-2xl p-6 sm:p-8 shadow-lg relative overflow-hidden">
+        <div class="relative z-10 max-w-3xl">
+          <h2 class="text-2xl sm:text-3xl font-extrabold mb-2" data-i18n="polyhouseHeroTitle">🏡 Polyhouse Climate & High-Tech Horticulture (पॉलीहाउस जलवायु नियंत्रक)</h2>
+          <p class="text-teal-100 text-sm sm:text-base leading-relaxed" data-i18n="polyhouseHeroDesc">
+            High-value protected cultivation. Size natural ridge ventilation, evaporative cooling pads, 50-inch exhaust fans, and calculate inside Vapor Pressure Deficit (VPD in kPa) alongside 50% MIDH government capital subsidies.
+          </p>
+        </div>
+      </div>
+
+      <section class="bg-white rounded-2xl border border-teal-200 shadow-sm p-6 sm:p-8 space-y-6">
+        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-teal-100 pb-4">
+          <div>
+            <h3 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+              <span>🌡️</span> Protected Structure & Microclimate Inputs
+            </h3>
+            <p class="text-xs text-slate-500">Sizes fans, pads, thermal drop, and MIDH subsidy entitlement.</p>
+          </div>
+          <span class="bg-teal-100 text-teal-800 text-xs font-bold px-3 py-1 rounded-full">MIDH 50% Subsidy</span>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 text-xs">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="polyStructureType">Structure Type</label>
+            <select id="polyStructureType" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-sm font-semibold">
+              <option value="Naturally Ventilated Polyhouse (NVPH)">Naturally Ventilated Polyhouse (NVPH)</option>
+              <option value="Fan & Pad Evaporative Polyhouse">Fan & Pad Evaporative Polyhouse</option>
+              <option value="Shade Net House (50% Green)">Shade Net House (50% Green)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="polyAreaSqm">Covered Area (Sq. Meters)</label>
+            <input id="polyAreaSqm" type="number" step="100" min="100" value="1008" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-sm font-bold">
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="polyCropType">High-Value Crop</label>
+            <select id="polyCropType" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-sm font-semibold">
+              <option value="Bell Pepper (Colored Capsicum)">Bell Pepper (Colored Capsicum)</option>
+              <option value="Parthenocarpic Cucumber">English Cucumber</option>
+              <option value="Cherry Tomato">Cherry Tomato</option>
+              <option value="Dutch Rose / Gerbera">Dutch Rose / Gerbera</option>
+              <option value="Strawberries">Strawberries</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="polyMaxTemp">Peak Ambient Temp (°C)</label>
+            <input id="polyMaxTemp" type="number" step="1" min="20" max="50" value="40" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-sm font-bold">
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="polyMinRh">Min Ambient RH (%)</label>
+            <input id="polyMinRh" type="number" step="5" min="10" max="90" value="30" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-sm font-bold">
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="polyHeight">Gutter/Roof Height (Meters)</label>
+            <input id="polyHeight" type="number" step="0.5" min="3.0" max="7.0" value="4.5" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-sm font-bold">
+          </div>
+        </div>
+
+        <div class="pt-2">
+          <button id="calcPolyhouseBtn" type="button" class="px-6 py-2.5 bg-teal-800 hover:bg-teal-900 text-white font-bold text-sm rounded-xl shadow-sm transition flex items-center gap-2">
+            <span>🏡</span> Size Polyhouse Climate & Calculate MIDH Subsidy
+          </button>
+        </div>
+
+        <div id="polyhouseResultContainer" class="hidden pt-6 border-t border-slate-200">
+          <!-- Populated by app.js -->
+        </div>
+      </section>
+    </div>
+
+    <!-- ==================== TAB 20: STUBBLE RESIDUE & BIOCHAR PYROLYSIS ==================== -->
+    <div id="biocharTabContent" class="hidden space-y-8">
+      <div class="bg-gradient-to-r from-amber-900 via-orange-950 to-stone-900 text-white rounded-2xl p-6 sm:p-8 shadow-lg relative overflow-hidden">
+        <div class="relative z-10 max-w-3xl">
+          <h2 class="text-2xl sm:text-3xl font-extrabold mb-2" data-i18n="biocharHeroTitle">🔥 Stubble Residue (Parali) to Biochar & Humus (पराली से बायोचार एवं खाद)</h2>
+          <p class="text-orange-100 text-sm sm:text-base leading-relaxed" data-i18n="biocharHeroDesc">
+            Turn crop stubble into black gold. Calculate biochar yield from low-cost flame-cap/Kon-Tiki kilns, soil water retention gains, avoided NGT burn fines, and rapid C:N aerobic composting recipes using Pusa Decomposer capsules.
+          </p>
+        </div>
+      </div>
+
+      <section class="bg-white rounded-2xl border border-amber-200 shadow-sm p-6 sm:p-8 space-y-6">
+        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-amber-100 pb-4">
+          <div>
+            <h3 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+              <span>🌾</span> Crop Residue Biomass & Pyrolysis Technology
+            </h3>
+            <p class="text-xs text-slate-500">Estimates biochar tonnage, carbon sequestered, and avoided smog.</p>
+          </div>
+          <span class="bg-amber-100 text-amber-900 text-xs font-bold px-3 py-1 rounded-full">Zero-Burn Economy</span>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="biocharCropSelect">Residue Crop / Stover</label>
+            <select id="biocharCropSelect" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-sm font-semibold">
+              <option value="Paddy Straw (Parali)">Paddy Straw (धान पराली)</option>
+              <option value="Wheat Straw (Turi)">Wheat Straw (गेहूं भूसा)</option>
+              <option value="Cotton Stalks">Cotton Stalks (कपास डंठल)</option>
+              <option value="Mustard Stover">Mustard Stover (सरसों अवशेष)</option>
+              <option value="Sugarcane Trash">Sugarcane Trash (गन्ना सूखी पत्ती)</option>
+              <option value="Maize Stover">Maize Stover (मक्का डंठल)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="biocharAcres">Harvested Land Size (Acres)</label>
+            <input id="biocharAcres" type="number" step="0.5" min="0.5" value="5.0" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-sm font-bold">
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="biocharTechSelect">Target Technology</label>
+            <select id="biocharTechSelect" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-sm font-semibold">
+              <option value="Kon-Tiki Pyrolysis Kiln (Biochar)">Kon-Tiki Pyrolysis Kiln (Biochar)</option>
+              <option value="Rapid Aerobic Composting">Rapid Aerobic Composting (Pusa Decomposer)</option>
+              <option value="Biochar + Compost Co-composting">Biochar + Compost Co-composting</option>
+            </select>
+          </div>
+          <div class="flex items-end">
+            <button id="calcBiocharBtn" type="button" class="w-full px-4 py-2.5 bg-amber-800 hover:bg-amber-900 text-white font-bold text-sm rounded-xl shadow-sm transition flex items-center justify-center gap-2">
+              <span>🔥</span> Calculate Biochar & Recipe
+            </button>
+          </div>
+        </div>
+
+        <div id="biocharResultContainer" class="hidden pt-6 border-t border-slate-200">
+          <!-- Populated by app.js -->
+        </div>
+      </section>
+    </div>
+
+    <!-- ==================== TAB 21: SILO AERATION & STORAGE MOISTURE SIZER ==================== -->
+    <div id="aerationTabContent" class="hidden space-y-8">
+      <div class="bg-gradient-to-r from-blue-900 via-sky-950 to-slate-900 text-white rounded-2xl p-6 sm:p-8 shadow-lg relative overflow-hidden">
+        <div class="relative z-10 max-w-3xl">
+          <h2 class="text-2xl sm:text-3xl font-extrabold mb-2" data-i18n="aerationHeroTitle">🌾 Silo Aeration & Grain Moisture Dry-Down (साइलो वातन एवं नमी सुखाई)</h2>
+          <p class="text-sky-100 text-sm sm:text-base leading-relaxed" data-i18n="aerationHeroDesc">
+            Prevent aflatoxin mold and fungal spoilage in stored harvest. Calculate exact moisture weight to extract (kg), required aeration fan airflow (CFM), motor HP, and safe shelf-life before terminal grain storage.
+          </p>
+        </div>
+      </div>
+
+      <section class="bg-white rounded-2xl border border-sky-200 shadow-sm p-6 sm:p-8 space-y-6">
+        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-sky-100 pb-4">
+          <div>
+            <h3 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+              <span>💨</span> Grain Lot Moisture & Ambient Aeration Sizer
+            </h3>
+            <p class="text-xs text-slate-500">Computes fan airflow (CFM), HP, sun vs. forced air drying hours.</p>
+          </div>
+          <span class="bg-sky-100 text-sky-800 text-xs font-bold px-3 py-1 rounded-full">ASABE Standards</span>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="aeroGrainType">Grain Type</label>
+            <select id="aeroGrainType" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-sm font-semibold">
+              <option value="Paddy (Rice)">Paddy / Rice (धान)</option>
+              <option value="Wheat">Wheat (गेहूं)</option>
+              <option value="Maize (Corn)">Maize (मक्का)</option>
+              <option value="Soybean">Soybean (सोयाबीन)</option>
+              <option value="Chickpea (Gram)">Gram / Chana (चना)</option>
+              <option value="Mustard">Mustard (सरसों)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="aeroQuantity">Total Grain Lot (Quintals)</label>
+            <input id="aeroQuantity" type="number" step="10" min="10" value="100.0" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-sm font-bold">
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="aeroInitMoist">Measured Moisture (% WB)</label>
+            <input id="aeroInitMoist" type="number" step="0.5" min="8" max="30" value="19.5" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-sm font-bold">
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="aeroTargetMoist">Target Safe Moisture (%)</label>
+            <input id="aeroTargetMoist" type="number" step="0.5" min="8" max="15" value="12.0" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-sm font-bold">
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="aeroTemp">Ambient Air Temp (°C)</label>
+            <input id="aeroTemp" type="number" step="1" min="10" max="45" value="28.0" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-sm font-bold">
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="aeroRh">Ambient Air RH (%)</label>
+            <input id="aeroRh" type="number" step="5" min="20" max="95" value="65.0" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-sm font-bold">
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="aeroStorageMethod">Storage System</label>
+            <select id="aeroStorageMethod" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-sm font-semibold">
+              <option value="Bagged in Warehouse">Bagged in Warehouse</option>
+              <option value="Steel Silo Bin">Steel Silo Bin with Perforated Floor</option>
+              <option value="Cap Storage (Outdoor Tarpaulin)">CAP Storage (Outdoor Tarpaulin)</option>
+            </select>
+          </div>
+          <div class="flex items-end">
+            <button id="calcAerationBtn" type="button" class="w-full px-4 py-2.5 bg-sky-800 hover:bg-sky-900 text-white font-bold text-sm rounded-xl shadow-sm transition flex items-center justify-center gap-2">
+              <span>💨</span> Size Aeration Fan & Dry-Down
+            </button>
+          </div>
+        </div>
+
+        <div id="aerationResultContainer" class="hidden pt-6 border-t border-slate-200">
+          <!-- Populated by app.js -->
+        </div>
+      </section>
+    </div>
+
+    <!-- ==================== TAB 22: WEED DOCTOR & HERBICIDE MIXING CALCULATOR ==================== -->
+    <div id="weedTabContent" class="hidden space-y-8">
+      <div class="bg-gradient-to-r from-emerald-800 via-teal-950 to-slate-900 text-white rounded-2xl p-6 sm:p-8 shadow-lg relative overflow-hidden">
+        <div class="relative z-10 max-w-3xl">
+          <h2 class="text-2xl sm:text-3xl font-extrabold mb-2" data-i18n="weedHeroTitle">🌿 Weed Doctor & Herbicide Mixing Calculator (खरपतवार एवं शाकनाशी सलाहकार)</h2>
+          <p class="text-emerald-100 text-sm sm:text-base leading-relaxed" data-i18n="weedHeroDesc">
+            Eliminate weeds before they rob 30-40% of crop yield. Select your crop, target weed type, and growth stage to calculate calibrated herbicide molecules, tank-by-tank knapsack sprayer dilution, flat-fan nozzle recommendations, and organic cultural controls.
+          </p>
+        </div>
+      </div>
+
+      <section class="bg-white rounded-2xl border border-emerald-200 shadow-sm p-6 sm:p-8 space-y-6">
+        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-emerald-100 pb-4">
+          <div>
+            <h3 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+              <span>🎯</span> Herbicide Dosage & Knapsack Dilution Calibrator
+            </h3>
+            <p class="text-xs text-slate-500">Calculate exact dose per 15L tank, water volume, and Pre-Harvest Interval (PHI) for maximum safety.</p>
+          </div>
+          <span class="bg-emerald-100 text-emerald-900 text-xs font-bold px-3 py-1 rounded-full border border-emerald-300">ICAR-DWR Standards</span>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="weedCropSelect">Crop (फसल)</label>
+            <select id="weedCropSelect" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-sm font-semibold">
+              <option value="wheat">Wheat (गेहूं)</option>
+              <option value="rice_paddy">Paddy / Rice (धान)</option>
+              <option value="soybean">Soybean (सोयाबीन)</option>
+              <option value="maize">Maize / Corn (मक्का)</option>
+              <option value="cotton">Cotton (कपास)</option>
+              <option value="mustard">Mustard (सरसों)</option>
+              <option value="chickpea">Chickpea / Chana (चना)</option>
+              <option value="sugarcane">Sugarcane (गन्ना)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="weedTypeSelect">Target Weed Category</label>
+            <select id="weedTypeSelect" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-sm font-semibold">
+              <option value="All">All Weeds (सभी खरपतवार)</option>
+              <option value="Narrow-leaf / Grassy">Narrow-leaf / Grassy (घास कुल / गुल्ली डंडा / सांवा)</option>
+              <option value="Broadleaf">Broadleaf Weeds (चौड़ी पत्ती / बथुआ / इटसिट)</option>
+              <option value="Sedges">Sedges (मोथा / Cyperus rotundus)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="weedStageSelect">Application Timing / Stage</label>
+            <select id="weedStageSelect" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-sm font-semibold">
+              <option value="Post-Emergence (15-25 Days)">Post-Emergence (15-35 Days after sowing / 2-4 leaf stage)</option>
+              <option value="Pre-Emergence (0-3 Days)">Pre-Emergence (0 to 3 days after sowing / before emergence)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="weedLandAcres">Land Size (Acres)</label>
+            <input id="weedLandAcres" type="number" step="0.5" min="0.25" value="1.0" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-sm font-bold">
+          </div>
+        </div>
+
+        <div class="flex justify-end pt-2 border-t border-slate-100">
+          <button id="calcWeedDoctorBtn" type="button" class="px-6 py-2.5 bg-emerald-800 hover:bg-emerald-900 text-white font-bold text-sm rounded-xl shadow-sm transition flex items-center gap-2">
+            <span>🌿</span> Calculate Herbicide Prescription & Dilution
+          </button>
+        </div>
+
+        <!-- Weed Doctor Results Container -->
+        <div id="weedDoctorResultContainer" class="hidden pt-6 border-t border-slate-200">
+          <!-- Injected by app.js -->
+        </div>
+      </section>
+    </div>
+
+  </main>
+
+  <!-- FLOATING COMPARISON BAR (Shows when crops are checked for comparison) -->
+  <div id="compareBar" class="hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 border-t border-slate-200 compare-bar px-4 py-3 no-print">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3">
+      <div class="flex flex-wrap items-center gap-2 text-xs">
+        <span class="font-bold text-slate-900">Compare Selected Crops (<span id="compareCount">0</span>/3):</span>
+        <div id="compareBadges" class="flex flex-wrap items-center gap-1.5"></div>
+      </div>
+      <div class="flex items-center space-x-2 shrink-0">
+        <button id="clearCompareBtn" type="button" class="text-xs text-slate-500 hover:text-slate-800 px-2 py-1">Clear</button>
+        <button id="openCompareModalBtn" type="button" class="bg-brand-700 hover:bg-brand-800 text-white font-bold text-xs px-4 py-2 rounded-xl shadow-sm">
+          View Side-by-Side Comparison 📊
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- COMPARISON MODAL -->
+  <div id="compareModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 modal-backdrop no-print">
+    <div class="bg-white w-full max-w-5xl rounded-2xl shadow-2xl overflow-hidden max-h-[90vh] flex flex-col">
+      <div class="bg-brand-800 text-white px-6 py-4 flex items-center justify-between">
+        <h3 class="font-bold text-base flex items-center gap-2">
+          <span>📊</span> Side-by-Side Crop Comparison (तुलनात्मक विश्लेषण)
+        </h3>
+        <button id="closeCompareModalBtn" type="button" class="text-emerald-200 hover:text-white text-xl font-bold">&times;</button>
+      </div>
+      <div class="p-6 overflow-y-auto flex-grow" id="compareModalContent">
+        <!-- Populated via app.js -->
+      </div>
+    </div>
+  </div>
+
+  <!-- LANGUAGE SELECTOR MODAL -->
+  <div id="langModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 modal-backdrop no-print">
+    <div class="bg-white w-full max-w-md rounded-2xl shadow-2xl overflow-hidden">
+      <div class="bg-brand-800 text-white px-6 py-4 flex items-center justify-between">
+        <h3 class="font-bold text-base flex items-center gap-2">
+          <span>🌐</span> Select Language / भाषा चुनें
+        </h3>
+        <button id="closeLangModalBtn" type="button" class="text-emerald-200 hover:text-white text-xl font-bold">&times;</button>
+      </div>
+      <div class="p-6 space-y-3 text-sm">
+        <button type="button" class="lang-choice-btn w-full text-left p-3 rounded-xl border border-slate-200 hover:border-brand-500 hover:bg-brand-50 font-bold text-slate-800 transition flex items-center justify-between" data-lang="en">
+          <span>🇬🇧 English</span> <span class="text-xs text-slate-400 font-normal">English</span>
+        </button>
+        <button type="button" class="lang-choice-btn w-full text-left p-3 rounded-xl border border-slate-200 hover:border-brand-500 hover:bg-brand-50 font-bold text-slate-800 transition flex items-center justify-between" data-lang="hi">
+          <span>🇮🇳 हिन्दी (Hindi)</span> <span class="text-xs text-slate-400 font-normal">हिंदी</span>
+        </button>
+        <button type="button" class="lang-choice-btn w-full text-left p-3 rounded-xl border border-slate-200 hover:border-brand-500 hover:bg-brand-50 font-bold text-slate-800 transition flex items-center justify-between" data-lang="pa">
+          <span>🇮🇳 ਪੰਜਾਬੀ (Punjabi)</span> <span class="text-xs text-slate-400 font-normal">ਪੰਜਾਬੀ</span>
+        </button>
+        <button type="button" class="lang-choice-btn w-full text-left p-3 rounded-xl border border-slate-200 hover:border-brand-500 hover:bg-brand-50 font-bold text-slate-800 transition flex items-center justify-between" data-lang="mr">
+          <span>🇮🇳 मराठी (Marathi)</span> <span class="text-xs text-slate-400 font-normal">मराठी</span>
+        </button>
+        <button type="button" class="lang-choice-btn w-full text-left p-3 rounded-xl border border-slate-200 hover:border-brand-500 hover:bg-brand-50 font-bold text-slate-800 transition flex items-center justify-between" data-lang="gu">
+          <span>🇮🇳 ગુજરાતી (Gujarati)</span> <span class="text-xs text-slate-400 font-normal">ગુજરાતી</span>
+        </button>
+        <button type="button" class="lang-choice-btn w-full text-left p-3 rounded-xl border border-slate-200 hover:border-brand-500 hover:bg-brand-50 font-bold text-slate-800 transition flex items-center justify-between" data-lang="te">
+          <span>🇮🇳 తెలుగు (Telugu)</span> <span class="text-xs text-slate-400 font-normal">తెలుగు</span>
+        </button>
+        <button type="button" class="lang-choice-btn w-full text-left p-3 rounded-xl border border-slate-200 hover:border-brand-500 hover:bg-brand-50 font-bold text-slate-800 transition flex items-center justify-between" data-lang="ta">
+          <span>🇮🇳 தமிழ் (Tamil)</span> <span class="text-xs text-slate-400 font-normal">தமிழ்</span>
+        </button>
+        <button type="button" class="lang-choice-btn w-full text-left p-3 rounded-xl border border-slate-200 hover:border-brand-500 hover:bg-brand-50 font-bold text-slate-800 transition flex items-center justify-between" data-lang="bn">
+          <span>🇮🇳 বাংলা (Bengali)</span> <span class="text-xs text-slate-400 font-normal">বাংলা</span>
+        </button>
+        <button type="button" class="lang-choice-btn w-full text-left p-3 rounded-xl border border-slate-200 hover:border-brand-500 hover:bg-brand-50 font-bold text-slate-800 transition flex items-center justify-between" data-lang="kn">
+          <span>🇮🇳 ಕನ್ನಡ (Kannada)</span> <span class="text-xs text-slate-400 font-normal">ಕನ್ನಡ</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- REGIONAL LAND UNIT CONVERTER MODAL -->
+  <div id="landConverterModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 modal-backdrop no-print">
+    <div class="bg-white w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden flex flex-col">
+      <div class="bg-amber-700 text-white px-6 py-4 flex items-center justify-between">
+        <h3 class="font-bold text-base flex items-center gap-2">
+          <span>📐</span> Regional Indian Land Unit Converter (क्षेत्रीय भूमि मापक)
+        </h3>
+        <button id="closeLandConverterBtn" type="button" class="text-amber-200 hover:text-white text-xl font-bold">&times;</button>
+      </div>
+      <div class="p-6 space-y-5 text-xs">
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="converterStateSelect">Region / State Standard</label>
+            <select id="converterStateSelect" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-sm font-semibold">
+              <option value="up_bihar">Uttar Pradesh & Bihar (Pucca Bigha)</option>
+              <option value="up_kaccha">Western UP (Kaccha Bigha)</option>
+              <option value="maharashtra">Maharashtra (Guntha / गुंठा)</option>
+              <option value="punjab_haryana">Punjab & Haryana (Kanal / Marla)</option>
+              <option value="rajasthan">Rajasthan (Bigha)</option>
+              <option value="gujarat">Gujarat (Vigha / વીઘા)</option>
+              <option value="bengal">West Bengal (Bigha / Kattha)</option>
+              <option value="south_india">Tamil Nadu & Kerala (Cent / Ground)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="converterInputValue">Enter Area Value</label>
+            <input id="converterInputValue" type="number" step="0.5" min="0.01" value="1.0" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-sm font-bold">
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" for="converterUnitSelect">Source Unit</label>
+            <select id="converterUnitSelect" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-sm font-semibold">
+              <option value="bigha">Bigha (बीघा)</option>
+              <option value="guntha">Guntha (गुंठा - MH/KA)</option>
+              <option value="kanal">Kanal (कनाल - PB/HR)</option>
+              <option value="marla">Marla (मरला - PB/HR)</option>
+              <option value="biswa">Biswa (बिस्वा)</option>
+              <option value="kattha">Kattha (कट्ठा)</option>
+              <option value="cent">Cent (सेंट - South India)</option>
+              <option value="ground">Ground (ग्राउंड - 2400 sq ft)</option>
+              <option value="acre">Acre (एकड़)</option>
+              <option value="hectare">Hectare (हेक्टेयर)</option>
+              <option value="sq_meter">Square Meter (वर्ग मीटर)</option>
+              <option value="sq_feet">Square Feet (वर्ग फुट)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Real-time Converted Units Grid -->
+        <div class="bg-amber-50/70 border border-amber-200 rounded-xl p-4 space-y-3">
+          <div class="text-xs font-bold text-amber-900 uppercase tracking-wider">Equivalent Land Measurements:</div>
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs" id="converterResultsGrid">
+            <div class="bg-white p-3 rounded-lg border border-amber-100 shadow-sm">
+              <span class="text-slate-500 block">Acres (एकड़):</span>
+              <span class="text-base font-black text-slate-900" id="convResAcre">1.00</span>
+            </div>
+            <div class="bg-white p-3 rounded-lg border border-amber-100 shadow-sm">
+              <span class="text-slate-500 block">Hectares (हेक्टेयर):</span>
+              <span class="text-base font-black text-slate-900" id="convResHectare">0.40</span>
+            </div>
+            <div class="bg-white p-3 rounded-lg border border-amber-100 shadow-sm">
+              <span class="text-slate-500 block">Guntha (गुंठा):</span>
+              <span class="text-base font-black text-emerald-800" id="convResGuntha">40.0</span>
+            </div>
+            <div class="bg-white p-3 rounded-lg border border-amber-100 shadow-sm">
+              <span class="text-slate-500 block">State Bigha (बीघा):</span>
+              <span class="text-base font-black text-amber-800" id="convResBigha">1.60</span>
+            </div>
+            <div class="bg-white p-3 rounded-lg border border-amber-100 shadow-sm">
+              <span class="text-slate-500 block">Kanal (कनाल):</span>
+              <span class="text-base font-black text-indigo-800" id="convResKanal">8.00</span>
+            </div>
+            <div class="bg-white p-3 rounded-lg border border-amber-100 shadow-sm">
+              <span class="text-slate-500 block">Marla (मरला):</span>
+              <span class="text-base font-black text-indigo-800" id="convResMarla">160.0</span>
+            </div>
+            <div class="bg-white p-3 rounded-lg border border-amber-100 shadow-sm">
+              <span class="text-slate-500 block">Square Feet:</span>
+              <span class="text-base font-black text-slate-900" id="convResSqFt">43,560</span>
+            </div>
+            <div class="bg-white p-3 rounded-lg border border-amber-100 shadow-sm">
+              <span class="text-slate-500 block">Square Meters:</span>
+              <span class="text-base font-black text-slate-900" id="convResSqM">4,047</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap items-center justify-between gap-3 pt-2">
+          <span class="text-slate-500 text-[11px] italic" id="converterFormulaHint">1 Acre = 43,560 sq ft = 40 Gunthas</span>
+          <button id="applyConverterToFormsBtn" type="button" class="bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs px-4 py-2.5 rounded-xl shadow-sm transition">
+            ✓ Apply Converted Acres to AgriAssist Forms
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- OFFLINE GPS FIELD PERIMETER & WALK-METER MODAL -->
+  <div id="fieldMeterModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 modal-backdrop no-print">
+    <div class="bg-white w-full max-w-3xl rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[92vh]">
+      <div class="bg-indigo-800 text-white px-6 py-4 flex items-center justify-between">
+        <h3 class="font-bold text-base flex items-center gap-2">
+          <span>🚶</span> Offline GPS Field Perimeter & Acreage Walk-Meter (खेत जीपीएस मापक)
+        </h3>
+        <button id="closeFieldMeterBtn" type="button" class="text-indigo-200 hover:text-white text-xl font-bold">&times;</button>
+      </div>
+
+      <div class="p-6 overflow-y-auto space-y-4 text-xs">
+        <div class="bg-indigo-50 border border-indigo-200 rounded-xl p-3 flex flex-wrap items-center justify-between gap-2">
+          <div class="flex items-center space-x-2">
+            <span class="w-3 h-3 rounded-full bg-emerald-500 animate-pulse" id="gpsStatusDot"></span>
+            <span class="font-bold text-indigo-950" id="gpsStatusText">GPS Idle • Ready to Walk Boundary</span>
+          </div>
+          <div class="text-slate-600 font-mono text-[11px]" id="gpsAccuracyText">Accuracy: --</div>
+        </div>
+
+        <!-- Action Controls -->
+        <div class="flex flex-wrap items-center gap-2">
+          <button id="gpsStartBtn" type="button" class="bg-emerald-700 hover:bg-emerald-800 text-white font-bold px-4 py-2 rounded-xl transition flex items-center gap-1.5 shadow-sm">
+            <span>▶️</span> <span>Start Walking Field</span>
+          </button>
+          <button id="gpsAddPointBtn" disabled type="button" class="bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 text-white font-bold px-3.5 py-2 rounded-xl transition flex items-center gap-1.5 shadow-sm">
+            <span>📍</span> <span>Mark Corner Point</span>
+          </button>
+          <button id="gpsFinishBtn" disabled type="button" class="bg-brand-700 hover:bg-brand-800 disabled:opacity-50 text-white font-bold px-4 py-2 rounded-xl transition flex items-center gap-1.5 shadow-sm">
+            <span>🏁</span> <span>Finish & Calculate Area</span>
+          </button>
+          <button id="gpsResetBtn" type="button" class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold px-3 py-2 rounded-xl transition">
+            Reset
+          </button>
+          <button id="toggleManualDimsBtn" type="button" class="text-indigo-700 hover:underline font-semibold ml-auto">
+            Manual Length/Width Mode 📐
+          </button>
+        </div>
+
+        <!-- Manual Dimensions Box -->
+        <div id="manualDimsBox" class="hidden p-3.5 bg-slate-50 rounded-xl border border-slate-200 grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <div>
+            <label class="block font-semibold text-slate-700 mb-1" for="manualFieldLength">Length (Feet / फीट)</label>
+            <input id="manualFieldLength" type="number" step="1" min="1" placeholder="e.g. 330" class="w-full bg-white border border-slate-300 rounded-xl p-2 text-sm font-bold">
+          </div>
+          <div>
+            <label class="block font-semibold text-slate-700 mb-1" for="manualFieldWidth">Width (Feet / फीट)</label>
+            <input id="manualFieldWidth" type="number" step="1" min="1" placeholder="e.g. 132" class="w-full bg-white border border-slate-300 rounded-xl p-2 text-sm font-bold">
+          </div>
+          <div class="flex items-end">
+            <button id="calcManualAreaBtn" type="button" class="w-full bg-indigo-700 hover:bg-indigo-800 text-white font-bold p-2 text-sm rounded-xl transition">
+              Calculate from Dimensions
+            </button>
+          </div>
+        </div>
+
+        <!-- Live Canvas Visualizer -->
+        <div class="border border-slate-300 rounded-xl bg-slate-900 p-2 overflow-hidden flex flex-col items-center justify-center relative">
+          <canvas id="fieldCanvas" width="600" height="260" class="w-full max-w-full bg-slate-950 rounded-lg"></canvas>
+          <div class="absolute bottom-4 left-4 text-[10px] text-slate-400 font-mono" id="canvasPointsCount">Points logged: 0</div>
+        </div>
+
+        <!-- Calculated Live Statistics -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <div class="bg-indigo-50 border border-indigo-200 p-3 rounded-xl text-center">
+            <span class="text-slate-500 block text-[11px]">Field Area (Acres):</span>
+            <span class="text-xl font-black text-indigo-900" id="walkCalculatedAcres">0.00</span>
+          </div>
+          <div class="bg-amber-50 border border-amber-200 p-3 rounded-xl text-center">
+            <span class="text-slate-500 block text-[11px]">Guntha (गुंठा):</span>
+            <span class="text-xl font-black text-amber-900" id="walkCalculatedGuntha">0.0</span>
+          </div>
+          <div class="bg-emerald-50 border border-emerald-200 p-3 rounded-xl text-center">
+            <span class="text-slate-500 block text-[11px]">Bigha (बीघा):</span>
+            <span class="text-xl font-black text-emerald-900" id="walkCalculatedBigha">0.0</span>
+          </div>
+          <div class="bg-slate-50 border border-slate-200 p-3 rounded-xl text-center">
+            <span class="text-slate-500 block text-[11px]">Perimeter (तारबंदी):</span>
+            <span class="text-xl font-black text-slate-900" id="walkCalculatedPerimeter">0 m</span>
+          </div>
+        </div>
+
+        <div class="flex justify-end pt-2 border-t border-slate-100">
+          <button id="applyWalkAcresBtn" type="button" class="bg-emerald-700 hover:bg-emerald-800 text-white font-bold px-4 py-2 rounded-xl transition shadow-sm">
+            ✓ Apply Measured Acres to AgriAssist
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SATELLITE FIELD PLOTTER & FENCING CALCULATOR MODAL (Leaflet + Esri World Imagery) -->
+  <div id="satelliteMapModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 modal-backdrop no-print">
+    <div class="bg-white w-full max-w-4xl rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[94vh]">
+      <div class="bg-teal-800 text-white px-6 py-4 flex items-center justify-between">
+        <h3 class="font-bold text-base flex items-center gap-2">
+          <span>🛰️</span> <span>Interactive Satellite Field Plotter & Fencing Calculator (उपग्रह खेत मापक एवं तारबंदी)</span>
+        </h3>
+        <button id="closeSatelliteMapBtn" type="button" class="text-teal-200 hover:text-white text-xl font-bold">&times;</button>
+      </div>
+
+      <div class="p-5 overflow-y-auto space-y-4 text-xs">
+        <!-- Interactive Controls Bar -->
+        <div class="flex flex-wrap items-center justify-between gap-2 bg-teal-50 p-3 rounded-xl border border-teal-200">
+          <div class="flex items-center gap-2">
+            <span class="font-bold text-teal-950">Instructions:</span>
+            <span class="text-slate-600">Click on satellite imagery to outline field corners. Connect back to first point to close polygon.</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <button id="satLocateBtn" type="button" class="bg-teal-700 hover:bg-teal-800 text-white font-bold px-3 py-1.5 rounded-lg transition flex items-center gap-1 shadow-sm">
+              <span>📍</span> <span>Zoom to My Location</span>
+            </button>
+            <button id="satClearPolygonBtn" type="button" class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold px-3 py-1.5 rounded-lg transition">
+              Clear Points
+            </button>
+          </div>
+        </div>
+
+        <!-- Leaflet Map Container -->
+        <div class="relative w-full rounded-xl overflow-hidden border-2 border-slate-300 shadow-inner">
+          <div id="leafletSatelliteMap" style="height: 380px; width: 100%;" class="bg-slate-900"></div>
+          <div class="absolute bottom-2 left-2 z-[1000] bg-slate-900/80 text-white text-[10px] px-2 py-1 rounded backdrop-blur font-mono" id="satPointsBadge">
+            Corners: 0 points
+          </div>
+        </div>
+
+        <!-- Calculated Land Statistics Grid -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <div class="bg-teal-50 border border-teal-200 p-3 rounded-xl text-center">
+            <span class="text-slate-500 block text-[11px]">Field Area (Acres):</span>
+            <span class="text-xl font-black text-teal-950" id="satAreaAcres">0.00</span>
+          </div>
+          <div class="bg-amber-50 border border-amber-200 p-3 rounded-xl text-center">
+            <span class="text-slate-500 block text-[11px]">Guntha (गुंठा):</span>
+            <span class="text-xl font-black text-amber-900" id="satAreaGuntha">0.0</span>
+          </div>
+          <div class="bg-emerald-50 border border-emerald-200 p-3 rounded-xl text-center">
+            <span class="text-slate-500 block text-[11px]">Bigha (बीघा):</span>
+            <span class="text-xl font-black text-emerald-900" id="satAreaBigha">0.0</span>
+          </div>
+          <div class="bg-indigo-50 border border-indigo-200 p-3 rounded-xl text-center">
+            <span class="text-slate-500 block text-[11px]">Boundary Perimeter:</span>
+            <span class="text-xl font-black text-indigo-900" id="satPerimeterM">0 m</span>
+          </div>
+        </div>
+
+        <!-- Fencing Cost & Materials Estimator Card -->
+        <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl space-y-3">
+          <h4 class="font-bold text-slate-800 text-xs uppercase tracking-wider flex items-center gap-1.5">
+            <span>🛡️</span> Boundary Fencing Materials & Cost Estimator (तारबंदी खर्च अनुमान)
+          </h4>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div>
+              <label class="block text-slate-600 mb-1" for="fenceTypeSelect">Fencing System</label>
+              <select id="fenceTypeSelect" class="w-full bg-white border border-slate-300 rounded-lg p-2 text-xs font-semibold">
+                <option value="barbed_3">3-Strand Barbed Wire (3-तार कांटेदार)</option>
+                <option value="barbed_4" selected>4-Strand Barbed Wire (4-तार कांटेदार)</option>
+                <option value="solar_electric">Solar Electric Fence (झटका मशीन / सौर बाड़)</option>
+                <option value="chain_link">GI Chain Link Mesh (तार की जाली - 5 ft)</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-slate-600 mb-1" for="fencePoleSpacing">Pole Spacing (Distance)</label>
+              <select id="fencePoleSpacing" class="w-full bg-white border border-slate-300 rounded-lg p-2 text-xs font-semibold">
+                <option value="3">Every 3 meters (~10 feet)</option>
+                <option value="4">Every 4 meters (~13 feet)</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-slate-600 mb-1" for="fencePoleType">Pole Type</label>
+              <select id="fencePoleType" class="w-full bg-white border border-slate-300 rounded-lg p-2 text-xs font-semibold">
+                <option value="cement">RCC Cement Pole (₹280/pole)</option>
+                <option value="iron">Iron Angle / Pipe (₹350/pole)</option>
+                <option value="wood">Local Wooden / Bamboo Pole (₹120/pole)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-2 text-[11px] border-t border-slate-200 text-slate-700">
+            <div>Total Wire Needed: <strong class="text-slate-900" id="fenceWireMeters">0 m</strong></div>
+            <div>Wire Weight: <strong class="text-slate-900" id="fenceWireKg">0 kg</strong></div>
+            <div>Poles Required: <strong class="text-slate-900" id="fencePolesCount">0 poles</strong></div>
+            <div>Estimated Cost: <strong class="text-emerald-700 font-bold" id="fenceTotalCost">₹0</strong></div>
+          </div>
+        </div>
+
+        <div class="flex justify-end pt-2 border-t border-slate-100">
+          <button id="applySatAcresBtn" type="button" class="bg-teal-700 hover:bg-teal-800 text-white font-bold px-4 py-2 rounded-xl transition shadow-sm">
+            ✓ Apply Measured Acres to AgriAssist
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GREEN CANOPY COVER & WEED DENSITY METER MODAL -->
+  <div id="canopyMeterModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 modal-backdrop no-print">
+    <div class="bg-white w-full max-w-3xl rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[94vh]">
+      <div class="bg-lime-800 text-white px-6 py-4 flex items-center justify-between">
+        <h3 class="font-bold text-base flex items-center gap-2">
+          <span>📷</span> <span>Green Canopy Cover & Weed Density Meter (कैनोपी एवं खरपतवार घनत्व मापक)</span>
+        </h3>
+        <button id="closeCanopyMeterBtn" type="button" class="text-lime-200 hover:text-white text-xl font-bold">&times;</button>
+      </div>
+
+      <div class="p-6 overflow-y-auto space-y-5 text-xs">
+        <div class="bg-lime-50 border border-lime-200 p-3.5 rounded-xl text-slate-700 leading-relaxed">
+          <strong>How it works:</strong> Take a top-down photo of your field canopy or upload a leaf bed image. The browser segments green plant matter using the Excess Green Index ($2G - R - B$) to measure ground cover %, seedling emergence density, and weed pressure without internet or servers.
+        </div>
+
+        <div class="flex flex-wrap items-center gap-3">
+          <!-- Camera / File Upload -->
+          <label class="cursor-pointer bg-lime-700 hover:bg-lime-800 text-white font-bold px-4 py-2 rounded-xl transition shadow-sm flex items-center gap-2">
+            <span>📸</span> <span>Take Photo or Upload</span>
+            <input type="file" id="canopyPhotoInput" accept="image/*" capture="environment" class="hidden">
+          </label>
+          <button id="toggleCanopyMaskBtn" type="button" disabled class="bg-slate-800 hover:bg-slate-900 text-white font-bold px-4 py-2 rounded-xl transition shadow-sm disabled:opacity-40">
+            <span>🎭</span> Toggle Green Mask
+          </button>
+          <span id="canopyFileName" class="text-slate-500 font-mono text-xs">No image selected</span>
+        </div>
+
+        <!-- Canvas Display Area -->
+        <div class="flex flex-col sm:flex-row gap-4 items-center justify-center bg-slate-950 p-4 rounded-xl relative min-h-[260px]">
+          <div id="canopyPlaceholder" class="text-slate-400 text-center py-12">
+            <span class="text-4xl block mb-2">🌿</span>
+            <p class="font-semibold">Snap a field photo or upload an image to analyze canopy coverage</p>
+            <p class="text-[11px] text-slate-500 mt-1">Works on wheat, paddy, cotton, maize, soybean, vegetables</p>
+          </div>
+          <canvas id="canopyCanvas" class="hidden max-h-[340px] max-w-full rounded-lg shadow-lg border border-slate-700"></canvas>
+        </div>
+
+        <!-- Metrics Dashboard -->
+        <div id="canopyMetricsDashboard" class="hidden space-y-4">
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            <div class="bg-white p-3.5 rounded-xl border border-lime-200 shadow-sm text-center">
+              <span class="text-[11px] font-bold text-slate-500 block">Canopy Cover</span>
+              <span id="canopyCoverPct" class="text-2xl font-black text-lime-700">0%</span>
+            </div>
+            <div class="bg-white p-3.5 rounded-xl border border-slate-200 shadow-sm text-center">
+              <span class="text-[11px] font-bold text-slate-500 block">Bare Ground / Soil</span>
+              <span id="canopyBareSoilPct" class="text-2xl font-black text-amber-800">0%</span>
+            </div>
+            <div class="bg-white p-3.5 rounded-xl border border-emerald-200 shadow-sm text-center">
+              <span class="text-[11px] font-bold text-slate-500 block">Emergence Status</span>
+              <span id="canopyEmergenceRating" class="text-sm font-black text-emerald-800 mt-1 block">Analyzing...</span>
+            </div>
+            <div class="bg-white p-3.5 rounded-xl border border-rose-200 shadow-sm text-center">
+              <span class="text-[11px] font-bold text-slate-500 block">Weed Pressure</span>
+              <span id="canopyWeedPressure" class="text-sm font-black text-rose-700 mt-1 block">Low Risk</span>
+            </div>
+          </div>
+
+          <div id="canopyAgronomicTip" class="p-4 bg-emerald-50 border border-emerald-200 rounded-xl text-xs text-emerald-950 leading-relaxed font-medium">
+            <!-- Populated by app.js -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DYNAMIC CROP CALENDAR MODAL (Milestones & ICS Export) -->
+  <div id="cropCalendarModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 modal-backdrop no-print">
+    <div class="bg-white w-full max-w-3xl rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+      <div class="bg-brand-800 text-white px-6 py-4 flex items-center justify-between">
+        <h3 class="font-bold text-base flex items-center gap-2">
+          <span>📅</span> <span id="calendarCropModalTitle">Dynamic Crop Growth Calendar & Reminders</span>
+        </h3>
+        <button id="closeCropCalendarBtn" type="button" class="text-emerald-200 hover:text-white text-xl font-bold">&times;</button>
+      </div>
+
+      <div class="p-6 overflow-y-auto space-y-5 text-xs">
+        <div class="flex flex-wrap items-center justify-between gap-3 bg-brand-50 p-3.5 rounded-xl border border-brand-200">
+          <div>
+            <span class="font-bold text-brand-950 text-sm" id="calSowingSummary">Sowing: -- | Harvest: --</span>
+            <div class="text-slate-600 text-[11px]" id="calDurationDays">Total Crop Lifecycle: 120 Days</div>
+          </div>
+          <button id="downloadIcsBtn" type="button" class="bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs px-4 py-2 rounded-xl shadow-sm transition flex items-center gap-2">
+            <span>📥</span> <span>Add to Phone Calendar (.ics)</span>
+          </button>
+        </div>
+
+        <!-- Timeline Events -->
+        <div id="cropCalendarTimelineContainer" class="space-y-3">
+          <!-- Injected by app.js -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- FLOATING VOICE INPUT STATUS PILL -->
+  <div id="voiceStatusPill" class="hidden fixed bottom-6 right-6 z-50 bg-slate-900/95 text-white px-4 py-3 rounded-2xl shadow-2xl border border-emerald-500/50 flex items-center space-x-3 no-print">
+    <span class="w-3 h-3 rounded-full bg-rose-500 animate-ping"></span>
+    <div class="text-xs">
+      <div class="font-bold text-emerald-300" id="voiceStatusTitle">Listening... बोलिए...</div>
+      <div class="text-slate-300 text-[11px]" id="voiceTranscriptPreview">Speak clearly into microphone...</div>
+    </div>
+    <button id="closeVoiceBtn" type="button" class="text-slate-400 hover:text-white font-bold ml-2 text-sm">&times;</button>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="bg-white border-t border-slate-200 text-slate-500 text-xs py-6 mt-12 no-print">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-wrap items-center justify-between gap-4">
+      <div class="flex items-center space-x-2">
+        <span class="font-black text-brand-800 text-sm">🌾 AgriAssist</span>
+        <span>• Agricultural Decision Support Intelligence</span>
+      </div>
+      <p>Empowering sustainable farming with science-backed sowing recommendations.</p>
+    </div>
+  </footer>
+
+  <!-- CONTINGENCY PROTOCOL "PLASTIC MAN" MODAL -->
+  <div id="contingencyModal" class="hidden fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-5 bg-slate-950/85 backdrop-blur-md no-print" role="dialog" aria-modal="true" aria-labelledby="contingencyTitle">
+    <div class="bg-gradient-to-b from-slate-900 via-slate-900 to-slate-950 text-slate-100 rounded-3xl shadow-2xl border-2 border-emerald-500/60 w-full max-w-2xl overflow-hidden flex flex-col max-h-[92vh] ring-1 ring-emerald-400/40 relative">
+      
+      <!-- Top Cyber Glow Indicator -->
+      <div class="h-1.5 w-full bg-gradient-to-r from-emerald-500 via-teal-400 to-emerald-500 animate-pulse"></div>
+
+      <!-- Header -->
+      <div class="px-6 py-5 bg-slate-900/95 border-b border-emerald-500/30 flex items-start justify-between gap-4">
+        <div class="flex items-center gap-3.5">
+          <div class="w-12 h-12 rounded-2xl bg-emerald-500/20 border border-emerald-400/50 flex items-center justify-center text-2xl shadow-inner text-emerald-400 flex-shrink-0 animate-bounce">
+            🛡️
+          </div>
+          <div>
+            <div class="flex items-center gap-2 flex-wrap">
+              <span class="bg-rose-600/90 text-white font-mono text-[10px] tracking-wider uppercase px-2.5 py-0.5 rounded-full font-bold shadow-sm">
+                RESTRICTED OVERRIDE
+              </span>
+              <span class="bg-emerald-500/20 text-emerald-300 font-mono text-[11px] px-2.5 py-0.5 rounded-full border border-emerald-500/40 font-semibold">
+                CODE NAME: PLASTIC MAN
+              </span>
+            </div>
+            <h2 id="contingencyTitle" class="text-xl sm:text-2xl font-black text-white tracking-tight mt-1 flex items-center gap-2">
+              Contingency Protocol Activated
+            </h2>
+            <p class="text-xs text-emerald-400 font-medium">Proprietary Authenticity & Master Ownership Verification</p>
+          </div>
+        </div>
+        <button id="closeContingencyBtn" type="button" class="text-slate-400 hover:text-white bg-slate-800/80 hover:bg-slate-800 p-2 rounded-xl transition border border-slate-700 text-lg leading-none" title="Close Protocol Modal">
+          ✕
+        </button>
+      </div>
+
+      <!-- Scrollable Content Body -->
+      <div class="p-6 overflow-y-auto space-y-5 text-sm">
+        
+        <!-- Anti-Theft Alert Banner -->
+        <div class="bg-gradient-to-r from-emerald-950/80 to-slate-900 p-4 rounded-2xl border border-emerald-500/40 flex items-start gap-3">
+          <span class="text-2xl">⚡</span>
+          <div class="text-xs space-y-1">
+            <div class="font-bold text-emerald-300 uppercase tracking-wider">Undisputed Authorship Confirmation</div>
+            <p class="text-slate-300 leading-relaxed">
+              A hidden master authorization key was successfully matched. This contingency protocol serves as cryptographic, forensic, and legal proof of original conception and intellectual property ownership.
+            </p>
+          </div>
+        </div>
+
+        <!-- Core Ownership Credentials Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+          
+          <!-- Real Owner Card -->
+          <div class="bg-slate-800/60 p-4 rounded-2xl border border-slate-700/80 space-y-1">
+            <div class="text-[11px] uppercase tracking-wider text-slate-400 font-bold flex items-center gap-1.5">
+              <span>👑</span> Real Owner & Architect
+            </div>
+            <div class="text-base font-extrabold text-white">
+              MegaTron <span class="text-emerald-400 font-normal">alias</span> Mohammed Razin H
+            </div>
+            <div class="text-[11px] text-slate-400">Sole Creator & Intellectual Property Holder</div>
+          </div>
+
+          <!-- Real Project Name Card -->
+          <div class="bg-slate-800/60 p-4 rounded-2xl border border-slate-700/80 space-y-1">
+            <div class="text-[11px] uppercase tracking-wider text-slate-400 font-bold flex items-center gap-1.5">
+              <span>🌾</span> Authentic Project Name
+            </div>
+            <div class="text-base font-extrabold text-white">
+              AgriAssist
+            </div>
+            <div class="text-[11px] text-emerald-400">Smart Crop Decision Support System</div>
+          </div>
+
+        </div>
+
+        <!-- Author Credentials Section -->
+        <div class="bg-slate-800/40 rounded-2xl border border-slate-700/60 p-4 space-y-3">
+          <div class="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center justify-between">
+            <span>Author Credentials & Direct Profiles</span>
+            <span class="text-emerald-400 text-[11px] font-mono">VERIFIED IDENTITY ✓</span>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs">
+            
+            <!-- Name -->
+            <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-800 flex items-center justify-between">
+              <span class="text-slate-400">Author:</span>
+              <span class="font-bold text-white text-right">Mohammed Razin H</span>
+            </div>
+
+            <!-- Contact Email -->
+            <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-800 flex items-center justify-between group">
+              <span class="text-slate-400">Contact:</span>
+              <div class="flex items-center gap-1.5 overflow-hidden">
+                <span id="authorEmailText" class="font-bold text-emerald-300 truncate text-[11px]">mohammedrazin22202@gmail.com</span>
+                <button id="copyAuthorEmailBtn" type="button" class="text-slate-400 hover:text-white bg-slate-800 px-1.5 py-0.5 rounded text-[10px] border border-slate-700" title="Copy Email">
+                  📋
+                </button>
+              </div>
+            </div>
+
+            <!-- LinkedIn -->
+            <a href="https://www.linkedin.com/in/razin88307" target="_blank" rel="noopener noreferrer" class="bg-slate-900/80 hover:bg-blue-950/40 p-3 rounded-xl border border-slate-800 hover:border-blue-500/50 flex items-center justify-between text-blue-400 transition group">
+              <span class="text-slate-400 flex items-center gap-1.5">
+                <span>💼</span> LinkedIn:
+              </span>
+              <span class="font-bold underline text-right group-hover:text-blue-300">in/razin88307 ↗</span>
+            </a>
+
+            <!-- GitHub -->
+            <a href="https://github.com/mohammedrazin22202-cyber" target="_blank" rel="noopener noreferrer" class="bg-slate-900/80 hover:bg-slate-800/80 p-3 rounded-xl border border-slate-800 hover:border-slate-600 flex items-center justify-between text-slate-200 transition group">
+              <span class="text-slate-400 flex items-center gap-1.5">
+                <span>🐙</span> GitHub:
+              </span>
+              <span class="font-bold underline text-right group-hover:text-white">mohammedrazin22202-cyber ↗</span>
+            </a>
+
+          </div>
+        </div>
+
+        <!-- Trigger Status & Matched Key -->
+        <div class="bg-emerald-950/30 border border-emerald-500/40 rounded-2xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div>
+            <div class="text-[11px] text-emerald-400 font-bold uppercase tracking-wider">Trigger Mechanism</div>
+            <div class="font-mono text-sm text-white font-extrabold mt-0.5" id="contingencyKeyInfo">
+              Matched Code: Authenticated Author Key
+            </div>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
+            <span class="text-emerald-300 text-xs font-mono font-bold">PROTOCOL LEVEL: OMNI-ACCESS</span>
+          </div>
+        </div>
+
+        <!-- 21 Secret Codes Vault (Expandable Accordion) -->
+        <div class="bg-slate-900/80 rounded-2xl border border-slate-800 overflow-hidden">
+          <button id="toggleSecretCodesBtn" type="button" class="w-full px-4 py-3 text-left font-bold text-xs text-slate-300 hover:text-white flex items-center justify-between bg-slate-800/60 hover:bg-slate-800 transition">
+            <span class="flex items-center gap-2">
+              <span>🔐</span> Master Security Vault (21 Secret Author Codes)
+            </span>
+            <span id="secretCodesToggleIcon" class="text-slate-400 font-mono text-[11px]">▼ Show Codes</span>
+          </button>
+          <div id="secretCodesContainer" class="hidden p-4 border-t border-slate-800 bg-slate-950/50">
+            <p class="text-[11px] text-slate-400 mb-3 leading-relaxed">
+              The following 21 unique author passcodes are embedded into the AgriAssist binary architecture to verify original possession and repel code theft:
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 font-mono text-xs" id="secretCodesListGrid">
+              <!-- Populated via script -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Legal Protection Notice -->
+        <div class="text-[11px] text-slate-400 border-l-2 border-amber-500 pl-3 py-1 space-y-1">
+          <div class="font-bold text-amber-400 uppercase tracking-wider">Legal Notice & Anti-Plagiarism Warning</div>
+          <p>
+            AgriAssist was researched, engineered, and published by <strong>Mohammed Razin H (MegaTron)</strong>. Possession of this software does not grant rights to remove attribution, repackage under a false identity, or infringe on the creator's moral and legal rights. All rights reserved.
+          </p>
+        </div>
+
+      </div>
+
+      <!-- Modal Footer Actions -->
+      <div class="px-6 py-4 bg-slate-900/95 border-t border-slate-800 flex flex-wrap items-center justify-between gap-3">
+        <div class="flex items-center gap-2">
+          <button id="copyProofCertBtn" type="button" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs px-3.5 py-2 rounded-xl transition flex items-center gap-1.5 shadow-sm">
+            <span>📜</span> <span>Copy Verification Receipt</span>
+          </button>
+          <a href="https://github.com/mohammedrazin22202-cyber" target="_blank" rel="noopener noreferrer" class="bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white font-bold text-xs px-3.5 py-2 rounded-xl transition border border-slate-700 flex items-center gap-1.5">
+            <span>🐙</span> <span>Author GitHub</span>
+          </a>
+        </div>
+        <button id="dismissContingencyBtn" type="button" class="bg-slate-700 hover:bg-slate-600 text-white font-bold text-xs px-4 py-2 rounded-xl transition">
+          Acknowledge & Close
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FLOATING KISAN AI ASSISTANT LAUNCHER -->
+  <button id="floatingKisanAIBtn" type="button" class="fixed bottom-6 right-6 z-40 bg-gradient-to-r from-purple-700 via-indigo-700 to-purple-800 hover:from-purple-600 hover:to-indigo-600 text-white p-3.5 rounded-full shadow-2xl border-2 border-purple-300 flex items-center gap-2 group transition-all duration-300 transform hover:scale-105 no-print" title="Ask Kisan AI Assistant (किसान AI से पूछें)">
+    <span class="text-2xl animate-bounce">🤖</span>
+    <span class="hidden group-hover:inline-block text-xs font-black tracking-wide pr-2">Kisan AI • पूछें या बोलें</span>
+  </button>
+
+  <!-- KISAN AI CONVERSATIONAL ASSISTANT MODAL -->
+  <div id="kisanAIChatModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 modal-backdrop no-print">
+    <div class="bg-white w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden flex flex-col h-[85vh] max-h-[700px] border border-slate-200">
+      
+      <!-- Modal Header -->
+      <div class="bg-gradient-to-r from-purple-800 via-indigo-900 to-slate-900 text-white px-5 py-3.5 flex items-center justify-between shrink-0 shadow-sm">
+        <div class="flex items-center space-x-3">
+          <div class="w-10 h-10 rounded-xl bg-purple-600/60 border border-purple-400 flex items-center justify-center text-2xl shadow-inner">
+            🤖
+          </div>
+          <div>
+            <div class="flex items-center space-x-2">
+              <h3 class="font-extrabold text-base tracking-tight">Kisan AI Assistant</h3>
+              <span class="bg-emerald-500/20 text-emerald-300 text-[10px] px-2 py-0.5 rounded-full font-bold border border-emerald-500/30 flex items-center gap-1">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> Online
+              </span>
+            </div>
+            <p class="text-xs text-purple-200">Bilingual Voice & Text Agronomic Intelligence (हिंदी / English)</p>
+          </div>
+        </div>
+        <div class="flex items-center space-x-2">
+          <!-- Voice Output Mute Toggle -->
+          <button id="toggleChatAudioBtn" type="button" class="text-purple-200 hover:text-white p-1.5 rounded-lg hover:bg-purple-700/50 transition text-sm" title="Toggle Spoken Audio Output">
+            <span id="chatAudioIcon">🔊</span>
+          </button>
+          <button id="closeKisanAIChatBtn" type="button" class="text-purple-200 hover:text-white text-2xl font-bold leading-none p-1 rounded-lg hover:bg-purple-700/50 transition">&times;</button>
+        </div>
+      </div>
+
+      <!-- Messages Feed Container -->
+      <div id="kisanChatFeed" class="flex-grow p-4 overflow-y-auto space-y-3.5 bg-slate-50 text-xs">
+        <!-- Initial Welcome Message from Assistant -->
+        <div class="flex items-start gap-2.5">
+          <div class="w-7 h-7 rounded-lg bg-purple-700 text-white flex items-center justify-center text-sm shrink-0">
+            🤖
+          </div>
+          <div class="bg-white border border-slate-200 rounded-2xl rounded-tl-none p-3.5 shadow-sm max-w-[85%] space-y-2 text-slate-800">
+            <p class="font-semibold text-slate-900 leading-relaxed">
+              नमस्ते किसान भाई! मैं AgriAssist AI सहायक हूँ। मुझसे फसल चयन, खाद की बोरी, ड्रिप फर्टीगेशन, मंडी भाव, कीट-रोग के देसी व रासायनिक उपचार, या सरकारी योजनाओं के बारे में पूछें।
+            </p>
+            <p class="text-slate-600 leading-relaxed">
+              Hello! I can guide you on crop recommendations, stoichiometric fertilizer doses, drip fertigation, APMC price arbitrage, and government subsidies. Type your question or tap the mic to speak!
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Suggestion Chips Carousel -->
+      <div class="px-4 py-2 bg-slate-100/80 border-t border-slate-200 flex items-center gap-1.5 overflow-x-auto scrollbar-thin text-[11px] shrink-0">
+        <span class="text-slate-500 font-bold shrink-0">💡 Quick:</span>
+        <button type="button" class="chat-quick-chip px-2.5 py-1 bg-white hover:bg-purple-50 text-slate-700 hover:text-purple-800 rounded-full border border-slate-200 font-medium whitespace-nowrap transition">
+          Top crops for Kharif
+        </button>
+        <button type="button" class="chat-quick-chip px-2.5 py-1 bg-white hover:bg-purple-50 text-slate-700 hover:text-purple-800 rounded-full border border-slate-200 font-medium whitespace-nowrap transition">
+          How many Urea bags per acre?
+        </button>
+        <button type="button" class="chat-quick-chip px-2.5 py-1 bg-white hover:bg-purple-50 text-slate-700 hover:text-purple-800 rounded-full border border-slate-200 font-medium whitespace-nowrap transition">
+          Drip fertigation schedule
+        </button>
+        <button type="button" class="chat-quick-chip px-2.5 py-1 bg-white hover:bg-purple-50 text-slate-700 hover:text-purple-800 rounded-full border border-slate-200 font-medium whitespace-nowrap transition">
+          Yellow leaves remedy
+        </button>
+        <button type="button" class="chat-quick-chip px-2.5 py-1 bg-white hover:bg-purple-50 text-slate-700 hover:text-purple-800 rounded-full border border-slate-200 font-medium whitespace-nowrap transition">
+          Mandi arbitrage profit
+        </button>
+        <button type="button" class="chat-quick-chip px-2.5 py-1 bg-white hover:bg-purple-50 text-slate-700 hover:text-purple-800 rounded-full border border-slate-200 font-medium whitespace-nowrap transition">
+          Carbon credit payout
+        </button>
+      </div>
+
+      <!-- Chat Input Area -->
+      <div class="p-3 bg-white border-t border-slate-200 shrink-0">
+        <form id="kisanChatForm" class="flex items-center gap-2">
+          <button id="chatVoiceInputBtn" type="button" class="p-2.5 bg-rose-50 hover:bg-rose-100 text-rose-700 rounded-xl border border-rose-200 transition shrink-0" title="Speak question via Microphone">
+            <span id="chatVoiceMicIcon" class="text-base">🎙️</span>
+          </button>
+          <input id="kisanChatInput" type="text" placeholder="Type or speak agronomic question... (उदा. 1 एकड़ टमाटर में खाद)" class="flex-grow bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 focus:outline-none focus:border-purple-600 focus:bg-white" autocomplete="off">
+          <button id="sendKisanChatBtn" type="submit" class="px-4 py-2.5 bg-purple-700 hover:bg-purple-800 text-white font-bold text-xs rounded-xl shadow-sm transition shrink-0 flex items-center gap-1.5">
+            <span>Send</span> <span>➤</span>
+          </button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION CONTAINER -->
+  <div id="toastContainer" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none max-w-sm w-full no-print" aria-live="polite"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
       
