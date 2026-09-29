@@ -1352,6 +1352,14 @@ const calcNasaGddBtn = document.getElementById("calcNasaGddBtn");
 const nasaGddResultContainer = document.getElementById("nasaGddResultContainer");
 
 
+// ZECC Cool Chamber
+const zeccProduceSelect = document.getElementById("zeccProduceSelect");
+const zeccCratesInput = document.getElementById("zeccCratesInput");
+const zeccCratesLabel = document.getElementById("zeccCratesLabel");
+const calcZeccBtn = document.getElementById("calcZeccBtn");
+const zeccResultContainer = document.getElementById("zeccResultContainer");
+
+
 // Quick Header Actions
 const voiceSearchBtn = document.getElementById("voiceSearchBtn");
 const openKisanAIBtn = document.getElementById("openKisanAIBtn");
@@ -1717,6 +1725,14 @@ document.addEventListener("DOMContentLoaded", () => {
       nasaTbase.value = opt.dataset.tbase;
     }
   });
+
+  
+  calcZeccBtn?.addEventListener("click", executeZeccPlanner);
+  zeccCratesInput?.addEventListener("input", (e) => {
+    if (zeccCratesLabel) zeccCratesLabel.textContent = `${e.target.value} Crates (${e.target.value * 20} kg)`;
+    executeZeccPlanner();
+  });
+  zeccProduceSelect?.addEventListener("change", executeZeccPlanner);
 
   recalculateLandConverter();
   renderGrainStorageCatalog();
@@ -10683,6 +10699,157 @@ function renderNasaGddResult(res) {
         <ul class="list-disc list-inside space-y-1 text-slate-600 pt-1">
           ${res.thermal_stress_alerts.map(a => `<li>${a}</li>`).join("")}
         </ul>
+      </div>
+    </div>
+  `;
+}
+
+
+
+// ----------------------------------------------------------------------------
+// 4. Zero Energy Cool Chamber (ZECC) Storage Planner
+// ----------------------------------------------------------------------------
+async function executeZeccPlanner() {
+  const produce = zeccProduceSelect ? zeccProduceSelect.value : "Tomato (टमाटर)";
+  const crates = parseInt(zeccCratesInput ? zeccCratesInput.value : 20) || 20;
+
+  if (!zeccResultContainer) return;
+
+  const payload = {
+    storage_capacity_crates: crates,
+    primary_produce: produce
+  };
+
+  try {
+    const res = await fetch(`${API_BASE}/zecc-storage`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+    if (!res.ok) throw new Error("API offline");
+    const data = await res.json();
+    renderZeccResult(data);
+  } catch (err) {
+    console.warn("Using offline ZECC calculation:", err);
+    const data = calculateZeccOffline(payload);
+    renderZeccResult(data);
+  }
+}
+window.executeZeccPlanner = executeZeccPlanner;
+
+function calculateZeccOffline(req) {
+  const crates = req.storage_capacity_crates;
+  const totalProduceKg = crates * 20.0;
+  const lengthCm = Math.round(100.0 + (crates * 3.5));
+  const widthCm = 100.0;
+  const heightCm = 65.0;
+  const bricks = Math.round(400 + (crates * 16));
+  const sandBags = Math.round(2 + (crates * 0.15));
+  const thatchSqm = Math.round(((lengthCm * widthCm) / 10000.0) * 1.5 * 10) / 10;
+  const waterLiters = Math.round(15.0 + (crates * 0.5));
+  const cost = Math.round(bricks * 8.0 + sandBags * 150.0 + 800.0);
+
+  const produceDb = [
+    { produce: "Tomato (टमाटर)", ambient_shelf_life_days: "4 - 6 days", zecc_shelf_life_days: "18 - 21 days", shelf_life_multiplier: "3.5x - 4x Longer", ideal_temp_c: "15 - 18°C", ideal_rh_pct: "90 - 95%", spoilage_reduction_pct: 75.0, market_arbitrage_holding_tip: "Avoid dumping ripe tomatoes at ₹3/kg during peak glut. Hold 2 weeks until local supply tightens to ₹15-20/kg." },
+    { produce: "Leafy Greens / Palak (पालक/धनिया)", ambient_shelf_life_days: "1 - 2 days", zecc_shelf_life_days: "6 - 8 days", shelf_life_multiplier: "4x Longer", ideal_temp_c: "12 - 16°C", ideal_rh_pct: "95%", spoilage_reduction_pct: 85.0, market_arbitrage_holding_tip: "Keeps delicate leaves crisp without wilting or yellowing. Eliminates same-day forced distress dumping." },
+    { produce: "Capsicum / Shimla Mirch (शिमला मिर्च)", ambient_shelf_life_days: "4 - 5 days", zecc_shelf_life_days: "14 - 18 days", shelf_life_multiplier: "3.5x Longer", ideal_temp_c: "14 - 17°C", ideal_rh_pct: "90 - 95%", spoilage_reduction_pct: 80.0, market_arbitrage_holding_tip: "Prevents shriveling and water loss, preserving crunchy fruit firmness and grade-A mandi auction rates." },
+    { produce: "Carrot / Gajar (गाजर)", ambient_shelf_life_days: "3 - 5 days", zecc_shelf_life_days: "12 - 15 days", shelf_life_multiplier: "3x Longer", ideal_temp_c: "12 - 15°C", ideal_rh_pct: "90 - 95%", spoilage_reduction_pct: 70.0, market_arbitrage_holding_tip: "Reduces root moisture transpiration and cracking." }
+  ];
+
+  const matched = produceDb.find(p => req.primary_produce && req.primary_produce.includes(p.produce.split(" ")[0])) || produceDb[0];
+
+  return {
+    storage_capacity_crates: crates,
+    total_produce_kg: totalProduceKg,
+    external_length_cm: lengthCm,
+    external_width_cm: widthCm,
+    external_height_cm: heightCm,
+    cavity_gap_cm: 7.5,
+    red_clay_bricks_required: bricks,
+    coarse_river_sand_bags_50kg: sandBags,
+    bamboo_and_straw_thatch_sqm: thatchSqm,
+    water_wetting_litres_per_day: waterLiters,
+    cooling_effect_celsius_drop: "10°C to 15°C below ambient dry bulb",
+    relative_humidity_achieved: "88% to 95% constant RH",
+    estimated_diy_cost_inr: cost,
+    step_by_step_construction_guide: [
+      "Select a shaded upland site near a clean water source, protected from direct midday sun.",
+      `Lay a single-layer brick foundation floor (${lengthCm} cm x ${widthCm} cm).`,
+      "Build a double brick wall with a 7.5 cm (3 inch) cavity gap between inner and outer brick layers.",
+      "Fill the cavity completely with clean, coarse river sand free from clay and organic matter.",
+      "Construct a top cover frame from bamboo sticks and sirki straw / gunny sacking.",
+      "Saturate the sand cavity with water twice daily (morning & late afternoon) to sustain evaporative cooling."
+    ],
+    perishable_produce_database: [matched]
+  };
+}
+
+function renderZeccResult(res) {
+  if (!zeccResultContainer) return;
+  const p = res.perishable_produce_database[0];
+
+  zeccResultContainer.innerHTML = `
+    <div class="space-y-4">
+      <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 pb-3">
+        <div>
+          <h4 class="font-black text-slate-900 text-base">❄️ Zero Energy Cool Chamber (ZECC) Blueprint</h4>
+          <span class="text-xs text-slate-500">${res.storage_capacity_crates} Crates (${res.total_produce_kg} kg produce capacity)</span>
+        </div>
+        <span class="px-2.5 py-1 text-xs font-black bg-cyan-100 text-cyan-800 rounded-lg">
+          ₹0 Electricity / Zero Carbon
+        </span>
+      </div>
+
+      <div class="bg-gradient-to-r from-emerald-50 to-teal-50 border border-teal-200 rounded-xl p-4">
+        <div class="flex items-center justify-between gap-2 mb-2">
+          <span class="text-xs font-bold text-teal-900">Produce: ${p.produce}</span>
+          <span class="text-xs font-black text-teal-700 bg-white/80 px-2 py-0.5 rounded-full border border-teal-200">${p.shelf_life_multiplier}</span>
+        </div>
+        <div class="grid grid-cols-2 gap-3 text-center">
+          <div class="bg-white/70 border border-red-200 p-2.5 rounded-xl">
+            <span class="text-[10px] text-red-700 uppercase font-bold block">Open Room Storage</span>
+            <span class="text-lg font-black text-red-950">${p.ambient_shelf_life_days}</span>
+            <span class="text-[10px] text-red-600 block">High wilting & rotting</span>
+          </div>
+          <div class="bg-white/90 border border-emerald-300 p-2.5 rounded-xl">
+            <span class="text-[10px] text-emerald-800 uppercase font-bold block">Inside Pusa ZECC</span>
+            <span class="text-xl font-black text-emerald-950">${p.zecc_shelf_life_days}</span>
+            <span class="text-[10px] text-emerald-700 block">Fresh & crisp</span>
+          </div>
+        </div>
+        <p class="text-xs text-teal-950 mt-2.5 leading-relaxed">💡 <strong>Glut Avoidance Tip:</strong> ${p.market_arbitrage_holding_tip}</p>
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
+        <div class="bg-slate-50 border border-slate-200 p-3 rounded-xl">
+          <span class="text-[10px] uppercase font-bold text-slate-500 block">Red Clay Bricks</span>
+          <span class="text-xl font-black text-slate-900">${res.red_clay_bricks_required}</span>
+          <span class="text-[10px] text-slate-500 block">Standard country bricks</span>
+        </div>
+        <div class="bg-amber-50 border border-amber-200 p-3 rounded-xl">
+          <span class="text-[10px] uppercase font-bold text-amber-800 block">River Sand</span>
+          <span class="text-xl font-black text-amber-950">${res.coarse_river_sand_bags_50kg}</span>
+          <span class="text-[10px] text-amber-700 block">50kg coarse bags</span>
+        </div>
+        <div class="bg-cyan-50 border border-cyan-200 p-3 rounded-xl">
+          <span class="text-[10px] uppercase font-bold text-cyan-800 block">Daily Water</span>
+          <span class="text-xl font-black text-cyan-950">${res.water_wetting_litres_per_day} L</span>
+          <span class="text-[10px] text-cyan-700 block">Wetting sand cavity</span>
+        </div>
+        <div class="bg-indigo-50 border border-indigo-200 p-3 rounded-xl">
+          <span class="text-[10px] uppercase font-bold text-indigo-800 block">Est. DIY Cost</span>
+          <span class="text-xl font-black text-indigo-950">₹${res.estimated_diy_cost_inr.toLocaleString("en-IN")}</span>
+          <span class="text-[10px] text-indigo-700 block">One-time village setup</span>
+        </div>
+      </div>
+
+      <div class="bg-slate-50 border border-slate-200 rounded-xl p-3.5 space-y-1.5 text-xs text-slate-700">
+        <div class="font-bold text-slate-900 flex items-center gap-1.5">
+          <span>🧱</span> <span>Pusa IARI Chamber Construction Guide:</span>
+        </div>
+        <ol class="list-decimal list-inside space-y-1">
+          ${res.step_by_step_construction_guide.map(s => `<li>${s}</li>`).join("")}
+        </ol>
       </div>
     </div>
   `;
