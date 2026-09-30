@@ -10314,7 +10314,136 @@ function initContingencyProtocol() {
 // ZERO-COST AG-TECH & AGRONOMY ENGINES ($0 Recurring / 100% Free)
 // ============================================================================
 
+// ----------------------------------------------------------------------------
+// Krishi Salahkar Dynamic Seasonal Advisory Ticker
+// ----------------------------------------------------------------------------
+const KRISHI_SALAHKAR_TIPS = {
+  kharif: [
+    {
+      title: "Paddy Water Management (AWD)",
+      hindi: "धान में वैकल्पिक गीला-सूखा (AWD) सिंचाई अपनाएं",
+      tip: "Adopt Alternate Wetting & Drying (AWD). Keep 2-3 cm standing water during transplanting and panicle initiation, then let water subside 1-2 days before re-irrigating to save 30% groundwater."
+    },
+    {
+      title: "Pink Bollworm Vigil in Cotton",
+      hindi: "कपास में गुलाबी सुंडी निगरानी",
+      tip: "Install 2-3 pheromone traps per acre at 45 DAS. If catch exceeds 8 moths/trap/night for 3 consecutive nights, trigger bio-control spray of 5% Neem Seed Kernel Extract (NSKE)."
+    },
+    {
+      title: "Soybean Rhizobium Bio-Inoculation",
+      hindi: "सोयाबीन राइजोबियम बीज उपचार",
+      tip: "Treat soybean seeds with Rhizobium japonicum and PSB culture @ 20g/kg seed in shade. Increases nitrogen fixation nodules, cutting basal Urea requirement by 25-30 kg/acre."
+    },
+    {
+      title: "Maize Fall Armyworm Monitoring",
+      hindi: "मक्का में फॉल आर्मीवर्म की रोकथाम",
+      tip: "Scout crop whorls at 15-20 DAS for pinholes. Apply dry sand + wood ash mixture (9:1) into central leaf whorls or release Trichogramma chilonis egg parasitoids."
+    }
+  ],
+  rabi: [
+    {
+      title: "Wheat CRI Stage Critical Irrigation",
+      hindi: "गेहूं में ताज मूल (CRI) सिंचाई",
+      tip: "Crown Root Initiation (CRI) at 20-25 DAS is the most yield-critical stage in wheat. Skipping this irrigation causes irreversible tiller abortion and 20-30% yield loss."
+    },
+    {
+      title: "Mustard Aphid (चेपा / माहू) Bio-Trap Cards",
+      hindi: "सरसों में चेपा/माहू से बचाव",
+      tip: "Erect yellow sticky traps @ 8-10 cards/acre 15 cm above mustard crop canopy. Avoid excessive nitrogen fertilizer which causes succulent vegetative growth attracting aphid swarms."
+    },
+    {
+      title: "Gram / Chickpea Pod Borer IPM",
+      hindi: "चने में फली छेदक (हेलिकोवर्पा) नियंत्रण",
+      tip: "Install T-shaped bird perches (खूंटी) @ 15-20 per acre across chickpea field. Birds like drongos and king crows naturally feast on Helicoverpa larvae without chemical spray."
+    },
+    {
+      title: "Potato Late Blight Preventive Shield",
+      hindi: "आलू में पछेती झुलसा का रोकथाम",
+      tip: "When dense foggy nights and high humidity (>90%) persist for 48 hours, apply preventive Mancozeb 75% WP @ 2.5g/L water or fermented sour buttermilk (Khatta Chhach) with copper wire."
+    }
+  ],
+  zaid: [
+    {
+      title: "Zaid Moong & Urad Soil Fertility Bonus",
+      hindi: "जायद मूंग/उड़द से भूमि सुधार",
+      tip: "Sow 60-day summer Moong (SML-668 / Virat) in March after harvesting wheat or mustard. Incorporating crop vines into soil after 2 pickings adds ~40 kg atmospheric nitrogen per hectare."
+    },
+    {
+      title: "Crop Residue Stubble Mulching",
+      hindi: "गर्मियों में पराली/पुआल से मल्चिंग",
+      tip: "Spread a 3-inch layer of dry straw or bagasse over vegetable beds and fruit tree basins. Cuts soil surface evaporation by 50% and drops soil root-zone temperature by 4-6°C."
+    },
+    {
+      title: "Summer Deep Ploughing for Pest Sanitation",
+      hindi: "मई-जून में गहरी जुताई (Summer Ploughing)",
+      tip: "Perform deep mouldboard ploughing in May-June. Scorching summer sun exposes resting pupae, nematodes, and dormant weed rhizomes to lethal solar heat and predatory birds."
+    },
+    {
+      title: "Drip Fertigation Morning Run",
+      hindi: "गर्मियों में सुबह ड्रिप फर्टीगेशन",
+      tip: "Schedule drip fertigation runs between 6:00 AM and 9:00 AM. Avoid midday water delivery to prevent thermal shock to roots and minimize drip line solar evaporation losses."
+    }
+  ]
+};
+
+let currentTickerIndex = 0;
+let tickerInterval = null;
+
+function initKrishiSalahkarTicker() {
+  const tickerContainer = document.getElementById("krishiSalahkarTicker");
+  const seasonBadge = document.getElementById("tickerSeasonBadge");
+  const advisoryText = document.getElementById("tickerAdvisoryText");
+  const nextBtn = document.getElementById("nextTickerTipBtn");
+
+  if (!tickerContainer || !advisoryText) return;
+
+  const currentMonth = new Date().getMonth(); // 0 = Jan, 11 = Dec
+  let activeSeason = "kharif";
+  let seasonLabel = "🌾 Kharif Season (खरीफ)";
+
+  if ([9, 10, 11, 0, 1].includes(currentMonth)) {
+    activeSeason = "rabi";
+    seasonLabel = "🌾 Rabi Season (रबी)";
+  } else if ([2, 3, 4].includes(currentMonth)) {
+    activeSeason = "zaid";
+    seasonLabel = "☀️ Zaid / Summer (जायद)";
+  }
+
+  if (seasonBadge) seasonBadge.textContent = seasonLabel;
+
+  const tipsList = KRISHI_SALAHKAR_TIPS[activeSeason] || KRISHI_SALAHKAR_TIPS.rabi;
+
+  function renderTip(index) {
+    const tip = tipsList[index % tipsList.length];
+    advisoryText.innerHTML = `<strong>${tip.title} (${tip.hindi}):</strong> ${tip.tip}`;
+  }
+
+  renderTip(currentTickerIndex);
+
+  nextBtn?.addEventListener("click", () => {
+    currentTickerIndex = (currentTickerIndex + 1) % tipsList.length;
+    renderTip(currentTickerIndex);
+  });
+
+  if (tickerInterval) clearInterval(tickerInterval);
+  tickerInterval = setInterval(() => {
+    currentTickerIndex = (currentTickerIndex + 1) % tipsList.length;
+    renderTip(currentTickerIndex);
+  }, 9000);
+
+  tickerContainer.addEventListener("mouseenter", () => clearInterval(tickerInterval));
+  tickerContainer.addEventListener("mouseleave", () => {
+    tickerInterval = setInterval(() => {
+      currentTickerIndex = (currentTickerIndex + 1) % tipsList.length;
+      renderTip(currentTickerIndex);
+    }, 9000);
+  });
+}
+window.initKrishiSalahkarTicker = initKrishiSalahkarTicker;
+
 function initZeroCostFeatures() {
+  initKrishiSalahkarTicker();
+
   if (nasaSowingDate && !nasaSowingDate.value) {
     const d = new Date();
     d.setDate(d.getDate() - 30);
