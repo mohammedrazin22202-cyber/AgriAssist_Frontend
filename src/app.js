@@ -1843,6 +1843,7 @@ function setupEventListeners() {
 
   recordAudioMemoBtn?.addEventListener("click", toggleAudioMemoRecording);
   stopAudioMemoBtn?.addEventListener("click", stopAudioMemoRecording);
+  document.getElementById("exportVoiceNotesBtn")?.addEventListener("click", exportVoiceNotesLog);
 
   // Kisan AI Assistant Listeners
   openKisanAIBtn?.addEventListener("click", openKisanAIChatModal);
@@ -4821,16 +4822,37 @@ function exportKhataToCSV() {
     showToast("No ledger entries to export.", "warning");
     return;
   }
+  let totalIncome = 0;
+  let totalExpense = 0;
   const headers = ["ID", "Date", "Type", "Category", "Amount_INR", "Notes"];
-  const rows = entries.map(t => [
-    t.id,
-    new Date(t.date).toISOString().split("T")[0],
-    t.type,
-    `"${(t.category || "").replace(/"/g, '""')}"`,
-    t.amount,
-    `"${(t.notes || "").replace(/"/g, '""')}"`
-  ]);
-  const csvContent = [headers.join(","), ...rows.map(r => r.join(","))].join("\r\n");
+  const rows = entries.map(t => {
+    const amt = parseFloat(t.amount) || 0;
+    if (t.type === "Income") totalIncome += amt;
+    else totalExpense += amt;
+    return [
+      t.id,
+      new Date(t.date).toISOString().split("T")[0],
+      t.type,
+      `"${(t.category || "").replace(/"/g, '""')}"`,
+      amt.toFixed(2),
+      `"${(t.notes || "").replace(/"/g, '""')}"`
+    ];
+  });
+
+  const netBalance = totalIncome - totalExpense;
+  const summaryRows = [
+    ["", "", "", "", "", ""],
+    ["SUMMARY", "Total Income (INR)", "Total Expense (INR)", "Net Balance (INR)", "", ""],
+    ["", totalIncome.toFixed(2), totalExpense.toFixed(2), netBalance.toFixed(2), "", ""]
+  ];
+
+  // Prepend UTF-8 BOM for Microsoft Excel regional language support
+  const csvContent = "\ufeff" + [
+    headers.join(","),
+    ...rows.map(r => r.join(",")),
+    ...summaryRows.map(r => r.join(","))
+  ].join("\r\n");
+
   const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
   const url = URL.createObjectURL(blob);
   const link = document.createElement("a");
@@ -4841,8 +4863,38 @@ function exportKhataToCSV() {
   link.click();
   document.body.removeChild(link);
   URL.revokeObjectURL(url);
-  showToast("✓ Farm ledger exported to CSV", "success");
+  showToast("✓ Farm ledger exported to CSV with Excel UTF-8 support", "success");
 }
+
+function exportVoiceNotesLog() {
+  const notes = typeof getStoredVoiceNotes === "function" ? getStoredVoiceNotes() : [];
+  if (notes.length === 0) {
+    showToast("No voice notes recorded yet to export.", "warning");
+    return;
+  }
+  const headers = ["ID", "Recorded_Date_Time", "Duration_Seconds", "Note_Title"];
+  const rows = notes.map(n => [
+    n.id,
+    new Date(n.timestamp).toLocaleString("en-IN"),
+    n.durationSecs || 0,
+    `"${(n.title || "").replace(/"/g, '""')}"`
+  ]);
+
+  const csvContent = "\ufeff" + [headers.join(","), ...rows.map(r => r.join(","))].join("\r\n");
+  const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  const today = new Date().toISOString().split("T")[0];
+  link.setAttribute("href", url);
+  link.setAttribute("download", `AgriAssist_Voice_Notes_Log_${today}.csv`);
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
+  showToast("✓ Voice notes log exported to CSV", "success");
+}
+window.exportVoiceNotesLog = exportVoiceNotesLog;
+
 
 function backupKhataToJSON() {
   const entries = getKhataEntries();
