@@ -18,6 +18,7 @@
 
   <script>
     tailwind.config = {
+      darkMode: 'class',
       theme: {
         extend: {
           colors: {
@@ -38,6 +39,20 @@
         }
       }
     }
+  </script>
+  <script>
+    // Immediate dark theme check to prevent flash of light theme
+    (function() {
+      try {
+        const savedTheme = localStorage.getItem('agriassist_theme');
+        const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+        }
+      } catch (e) {}
+    })();
   </script>
 </head>
 <body class="min-h-screen bg-slate-50 text-slate-800 flex flex-col">
@@ -101,6 +116,12 @@
           <button id="detectWeatherBtn" type="button" class="flex items-center space-x-1.5 text-xs bg-emerald-700 hover:bg-emerald-600 text-white px-3 py-1.5 rounded-full shadow-sm transition border border-emerald-500">
             <span>📍</span>
             <span id="weatherBtnText" data-i18n="detectLocation">Detect Weather</span>
+          </button>
+
+          <!-- Theme Toggle Button (Dark / Light Mode) -->
+          <button id="themeToggleBtn" type="button" class="flex items-center space-x-1.5 text-xs bg-brand-900 hover:bg-brand-950 text-amber-300 font-bold px-3 py-1.5 rounded-full border border-brand-700 transition shadow-sm cursor-pointer" title="Toggle Dark/Light Mode" aria-label="Toggle Dark/Light Mode">
+            <span id="themeToggleIcon">🌙</span>
+            <span id="themeToggleText" data-i18n="themeToggle">Dark</span>
           </button>
 
           <!-- Language Switcher Button -->

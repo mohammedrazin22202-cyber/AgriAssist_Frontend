@@ -94,6 +94,11 @@ const TRANSLATIONS = {
     btnPrintAdvisory: "Download / Print Advisory",
     noResults: "No matching crops found",
     langSwitch: "🌐 Language / भाषा",
+    themeToggle: "Dark",
+    themeToggleDark: "Dark",
+    themeToggleLight: "Light",
+    themeToastDark: "🌙 Switched to Dark Theme",
+    themeToastLight: "☀️ Switched to Light Theme",
     viewAdvice: "View Agronomic Advice ▼",
     hideAdvice: "Hide Agronomic Advice ▲",
     viewCompleteAdvice: "View Complete Agronomic Advice ▼",
@@ -174,6 +179,11 @@ const TRANSLATIONS = {
     btnPrintAdvisory: "सलाहकार कार्ड डाउनलोड / प्रिंट करें",
     noResults: "कोई उपयुक्त फसल नहीं मिली",
     langSwitch: "🌐 भाषा / Language",
+    themeToggle: "डार्क मोड",
+    themeToggleDark: "डार्क मोड",
+    themeToggleLight: "लाइट मोड",
+    themeToastDark: "🌙 डार्क मोड सक्रिय",
+    themeToastLight: "☀️ लाइट मोड सक्रिय",
     viewAdvice: "कृषि सलाह देखें ▼",
     hideAdvice: "सलाह छिपाएं ▲",
     viewCompleteAdvice: "विस्तृत सलाह देखें ▼",
@@ -243,6 +253,11 @@ const TRANSLATIONS = {
     btnPrintAdvisory: "सल्लागार पत्रक प्रिंट करा",
     noResults: "योग्य पीक आढळले नाही",
     langSwitch: "🌐 भाषा निवडा",
+    themeToggle: "डार्क मोड",
+    themeToggleDark: "डार्क मोड",
+    themeToggleLight: "लाईट मोड",
+    themeToastDark: "🌙 डार्क मोड सुरू",
+    themeToastLight: "☀️ लाईट मोड सुरू",
     viewAdvice: "कृषी सल्ला पहा ▼",
     hideAdvice: "सल्ला लपवा ▲",
     viewCompleteAdvice: "सविस्तर सल्ला पहा ▼",
@@ -312,6 +327,11 @@ const TRANSLATIONS = {
     btnPrintAdvisory: "ਸਲਾਹਕਾਰ ਕਾਰਡ ਪ੍ਰਿੰਟ ਕਰੋ",
     noResults: "ਕੋਈ ਫਸਲ ਨਹੀਂ ਮਿਲੀ",
     langSwitch: "🌐 ਭਾਸ਼ਾ ਚੁਣੋ",
+    themeToggle: "ਡਾਰਕ ਮੋਡ",
+    themeToggleDark: "ਡਾਰਕ ਮੋਡ",
+    themeToggleLight: "ਲਾਈਟ ਮੋਡ",
+    themeToastDark: "🌙 ਡਾਰਕ ਮੋਡ ਚਾਲੂ",
+    themeToastLight: "☀️ ਲਾਈਟ ਮੋਡ ਚਾਲੂ",
     viewAdvice: "ਖੇਤੀ ਸਲਾਹ ਵੇਖੋ ▼",
     hideAdvice: "ਸਲਾਹ ਲੁਕਾਓ ▲",
     viewCompleteAdvice: "ਵਿਸਤ੍ਰਿਤ ਸਲਾਹ ਵੇਖੋ ▼",
@@ -381,6 +401,11 @@ const TRANSLATIONS = {
     btnPrintAdvisory: "સલાહકાર કાર્ડ પ્રિન્ટ કરો",
     noResults: "કોઈ પાક મળ્યો નથી",
     langSwitch: "🌐 ભાષા પસંદ કરો",
+    themeToggle: "ડાર્ક મોડ",
+    themeToggleDark: "ડાર્ક મોડ",
+    themeToggleLight: "લાઇટ મોડ",
+    themeToastDark: "🌙 ડાર્ਕ મોડ ચાલુ",
+    themeToastLight: "☀️ લાઈટ મોડ ચાલુ",
     viewAdvice: "ખેતી સલાહ જુઓ ▼",
     hideAdvice: "સલાહ છુપાવો ▲",
     viewCompleteAdvice: "સંપૂર્ણ સલાહ જુઓ ▼",
@@ -418,7 +443,12 @@ const TRANSLATIONS = {
     heroDesc: "శాస్త్రీయంగా పంటలను ఎంచుకోండి. మీ నేల, వాతావరణం మరియు నీటి ఆధారంగా అత్యధిక లాభదాయక పంటల సిఫార్సులు పొందండి.",
     btnGetRecommendations: "పంట సిఫార్సులు పొందండి",
     btnPrintAdvisory: "సలహా పత్రం ప్రింట్ చేయండి",
-    langSwitch: "🌐 భాషను ఎంచుకోండి"
+    langSwitch: "🌐 భాషను ఎంచుకోండి",
+    themeToggle: "డార్క్ మోడ్",
+    themeToggleDark: "డార్క్ మోడ్",
+    themeToggleLight: "లైట్ మోడ్",
+    themeToastDark: "🌙 డార్క్ మోడ్ ఆన్ చేయబడింది",
+    themeToastLight: "☀️ లైట్ మోడ్ ఆన్ చేయబడింది"
   },
   ta: {
     tagline: "விவசாய முடிவு வழிகாட்டி",
@@ -452,7 +482,12 @@ const TRANSLATIONS = {
     heroDesc: "மண் மற்றும் பாசன வசதிக்கேற்ப அதிக லாபம் தரும் சிறந்த பயிர்களை தேர்வு செய்யுங்கள்.",
     btnGetRecommendations: "பயிர் பரிந்துரை பெறுக",
     btnPrintAdvisory: "அறிக்கையை பதிவிறக்கு",
-    langSwitch: "🌐 மொழியை தேர்ந்தெடுக்க"
+    langSwitch: "🌐 மொழியை தேர்ந்தெடுக்க",
+    themeToggle: "இருண்ட பயன்முறை",
+    themeToggleDark: "இருண்ட முறை",
+    themeToggleLight: "ஒளி முறை",
+    themeToastDark: "🌙 இருண்ட முறை செயல்படுத்தப்பட்டது",
+    themeToastLight: "☀️ ஒளி முறை செயல்படுத்தப்பட்டது"
   },
   bn: {
     tagline: "কৃষি সিদ্ধান্ত ব্যবস্থা",
@@ -486,7 +521,12 @@ const TRANSLATIONS = {
     heroDesc: "বিজ্ঞানসম্মত ভাবে সঠিক ফসল নির্বাচন করুন এবং সারের সঠিক পরিমাণ ও লাভ জানুন।",
     btnGetRecommendations: "ফসল সুপারিশ পান",
     btnPrintAdvisory: "পরামর্শ কার্ড প্রিন্ট করুন",
-    langSwitch: "🌐 ভাষা নির্বাচন করুন"
+    langSwitch: "🌐 ভাষা নির্বাচন করুন",
+    themeToggle: "ডার্ক মোড",
+    themeToggleDark: "ডার্ক মোড",
+    themeToggleLight: "লাইট মোড",
+    themeToastDark: "🌙 ডার্ক মোড সক্রিয়",
+    themeToastLight: "☀️ লাইট মোড সক্রিয়"
   },
   kn: {
     tagline: "ಕೃಷಿ ನಿರ್ಧಾರ ಬೆಂಬಲ",
@@ -520,7 +560,12 @@ const TRANSLATIONS = {
     heroDesc: "ನಿಮ್ಮ ಮಣ್ಣು ಮತ್ತು ನೀರಿನ ಲಭ್ಯತೆಗೆ ಸೂಕ್ತವಾದ ಹೆಚ್ಚು ಲಾಭದಾಯಕ ಬೆಳೆಗಳನ್ನು ಆಯ್ಕೆಮಾಡಿ.",
     btnGetRecommendations: "ಬೆಳೆ ಶಿಫಾರಸು ಪಡೆಯಿರಿ",
     btnPrintAdvisory: "ಸಲಹಾ ಪತ್ರ ಮುದ್ರಿಸಿ",
-    langSwitch: "🌐 ಭಾಷೆ ಆಯ್ಕೆಮಾಡಿ"
+    langSwitch: "🌐 ಭಾಷೆ ಆಯ್ಕೆಮಾಡಿ",
+    themeToggle: "ಡಾರ್ಕ್ ಮೋಡ್",
+    themeToggleDark: "ಡಾರ್ಕ್ ಮೋಡ್",
+    themeToggleLight: "ಲೈಟ್ ಮೋಡ್",
+    themeToastDark: "🌙 ಡಾರ್ಕ್ ಮೋಡ್ ಸಕ್ರಿಯ",
+    themeToastLight: "☀️ ಲೈಟ್ ಮೋಡ್ ಸಕ್ರಿಯ"
   }
 };
 
@@ -1270,6 +1315,9 @@ const weatherBtnText = document.getElementById("weatherBtnText");
 const weatherAlertBanner = document.getElementById("weatherAlertBanner");
 const langToggleBtn = document.getElementById("langToggleBtn");
 const langToggleText = document.getElementById("langToggleText");
+const themeToggleBtn = document.getElementById("themeToggleBtn");
+const themeToggleIcon = document.getElementById("themeToggleIcon");
+const themeToggleText = document.getElementById("themeToggleText");
 
 // Navigation Tabs
 const tabAdvisorBtn = document.getElementById("tabAdvisorBtn");
@@ -1721,6 +1769,7 @@ window.showToast = showToast;
 // ----------------- INITIALIZATION -----------------
 
 document.addEventListener("DOMContentLoaded", () => {
+  initTheme();
   setupEventListeners();
   registerServiceWorker();
   populateFertilizerCropOptions();
@@ -2023,6 +2072,9 @@ function setupEventListeners() {
     });
   }
 
+  // Theme toggle
+  themeToggleBtn?.addEventListener("click", toggleTheme);
+
   // Language modal controls
   langToggleBtn?.addEventListener("click", () => {
     langModal?.classList.remove("hidden");
@@ -2315,6 +2367,70 @@ function switchTab(tab) {
   }
 }
 
+// ----------------- THEME MANAGEMENT (DARK / LIGHT THEME) -----------------
+
+function initTheme() {
+  const savedTheme = localStorage.getItem("agriassist_theme");
+  const prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+  const isDark = savedTheme === "dark" || (!savedTheme && prefersDark);
+
+  if (isDark) {
+    document.documentElement.classList.add("dark");
+  } else {
+    document.documentElement.classList.remove("dark");
+  }
+
+  updateThemeUI();
+
+  // Listen to system preference changes if user hasn't explicitly set a preference
+  if (window.matchMedia) {
+    window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (e) => {
+      if (!localStorage.getItem("agriassist_theme")) {
+        if (e.matches) {
+          document.documentElement.classList.add("dark");
+        } else {
+          document.documentElement.classList.remove("dark");
+        }
+        updateThemeUI();
+      }
+    });
+  }
+}
+
+function updateThemeUI() {
+  const isDark = document.documentElement.classList.contains("dark");
+  const dict = TRANSLATIONS[appState.currentLang] || TRANSLATIONS.en || {};
+
+  if (themeToggleIcon) {
+    themeToggleIcon.textContent = isDark ? "☀️" : "🌙";
+  }
+  if (themeToggleText) {
+    themeToggleText.textContent = isDark ? (dict.themeToggleLight || "Light") : (dict.themeToggleDark || "Dark");
+  }
+  if (themeToggleBtn) {
+    themeToggleBtn.setAttribute("title", isDark ? "Switch to Light Theme" : "Switch to Dark Theme");
+  }
+
+  // Update mobile browser navbar theme-color
+  const metaTheme = document.querySelector('meta[name="theme-color"]');
+  if (metaTheme) {
+    metaTheme.setAttribute("content", isDark ? "#0b1120" : "#166534");
+  }
+}
+
+function toggleTheme() {
+  const isDark = document.documentElement.classList.toggle("dark");
+  localStorage.setItem("agriassist_theme", isDark ? "dark" : "light");
+
+  updateThemeUI();
+
+  const dict = TRANSLATIONS[appState.currentLang] || TRANSLATIONS.en || {};
+  const toastMsg = isDark ? (dict.themeToastDark || "🌙 Switched to Dark Theme") : (dict.themeToastLight || "☀️ Switched to Light Theme");
+  if (typeof showToast === "function") {
+    showToast(toastMsg, "info");
+  }
+}
+
 function setLanguage(lang) {
   if (!TRANSLATIONS[lang]) return;
   appState.currentLang = lang;
@@ -2338,6 +2454,8 @@ function setLanguage(lang) {
       el.textContent = dict[key];
     }
   });
+
+  updateThemeUI();
 
   // Re-render top pick and crops with updated language
   if (appState.topPick) {

@@ -152,6 +152,398 @@ body {
   animation: contingencyGlow 3s infinite ease-in-out;
 }
 
+/* ============================================================
+   DARK THEME STYLESHEET FOR AGRIASSIST
+   ============================================================ */
+
+html.dark {
+  color-scheme: dark;
+}
+
+/* Base Body & Main in Dark Mode */
+html.dark body {
+  background-color: #0b1120 !important;
+  color: #f1f5f9 !important;
+}
+
+/* Smooth background transitions for interactive feel */
+body, header, nav, .crop-card, section, .modal-backdrop > div {
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.15s ease;
+}
+
+/* Universal Container & Card Overrides in Dark Mode */
+html.dark .bg-white {
+  background-color: #111827 !important;
+  color: #f1f5f9;
+}
+
+html.dark .bg-slate-50 {
+  background-color: #0f172a !important;
+}
+
+html.dark .bg-slate-100 {
+  background-color: #1e293b !important;
+}
+
+html.dark .bg-slate-200 {
+  background-color: #334155 !important;
+}
+
+/* Borders */
+html.dark .border-slate-100,
+html.dark .border-gray-100 {
+  border-color: #1e293b !important;
+}
+
+html.dark .border-slate-200,
+html.dark .border-gray-200 {
+  border-color: #29384d !important;
+}
+
+html.dark .border-slate-300,
+html.dark .border-gray-300 {
+  border-color: #3b4e68 !important;
+}
+
+html.dark .divide-slate-100 > * + *,
+html.dark .divide-slate-200 > * + * {
+  border-color: #29384d !important;
+}
+
+/* Text Colors */
+html.dark .text-slate-900,
+html.dark .text-gray-900 {
+  color: #f8fafc !important;
+}
+
+html.dark .text-slate-800,
+html.dark .text-gray-800 {
+  color: #f1f5f9 !important;
+}
+
+html.dark .text-slate-700,
+html.dark .text-gray-700 {
+  color: #cbd5e1 !important;
+}
+
+html.dark .text-slate-600,
+html.dark .text-gray-600 {
+  color: #94a3b8 !important;
+}
+
+html.dark .text-slate-500,
+html.dark .text-gray-500 {
+  color: #94a3b8 !important;
+}
+
+html.dark .text-slate-400,
+html.dark .text-gray-400 {
+  color: #64748b !important;
+}
+
+/* Brand Agricultural Colors in Dark Mode */
+html.dark .text-brand-900,
+html.dark .text-brand-800 {
+  color: #86efac !important;
+}
+
+html.dark .text-brand-700 {
+  color: #4ade80 !important;
+}
+
+html.dark .bg-brand-50,
+html.dark .bg-brand-50\/70 {
+  background-color: rgba(22, 101, 52, 0.25) !important;
+  border-color: rgba(34, 197, 94, 0.35) !important;
+}
+
+/* Amber / Yellow Accents */
+html.dark .bg-amber-50,
+html.dark .bg-amber-50\/90 {
+  background-color: rgba(120, 53, 15, 0.3) !important;
+  border-color: rgba(245, 158, 11, 0.35) !important;
+}
+
+html.dark .text-amber-900,
+html.dark .text-amber-950 {
+  color: #fef08a !important;
+}
+
+/* Emerald Accents */
+html.dark .bg-emerald-50,
+html.dark .bg-emerald-50\/80 {
+  background-color: rgba(6, 78, 59, 0.35) !important;
+  border-color: rgba(16, 185, 129, 0.35) !important;
+}
+
+html.dark .text-emerald-900,
+html.dark .text-emerald-800 {
+  color: #a7f3d0 !important;
+}
+
+/* Blue & Sky Accents */
+html.dark .bg-blue-50,
+html.dark .bg-blue-50\/70,
+html.dark .bg-sky-50 {
+  background-color: rgba(30, 58, 138, 0.3) !important;
+  border-color: rgba(59, 130, 246, 0.35) !important;
+}
+
+html.dark .text-blue-900,
+html.dark .text-blue-800,
+html.dark .text-sky-900,
+html.dark .text-sky-800 {
+  color: #93c5fd !important;
+}
+
+/* Purple & Indigo Accents */
+html.dark .bg-purple-50,
+html.dark .bg-indigo-50 {
+  background-color: rgba(88, 28, 135, 0.3) !important;
+  border-color: rgba(168, 85, 247, 0.35) !important;
+}
+
+html.dark .text-purple-900,
+html.dark .text-indigo-900 {
+  color: #e9d5ff !important;
+}
+
+/* Rose & Red Accents */
+html.dark .bg-rose-50,
+html.dark .bg-red-50 {
+  background-color: rgba(136, 19, 55, 0.3) !important;
+  border-color: rgba(244, 63, 94, 0.35) !important;
+}
+
+html.dark .text-rose-900,
+html.dark .text-red-900 {
+  color: #fecdd3 !important;
+}
+
+/* Teal & Lime Accents */
+html.dark .bg-teal-50,
+html.dark .bg-lime-50 {
+  background-color: rgba(19, 78, 74, 0.3) !important;
+  border-color: rgba(20, 184, 166, 0.35) !important;
+}
+
+html.dark .text-teal-900,
+html.dark .text-lime-900 {
+  color: #99f6e4 !important;
+}
+
+/* Form Inputs, Selects, & Textareas in Dark Mode */
+html.dark input:not([type="checkbox"]):not([type="radio"]),
+html.dark select,
+html.dark textarea {
+  background-color: #1e293b !important;
+  color: #f8fafc !important;
+  border-color: #3b4e68 !important;
+}
+
+html.dark input::placeholder,
+html.dark textarea::placeholder {
+  color: #64748b !important;
+}
+
+html.dark select option {
+  background-color: #1e293b !important;
+  color: #f8fafc !important;
+}
+
+html.dark input:focus,
+html.dark select:focus,
+html.dark textarea:focus {
+  border-color: #22c55e !important;
+  box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.3) !important;
+}
+
+/* Navigation Bar & Inactive/Active Tabs in Dark Mode */
+html.dark nav.bg-white {
+  background-color: #0f172a !important;
+  border-color: #1e293b !important;
+}
+
+html.dark .nav-tab:not(.active) {
+  color: #cbd5e1 !important;
+}
+
+html.dark .nav-tab:not(.active):hover {
+  background-color: #1e293b !important;
+  color: #ffffff !important;
+}
+
+html.dark .nav-tab.active {
+  background-color: #15803d !important;
+  color: #ffffff !important;
+  border-color: #22c55e !important;
+  box-shadow: 0 0 14px rgba(34, 197, 94, 0.4) !important;
+}
+
+/* Category Filter Chips */
+html.dark .cat-chip:not(.active) {
+  background-color: #1e293b !important;
+  color: #cbd5e1 !important;
+  border-color: #334155 !important;
+}
+
+html.dark .cat-chip:not(.active):hover {
+  background-color: #2b394f !important;
+  color: #ffffff !important;
+}
+
+html.dark .cat-chip.active {
+  background-color: #15803d !important;
+  color: #ffffff !important;
+  border-color: #22c55e !important;
+  box-shadow: 0 2px 8px rgba(34, 197, 94, 0.3) !important;
+}
+
+/* Crop Cards in Dark Mode */
+html.dark .crop-card {
+  background-color: #111827 !important;
+  border-color: #1f293d !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4) !important;
+}
+
+html.dark .crop-card:hover {
+  border-color: #15803d !important;
+  transform: translateY(-3px);
+  box-shadow: 0 14px 28px -6px rgba(0, 0, 0, 0.7), 0 0 18px rgba(34, 197, 94, 0.25) !important;
+}
+
+/* Top Pick Spotlight Banner in Dark Mode */
+html.dark #topPickCard {
+  background: linear-gradient(135deg, rgba(6, 78, 59, 0.5) 0%, rgba(17, 24, 39, 0.9) 100%) !important;
+  border-color: #10b981 !important;
+  box-shadow: 0 0 25px rgba(16, 185, 129, 0.2) !important;
+}
+
+/* Secondary & Action Buttons in Dark Mode */
+html.dark #printReportBtn,
+html.dark .open-calendar-btn,
+html.dark .voice-btn,
+html.dark .whatsapp-btn {
+  background-color: #1e293b !important;
+  color: #cbd5e1 !important;
+  border-color: #334155 !important;
+}
+
+html.dark #printReportBtn:hover,
+html.dark .open-calendar-btn:hover,
+html.dark .voice-btn:hover,
+html.dark .whatsapp-btn:hover {
+  background-color: #2b394f !important;
+  color: #4ade80 !important;
+  border-color: #22c55e !important;
+}
+
+/* Mode Toggle Container & Buttons */
+html.dark #modeSimpleBtn,
+html.dark #modeAdvancedBtn {
+  color: #94a3b8;
+}
+
+html.dark #modeSimpleBtn.bg-white,
+html.dark #modeAdvancedBtn.bg-white {
+  background-color: #1e293b !important;
+  color: #4ade80 !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4) !important;
+}
+
+/* Match Score Badges in Dark Mode */
+html.dark .badge-score-high {
+  background-color: rgba(34, 197, 94, 0.2) !important;
+  color: #4ade80 !important;
+  border-color: rgba(74, 222, 128, 0.4) !important;
+}
+
+html.dark .badge-score-med {
+  background-color: rgba(234, 179, 8, 0.2) !important;
+  color: #fde047 !important;
+  border-color: rgba(250, 204, 21, 0.4) !important;
+}
+
+html.dark .badge-score-low {
+  background-color: rgba(239, 68, 68, 0.2) !important;
+  color: #f87171 !important;
+  border-color: rgba(248, 113, 113, 0.4) !important;
+}
+
+/* Floating Compare Bar in Dark Mode */
+html.dark .compare-bar {
+  background-color: rgba(15, 23, 42, 0.95) !important;
+  border-color: #334155 !important;
+}
+
+/* Modals & Dialogs in Dark Mode */
+html.dark .modal-backdrop {
+  background-color: rgba(3, 7, 18, 0.82) !important;
+}
+
+html.dark .modal-backdrop > div {
+  background-color: #111827 !important;
+  border: 1px solid #374151 !important;
+  color: #f1f5f9 !important;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8) !important;
+}
+
+html.dark .lang-choice-btn {
+  background-color: #1e293b !important;
+  border-color: #374151 !important;
+  color: #f1f5f9 !important;
+}
+
+html.dark .lang-choice-btn:hover {
+  background-color: rgba(22, 101, 52, 0.35) !important;
+  border-color: #22c55e !important;
+}
+
+/* Tables, Ledgers, and Grids in Dark Mode */
+html.dark table {
+  border-color: #29384d !important;
+}
+
+html.dark th {
+  background-color: #0f172a !important;
+  color: #94a3b8 !important;
+  border-color: #29384d !important;
+}
+
+html.dark td {
+  border-color: #1f2937 !important;
+  color: #e2e8f0 !important;
+}
+
+html.dark tr:hover td {
+  background-color: rgba(30, 41, 59, 0.6) !important;
+}
+
+/* Leaflet Maps in Dark Mode */
+html.dark .leaflet-container {
+  background-color: #0f172a !important;
+}
+
+html.dark .leaflet-popup-content-wrapper,
+html.dark .leaflet-popup-tip {
+  background-color: #1e293b !important;
+  color: #f8fafc !important;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6) !important;
+}
+
+/* Dark Mode Scrollbars */
+html.dark ::-webkit-scrollbar-track {
+  background: #090d16;
+}
+
+html.dark ::-webkit-scrollbar-thumb {
+  background: #283548;
+}
+
+html.dark ::-webkit-scrollbar-thumb:hover {
+  background: #3b4e68;
+}
+
 /* PRINT STYLESHEET (Clean A4 Farmer Advisory Sheet) */
 @media print {
   header, footer, #compareBar, #compareModal, .no-print, button, input, select, #advancedParamsPanel, #categoryChips, #weatherAlertBanner, #toastContainer {
