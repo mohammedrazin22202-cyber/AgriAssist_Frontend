@@ -1,5 +1,5 @@
 // AgriAssist Service Worker for Offline Field Operation
-const CACHE_NAME = "agriassist-cache-v5-zero-cost";
+const CACHE_NAME = "agriassist-cache-v6-dark-theme";
 const ASSETS_TO_CACHE = [
   "./",
   "./index.html",

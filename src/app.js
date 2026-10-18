@@ -2072,8 +2072,14 @@ function setupEventListeners() {
     });
   }
 
-  // Theme toggle
+  // Theme toggle button and keyboard shortcut (Alt+T or Alt+D)
   themeToggleBtn?.addEventListener("click", toggleTheme);
+  document.addEventListener("keydown", (e) => {
+    if (e.altKey && (e.key === "t" || e.key === "T" || e.key === "d" || e.key === "D")) {
+      e.preventDefault();
+      toggleTheme();
+    }
+  });
 
   // Language modal controls
   langToggleBtn?.addEventListener("click", () => {
@@ -2408,7 +2414,7 @@ function updateThemeUI() {
     themeToggleText.textContent = isDark ? (dict.themeToggleLight || "Light") : (dict.themeToggleDark || "Dark");
   }
   if (themeToggleBtn) {
-    themeToggleBtn.setAttribute("title", isDark ? "Switch to Light Theme" : "Switch to Dark Theme");
+    themeToggleBtn.setAttribute("title", isDark ? "Switch to Light Theme (Alt+T)" : "Switch to Dark Theme (Alt+T)");
   }
 
   // Update mobile browser navbar theme-color
@@ -8465,6 +8471,11 @@ function renderLivestockRemedies(remedies) {
 
 function handleVoiceRecognitionResult(transcript) {
   const clean = transcript.toLowerCase().trim();
+
+  if (clean.includes("dark") || clean.includes("डार्क") || clean.includes("night") || clean.includes("नाईट") || clean.includes("थीम") || clean.includes("theme") || clean.includes("काली") || clean.includes("काला") || clean.includes("light mode") || clean.includes("लाइट")) {
+    toggleTheme();
+    return;
+  }
 
   if (clean.includes("मंडी") || clean.includes("भाव") || clean.includes("mandi") || clean.includes("price") || clean.includes("rate")) {
     switchTab("mandi");
