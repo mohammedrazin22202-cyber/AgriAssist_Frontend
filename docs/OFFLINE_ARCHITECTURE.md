@@ -26,12 +26,12 @@ AgriAssist is designed from the ground up for low-connectivity rural environment
 
 ## 2. Core Offline Technologies
 
-### 2.1 Service Worker (`sw.js` v5)
+### 2.1 Service Worker (`sw.js` v6)
 - **Install & Precache**: Precaches static shell (`index.html`, `style.css`, `app.js`, `manifest.json`).
 - **Fetch Interceptor**:
   - `Cache-First` for application assets (instant $< 50\text{ms}$ load times).
   - Network passthrough for local API calls, allowing automatic failover to client-side logic.
-- **Cache Invalidation**: Previous versioned caches are purged upon worker activation (`v4` $\to$ `v5`).
+- **Cache Invalidation**: Previous versioned caches are purged upon worker activation (`v5` $\to$ `v6-dark-theme`).
 
 ### 2.2 Client-Side Computer Vision (Excess Green Index)
 The **Camera-Based Green Canopy Cover & Weed Density Meter** runs completely inside the browser's HTML5 Canvas context:
@@ -46,12 +46,18 @@ The **Camera-Based Green Canopy Cover & Weed Density Meter** runs completely ins
 
 ### 2.3 Local Storage Persistence Schema
 All user data is stored safely in `window.localStorage`:
+- `agriassist_theme`: Selected UI theme (`dark` or `light`), defaulting to OS `prefers-color-scheme`.
 - `agriassist_lang`: Currently selected UI language (`en`, `hi`, `mr`, `pa`, `gu`).
 - `agriassist_transactions`: Array of financial ledger transactions for Kisan Bahi-Khata.
 - `agriassist_voice_notes`: Array of base64 WebM audio blobs and titles recorded via HTML5 MediaRecorder API.
 
 ### 2.4 Multi-Language Regional Expansion
-A built-in dictionary dictionary (`TRANSLATIONS`) provides real-time client-side translation across 5 Indian languages without cloud translation API calls.
+A built-in dictionary (`TRANSLATIONS`) provides real-time client-side translation across 9 Indian languages without cloud translation API calls.
+
+### 2.5 Adaptive Day/Night Visual Engine (Dark Theme & Anti-FOUC)
+- **Zero-Flash Anti-FOUC**: Synchronous self-executing script in `<head>` applies `dark` class before the DOM renders, preventing light flashes.
+- **Hands-Free Field Usability**: Accessible via keyboard shortcut (`Alt+T`) and Kisan Voice Assistant keywords (*"dark"*, *"डार्क"*, *"night"*).
+- **Print Isolation**: `@media print` overrides force clean white paper backgrounds for advisory card generation.
 
 ---
 

@@ -41,10 +41,16 @@ A clean, high-performance, farmer-oriented Progressive Web App (PWA) designed to
 - **Offline Audio Memos**: Record voice notes directly in the field with HTML5 MediaRecorder.
 - **Excel-Compatible CSV Export**: One-click download with UTF-8 BOM encoding for regional script preservation.
 
+### 10. 🌙 High-Contrast Dark & Night Adaptive Mode
+- **OLED-Optimized Dark Palette**: High-contrast, battery-friendly dark theme designed for low-light field conditions and night-time planning.
+- **Hands-Free Voice & Keyboard Navigation**: Toggle instantly via header UI button, microphone voice command (*"Dark Mode"* / *"डार्क मोड"* / *"Night Mode"*), or keyboard shortcut (`Alt+T` / `Alt+D`).
+- **Auto-Preference Sync & Anti-FOUC**: Syncs with system color scheme (`prefers-color-scheme`) and persists preference in `localStorage` with zero page-flash.
+- **Print-Safe Clean Sheets**: Automatically maintains clean white paper backgrounds during PDF generation and physical printing.
+
 ---
 
 ## 📱 Offline PWA Architecture
-- **Service Worker (`sw.js` v5)**: Pre-caches shell assets for instant sub-50ms offline loading.
+- **Service Worker (`sw.js` v6)**: Pre-caches shell assets for instant sub-50ms offline loading with dark theme stylesheet support.
 - **Dual-Mode Engine**: Every calculation runs against the FastAPI backend when online, automatically falling back to an identical client-side mathematical engine when offline.
 - Detailed technical documentation is available in [`docs/OFFLINE_ARCHITECTURE.md`](docs/OFFLINE_ARCHITECTURE.md).
 
