@@ -585,3 +585,19 @@ html.dark ::-webkit-scrollbar-thumb:hover {
 .print-only {
   display: none;
 }
+
+/* Top Utility Bar, Hourly Agricultural Slogan & Digital Clock */
+#topUtilityBar {
+  backdrop-filter: blur(8px);
+}
+
+#topHourlySlogan {
+  transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#topHourlySlogan:hover {
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-underline-offset: 3px;
+}
+
