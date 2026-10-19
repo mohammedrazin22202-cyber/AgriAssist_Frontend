@@ -1,9 +1,10 @@
 // AgriAssist Service Worker for Offline Field Operation
-const CACHE_NAME = "agriassist-cache-v6-dark-theme";
+const CACHE_NAME = "agriassist-cache-v7-clock-slogans";
 const ASSETS_TO_CACHE = [
   "./",
   "./index.html",
   "./style.css",
+  "./slogans.js",
   "./app.js",
   "./manifest.json"
 ];

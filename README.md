@@ -47,10 +47,15 @@ A clean, high-performance, farmer-oriented Progressive Web App (PWA) designed to
 - **Auto-Preference Sync & Anti-FOUC**: Syncs with system color scheme (`prefers-color-scheme`) and persists preference in `localStorage` with zero page-flash.
 - **Print-Safe Clean Sheets**: Automatically maintains clean white paper backgrounds during PDF generation and physical printing.
 
+### 11. ⏰ Live Digital Clock & Hourly Agri-Wisdom Slogans
+- **Real-Time Live Digital Clock**: Monospace tabular digital clock with ticking seconds and current date prominently positioned on the top right.
+- **360 Curated Agricultural Slogans**: Comprehensive agricultural wisdom database spanning soil health, water conservation, organic methods, IPM, seeds, and farmer pride.
+- **Synchronized Hourly Rotation**: Automatically transitions to a new slogan every hour with smooth fade animations, along with manual interactive browsing.
+
 ---
 
 ## 📱 Offline PWA Architecture
-- **Service Worker (`sw.js` v6)**: Pre-caches shell assets for instant sub-50ms offline loading with dark theme stylesheet support.
+- **Service Worker (`sw.js` v7)**: Pre-caches shell assets and the 360-slogan database for instant sub-50ms offline loading with dark theme stylesheet support.
 - **Dual-Mode Engine**: Every calculation runs against the FastAPI backend when online, automatically falling back to an identical client-side mathematical engine when offline.
 - Detailed technical documentation is available in [`docs/OFFLINE_ARCHITECTURE.md`](docs/OFFLINE_ARCHITECTURE.md).
 
