@@ -1766,10 +1766,115 @@ function showToast(message, type = "info") {
 }
 window.showToast = showToast;
 
+// ============================================================================
+// TOP UTILITY BAR: HOURLY AGRICULTURAL SLOGAN & LIVE DIGITAL CLOCK
+// ============================================================================
+let currentSloganIndex = -1;
+let lastSloganHour = -1;
+let clockTimerId = null;
+
+function initTopClockAndSlogan() {
+  const clockEl = document.getElementById("liveClockText");
+  const dateEl = document.getElementById("liveDateText");
+  const sloganEl = document.getElementById("topHourlySlogan");
+  const badgeEl = document.getElementById("sloganIndexBadge");
+  const shuffleBtn = document.getElementById("sloganShuffleBtn");
+
+  if (!clockEl && !sloganEl) return;
+
+  const slogans = (typeof AGRICULTURAL_SLOGANS !== "undefined" && Array.isArray(AGRICULTURAL_SLOGANS) && AGRICULTURAL_SLOGANS.length > 0)
+    ? AGRICULTURAL_SLOGANS
+    : [
+        "Healthy Soil, Bountiful Harvest: Feed the earth that feeds the nation.",
+        "Save water drop by drop; harvest abundance crop by crop.",
+        "Right Seed, Right Season, Rich Harvest.",
+        "Smart data in farmer hands turns humble soil into fertile lands."
+      ];
+
+  function displaySlogan(index, smoothTransition = false) {
+    if (!sloganEl) return;
+    const slogan = slogans[index];
+
+    if (smoothTransition) {
+      sloganEl.style.opacity = "0";
+      setTimeout(() => {
+        sloganEl.textContent = `"${slogan}"`;
+        if (badgeEl) {
+          badgeEl.textContent = `#${index + 1}/${slogans.length}`;
+        }
+        sloganEl.style.opacity = "1";
+      }, 180);
+    } else {
+      sloganEl.textContent = `"${slogan}"`;
+      if (badgeEl) {
+        badgeEl.textContent = `#${index + 1}/${slogans.length}`;
+      }
+    }
+  }
+
+  function updateClockAndCheckHour() {
+    const now = new Date();
+
+    // 1. Update Live Real-Time Digital Clock
+    if (clockEl) {
+      let hours = now.getHours();
+      const minutes = String(now.getMinutes()).padStart(2, "0");
+      const seconds = String(now.getSeconds()).padStart(2, "0");
+      const ampm = hours >= 12 ? "PM" : "AM";
+      hours = hours % 12;
+      hours = hours ? hours : 12; // 0 becomes 12
+      const formattedHours = String(hours).padStart(2, "0");
+      clockEl.textContent = `${formattedHours}:${minutes}:${seconds} ${ampm}`;
+    }
+
+    // 2. Update Live Date
+    if (dateEl) {
+      const options = { weekday: "short", day: "numeric", month: "short", year: "numeric" };
+      dateEl.textContent = now.toLocaleDateString("en-US", options);
+    }
+
+    // 3. Hourly Slogan Change Check
+    // Calculate hours since epoch to guarantee consistent, synchronized change on the hour
+    const epochHour = Math.floor(now.getTime() / (1000 * 60 * 60));
+    if (epochHour !== lastSloganHour) {
+      lastSloganHour = epochHour;
+      currentSloganIndex = Math.abs(epochHour) % slogans.length;
+      displaySlogan(currentSloganIndex, true);
+    }
+  }
+
+  // Interactive Next Slogan (Shuffle / Browse)
+  function showNextSlogan() {
+    currentSloganIndex = (currentSloganIndex + 1) % slogans.length;
+    displaySlogan(currentSloganIndex, true);
+  }
+
+  if (shuffleBtn) {
+    shuffleBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      showNextSlogan();
+    });
+  }
+
+  if (sloganEl) {
+    sloganEl.addEventListener("click", () => {
+      showNextSlogan();
+    });
+  }
+
+  // Initial immediate run
+  updateClockAndCheckHour();
+
+  // Run timer every second (1000ms) for live ticking seconds and instant hourly transition
+  if (clockTimerId) clearInterval(clockTimerId);
+  clockTimerId = setInterval(updateClockAndCheckHour, 1000);
+}
+
 // ----------------- INITIALIZATION -----------------
 
 document.addEventListener("DOMContentLoaded", () => {
   initTheme();
+  initTopClockAndSlogan();
   setupEventListeners();
   registerServiceWorker();
   populateFertilizerCropOptions();
